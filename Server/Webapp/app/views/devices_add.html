@@ -1,0 +1,32 @@
+<md-dialog layout-padding>
+	<md-subheader>L'appareil {{name}}</md-subheader>
+	<md-content>
+		<md-input-container>
+			<label>Nom de l'appareil</label>
+			<input ng-model=name class=dialog-close>
+		</md-input-container>
+		<md-input-container>
+			<label>Adresse IP</label>
+			<input ng-model=ip class=dialog-close>
+		</md-input-container>
+		<md-input-container>
+			<label>Adresse MAC</label>
+			<input ng-model=mac class=dialog-close>
+		</md-input-container>
+		<md-input-container>
+			<md-select ng-model=type.id placeholder=Type>
+				<md-option ng-value=type.id ng-repeat="type in types">{{type.label}}</md-option>
+			</md-select>
+			<md-select ng-model=connection.id placeholder=Connexion>
+				<md-option ng-value=connection.id ng-repeat="connection in connections">{{connection.label}}</md-option>
+			</md-select>
+			<md-select ng-model=user.id placeholder=Utilisateur>
+				<md-option ng-value=user.id ng-repeat="user in users">{{user.nom}}</md-option>
+			</md-select>
+		</md-input-container>
+	</md-content>
+	<div class=md-actions>
+		<md-button ng-click=cancel()>Annuler</md-button>
+		<md-button class='md-primary' ng-click=submit()>{{btnSubmit}}</md-button>
+	</div>
+</md-dialog>

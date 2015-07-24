@@ -1,0 +1,18 @@
+<div class="panel panel-info left50">
+	<div class="panel-heading">Lumi&egrave;res</div>
+	<div class="panel-body">
+		<div class="nList" ng-repeat="light in lights">
+			<md-switch ng-model="light.on" style="float:right" ng-change="toggleLight(light)" aria-label="light"></md-switch>
+			<img alt="light" ng-src="{{reachable(light.reachable)}}" style="background:url(images/ng_bulb.png);margin-right:15px"><b>{{light.name}}</b>
+			<md-slider flex="" min="0" max="255" ng-model="light.brightness" aria-label="red" class="" ng-change="changeBright(light)"></md-slider>
+		</div>
+	</div>
+</div>
+<div class="panel panel-info right50">
+	<div class="panel-heading">Capteurs</div>
+	<div class="panel-body form-group">
+		<div class="nList2" ng-repeat="sensor in sensors">
+			<img alt="sensor" ng-src="{{sensorPic(sensor.type)}}" style="margin-right:15px"><span ng-bind-html="sensorDesc(sensor)"></span>
+		</div>
+	</div>
+</div>
