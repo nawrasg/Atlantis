@@ -49,9 +49,10 @@ nApp.controller('CuisineAddCtrl', function($scope, $http, $filter, $localStorage
 		}
 		var nURL = AtlantisUri.Cuisine() + '?api=' + $sessionStorage.api;
 		if($scope.selectedItem == null){
-			nURL += '&element=' + $scope.searchText;
 			if($scope.codebarre != null && $scope.codebarre != ''){
-				nURL += '&ean=' + $scope.codebarre; 
+				nURL += '&element=' + $scope.codebarre + '&ean=' + $scope.searchText; 
+			}else{
+				nURL += '&element=' + $scope.searchText;				
 			}
 		}else{
 			nURL += '&element=' + $scope.selectedItem.ean;
