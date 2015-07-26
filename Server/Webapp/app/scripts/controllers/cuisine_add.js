@@ -48,7 +48,7 @@ nApp.controller('CuisineAddCtrl', function($scope, $http, $filter, $localStorage
 			return;
 		}
 		var nURL = AtlantisUri.Cuisine() + '?api=' + $sessionStorage.api;
-		if($scope.selectedItem.ean == null){
+		if($scope.selectedItem == null){
 			nURL += '&element=' + $scope.searchText;
 			if($scope.codebarre != null && $scope.codebarre != ''){
 				nURL += '&ean=' + $scope.codebarre; 
@@ -56,7 +56,13 @@ nApp.controller('CuisineAddCtrl', function($scope, $http, $filter, $localStorage
 		}else{
 			nURL += '&element=' + $scope.selectedItem.ean;
 		}
-		nURL += '&peremption=' + $filter('date')($scope.date, 'yyyy-MM-dd') + '&endroit=' + $scope.place.id + '&quantite=' + $scope.quantity;
+		nURL += '&peremption=' + $filter('date')($scope.date, 'yyyy-MM-dd');
+		if($scope.place != null){
+			nURL += '&endroit=' + $scope.place.id;
+		}
+		if($scope.quantity != null){
+			nURL += '&quantite=' + $scope.quantity;
+		}
 		$http.post(nURL).success(function(data, status){
 			if(status == 202){
 				$mdDialog.hide(data);
