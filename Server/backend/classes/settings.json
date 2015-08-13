@@ -1,0 +1,46 @@
+[ 
+    {
+        "name": "Atlantis",
+        "version": "0.1",
+        "url": "",
+        "ssid": "",
+        "mac": "",
+        "city": "RENNES",
+        "dep": 35,
+        "lat": 48.109716,
+        "long": -1.679268,
+        "radius": 10
+    },
+    {
+        "name": "Notification",
+        "key": ""
+    },
+    {
+        "name": "Silence",
+        "on":false,
+        "H1": 6,
+        "H2": 23
+    },
+    {
+        "name": "Zwave",
+        "IP":"",
+        "Port":""
+    },
+    {
+        "name": "Arduino",
+        "Port":"",
+        "IP":""
+    },
+    {
+    	"name": "Hue",
+    	"ip": "",
+    	"user": ""
+    },
+    {
+    	"name": "Alarm",
+    	"status": false,
+    	"motion":true,
+    	"door":true,
+    	"tamper":true
+    }
+]
