@@ -116,7 +116,6 @@ function delete($arr){
 
 function cryptPassword($pwd){
 	$sel = "ngSel";
-	$co = "10";
 	return crypt ( $pwd, $sel);
 }
 
