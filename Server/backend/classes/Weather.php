@@ -122,8 +122,9 @@ class Weather{
     }
     
     function setCachedWeather($data){
-    	$file = "weather.json";
-    	file_put_contents ( $file, json_encode ( $data ));
+    	$file = '/weather.json';
+    	$data = json_encode($arr);
+    	file_put_contents ( __DIR__. $file, $data, FILE_USE_INCLUDE_PATH);
     }
 }
 
