@@ -9,7 +9,10 @@ function install(){
 	chmod 777 backend/classes/weather.json && 
 	chmod 777 backend/classes/settings.json &&
 	mkdir backend/home &&
-	crontab Atlantis-master/Server/crontab
+	crontab -l >> Atlantis-master/Server/crontab &&
+	crontab Atlantis-master/Server/crontab &&
+	rm -r Atlantis-master &&
+	printf "\nInstallation completed successfully :)\n"
 }
 
 printf "\nWelcome to Atlantis !\nThis script will help you downloading your new home automation system.\n"
