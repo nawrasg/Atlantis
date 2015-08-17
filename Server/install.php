@@ -68,5 +68,11 @@ if($argc > 4){
 	} catch (Exception $e) {
 		die($e->getMessage()."\n");
 	}
+	
+	//Modify crontab
+	$at_cron = file_get_contents('Atlantis-master/Server/crontab');
+	$at_cron = str_replace('ngWebPath', getcwd(), $at_cron);
+	$result = file_put_contents('Atlantis-master/Server/crontab', $at_cron);
+	if(!$result) echo "Cannot install cron jobs!\n";
 }
 
