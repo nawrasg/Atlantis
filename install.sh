@@ -12,14 +12,14 @@ function install(){
 	crontab Atlantis-master/Server/crontab
 }
 
-echo "Welcome to Atlantis !\nThis script will help you downloading your new home automation system.\n"
-echo "Please send a message to support@nawrasg.fr if you are facing any problem or if you want to say hi :)\n\n"
+printf "Welcome to Atlantis !\nThis script will help you downloading your new home automation system.\n"
+printf "Please send a message to support@nawrasg.fr if you are facing any problem or if you want to say hi :)\n\n"
 
-echo -n "Please enter your database host address: "
+printf "Please enter your database host address: "
 read ngHost
-echo -n "Please enter your database user name: "
+printf "Please enter your database user name: "
 read ngUser
-echo -n "Please enter your database user password: "
+printf "Please enter your database user password: "
 read ngPassword
 
 printf "You entered the following answers:\n"
@@ -27,8 +27,7 @@ printf "Host: $ngHost \n"
 printf "User: $ngUser \n"
 printf "Password: $ngPassword \n\n"
 
-echo -n "Would you like to proceed? (y/n)" 
-read ngChoice
+read -p "Would you like to proceed? (y/n)" ngChoice
 case "$ngChoice" in
 	y|Y ) printf "Installing..." && install $ngHost $ngUser $ngPassword;;
 	n|N ) printf "Installation cancelled!";;
