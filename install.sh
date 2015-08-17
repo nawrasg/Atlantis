@@ -12,7 +12,7 @@ function install(){
 	crontab Atlantis-master/Server/crontab
 }
 
-printf "Welcome to Atlantis !\nThis script will help you downloading your new home automation system.\n"
+printf "\nWelcome to Atlantis !\nThis script will help you downloading your new home automation system.\n"
 printf "Please send a message to support@nawrasg.fr if you are facing any problem or if you want to say hi :)\n\n"
 
 printf "Please enter your database host address: "
