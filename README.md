@@ -33,3 +33,4 @@ Naviguez dans le répertoire web de votre serveur puis exécutez la commande sui
 
 ##Licences
 * [Application Android](Licenses/android.md)
+* [AngularJS](Licenses/angular.md)
