@@ -16,7 +16,6 @@ nApp.controller('ContenuCtrl', function($scope, $http, $window, $sessionStorage,
 		}).then(function(item){
 			$scope.data.push(item);
 			$scope.data = $filter('orderBy')($scope.data, 'peremption');
-//			$scope.frigos.push(item);
 			loadCuisine();
 		}, function(){
 			//
@@ -60,7 +59,7 @@ nApp.controller('ContenuCtrl', function($scope, $http, $window, $sessionStorage,
 				var nURL = AtlantisUri.Cuisine() + '?api=' + $sessionStorage.api;
 				nURL += "&id=" + item.id + "&quantite=" + (parseInt(item.quantite) + 1);
 				$http.put(nURL).success(function(data, status){
-					if(status == 200){
+					if(status == 202){
 						item.quantite = parseInt(item.quantite) + 1;
 					}
 				});			
@@ -71,7 +70,7 @@ nApp.controller('ContenuCtrl', function($scope, $http, $window, $sessionStorage,
 				var nURL = AtlantisUri.Cuisine() + '?api=' + $sessionStorage.api;
 				nURL += "&id=" + item.id + "&quantite=" + (parseInt(item.quantite) - 1) + '&close=true';
 				$http.put(nURL).success(function(data, status){
-					if(status == 200){
+					if(status == 202){
 						item.quantite = parseInt(item.quantite) - 1;	
 						item.status = 0;					
 					}
