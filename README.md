@@ -30,3 +30,6 @@ Atlantis est un système domotique libre et gratuit sous licence GPL 3.
 Naviguez dans le répertoire web de votre serveur puis exécutez la commande suivante en tant d'administrateur :
 
     wget https://raw.githubusercontent.com/nawrasg/Atlantis/master/install.sh && bash install.sh
+
+##Licences
+* [Application Android](licences/android.md)
