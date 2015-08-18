@@ -32,4 +32,4 @@ Naviguez dans le répertoire web de votre serveur puis exécutez la commande sui
     wget https://raw.githubusercontent.com/nawrasg/Atlantis/master/install.sh && bash install.sh
 
 ##Licences
-* [Application Android](Licences/android.md)
+* [Application Android](Licenses/android.md)
