@@ -1,10 +1,25 @@
 <div class="left50">
 	<div class="panel panel-info">
-		<div class="panel-heading">Contr&ocirc;les</div>
+		<div class="panel-heading">
+			<div layout=row layout-align="start center">
+				<span flex>Contr&ocirc;les</span>
+				<md-menu>
+   					<md-icon ng-click="$mdOpenMenu($event)" md-svg-icon="images/svg/ic_more_vert_white_24px.svg"></md-icon>
+ 					<md-menu-content>
+   						<md-menu-item>
+   							<md-button  ng-click="action('refresh')">
+								<md-icon md-svg-src="images/svg/ic_refresh_black_24px.svg"></md-icon>	
+   								Actualiser
+ 							</md-button>
+  						</md-menu-item>
+ 					</md-menu-content>
+				</md-menu>		
+			</div>
+		</div>
 		<div class="panel-body">
 			<table width="100%">
 				<tr>
-					<td width="33%" style="text-align: center"><img src="images/ic_action_refresh.png" ng-click="action('refresh')"></td>
+					<td width="33%" style="text-align: center"></td>
 					<td width="33%" style="text-align: center"></td>
 					<td width="33%" style="text-align: center"><md-switch ng-model="on" ng-change="toggleMusic()" aria-label="music" style="float:right"></md-switch></td>
 				</tr>
@@ -22,7 +37,7 @@
 			<md-slider flex="" min="0" max="10" ng-model="volume" aria-label="red" class="" ng-change="changeVol(volume)"></md-slider>
 		</div>
 	</div>
-	<div class="panel panel-warning">
+	<div class="panel panel-warning" ng-if="false">
 		<div class="panel-heading">Message Vocal</div>
 		<div class="panel-body">
 			<div class="form-horizontal">
@@ -40,11 +55,18 @@
 <div class="panel panel-info right50">
 	<div class="panel-heading">Musith&egrave;que</div>
 	<div class="panel-body">
+		<md-input-container>
+			<md-select ng-model=song.playlist placeholder="Liste de lecture">
+				<md-option ng-value=playlist.id ng-repeat="playlist in playlists">{{playlist.title}}</md-option>
+			</md-select>
+		</md-input-container>
 		<div class="nList" ng-repeat="playlist in playlists">
-			<img alt="" ng-src="{{songPic(playlist)}}" style="margin-right:15px"><a href="" ng-click="play(playlist)">{{playlist.title}}</a>
+			<img alt="" ng-src="{{songPic(playlist)}}" style="margin-right:15px" ng-click="editPlaylist(playlist)">
+			<a href="" ng-click="play(playlist)" flex>{{playlist.title}}</a>
 		</div>
 		<div class="nList" ng-repeat="song in songs">
-			<img alt="" ng-src="{{songPic(song)}}" style="margin-right:15px"><a href="" ng-click="play(song)">{{song.title}}</a>
+			<img alt="" ng-src="{{songPic(song)}}" style="margin-right:15px" ng-click="editSong(song)">
+			<a href="" ng-click="play(song)" flex>{{song.title}}</a>
 		</div>
 	</div>
 </div>

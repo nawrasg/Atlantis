@@ -19,6 +19,7 @@ nApp.controller('HomePlanCtrl', function($scope, $sessionStorage, $mdDialog, $md
 			}).progress(function (evt) {
 				var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 			}).success(function (data, status, headers, config) {
+				console.log(status, data);
 				if(status == 202){
 					showToast($mdToast, 'Plan envoyé avec succès !');
 					$mdDialog.hide();

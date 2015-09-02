@@ -10,30 +10,30 @@
         				<md-content>
         					<md-input-container>
         						<label>DNS URL</label>
-        						<input ng-model=atlantis[0].url >
+        						<input ng-model=atlantis.Atlantis.url >
        						</md-input-container>
        						<div layout="row">
 	       						<md-input-container flex>
 	        						<label>D&eacute;partement</label>
-	        						<input ng-model=atlantis[0].dep >
+	        						<input ng-model=atlantis.Atlantis.dep >
 	       						</md-input-container>
 	       						<md-input-container flex>
 	        						<label>Ville</label>
-	        						<input ng-model=atlantis[0].city >
+	        						<input ng-model=atlantis.Atlantis.city >
 	       						</md-input-container>
        						</div>
        						<div layout=row>
 	       						<md-input-container flex>
 	        						<label>Latitude</label>
-	        						<input ng-model=atlantis[0].lat >
+	        						<input ng-model=atlantis.Atlantis.lat >
 	       						</md-input-container>
 	       						<md-input-container flex>
 	        						<label>Longitude</label>
-	        						<input ng-model=atlantis[0].long >
+	        						<input ng-model=atlantis.Atlantis.long >
 	       						</md-input-container>
 	       						<md-input-container flex>
 	        						<label>Rayon</label>
-	        						<input ng-model=atlantis[0].radius >
+	        						<input ng-model=atlantis.Atlantis.radius >
 	       						</md-input-container>       						
        						</div>
        						<div layout=row layout-align="end center">
@@ -50,7 +50,7 @@
         				<md-content>
         					<md-input-container>
         						<label>Cl&eacute; GCM</label>
-        						<input ng-model=atlantis[1].key >
+        						<input ng-model=atlantis.Notification.key >
        						</md-input-container>
        						<div layout=row layout-align="end center">
        							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveNotification()">
@@ -70,26 +70,46 @@
         					<div layout=row>
 	        					<md-input-container flex>
 	        						<label>Adresse IP</label>
-	        						<input ng-model=atlantis[6].ip >
+	        						<input ng-model=atlantis.Hue.ip >
 	        					</md-input-container>
 	        					<md-input-container flex>
 	        						<label>Utilisateur</label>
-	        						<input ng-model=atlantis[6].user >
+	        						<input ng-model=atlantis.Hue.user >
 	        					</md-input-container>
         					</div>
         					<h4>Zwave</h4>
         					<div layout=row>
 	        					<md-input-container flex>
 	        						<label>Adresse IP</label>
-	        						<input ng-model=atlantis[3].IP >
+	        						<input ng-model=atlantis.Zwave.IP >
 	        					</md-input-container>
 	        					<md-input-container flex>
 	        						<label>Port</label>
-	        						<input ng-model=atlantis[3].Port >
+	        						<input ng-model=atlantis.Zwave.Port >
 	        					</md-input-container>
         					</div>
         					<div layout=row layout-align="end center">
        							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveSensors()">
+								  <md-icon md-svg-src="images/svg/ic_check_black_36px.svg"></md-icon>
+								</md-button>
+       						</div>
+        				</md-content>
+        			</div>
+        		</div>
+        		
+        		<!-- Files Settings -->
+        		<div class="panel panel-info">
+        			<div class="panel-heading">Fichiers</div>
+        			<div class="panel-body">
+        				<md-content>
+        					<div layout=row>
+	        					<md-input-container flex>
+	        						<label>Musique</label>
+	        						<input ng-model=atlantis.Files.music >
+	        					</md-input-container>
+        					</div>
+        					<div layout=row layout-align="end center">
+       							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveFiles()">
 								  <md-icon md-svg-src="images/svg/ic_check_black_36px.svg"></md-icon>
 								</md-button>
        						</div>

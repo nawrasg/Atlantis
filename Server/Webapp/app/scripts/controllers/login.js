@@ -11,11 +11,12 @@ nApp.controller('LoginCtrl', function($scope, $http, base64, $sessionStorage, $r
 		var nPwd = $scope.user.password;
 		var nURL = AtlantisUri.Login();
 		$http.defaults.headers.common.Authorization = base64.encode(nUsername + ':' + nPwd);
-		$http.get(nURL).success(function(data, status, header, config){
+		$http.get(nURL).success(function(data, status){
 			if(status == 202){
 				$scope.user  = null;
 				$rootScope.navigation = false;
-				$sessionStorage.api = data;
+				$sessionStorage.user = data
+				$sessionStorage.api = data.cle;
 				delete $http.defaults.headers.common.Authorization;
 				$location.path('/home');
 			}else{

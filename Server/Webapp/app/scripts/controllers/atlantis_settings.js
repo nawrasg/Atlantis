@@ -16,22 +16,21 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http,
 		}
 	});
 	$scope.saveGeneral = function() {
-		var url = $scope.atlantis[0].url;
-		var dep = $scope.atlantis[0].dep;
-		var city = $scope.atlantis[0].city;
-		var lat = $scope.atlantis[0].lat;
-		var long = $scope.atlantis[0].long;
-		var radius = $scope.atlantis[0].radius;
+		var url = $scope.atlantis.Atlantis.url;
+		var dep = $scope.atlantis.Atlantis.dep;
+		var city = $scope.atlantis.Atlantis.city;
+		var lat = $scope.atlantis.Atlantis.lat;
+		var long = $scope.atlantis.Atlantis.long;
+		var radius = $scope.atlantis.Atlantis.radius;
 		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
-		nURL += '&section=Atlantis&url=' + url + '&dep=' + dep + '&city='
-				+ city + '&lat=' + lat + '&long=' + long + '&radius=' + radius;
+		nURL += '&section=Atlantis&url=' + url + '&dep=' + dep + '&city=' + city + '&lat=' + lat + '&long=' + long + '&radius=' + radius;
 		$http.put(nURL).success(
 				function(data, status) {
 					showToast($mdToast, status, data);
 				});
 	};
 	$scope.saveNotification = function() {
-		var key = $scope.atlantis[1].key;
+		var key = $scope.atlantis.Notification.key;
 		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
 		nURL += '&section=Notification&key=' + key;
 		$http.put(nURL).success(function(data, status) {
@@ -39,10 +38,10 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http,
 		});
 	};
 	$scope.saveSensors = function() {
-		var hue_ip = $scope.atlantis[6].ip;
-		var hue_user = $scope.atlantis[6].user;
-		var zwave_ip = $scope.atlantis[3].IP;
-		var zwave_port = $scope.atlantis[3].Port;
+		var hue_ip = $scope.atlantis.Hue.ip;
+		var hue_user = $scope.atlantis.Hue.user;
+		var zwave_ip = $scope.atlantis.Zwave.IP;
+		var zwave_port = $scope.atlantis.Zwave.Port;
 		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
 		nURL += '&section=Zwave&ip=' + zwave_ip + '&port=' + zwave_port;
 		$http.put(nURL).success(function(data, status) {
@@ -54,7 +53,14 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http,
 			showToast($mdToast, status, data);
 		});
 	};
-	
+	$scope.saveFiles = function(){
+		var music = $scope.atlantis.Files.music;
+		var nURL = AtlantisUri.Settings() + "?api=" + $sessionStorage.api;
+		nURL += "&section=Files&music=" + music;
+		$http.put(nURL).success(function(data, status){
+			showToast($mdToast, status, data);
+		});
+	};
 	
 
 });

@@ -1,0 +1,19 @@
+<md-dialog layout-padding>
+	<md-content>
+		<div layout=column>
+			<md-input-container>
+				<label>Titre</label>
+				<input ng-model=playlist.title >
+			</md-input-container>
+			<div ng-repeat="song in songs" layout=row layout-align="start center">
+				<img alt="" src="images/music/ng_note.png" style="margin-right:15px">
+				<span flex>{{::song.title}}</span>
+				<md-icon md-svg-src="images/svg/ic_clear_black_36px.svg" ng-click="del(song)"></md-icon>
+			</div>
+		</div>
+	</md-content>
+	<div class=md-actions>
+		<md-button class=md-warn ng-click=delete() ng-if="admin">Supprimer</md-button>
+		<md-button ng-click=close()>Fermer</md-button>
+	</div>
+</md-dialog>
