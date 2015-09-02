@@ -12,8 +12,6 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/material.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.css" />
-    <link rel="stylesheet" href="bower_components/nouislider/distribute/jquery.nouislider.min.css" />
-    <link rel="stylesheet" href="bower_components/nouislider/distribute/jquery.nouislider.pips.min.css" />
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <!-- endbower -->
     <!-- endbuild -->
@@ -47,6 +45,7 @@
             <ul class="nav navbar-nav" >
               <li><a ng-href="#home">Accueil</a></li>
               <li><a ng-href="#sensors">Lumières et Capteurs</a></li>
+              <li><a ng-href="#plantes">Plantes</a></li>
               <li class="dropdown">
 		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contenu <span class="caret"></span></a>
 		          <ul class="dropdown-menu">
@@ -97,14 +96,11 @@
     <script src="bower_components/ngstorage/ngStorage.js"></script>
     <script src="bower_components/bootstrap-material-design/dist/js/material.js"></script>
     <script src="bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
-    <script src="bower_components/nouislider/distribute/jquery.nouislider.all.min.js"></script>
-    <script src="bower_components/angular-nouislider/src/nouislider.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-modal-service/dst/angular-modal-service.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
@@ -131,13 +127,18 @@
         <script src="scripts/controllers/security_settings.js"></script>
         <script src="scripts/directives/ngenter.js"></script>
         <script src="scripts/controllers/plantes.js"></script>
-        <script src="scripts/controllers/light_options.js"></script>
         <script src="scripts/controllers/room.js"></script>
         <script src="scripts/controllers/cuisine_add.js"></script>
         <script src="scripts/controllers/pharmacie_add.js"></script>
         <script src="scripts/controllers/entretien_add.js"></script>
         <script src="scripts/controllers/devices_add.js"></script>
         <script src="scripts/controllers/home_plan.js"></script>
+        <script src="scripts/controllers/sensors_settings.js"></script>
+        <script src="scripts/controllers/lights_settings.js"></script>
+        <script src="scripts/controllers/sensor_settings.js"></script>
+        <script src="scripts/controllers/plant_settings.js"></script>
+        <script src="scripts/controllers/playlist_settings.js"></script>
+        <script src="scripts/controllers/song_settings.js"></script>
         <!-- endbuild -->
 </body>
 </html>
