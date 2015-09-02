@@ -19,6 +19,7 @@ nApp.factory('AtlantisUri', function() {
 		Login : function(){return mIP + 'backend/at_auth.php';},
 		Music : function(){return mIP + 'backend/at_music.php';},
 		Pharmacie : function(){return mIP + 'backend/at_pharmacie.php';},
+		Plantes : function(){return mIP + 'backend/at_plants.php';},
 		Rooms : function(){return mIP + 'backend/at_rooms.php';},
 		Sensors : function(){return mIP + 'backend/at_sensors.php';},
 		Speech : function(){return mIP + 'backend/at_speech.php';},
