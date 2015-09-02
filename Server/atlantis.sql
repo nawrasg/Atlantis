@@ -200,6 +200,34 @@ CREATE TABLE IF NOT EXISTS `at_welcome` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+CREATE TABLE IF NOT EXISTS `at_plants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sensor` varchar(50) NOT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `picture` text,
+  `color` varchar(20) DEFAULT NULL,
+  `room` int(11) DEFAULT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sensor` (`sensor`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE IF NOT EXISTS `at_plants_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sensor` int(11) NOT NULL,
+  `battery` int(11) NOT NULL,
+  `light` double NOT NULL,
+  `soil_conductivity` double NOT NULL,
+  `soil_temperature` double NOT NULL,
+  `air_temperature` double NOT NULL,
+  `moisture` double NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
