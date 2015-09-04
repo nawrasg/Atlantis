@@ -6,7 +6,7 @@
 				<label>Titre</label>
 				<input ng-model=newPlaylist ng-enter="createPlaylist()">
 			</md-input-container>
-			<md-button class="md-fab md-primary" aria-label="add" ng-click="createPlaylist()"><md-icon alt="add" md-svg-src="images/svg/ic_add_white_36px.svg"></md-icon></md-button>
+			<md-button class="md-fab md-mini md-primary" aria-label="add" ng-click="createPlaylist()"><md-icon alt="add" md-svg-src="images/svg/ic_add_white_36px.svg"></md-icon></md-button>
 		</div>
 		<div layout=row layout-align="start center">
 			<md-input-container flex>
@@ -14,7 +14,7 @@
 					<md-option ng-value=playlist.id ng-repeat="playlist in playlists">{{playlist.title}}</md-option>
 				</md-select>
 			</md-input-container>
-			<md-button class="md-fab md-primary" aria-label="add" ng-click="addSong()"><md-icon alt="add" md-svg-src="images/svg/ic_add_white_36px.svg"></md-icon></md-button>
+			<md-button class="md-fab md-mini md-primary" aria-label="add" ng-click="addSong()"><md-icon alt="add" md-svg-src="images/svg/ic_add_white_36px.svg"></md-icon></md-button>
 		</div>
 	</md-content>
 	<div class=md-actions>
