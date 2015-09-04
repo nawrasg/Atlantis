@@ -6,27 +6,32 @@
  * @description # GeoCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('GeoCtrl', function($scope, $http, $sessionStorage, $rootScope, AtlantisUri) {
-	$scope.home = {lat:0, long:0};
+nApp.controller('GeoCtrl', function($scope, $http, $sessionStorage, $mdToast, AtlantisUri) {
+	$scope.admin = ($sessionStorage.user.type == 0);
 	get();
-	$scope.request = function(){
-		var nURL = AtlantisUri.Geo() + '?api=' + $sessionStorage.api + '&action=request';
-		$http.get(nURL);		
+	$scope.request = function(status){
+		var nURL = AtlantisUri.Geo() + '?api=' + $sessionStorage.api;
+		switch(status){
+		case 'p':
+			$http.post(nURL).success(function(data, status){
+				if(status == 202){
+					showToast($mdToast, 'Demande envoyée !');
+				}
+			});		
+			break;
+		case 's':
+			break;
+		}
 	};
 	$scope.getLocation = function(){
-		var nURL =  AtlantisUri.Geo() + '?api=' + $sessionStorage.api + '&action=get' ;
-		$http.get(nURL).success(function(data, status){
-			if(status == 200){
-				$scope.devices.push( data);
-			}
-			console.log(data);
-		});
+		get();
 	};
 	function get(){
-		var nURL =  AtlantisUri.Geo() + '?api=' + $sessionStorage.api + '&action=get' ;
+		var nURL =  AtlantisUri.Geo() + '?api=' + $sessionStorage.api;
 		$http.get(nURL).success(function(data, status){
-			if(status == 200){
-				$scope.devices = data;
+			if(status == 202){
+				$scope.home = data.atlantis;
+				$scope.devices = data.positions;
 			}
 		});
 	}
