@@ -66,44 +66,44 @@ class Zwave {
 		$req->closeCursor ();
 		return json_encode ( $arr );
 	}
-
-	public function loadDevices() {
+	
+	public function loadDevices(){
 		$bdd = getBDD ();
-		$req = $bdd->query ( 'SELECT *, at_sensors.id AS id FROM at_sensors INNER JOIN at_sensors_devices ON at_sensors.device = at_sensors_devices.device WHERE `ignore` = 0 AND `protocol` = "zwave" ORDER BY at_sensors.device' );
-		$arr = array ();
-		$lastDevice = "";
-		while ( $data = $req->fetch () ) {
-			if ($data ['device'] != $lastDevice) {
-				$arr [] = array (
-						'device' => $data ['device'],
-						'type' => 'section',
-						'alias' => $data ['alias'],
-						'room' => $data ['room'] 
-				);
-				$lastDevice = $data ['device'];
-			}
-			$id = $data ['id'];
-			$sensor = $data ['sensor'];
-			$type = $data ['type'];
-			$device = $this->loadRawData ( $sensor );
-			$val = $device->{'data'}->{'metrics'}->{'level'};
-			$update = $device->{'data'}->{'updateTime'};
-			$arr [] = array (
-					'id' => $id,
-					'sensor' => $sensor,
+		$req = $bdd->query ( 'SELECT * FROM at_sensors_devices' );
+		$devices = array();
+		while($data = $req->fetch()){
+			$devices [] = array (
+					'id' => $data ['id'],
 					'device' => $data ['device'],
-					'type' => $type,
-					'unit' => $data ['unit'],
-					'date' => $data ['date'],
-					'time' => $data ['time'],
-					'value' => $val,
-					'update' => $update,
-					'history' => $data ['history'],
-					'ignore' => $data ['ignore'] 
+					'alias' => $data ['alias'],
+					'room' => $data ['room'],
+					'type' => 'section' 
 			);
 		}
-		$req->closeCursor ();
-		return $arr;
+		$output = array();
+		for($i = 0; $i < count($devices); $i++){
+			$device = $devices[$i]['device'];
+			$req = $bdd->query("SELECT * FROM at_sensors WHERE `device` = '$device'");
+			$sensors = array();
+			while($data = $req->fetch()){
+				$sensor = $this->loadRawData ( $data['sensor'] );
+				$sensors[] = array(
+						'id' => $data['id'],
+						'sensor' => $data['sensor'],
+						'device' => $device,
+						'type' => $data['type'],
+						'unit' => $data ['unit'],
+						'date' => $data ['date'],
+						'time' => $data ['time'],
+						'value' => $sensor->{'data'}->{'metrics'}->{'level'},
+						'update' => $sensor->{'data'}->{'updateTime'},
+						'history' => intval($data ['history']),
+						'ignore' => intval($data ['ignore'])
+				);
+			}
+			$output[] = array('device' => $devices[$i], 'sensors' => $sensors);
+		}
+		return $output;
 	}
 
 	public function discover() {
