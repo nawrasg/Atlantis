@@ -6,9 +6,31 @@ header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Music.php';
+require_once __DIR__ . '/classes/Settings.php';
 require_once __DIR__ . '/getid3/getid3.php';
 
 $page_level = 1;
+
+if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
+	switch($_SERVER['REQUEST_METHOD']){
+		case 'POST':
+			if(isset($_REQUEST['playlist'])){
+				$playlist = createPlaylist($_REQUEST);
+				echo json_encode($playlist);
+			}else{
+				$settings = new Settings();
+				$musicPath = $settings->getSettings('Files', 'music');
+				findMusic($musicPath);
+				http_response_code(202);
+			}
+			break;
+		case 'DELETE':
+			if(isset($_REQUEST['playlist'])){
+				deletePlaylist($_REQUEST['playlist']);
+			}
+			break;
+	}
+}
 
 if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 	$music = new Music ();
@@ -122,19 +144,6 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 				$arr = getSongs ();
 				echo json_encode ( $arr );
 				break;
-			case 'playlistcreate' :
-				if (isset ( $_GET ['playlist'] )) {
-					$title = $_GET ['playlist'];
-					$req = $bdd->prepare ( 'INSERT INTO at_playlists VALUES("", :title)' );
-					$req->execute ( array (
-							'title' => $title 
-					) );
-					$req->closeCursor ();
-					echo 200;
-				} else {
-					echo 404;
-				}
-				break;
 			case 'playlistadd' :
 				if (isset ( $_GET ['playlist'], $_GET ['song'] )) {
 					$playlist = $_GET ['playlist'];
@@ -205,24 +214,32 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 					echo 404;
 				}
 				break;
-			case 'search' :
-				findMusic ( '/Files/Music' );
-				break;
 		}
-	} else {
-		echo 404;
+	} 
+}
+
+function deletePlaylist($id){
+	$bdd = getBDD();
+	$req = $bdd->exec("DELETE FROM at_playlists WHERE id = '$id'");
+	if($req == 1){
+		http_response_code(202);
+	}else{
+		http_response_code(400);
 	}
-} else if ($argc > 1) {
-	switch ($argv [1]) {
-		case 'search' :
-			findMusic ( '/media/HDD/Music' );
-			break;
-		case 'sync' :
-			folderToPlaylist ();
-			break;
+}
+
+function createPlaylist($arr){
+	$bdd = getBDD();
+	$title = $arr ['playlist'];
+	$req = $bdd->exec ( "INSERT INTO at_playlists VALUES('', '$title')" );
+	if($req == 1){
+		$id = $bdd->lastInsertId();
+		$playlist = array('id' => $id, 'title' => $title, 'type' => 'playlist');
+		http_response_code(202);
+		return $playlist;	
+	}else{
+		http_response_code(400);
 	}
-} else {
-	echo 401;
 }
 
 function getFolderName($path) {
