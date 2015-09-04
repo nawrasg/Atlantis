@@ -3,8 +3,8 @@ header ( 'Access-Control-Allow-Origin: *' );
 header ( 'Access-Control-Allow-Headers: origin, x-requested-with, content-type, accept' );
 header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
 
-require_once __DIR__ .'/classes/connexion.php';
-require_once __DIR__ .'/classes/checkAPI.php';
+require_once __DIR__ . '/classes/connexion.php';
+require_once __DIR__ . '/classes/checkAPI.php';
 
 $page_level = 1;
 
@@ -43,13 +43,13 @@ function add($arr) {
 			http_response_code ( 400 );
 		}
 	} else if (isset ( $_FILES )) {
-		$path = $_FILES['file']['tmp_name'];
-		$name = $_FILES['file']['name'];
-		$ext = pathinfo($name, PATHINFO_EXTENSION);
-		$result = move_uploaded_file($path, './home/plan.'.$ext);
-		if($result){
+		$path = $_FILES ['file'] ['tmp_name'];
+		$name = $_FILES ['file'] ['name'];
+		$ext = pathinfo ( $name, PATHINFO_EXTENSION );
+		$result = move_uploaded_file ( $path, './home/plan.' . $ext );
+		if ($result) {
 			http_response_code ( 202 );
-		}else{
+		} else {
 			http_response_code ( 400 );
 		}
 	} else {
