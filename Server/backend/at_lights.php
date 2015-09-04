@@ -25,7 +25,7 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 			echo put ( $_REQUEST );
 			break;
 		case 'DELETE' :
-			echo delete ();
+			delete ($_REQUEST);
 			break;
 	}
 }else{
@@ -67,7 +67,6 @@ function put($arr) {
 		$hue->setName ( $arr ['uid'], $arr ['name'] );
 		http_response_code(202);
 	}
-	http_response_code(404);
 }
 function get() {
 	$hue = new Hue ();
@@ -85,10 +84,17 @@ function create() {
 	$hue->discover ();
 	return 200;
 }
-function delete() {
-	$hue = new Hue ();
-	$hue->delete ();
-	return 200;
+function delete($arr) {
+	if(isset($arr['id'])){
+		$bdd = getBDD();
+		$id = $arr['id'];
+		$request = $bdd->exec("DELETE FROM at_lights WHERE id = '$id'");
+		if($request == 1){
+			http_response_code(202);
+		}else{
+			http_response_code(400);
+		}
+	}
 }
 function getRooms() {
 	$bdd = getBDD ();
