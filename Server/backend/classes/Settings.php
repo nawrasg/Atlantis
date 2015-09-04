@@ -26,29 +26,15 @@ class Settings {
     }
     
     public function getSettings($section, $param){
-        for($i = 0; $i < count($this->data); $i++){
-            if($this->data[$i]->{'name'} == $section){
-                return $this->data[$i]->{$param};
-            }
-        }
-        return false;
+        return $this->data->$section->{$param};
     }
     
     public function getSectionSettings($section){
-        for($i = 0; $i < count($this->data); $i++){
-            if($this->data[$i]->{'name'} == $section){
-                return $this->data[$i];
-            }
-        }
-        return false;
+        return $this->data->$section;
     }
     
     public function setSettings($section, $param, $value){
-        for($i = 0; $i < count($this->data); $i++){
-            if($this->data[$i]->{'name'} == $section){
-                $this->data[$i]->{$param} = $value;
-            }
-        }
+        $this->data->$section->{$param} = $value;
         $this->saveSettings();
     }
     
