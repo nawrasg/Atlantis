@@ -34,7 +34,6 @@ function checkAPI($val, $level) {
 			return false;
 		} else {
 			$req2 = $bdd->prepare ( 'SELECT at_users.type FROM at_users INNER JOIN at_devices ON at_devices.username = at_users.id WHERE at_devices.mac = :mac' );
-// 			$req2 = $bdd->prepare ( 'SELECT u.type FROM at_users AS u, at_devices AS d WHERE d.username = u.nom AND d.mac = :mac' );
 			$req2->execute ( array (
 					'mac' => strtoupper ( $val ) 
 			) );
