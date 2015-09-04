@@ -17,9 +17,17 @@ $bdd = getBDD ();
 $request = $bdd->query ( "SELECT * FROM at_users WHERE nom = '$username' AND password = '$pwd'" );
 $result = $request->fetch ();
 
-if ($result) {
+f (!$result) {
+	http_response_code(403);
+}else{
 	http_response_code ( 202 );
-	echo $result ['cle'];
-} else {
-	http_response_code ( 403 );
+	$user = array (
+			'id' => $result ['id'],
+			'nom' => $result ['nom'],
+			'type' => $result ['type'],
+			'mail' => $result ['mail'],
+			'phone' => $result ['phone'],
+			'cle' => $result ['cle']
+	);
+	echo json_encode($user);
 }
