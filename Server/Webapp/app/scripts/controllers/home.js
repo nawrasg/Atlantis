@@ -6,7 +6,7 @@
  * @description # HomeCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage, $filter, $mdDialog, $window, AtlantisUri) {
+nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage, $filter, $mdDialog, $mdToast, $window, AtlantisUri) {
 	get();
 	getCourses();
 	$scope.toggleAlarm = function(){
@@ -32,6 +32,13 @@ nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage,
 				}
 			});			
 		}
+	};
+	$scope.notifyCourses = function(){
+		var nURL = AtlantisUri.Notify() + '?api=' + $sessionStorage.api;
+		nURL += '&msg=Liste de courses modifiée !';
+		$http.post(nURL).success(function(data, status){
+			showToast($mdToast, 'Notification envoyée !');
+		});
 	};
 	$scope.modifyCourse = function(item, method){
 		var nURL = AtlantisUri.Courses() + '?api=' + $sessionStorage.api +'&id=' + item.id;
