@@ -1,12 +1,23 @@
-<div class="panel panel-info right30">
-	<div class="panel-heading">Contr&ocirc;les</div>
-	<div class="panel-body">
-		<button class="btn btn-primary btn-block" ng-click="getLocation()"><img alt="" src="images/ic_action_refresh.png"></button>
-		<button class="btn btn-info btn-block" ng-click="request()"><img alt="get" src="images/ic_action_send_now.png"></button>
-	</div>
-</div>
+<md-fab-speed-dial md-open="demo.isOpen" md-direction="left" ng-class="demo.selectedMode" style="float:right">
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-fab md-warn">
+      <md-icon md-svg-src="images/svg/ic_menu_white_24px.svg"></md-icon>
+    </md-button>
+  </md-fab-trigger>
+  <md-fab-actions>
+    <md-button aria-label="Actualiser" class="md-fab md-raised md-mini" ng-click="getLocation()">
+      <md-icon md-svg-src="images/svg/ic_refresh_black_24px.svg"></md-icon>
+    </md-button>
+    <md-button aria-label="Demander position" class="md-fab md-raised md-mini" ng-click="request('p')">
+      <md-icon md-svg-src="images/svg/ic_center_focus_strong_black_24px.svg"></md-icon>
+    </md-button>
+    <md-button aria-label="Demander position s" class="md-fab md-raised md-mini" ng-click="request('s')" ng-if="admin">
+      <md-icon md-svg-src="images/svg/ic_center_focus_weak_black_24px.svg"></md-icon>
+    </md-button>
+  </md-fab-actions>
+</md-fab-speed-dial>
 
-<map class="left70" center="{{home.lat}}, {{home.long}}" style="height:500px" zoom="14">
-	<marker position="{{home.lat}}, {{home.long}}" title="Atlantis"></marker>
-	<marker ng-repeat="device in devices" position="{{device.lat}}, {{device.long}}" title="{{device.username}} à {{device.timestamp}}"></marker>
+<map  center="{{home.lat}}, {{home.long}}" style="height:500px" zoom="14">
+	<marker position="{{home.lat}}, {{home.long}}" title="Atlantis" animation="Animation.BOUNCE"></marker>
+	<marker ng-repeat="device in devices" position="{{device.lat}}, {{device.long}}" title="{{device.mac}} à {{device.timestamp}}"></marker>
 </map>
