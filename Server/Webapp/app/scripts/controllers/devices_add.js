@@ -67,7 +67,15 @@ nApp.controller('DevicesAddCtrl', function($scope, $http, $sessionStorage, $mdDi
 				}
 			});
 		}
-	}
+	};
+	$scope.ring = function(device){
+		var nURL = AtlantisUri.Notify() + '?api=' + $sessionStorage.api + '&cmd=ring';
+		$http.put(nURL).success(function(data, status){
+			if(status == 202){
+				showToast($mdToast, 'Notification envoyée !');
+			}
+		});
+	};
 	$scope.cancel = function(){
 		$mdDialog.cancel();
 	};
