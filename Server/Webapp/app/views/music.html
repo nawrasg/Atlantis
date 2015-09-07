@@ -56,15 +56,15 @@
 	<div class="panel-heading">Musith&egrave;que</div>
 	<div class="panel-body">
 		<md-input-container>
-			<md-select ng-model=song.playlist placeholder="Liste de lecture">
-				<md-option ng-value=playlist.id ng-repeat="playlist in playlists">{{playlist.title}}</md-option>
+			<md-select ng-model=type.id>
+				<md-option ng-value=type.id ng-repeat="type in types track by type.id">{{type.title}}</md-option>
 			</md-select>
 		</md-input-container>
-		<div class="nList" ng-repeat="playlist in playlists">
+		<div class="nList" ng-repeat="playlist in playlists track by playlist.id" ng-if="type.id == 0 || type.id == 1">
 			<img alt="" ng-src="{{songPic(playlist)}}" style="margin-right:15px" ng-click="editPlaylist(playlist)">
 			<a href="" ng-click="play(playlist)" flex>{{playlist.title}}</a>
 		</div>
-		<div class="nList" ng-repeat="song in songs">
+		<div class="nList" ng-repeat="song in songs track by song.id" ng-if="type.id == 0 || type.id == 2">
 			<img alt="" ng-src="{{songPic(song)}}" style="margin-right:15px" ng-click="editSong(song)">
 			<a href="" ng-click="play(song)" flex>{{song.title}}</a>
 		</div>
