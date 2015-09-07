@@ -3,8 +3,8 @@ header ( 'Access-Control-Allow-Origin: *' );
 header ( 'Access-Control-Allow-Headers: origin, x-requested-with, content-type, accept' );
 header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
 
-require_once __DIR__ .'/classes/connexion.php';
-require_once __DIR__ .'/classes/checkAPI.php';
+require_once __DIR__ . '/classes/connexion.php';
+require_once __DIR__ . '/classes/checkAPI.php';
 
 $page_level = 1;
 
@@ -14,7 +14,7 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			echo json_encode ( get () );
 			break;
 		case 'POST' :
-			echo json_encode(add ( $_REQUEST ));
+			echo json_encode ( add ( $_REQUEST ) );
 			break;
 		case 'PUT' :
 			update ( $_REQUEST );
@@ -49,8 +49,8 @@ function add($arr) {
 					'quantite' => $data ['quantite'],
 					'peremption' => $dt 
 			);
-			http_response_code(202);
-			return $medicament ;
+			http_response_code ( 202 );
+			return $medicament;
 		} else {
 			http_response_code ( 400 );
 		}
