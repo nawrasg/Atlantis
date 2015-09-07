@@ -8,7 +8,8 @@
 
 nApp.controller('MusicCtrl', function($scope, $http, $sessionStorage, $filter, $mdDialog, AtlantisUri) {
 	get();
-	
+	$scope.types = [{id:0, title:'Tout afficher'},{id:1, title:'Listes de lecture'}, {id:2, title:'Morceaux'}];
+	$scope.type = {id:1, title:'Listes de lecture'};
 	$scope.toggleMusic = function(){
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api + '&action=';
 		if($scope.on){
