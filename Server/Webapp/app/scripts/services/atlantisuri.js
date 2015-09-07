@@ -5,8 +5,9 @@
  * @name atlantisWebAppApp.AtlantisUri
  * @description # AtlantisUri Factory in the atlantisWebAppApp.
  */
-nApp.factory('AtlantisUri', function() {
-	var mIP = '../';
+nApp.factory('AtlantisUri', function($sessionStorage) {
+	var mIP = '';
+	
 	return {
 		Courses : function(){return mIP + 'backend/at_courses.php';},
 		Cuisine : function() {return mIP + 'backend/at_cuisine.php';},
@@ -20,6 +21,7 @@ nApp.factory('AtlantisUri', function() {
 		Music : function(){return mIP + 'backend/at_music.php';},
 		Pharmacie : function(){return mIP + 'backend/at_pharmacie.php';},
 		Plantes : function(){return mIP + 'backend/at_plants.php';},
+		Notify : function(){return mIP + 'backend/at_notify.php';},
 		Rooms : function(){return mIP + 'backend/at_rooms.php';},
 		Sensors : function(){return mIP + 'backend/at_sensors.php';},
 		Speech : function(){return mIP + 'backend/at_speech.php';},
