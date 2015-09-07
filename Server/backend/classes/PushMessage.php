@@ -41,7 +41,16 @@ class PushMessage {
         return $response;
     }
     
-    public function sendMessageUser($title, $message, $user){
-        
+    public function sendMessageDevice($title, $message, $device){
+    	$gcpm = new GCMPushMessage($this->apiKey);
+    	$bdd = getBDD();
+    	$req = $bdd->query("SELECT at_gcm.id FROM at_gcm JOIN at_devices ON at_gcm.mac = at_devices.mac JOIN at_users ON at_devices.username = at_users.id WHERE at_gcm.mac = '$device' LIMIT 1");
+    	$data = $req->fetch();
+    	if(!$data){
+    		return;
+    	}
+    	$gcpm->setDevices($data['id']);
+    	$response = $gcpm->send($message, array('title' => $title));
+    	return $response;
     }
 }
