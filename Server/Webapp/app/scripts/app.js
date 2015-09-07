@@ -8,8 +8,8 @@
  * Main module of the application.
  */
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
-		'ab-base64', 'ngStorage', 'nouislider', 'ngMaterial',
-		'ngSanitize', 'angularModalService', 'ngFileUpload' ]);
+		'ab-base64', 'ngStorage', 'ngMaterial',
+		'ngSanitize', 'ngFileUpload' ]);
 
 var toastPosition = {
 	bottom : false,
