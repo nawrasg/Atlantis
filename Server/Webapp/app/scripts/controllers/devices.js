@@ -6,7 +6,7 @@
  * @description # DevicesCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('DevicesCtrl', function($scope, $http, $filter, $localStorage, $sessionStorage, $mdDialog, AtlantisUri) {
+nApp.controller('DevicesCtrl', function($scope, $http, $filter, $sessionStorage, $mdDialog, AtlantisUri) {
 	get();
 	$scope.add = function(e){
 		$mdDialog.show({
@@ -108,23 +108,21 @@ nApp.controller('DevicesCtrl', function($scope, $http, $filter, $localStorage, $
 		}
 	};
 	function get(){
-		$mdDialog.show({
-			templateUrl: 'views/wait.html'
-		});	
-		var nURL = AtlantisUri.Devices() + '?api=' + $sessionStorage.api;
-		$http.get(nURL).success(function(data, status){
-			$scope.devices = data.devices;
-			$scope.data = data.devices;
-			$scope.users = data.users;
-			$mdDialog.hide();
-//			$localStorage.devices = data.devices;
-//			$localStorage.users = data.users;
-		});			
-//		if($localStorage.devices == null || $localStorage.devices == '') {
-//		}else{
-//			$scope.devices = $localStorage.devices;
-//			$scope.data = $localStorage.devices;
-//			$scope.users = $localStorage.users;
-//		}
+		if($sessionStorage.devices == null) {
+			$mdDialog.show({templateUrl: 'views/wait.html'});	
+			var nURL = AtlantisUri.Devices() + '?api=' + $sessionStorage.api;
+			$http.get(nURL).success(function(data, status){
+				$scope.devices = data.devices;
+				$scope.data = data.devices;
+				$scope.users = data.users;
+				$mdDialog.hide();
+				$sessionStorage.devices = data.devices;
+				$sessionStorage.users = data.users;
+			});			
+		}else{
+			$scope.devices = $sessionStorage.devices;
+			$scope.data = $sessionStorage.devices;
+			$scope.users = $sessionStorage.users;
+		}
 	}
 });
