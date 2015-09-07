@@ -20,6 +20,12 @@ nApp.controller('GeoCtrl', function($scope, $http, $sessionStorage, $mdToast, At
 			});		
 			break;
 		case 's':
+			nURL += '&secret=oui';
+			$http.post(nURL).success(function(data, status){
+				if(status == 202){
+					showToast($mdToast, 'Demande envoyée !');
+				}
+			});
 			break;
 		}
 	};
