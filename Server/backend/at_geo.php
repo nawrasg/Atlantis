@@ -16,7 +16,7 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			echo json_encode ( get () );
 			break;
 		case 'POST':
-			broadcast();
+			broadcast($_REQUEST);
 			break;
 		case 'PUT':
 			update($_REQUEST);
@@ -24,9 +24,13 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 	}
 }
 
-function broadcast(){
+function broadcast($arr){
 	$push = new PushMessage ();
-	$push->sendMessageAll ( 'at_commands', 'geo' );
+	if(isset($arr['secret'])){
+		$push->sendMessageAll ( 'at_commands', 'geoi' );
+	}else{
+		$push->sendMessageAll ( 'at_commands', 'geo' );		
+	}
 	http_response_code(202);
 }
 
