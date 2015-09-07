@@ -116,7 +116,7 @@ nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage,
 		case 'Battery':
 			return 'Autonomie : ' + sensor.value + ' %';
 		case 'Tamper':
-			return 'Dernier arrachement le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à hh:mm a');
+			return 'Dernier arrachement le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à HH:mm');
 		case 'Door/Window':
 			return (sensor.value == 'on') ? 'Etat : Ouvert' : 'Etat : Fermé';
 		case 'Temperature':
@@ -126,9 +126,9 @@ nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage,
 		case 'switchBinary':
 			return (sensor.value == 'on') ? 'Allumé' : 'Eteint';
 		case 'General purpose':
-			return 'Dernier mouvement détecté le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à hh:mm a');
+			return 'Dernier mouvement détecté le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à HH:mm');
 		case 'sensorBinary':
-			return 'Dernier mouvement le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à hh:mm a');
+			return 'Dernier mouvement le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à HH:mm');
 		default:
 			return sensor.value + ' ' + sensor.unit;
 		}
