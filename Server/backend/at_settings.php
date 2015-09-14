@@ -70,8 +70,8 @@ function update($arr) {
 					$settings->setSettings ( 'Hue', 'user', $arr ['user'] );
 				http_response_code ( 202 );
 				return;
-			case 'Files':
-				if(isset($arr['music'])){
+			case 'Files' :
+				if (isset ( $arr ['music'] )) {
 					$settings->setSettings ( 'Files', 'music', $arr ['music'] );
 					http_response_code ( 202 );
 				}
