@@ -15,51 +15,47 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 		case 'GET' :
 			echo json_encode ( get () );
 			break;
-		case 'POST':
-			broadcast($_REQUEST);
+		case 'POST' :
+			broadcast ( $_REQUEST );
 			break;
-		case 'PUT':
-			update($_REQUEST);
+		case 'PUT' :
+			update ( $_REQUEST );
 			break;
 	}
 }
-
-function broadcast($arr){
+function broadcast($arr) {
 	$push = new PushMessage ();
-	if(isset($arr['secret'])){
+	if (isset ( $arr ['secret'] )) {
 		$push->sendMessageAll ( 'at_commands', 'geoi' );
-	}else{
-		$push->sendMessageAll ( 'at_commands', 'geo' );		
+	} else {
+		$push->sendMessageAll ( 'at_commands', 'geo' );
 	}
-	http_response_code(202);
+	http_response_code ( 202 );
 }
-
-function update($arr){
-	if(isset($arr['lat'], $arr['long'])){
-		$mac = $arr['api'];
-		$lat = $arr['lat'];
-		$long = $arr['long'];
-		$bdd = getBDD();
-		$req = $bdd->exec("INSERT INTO at_geo VALUES('$mac', '$lat', '$long', NOW(), NOW(), NOW())");
-		if($req == 1){
-			http_response_code(202);
-		}else{
-			http_response_code(400);
+function update($arr) {
+	if (isset ( $arr ['lat'], $arr ['long'] )) {
+		$mac = $arr ['api'];
+		$lat = $arr ['lat'];
+		$long = $arr ['long'];
+		$bdd = getBDD ();
+		$req = $bdd->exec ( "INSERT INTO at_geo VALUES('$mac', '$lat', '$long', NOW(), NOW(), NOW())" );
+		if ($req == 1) {
+			http_response_code ( 202 );
+		} else {
+			http_response_code ( 400 );
 		}
-	}else{
-		http_response_code(404);
+	} else {
+		http_response_code ( 404 );
 	}
 }
-
 function get() {
 	$settings = new Settings ();
 	$atlantis = array (
-			'lat' => doubleval($settings->getSettings ( 'Atlantis', 'lat' )),
-			'long' => doubleval($settings->getSettings ( 'Atlantis', 'long' )) 
+			'lat' => doubleval ( $settings->getSettings ( 'Atlantis', 'lat' ) ),
+			'long' => doubleval ( $settings->getSettings ( 'Atlantis', 'long' ) ) 
 	);
-	// add user name with device
 	$bdd = getBDD ();
-	$req = $bdd->query ( 'SELECT t1.* FROM at_geo t1 LEFT JOIN at_geo t2 ON (t1.mac = t2.mac AND t1.timestamp < t2.timestamp) WHERE t2.timestamp IS NULL' );
+	$req = $bdd->query ( 'SELECT t1.* FROM at_geo t1 LEFT JOIN at_geo t2 ON (t1.mac = t2.mac AND t1.timestamp < t2.timestamp) WHERE t2.timestamp IS NULL AND t1.date = CURDATE()' );
 	$result = array ();
 	while ( $data = $req->fetch () ) {
 		$result [] = array (

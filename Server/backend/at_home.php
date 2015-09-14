@@ -37,16 +37,15 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			break;
 	}
 } else if ($argc > 1) {
-	switch($argv[1]){
-		case 'weather':
-			setWeather();		
+	switch ($argv [1]) {
+		case 'weather' :
+			setWeather ();
 			break;
 	}
 } else {
 	http_response_code ( 403 );
 }
-
-function setWeather(){
+function setWeather() {
 	$settings = new Settings ();
 	$weather = new Weather ();
 	$city = $settings->getSettings ( 'Atlantis', 'city' );
@@ -58,7 +57,7 @@ function setWeather(){
 	$description = $weather->getDescription ();
 	$description2 = $weather->getDescription ( 2 );
 	
-	$data = $weather->getCachedWeather();
+	$data = $weather->getCachedWeather ();
 	
 	$data [0]->temperature = $temp;
 	$data [0]->code = $code;
@@ -67,10 +66,9 @@ function setWeather(){
 	$data [1]->temperature = $temp2;
 	$data [1]->code = $code2;
 	$data [1]->description = $description2;
-		
-	$weather->setCachedWeather($data);
+	
+	$weather->setCachedWeather ( $data );
 }
-
 function getWeather() {
 	$settings = new Settings ();
 	$vigilance = new VigilanceMeteo ();
