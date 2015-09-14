@@ -71,9 +71,3 @@ function delete($arr) {
 		http_response_code ( 404 );
 	}
 }
-
-/*
- * encode image to base64:
- * 
- * 
- */

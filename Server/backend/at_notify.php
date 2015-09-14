@@ -7,52 +7,49 @@ require_once './classes/connexion.php';
 require_once './classes/checkAPI.php';
 require_once './classes/PushMessage.php';
 
-
 $title = "";
 $message = "";
 
 $page_level = 1;
 
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
-	switch($_SERVER['REQUEST_METHOD']){
-		case 'POST':
-			notify($_REQUEST);
+	switch ($_SERVER ['REQUEST_METHOD']) {
+		case 'POST' :
+			notify ( $_REQUEST );
 			break;
-		case 'PUT':
-			command($_REQUEST);
+		case 'PUT' :
+			command ( $_REQUEST );
 			break;
 	}
 }
-
-function command($arr){
-	if(isset($arr['cmd'])){
+function command($arr) {
+	if (isset ( $arr ['cmd'] )) {
 		$push = new PushMessage ();
-		$cmd = $arr['cmd'];
-		if(isset($arr['id'])){
-			$id = $arr['id'];
-			$push->sendMessageDevice('at_commands', $cmd, $id);
-			http_response_code(202);
-		}else{
+		$cmd = $arr ['cmd'];
+		if (isset ( $arr ['id'] )) {
+			$id = $arr ['id'];
+			$push->sendMessageDevice ( 'at_commands', $cmd, $id );
+			http_response_code ( 202 );
+		} else {
 			$push->sendMessageAll ( 'at_commands', $cmd );
-			http_response_code(202);			
+			http_response_code ( 202 );
 		}
-	}else{
-		http_response_code(404);
+	} else {
+		http_response_code ( 404 );
 	}
 }
-
-function notify($arr){
-	if(isset($arr['msg'])){
-		if(isset($arr['id'])){
-			//TODO
-		}else{
-			$msg = $arr['msg'];
+function notify($arr) {
+	if (isset ( $arr ['msg'] )) {
+		if (isset ( $arr ['id'] )) {
+			// TODO
+		} else {
+			$msg = $arr ['msg'];
 			$push = new PushMessage ();
 			$push->sendMessageAll ( 'Atlantis', $msg );
-			http_response_code(202);
+			http_response_code ( 202 );
 		}
-	}else{
-		http_response_code(404);
+	} else {
+		http_response_code ( 404 );
 	}
 }
 
