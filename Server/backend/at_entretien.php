@@ -14,7 +14,7 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			echo json_encode ( get () );
 			break;
 		case 'POST' :
-			echo json_encode(add ( $_REQUEST ));
+			echo json_encode ( add ( $_REQUEST ) );
 			break;
 		case 'PUT' :
 			echo update ( $_REQUEST );
@@ -23,10 +23,9 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			delete ( $_REQUEST );
 			break;
 	}
-}else{
-	http_response_code(403);
+} else {
+	http_response_code ( 403 );
 }
-
 function add($arr) {
 	if (isset ( $arr ['nom'], $arr ['peremption'] )) {
 		$bdd = getBDD ();
