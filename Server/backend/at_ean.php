@@ -1,8 +1,8 @@
 <?php
 header ( "Access-Control-Allow-Origin: *" );
 
-require_once __DIR__ .'/classes/connexion.php';
-require_once __DIR__ .'/classes/checkAPI.php';
+require_once __DIR__ . '/classes/connexion.php';
+require_once __DIR__ . '/classes/checkAPI.php';
 
 $page_level = 1;
 
@@ -20,9 +20,8 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			break;
 	}
 } else {
-	http_response_code(403);
+	http_response_code ( 403 );
 }
-
 function add($arr) {
 	if (isset ( $arr ['ean'], $arr ['nom'] ) && $arr ['ean'] != '') {
 		$bdd = getBDD ();
@@ -33,12 +32,11 @@ function add($arr) {
 				'nom' => $nom 
 		) );
 		$req->closeCursor ();
-		http_response_code(202);
+		http_response_code ( 202 );
 	} else {
-		http_response_code(404);
+		http_response_code ( 404 );
 	}
 }
-
 function get($arr) {
 	if (isset ( $arr ['ean'] )) {
 		$bdd = getBDD ();
@@ -48,14 +46,13 @@ function get($arr) {
 		) );
 		$resultat = $req->fetch ();
 		if ($resultat) {
-			http_response_code(202);
+			http_response_code ( 202 );
 			return $resultat ['nom'];
 		} else {
-			http_response_code(404);
+			http_response_code ( 404 );
 		}
 	}
 }
-
 function getAll() {
 	$bdd = getBDD ();
 	$req = $bdd->query ( 'SELECT * FROM at_ean ORDER BY nom' );
@@ -63,10 +60,10 @@ function getAll() {
 	while ( $data = $req->fetch () ) {
 		$result [] = array (
 				'nom' => $data ['nom'],
-				'ean' => $data['ean'] 
+				'ean' => $data ['ean'] 
 		);
 	}
 	$req->closeCursor ();
-	http_response_code(202);
+	http_response_code ( 202 );
 	return $result;
 }
