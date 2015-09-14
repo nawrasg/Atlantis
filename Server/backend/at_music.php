@@ -11,82 +11,91 @@ require_once __DIR__ . '/getid3/getid3.php';
 
 $page_level = 1;
 
-if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
-	switch($_SERVER['REQUEST_METHOD']){
-		case 'POST':
-			if(isset($_REQUEST['playlist'])){
-				$playlist = createPlaylist($_REQUEST);
-				echo json_encode($playlist);
-			}else{
-				$settings = new Settings();
-				$musicPath = $settings->getSettings('Files', 'music');
-				findMusic($musicPath);
-				http_response_code(202);
-			}
+if ($argc > 1) {
+	switch ($argv [1]) {
+		case 'search' :
+			$settings = new Settings ();
+			$musicPath = $settings->getSettings ( 'Files', 'music' );
+			findMusic ( $musicPath );
 			break;
-		case 'DELETE':
-			if(isset($_REQUEST['playlist'])){
-				deletePlaylist($_REQUEST['playlist']);
-			}
+		case 'sync' :
+			folderToPlaylist ();
 			break;
 	}
 }
 
-if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
-	$music = new Music ();
-	$bdd = getBDD ();
-	if (isset ( $_GET ['action'] )) {
-		switch ($_GET ['action']) {
-			case 'welcome' :
-				if (isset ( $_REQUEST ['music'] )) {
-					echo setWelcomeMusic ( $_REQUEST ['api'], $_REQUEST ['music'] );
-				} else {
-					echo deleteWelcomeMusic ( $_REQUEST ['api'] );
-				}
-				break;
+if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
+	switch ($_SERVER ['REQUEST_METHOD']) {
+		case 'POST' :
+			if (isset ( $_REQUEST ['playlist'] )) {
+				$playlist = createPlaylist ( $_REQUEST );
+				echo json_encode ( $playlist );
+			} else {
+				$settings = new Settings ();
+				$musicPath = $settings->getSettings ( 'Files', 'music' );
+				findMusic ( $musicPath );
+				http_response_code ( 202 );
+			}
+			break;
+		case 'GET' :
+			echo json_encode ( get ( $_REQUEST ) );
+			break;
+		case 'PUT' :
+			update ( $_REQUEST );
+			break;
+		case 'DELETE' :
+			delete ( $_REQUEST );
+			break;
+	}
+}
+function delete($arr) {
+	if (isset ( $arr ['playlist'] )) {
+		deletePlaylist ( $arr ['playlist'] );
+	} else if (isset ( $arr ['welcome'] )) {
+		deleteWelcomeMusic ( $_REQUEST ['api'] );
+	} else {
+		http_response_code ( 404 );
+	}
+}
+function update($arr) {
+	if (isset ( $arr ['action'] )) {
+		$bdd = getBDD ();
+		$music = new Music ();
+		switch ($arr ['action']) {
 			case 'on' :
 				$music->on ();
-				echo 200;
 				break;
 			case 'off' :
 				$music->off ();
-				echo 200;
 				break;
 			case 'start' :
 				$music->start ();
-				echo 200;
 				break;
 			case 'pause' :
 				$music->pause ();
-				echo 200;
 				break;
 			case 'stop' :
 				$music->stop ();
-				echo 200;
 				break;
 			case 'next' :
 				$music->next ();
-				echo 200;
 				break;
 			case 'previous' :
 				$music->previous ();
-				echo 200;
 				break;
 			case 'repeat' :
 				$music->repeat ();
-				echo 200;
 				break;
 			case 'shuffle' :
 				$music->shuffle ();
-				echo 200;
 				break;
 			case 'play' :
-				if (isset ( $_GET ['link'] )) {
-					$link = $_GET ['link'];
+				if (isset ( $arr ['link'] )) {
+					$link = $arr ['link'];
 					$music->play ( $link );
 					echo 200;
-				} else if (isset ( $_GET ['id'] )) {
-					$id = $_GET ['id'];
+				} else if (isset ( $arr ['id'] )) {
+					$id = $arr ['id'];
 					$req = $bdd->prepare ( 'SELECT file FROM at_music WHERE id = :id' );
 					$req->execute ( array (
 							'id' => $id 
@@ -101,13 +110,13 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 				}
 				break;
 			case 'vol' :
-				if (isset ( $_GET ['level'], $_REQUEST['source'] )) {
-					if($_REQUEST['source'] == 0){
+				if (isset ( $arr ['level'], $arr ['source'] )) {
+					if ($arr ['source'] == 0) {
 						$source = FALSE;
-					}else{
+					} else {
 						$source = TRUE;
 					}
-					$vol = $_GET ['level'];
+					$vol = $arr ['level'];
 					$vol *= 10;
 					$music->volume ( $vol, $source );
 					echo 200;
@@ -117,37 +126,22 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 				break;
 			case 'state' :
 				if ($music->isPlay ()) {
-					$arr = array (
+					$result = array (
 							'state' => 1,
 							'vol' => $music->getVol () 
 					);
 				} else {
-					$arr = array (
+					$result = array (
 							'state' => 0,
 							'vol' => $music->getVol () 
 					);
 				}
-				echo json_encode ( $arr );
-				break;
-			case 'init' :
-				$arr = array (
-						'on' => ($music->isOn () ? 1 : 0),
-						'play' => ($music->isPlay () ? 1 : 0),
-						'welcome' => isWelcomeMusic ( $_REQUEST ['api'] ),
-						'vol' => $music->getVol (true),
-						'headphone' => $music->getVol(TRUE),
-						'songs' => getSongs () 
-				);
-				echo json_encode ( $arr );
-				break;
-			case 'songs' :
-				$arr = getSongs ();
-				echo json_encode ( $arr );
+				echo json_encode ( $result );
 				break;
 			case 'playlistadd' :
-				if (isset ( $_GET ['playlist'], $_GET ['song'] )) {
-					$playlist = $_GET ['playlist'];
-					$song = $_GET ['song'];
+				if (isset ( $arr ['playlist'], $arr ['song'] )) {
+					$playlist = $arr ['playlist'];
+					$song = $arr ['song'];
 					$req = $bdd->prepare ( 'INSERT INTO at_songsplaylists VALUES("", :playlist, :song)' );
 					$req->execute ( array (
 							'playlist' => $playlist,
@@ -160,9 +154,9 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 				}
 				break;
 			case 'playlistremove' :
-				if (isset ( $_GET ['playlist'], $_GET ['song'] )) {
-					$playlist = $_GET ['playlist'];
-					$song = $_GET ['song'];
+				if (isset ( $arr ['playlist'], $arr ['song'] )) {
+					$playlist = $arr ['playlist'];
+					$song = $arr ['song'];
 					$req = $bdd->prepare ( 'DELETE FROM at_songsplaylists WHERE playlist = :playlist AND song = :song' );
 					$req->execute ( array (
 							'playlist' => $playlist,
@@ -175,8 +169,8 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 				}
 				break;
 			case 'playlistplay' :
-				if (isset ( $_GET ['playlist'] )) {
-					$playlist = $_GET ['playlist'];
+				if (isset ( $arr ['playlist'] )) {
+					$playlist = $arr ['playlist'];
 					$music->clearPlaylist ();
 					$req = $bdd->prepare ( 'SELECT at_music.file FROM at_music JOIN at_songsplaylists ON at_music.id = at_songsplaylists.song WHERE at_songsplaylists.playlist = :playlist' );
 					$req->execute ( array (
@@ -193,68 +187,89 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 				}
 				break;
 			case 'playlistsongs' :
-				if (isset ( $_GET ['playlist'] )) {
-					$playlist = $_GET ['playlist'];
-					$arr = array ();
+				if (isset ( $arr ['playlist'] )) {
+					$playlist = $arr ['playlist'];
+					$result = array ();
 					$req = $bdd->prepare ( 'SELECT at_music.file, at_music.length, at_music.id FROM at_music JOIN at_songsplaylists ON at_music.id = at_songsplaylists.song WHERE at_songsplaylists.playlist = :playlist' );
 					$req->execute ( array (
 							'playlist' => $playlist 
 					) );
 					while ( $data = $req->fetch () ) {
 						$title = basename ( $data ['file'] );
-						$arr [] = array (
+						$result [] = array (
 								'id' => $data ['id'],
 								'title' => $title,
 								'length' => $data ['length'] 
 						);
 					}
 					$req->closeCursor ();
-					echo json_encode ( $arr );
+					echo json_encode ( $result );
 				} else {
 					echo 404;
 				}
 				break;
 		}
-	} 
-}
-
-function deletePlaylist($id){
-	$bdd = getBDD();
-	$req = $bdd->exec("DELETE FROM at_playlists WHERE id = '$id'");
-	if($req == 1){
-		http_response_code(202);
-	}else{
-		http_response_code(400);
+		http_response_code ( 202 );
+	} else if (isset ( $arr ['welcome'] )) {
+		setWelcomeMusic ( $arr ['api'], $arr ['welcome'] );
+	} else {
+		http_response_code ( 404 );
 	}
 }
-
-function createPlaylist($arr){
-	$bdd = getBDD();
+function get($arr) {
+	$music = new Music ();
+	if (isset ( $arr ['songs'] )) {
+		return getSongs ();
+	} else {
+		$result = array (
+				'on' => ($music->isOn () ? 1 : 0),
+				'play' => ($music->isPlay () ? 1 : 0),
+				'welcome' => isWelcomeMusic ( $arr ['api'] ),
+				'vol' => $music->getVol ( true ),
+				'headphone' => $music->getVol ( TRUE ),
+				'songs' => getSongs () 
+		);
+		http_response_code ( 202 );
+		return $result;
+	}
+}
+function deletePlaylist($id) {
+	$bdd = getBDD ();
+	$req = $bdd->exec ( "DELETE FROM at_playlists WHERE id = '$id'" );
+	if ($req == 1) {
+		http_response_code ( 202 );
+	} else {
+		http_response_code ( 400 );
+	}
+}
+function createPlaylist($arr) {
+	$bdd = getBDD ();
 	$title = $arr ['playlist'];
 	$req = $bdd->exec ( "INSERT INTO at_playlists VALUES('', '$title')" );
-	if($req == 1){
-		$id = $bdd->lastInsertId();
-		$playlist = array('id' => $id, 'title' => $title, 'type' => 'playlist');
-		http_response_code(202);
-		return $playlist;	
-	}else{
-		http_response_code(400);
+	if ($req == 1) {
+		$id = $bdd->lastInsertId ();
+		$playlist = array (
+				'id' => $id,
+				'title' => $title,
+				'type' => 'playlist' 
+		);
+		http_response_code ( 202 );
+		return $playlist;
+	} else {
+		http_response_code ( 400 );
 	}
 }
-
 function getFolderName($path) {
 	$data = explode ( '/', $path );
 	$i = count ( $data ) - 2;
 	return $data [$i];
 }
-
-function getPlaylistId($playlist){
-	$bdd = getBDD();
-	$request = $bdd->query("SELECT * FROM at_playlists WHERE title = '$playlist'");
-	$data = $request->fetch();
-	return $data['id'];
+function getPlaylistId($playlist) {
+	$bdd = getBDD ();
+	$request = $bdd->query ( "SELECT * FROM at_playlists WHERE title = '$playlist'" );
+	$data = $request->fetch ();
+	return $data ['id'];
 }
-
 function folderToPlaylist() {
 	$bdd = getBDD ();
 	$request = $bdd->query ( 'SELECT * FROM at_music' );
@@ -262,15 +277,14 @@ function folderToPlaylist() {
 		$folder = getFolderName ( $data ['file'] );
 		if ($folder != 'Music') {
 			$bdd->exec ( "INSERT INTO at_playlists VALUES('', '$folder')" );
-			$songId = $data['id'];
-			$playlistId = getPlaylistId($folder);
-			$bdd->exec("INSERT INTO at_songsplaylists VALUES('', '$playlistId', '$songId')");
+			$songId = $data ['id'];
+			$playlistId = getPlaylistId ( $folder );
+			$bdd->exec ( "INSERT INTO at_songsplaylists VALUES('', '$playlistId', '$songId')" );
 		}
 	}
 	$request->closeCursor ();
 	return 200;
 }
-
 function findMusic($path) {
 	checkSavedMusic ();
 	exec ( "find " . $path . " -name '*.mp3'", $output );
@@ -288,14 +302,12 @@ function findMusic($path) {
 	$req->closeCursor ();
 	folderToPlaylist ();
 }
-
 function deleteMusicDB($id) {
 	$bdd = getBDD ();
 	$request = $bdd->exec ( "DELETE FROM at_music WHERE id = '$id'" );
 	$request = $bdd->exec ( "DELETE FROM at_songsplaylists WHERE song = '$id'" );
 	return 200;
 }
-
 function checkSavedMusic() {
 	$bdd = getBDD ();
 	$request = $bdd->query ( 'SELECT * FROM at_music' );
@@ -307,7 +319,6 @@ function checkSavedMusic() {
 	$request->closeCursor ();
 	return 200;
 }
-
 function getTags($path) {
 	$getID3 = new getID3 ();
 	$info = $getID3->analyze ( $path );
@@ -318,7 +329,6 @@ function getTags($path) {
 	);
 	return $arr;
 }
-
 function deleteWelcomeMusic($api) {
 	$bdd = getBDD ();
 	$req = $bdd->prepare ( 'DELETE FROM at_welcome WHERE mac = :mac' );
@@ -326,9 +336,8 @@ function deleteWelcomeMusic($api) {
 			'mac' => $api 
 	) );
 	$req->closeCursor ();
-	return 200;
+	http_response_code ( 202 );
 }
-
 function setWelcomeMusic($api, $music) {
 	$bdd = getBDD ();
 	$result = isWelcomeMusic ( $api );
@@ -342,9 +351,8 @@ function setWelcomeMusic($api, $music) {
 			'music' => $music 
 	) );
 	$req->closeCursor ();
-	return 200;
+	http_response_code ( 202 );
 }
-
 function isWelcomeMusic($api) {
 	$bdd = getBDD ();
 	$req = $bdd->prepare ( 'SELECT id, music FROM at_welcome WHERE mac = :api' );
@@ -364,7 +372,6 @@ function isWelcomeMusic($api) {
 		);
 	}
 }
-
 function getSongs() {
 	$arr = array ();
 	$bdd = getBDD ();

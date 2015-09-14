@@ -25,39 +25,38 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 			echo put ( $_REQUEST );
 			break;
 		case 'DELETE' :
-			delete ($_REQUEST);
+			delete ( $_REQUEST );
 			break;
 	}
-}else{
-	http_response_code(403);
+} else {
+	http_response_code ( 403 );
 }
-
 function put($arr) {
 	$hue = new Hue ();
 	if (isset ( $arr ['toggle'] )) {
 		$hue->toggleLight ( $arr ['toggle'] );
-		http_response_code(202);
+		http_response_code ( 202 );
 	}
 	if (isset ( $arr ['bri'], $arr ['protocol'], $arr ['value'] )) {
 		switch ($arr ['protocol']) {
 			case 'hue' :
 				$hue->setBrightness ( $arr ['bri'], $arr ['value'] );
-				http_response_code(202);
+				http_response_code ( 202 );
 			default :
-				http_response_code(404);
+				http_response_code ( 404 );
 		}
 	}
 	if (isset ( $arr ['color'], $arr ['value'] )) {
 		$hue->setColor ( $arr ['color'], $arr ['value'] );
-		http_response_code(202);
+		http_response_code ( 202 );
 	}
 	if (isset ( $arr ['on'], $arr ['protocol'], $arr ['value'] )) {
 		switch ($arr ['protocol']) {
 			case 'hue' :
 				$hue->on ( $arr ['on'], $arr ['value'] );
-				http_response_code(202);
+				http_response_code ( 202 );
 			default :
-				http_response_code(404);
+				http_response_code ( 404 );
 		}
 	}
 	if (isset ( $arr ['set'], $arr ['room'], $arr ['name'], $arr ['uid'] )) {
@@ -65,7 +64,7 @@ function put($arr) {
 		($arr ['room'] == - 1) ? $room = NULL : $room = $arr ['room'];
 		setRoom ( $light, $room );
 		$hue->setName ( $arr ['uid'], $arr ['name'] );
-		http_response_code(202);
+		http_response_code ( 202 );
 	}
 }
 function get() {
@@ -76,7 +75,7 @@ function get() {
 			'lights' => $lights_hue,
 			'rooms' => $rooms 
 	);
-	http_response_code(202);
+	http_response_code ( 202 );
 	return $output;
 }
 function create() {
@@ -85,14 +84,14 @@ function create() {
 	return 200;
 }
 function delete($arr) {
-	if(isset($arr['id'])){
-		$bdd = getBDD();
-		$id = $arr['id'];
-		$request = $bdd->exec("DELETE FROM at_lights WHERE id = '$id'");
-		if($request == 1){
-			http_response_code(202);
-		}else{
-			http_response_code(400);
+	if (isset ( $arr ['id'] )) {
+		$bdd = getBDD ();
+		$id = $arr ['id'];
+		$request = $bdd->exec ( "DELETE FROM at_lights WHERE id = '$id'" );
+		if ($request == 1) {
+			http_response_code ( 202 );
+		} else {
+			http_response_code ( 400 );
 		}
 	}
 }
