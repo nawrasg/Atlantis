@@ -116,7 +116,7 @@ nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage,
 		case 'Battery':
 			return 'Autonomie : ' + sensor.value + ' %';
 		case 'Tamper':
-			return 'Dernier arrachement le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à HH:mm');
+			return 'Capteur trafiqué le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à HH:mm');
 		case 'Door/Window':
 			return (sensor.value == 'on') ? 'Etat : Ouvert' : 'Etat : Fermé';
 		case 'Temperature':
@@ -137,7 +137,7 @@ nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage,
 		var nURL = AtlantisUri.Sensors() + '?api=' + $sessionStorage.api;
 		nURL += '&toggle=' + sensor.sensor + "&value=" + sensor.value;
 		$http.put(nURL).success(function(data, status) {
-			console.log(status, data);
+
 		})
 	};
 	$scope.editSensors = function(e) {
