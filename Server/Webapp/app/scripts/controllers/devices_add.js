@@ -30,6 +30,7 @@ nApp.controller('DevicesAddCtrl', function($scope, $http, $sessionStorage, $mdDi
 		id:'ethernet',
 		label: 'Ethernet'
 	}];
+	$scope.gcm = device.gcm;
 	$scope.users = users;
 	if(device != null){
 		$scope.btnSubmit = 'Modifier';
@@ -68,11 +69,20 @@ nApp.controller('DevicesAddCtrl', function($scope, $http, $sessionStorage, $mdDi
 			});
 		}
 	};
-	$scope.ring = function(device){
+	$scope.ring = function(){
 		var nURL = AtlantisUri.Notify() + '?api=' + $sessionStorage.api + '&cmd=ring&id=' + $scope.mac;
 		$http.put(nURL).success(function(data, status){
 			if(status == 202){
 				showToast($mdToast, 'Notification envoyée !');
+			}
+		});
+	};
+	$scope.unsuscribe = function(){
+		var nURL = AtlantisUri.GCM() + '?api=' + $sessionStorage.api + '&mac=' + $scope.mac;
+		$http.delete(nURL).success(function(data, status){
+			console.log(status);
+			if(status == 202){
+				$scope.gcm = null;
 			}
 		});
 	};
