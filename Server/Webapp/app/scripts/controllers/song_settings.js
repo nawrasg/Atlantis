@@ -21,7 +21,7 @@ nApp.controller('SongSettingsCtrl', function($scope, $http, $sessionStorage, $md
 		if($scope.song.playlist != null){
 			var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
 			nURL += "&playlist=" + $scope.song.playlist + '&song=' + song.id + '&action=playlistadd';
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				console.log(data, status);
 			});
 		}
