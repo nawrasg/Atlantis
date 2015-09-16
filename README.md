@@ -1,6 +1,6 @@
 #Atlantis
-Version 0.1  
-GPL v3 - Nawras GEORGI 2015  
+Version 0.2  
+GPL v3 - Nawras GEORGI - Septembre 2015  
 ***
 
 
@@ -13,12 +13,14 @@ Atlantis est un système domotique libre et gratuit sous licence GPL 3.
 * Contenu Cuisine/Pharmacie/Produit d'hygiène et d'entretien avec quantité et date de péremption
 * Gestion des lumières (Philips Hue)
 * Gestion des capteurs Zwave
+* Gestion des plantes
 * Gestion des appareils connectés (ordinateurs, smartphones, tablettes, etc.)
 * Lecteur de musique
 * Musique de bienvenue : lorsque vous rentrez chez vous, votre morceau préféré est joué
+* Géolocalisation des appareils utilisant Atlantis
 
 ##Demo
-* Application web : <http://atlantis.nawrasg.fr/>
+* Application web (utiliser un quelconque identifiant) : <http://atlantis.nawrasg.fr/>
 * Application Android : <https://play.google.com/store/apps/details?id=fr.nawrasg.atlantis>
 
 ##Prérequis
