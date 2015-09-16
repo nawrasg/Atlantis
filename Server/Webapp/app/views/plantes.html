@@ -3,6 +3,17 @@
 		margin-right:10px
 	}
 </style>
+<md-content>
+	<div layout=row layout-align="start center" layout-padding>
+		<md-input-container flex>
+			<label>Recherchez</label>
+			<input ng-model=item ng-enter="" flex ng-change="filter(item)">
+		</md-input-container>
+		<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="add()">
+		  	<md-icon md-svg-src="images/svg/ic_add_white_36px.svg"></md-icon>
+		</md-button>
+	</div>
+</md-content>
 <div>
 	<md-card ng-repeat="plant in plants track by plant.id" style="float:left">
 		<img alt=plant ng-src="{{'backend/home/plants/' + plant.id + '.png'}}">
