@@ -17,50 +17,50 @@ nApp.controller('MusicCtrl', function($scope, $http, $sessionStorage, $filter, $
 		}else{
 			nURL += 'off';
 		}
-		$http.get(nURL);
+		$http.put(nURL);
 	};
 	$scope.action = function(cmd){
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
 		switch(cmd){
 		case 'stop':
 			nURL += '&action=stop';
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				
 			});
 			break;
 		case 'pause':
 			nURL += '&action=pause';
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				
 			});
 			break;
 		case 'repeat':
 			nURL += '&action=repeat';
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				
 			});
 			break;
 		case 'previous':
 			nURL += '&action=previous';
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				
 			});
 			break;
 		case 'next':
 			nURL += '&action=next';
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				
 			});
 			break;
 		case 'shuffle':
 			nURL += '&action=shuffle';
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				
 			});
 			break;
 		case 'refresh':
 			$http.post(nURL).success(function(data, status){
-				console.log(status, data);
+				get();
 			});
 			break;
 		}
@@ -80,12 +80,12 @@ nApp.controller('MusicCtrl', function($scope, $http, $sessionStorage, $filter, $
 	$scope.play = function(song){
 		if(song.type == 'song'){
 			var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api + '&action=play&id=' + song.id;
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				
 			});
 		}else{
 			var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api + '&action=playlistplay&playlist=' + song.id;
-			$http.get(nURL).success(function(data, status){
+			$http.put(nURL).success(function(data, status){
 				
 			});
 		}
@@ -94,14 +94,12 @@ nApp.controller('MusicCtrl', function($scope, $http, $sessionStorage, $filter, $
 		var nURL = AtlantisUri.Speech() + '?api=' + $sessionStorage.api;
 		nURL += '&action=speaker&text=' + encodeURI($scope.message);
 		$http.get(nURL).success(function(data, status){
-			console.log(status + ' : ' + data);
 		});
 	};
 	$scope.changeVol = function(volume){
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
 		nURL += '&action=vol&source=1&level=' + volume;
-		$http.get(nURL).success(function(data, status){
-			console.log(data);
+		$http.put(nURL).success(function(data, status){
 		});
 	};
 	$scope.songPic = function(song){
@@ -131,9 +129,8 @@ nApp.controller('MusicCtrl', function($scope, $http, $sessionStorage, $filter, $
 	};
 	function get(){
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
-		nURL += '&action=init';
 		$http.get(nURL).success(function(data, status){
-			if(status == 200){
+			if(status == 202){
 				$scope.on = (data.on == 1);
 				$scope.welcome = (data.welcome.id != -1);
 				$scope.playlists = $filter('filter')(data.songs, {type:'playlist'});
