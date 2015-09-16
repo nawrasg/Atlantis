@@ -9,6 +9,9 @@ function install(){
 	chmod 777 backend/classes/weather.json && 
 	chmod 777 backend/classes/settings.json &&
 	mkdir backend/home &&
+	chmod -R 777 backend/home &&
+	mkdir backend/home/plants &&
+	chmod -R 777 backend/home/plants &&
 	crontab -l >> Atlantis-master/Server/crontab &&
 	crontab Atlantis-master/Server/crontab &&
 	rm -r Atlantis-master &&
