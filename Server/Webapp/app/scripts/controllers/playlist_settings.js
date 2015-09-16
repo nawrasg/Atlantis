@@ -27,8 +27,8 @@ nApp.controller('PlaylistSettingsCtrl', function($scope, $http, $sessionStorage,
 	$scope.del = function(song){
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
 		nURL += '&action=playlistremove&playlist=' + playlist.id + '&song=' + song.id;
-		$http.get(nURL).success(function(data, status){
-			if(status == 200){
+		$http.put(nURL).success(function(data, status){
+			if(status == 202){
 				var i = $scope.songs.indexOf(song);
 				$scope.songs.splice(i, 1);
 			}
@@ -37,7 +37,7 @@ nApp.controller('PlaylistSettingsCtrl', function($scope, $http, $sessionStorage,
 	function getSongs(){
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
 		nURL += '&action=playlistsongs&playlist=' + playlist.id;
-		$http.get(nURL).success(function(data, status){
+		$http.put(nURL).success(function(data, status){
 			$scope.songs = data;
 		});
 	}
