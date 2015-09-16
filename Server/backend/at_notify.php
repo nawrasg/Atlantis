@@ -3,9 +3,9 @@ header ( "Access-Control-Allow-Origin: *" );
 header ( 'Access-Control-Allow-Headers: origin, x-requested-with, content-type, accept' );
 header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
 
-require_once './classes/connexion.php';
-require_once './classes/checkAPI.php';
-require_once './classes/PushMessage.php';
+require_once __DIR__ . '/classes/connexion.php';
+require_once __DIR__ . '/classes/checkAPI.php';
+require_once __DIR__ . '/classes/PushMessage.php';
 
 $title = "";
 $message = "";
