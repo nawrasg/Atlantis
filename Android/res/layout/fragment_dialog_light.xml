@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/txtLightDialogName"
+        android:text="Nom : " />
+
+    <EditText
+        android:id="@+id/txtLightDialogName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/spinnerLightDialogRoom"
+        android:paddingTop="20dp"
+        android:text="Pièce : " />
+
+    <Spinner
+        android:id="@+id/spinnerLightDialogRoom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:paddingTop="20dp" >
+
+        <ImageView
+            android:id="@+id/imgLightDialogRed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_light"
+            android:contentDescription="red"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/imgLightDialogGreen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/holo_green_light"
+            android:contentDescription="green"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/imgLightDialogBlue"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
+            android:contentDescription="blue"
+            android:padding="10dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgLightDialogYellow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFFFE0"
+            android:contentDescription="yellow"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/imgLightDialogWhite"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:contentDescription="white"
+            android:padding="10dp" />
+
+    </LinearLayout>
+    
+
+</LinearLayout>

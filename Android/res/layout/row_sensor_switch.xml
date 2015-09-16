@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants" >
+
+    <ImageView
+        android:id="@+id/imgSensorSwitchIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="icon"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/lblSensorSwitchName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imgSensorSwitchIcon"
+        android:layout_toRightOf="@id/imgSensorSwitchIcon"
+        android:paddingTop="15dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lblSensorSwitchDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/lblSensorSwitchName"
+        android:layout_below="@id/lblSensorSwitchName" />
+
+    <Switch
+        android:id="@+id/swtSensorSwitchToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:textOff="@string/switch_off"
+        android:textOn="@string/switch_on" />
+
+</RelativeLayout>

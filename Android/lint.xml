@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DefaultLocale">
+        <ignore path="src/fr/nawrasg/atlantis/fragments/DevicesAddFragment.java" />
+    </issue>
+    <issue id="InflateParams" severity="ignore">
+        <ignore path="src/fr/nawrasg/atlantis/adapters/SensorAdapter.java" />
+        <ignore path="src/fr/nawrasg/atlantis/fragments/CoursesFragment.java" />
+        <ignore path="src/fr/nawrasg/atlantis/fragments/SensorDialogFragment.java" />
+        <ignore path="src/fr/nawrasg/atlantis/fragments/SpeechDialogFragment.java" />
+        <ignore path="src/fr/nawrasg/atlantis/fragments/dialogs/LightDialogFragment.java" />
+    </issue>
+    <issue id="ShowToast" severity="ignore" />
+    <issue id="ViewHolder">
+        <ignore path="src/fr/nawrasg/atlantis/adapters/SensorAdapter.java" />
+    </issue>
+</lint>

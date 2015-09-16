@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+    <TextView
+        android:id="@+id/lblSensorDialogAlias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/txtSensorDialogAlias"
+        android:text="Alias : " />
+
+    <EditText
+        android:id="@+id/txtSensorDialogAlias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/lblSensorDialogRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/spinnerSensorDialogRoom"
+        android:text="Pièce : " />
+
+    <Spinner
+        android:id="@+id/spinnerSensorDialogRoom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/lblSensorDialogTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp" />
+
+    <CheckBox
+        android:id="@+id/cbSensorDialogHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activer l&apos;historique" />
+
+    <CheckBox
+        android:id="@+id/cbSensorDialogIgnore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ignorer ce capteur" />
+
+</LinearLayout>

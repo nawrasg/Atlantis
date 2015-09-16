@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Atlantis</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="section_array">
+        <item>Accueil</item>
+        <item>Liste des courses</item>
+        <item>Cuisine</item>
+        <item>Pharmacie</item>
+        <item>Appareils Connectés</item>
+        <item>Paramètres</item>
+        <item>Actualiser</item>
+        <item>Quitter</item>
+    </string-array>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="switch_off">Off</string>
+    <string name="switch_on">On</string>
+</resources>

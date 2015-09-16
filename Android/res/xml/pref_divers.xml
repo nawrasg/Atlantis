@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Divers" >
+        <Preference
+            android:icon="@drawable/ic_action_import_export"
+            android:key="import"
+            android:summary="Importer les paramètres de base"
+            android:title="Importer les paramètres" />
+        <Preference
+            android:icon="@drawable/ic_action_send_now"
+            android:key="gcm"
+            android:summary="S&apos;enregistrer pour recevoir des notifications"
+            android:title="Enregistrement GCM" />
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

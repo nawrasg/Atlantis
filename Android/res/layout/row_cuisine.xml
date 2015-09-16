@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imgCuisineIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="icon"
+        android:padding="10dp" />
+
+    <ImageView
+        android:id="@+id/imgCuisineIcon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgCuisineIcon"
+        android:layout_alignRight="@+id/imgCuisineIcon"
+        android:contentDescription="icon"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/lblCuisineTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/listIcon"
+        android:layout_toRightOf="@id/imgCuisineIcon"
+        android:paddingTop="15dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lblCuisineDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/lblCuisineTitle"
+        android:layout_below="@id/lblCuisineTitle" />
+
+    <TextView
+        android:id="@+id/lblCuisineQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/qte"
+        android:gravity="center" />
+
+</RelativeLayout>

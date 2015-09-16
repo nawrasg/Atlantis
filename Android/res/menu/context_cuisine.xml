@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/itemCuisineOpen"
+        android:title="Ouvrir"/>
+    <item
+        android:id="@+id/itemCuisinePlus"
+        android:title="Incrémenter"/>
+    <item
+        android:id="@+id/itemCuisineMinus"
+        android:title="Décrémenter"/>
+    <item
+        android:id="@+id/itemCuisineDel"
+        android:title="Supprimer"/>
+    <item
+        android:id="@+id/itemCuisineAvoid"
+        android:title="Ignorer"/>
+
+</menu>

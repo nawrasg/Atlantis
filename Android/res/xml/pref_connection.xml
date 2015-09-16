@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:summary="Paramètres Connexion"
+        android:title="Paramètres de Connexion" >
+        <EditTextPreference
+            android:icon="@drawable/ic_action_network_cell"
+            android:key="urlExterne"
+            android:summary="Entrer l&apos;adresse URL publique"
+            android:title="URL Public" />
+        <EditTextPreference
+            android:icon="@drawable/ic_action_network_wifi"
+            android:key="urlInterne"
+            android:summary="Entrer l&apos;adresse IP privée"
+            android:title="IP Privée" />
+
+        <CheckBoxPreference
+            android:icon="@drawable/ic_action_network_wifi"
+            android:key="wifi"
+            android:summary="Utiliser l&apos;adresse IP privée chez soi"
+            android:title="Connexion Privée" />
+
+        <Preference
+            android:icon="@drawable/ic_action_make_available_offline"
+            android:key="wifiHome"
+            android:summary="Définir le WIFI domestique"
+            android:title="Aucun" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

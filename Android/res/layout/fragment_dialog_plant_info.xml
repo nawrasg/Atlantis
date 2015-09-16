@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/txtPlantDialogTitle"
+        android:text="Nom de l&apos;appareil" />
+
+    <EditText
+        android:id="@+id/txtPlantDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/imgPlantDialogPicture"
+        android:text="Photo de la plante" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imgPlantDialogPicture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="plant" />
+
+        <ImageButton
+            android:id="@+id/btnPlantDialogPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="scan"
+            android:src="@drawable/ic_action_camera" />
+    </LinearLayout>
+
+</LinearLayout>
