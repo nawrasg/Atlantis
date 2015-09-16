@@ -2,5 +2,13 @@
 *.ap_
 *.dex
 *.class
+*.iml
 
 Thumbs.db
+local.properties
+
+bin/
+gen/
+.idea
+.gradle
+build/
