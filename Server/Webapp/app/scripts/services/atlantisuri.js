@@ -14,6 +14,7 @@ nApp.factory('AtlantisUri', function($sessionStorage) {
 		Devices : function(){return mIP + 'backend/at_ccdevices.php';},
 		Ean : function(){return mIP + 'backend/at_ean.php';},
 		Entretien : function(){return mIP + 'backend/at_entretien.php';},
+		GCM : function(){return mIP + 'backend/at_gcm.php';},
 		Geo : function(){return mIP + 'backend/at_geo.php';},
 		Home : function(){return mIP + 'backend/at_home.php';},
 		Lights : function(){return mIP + 'backend/at_lights.php';},
