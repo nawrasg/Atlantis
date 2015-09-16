@@ -12,7 +12,7 @@
 <div class="panel panel-info">
 	<div class="panel-heading">Appareils Connect&eacute;s</div>
 	<div class="panel-body">
-		<md-content ng-repeat="device in devices">
+		<md-content ng-repeat="device in devices track by device.id">
 			<div layout=row layout-align="start center">
 				<img alt="statut" ng-src="{{status(device.online)}}" ng-style="{'background-image':type(device.type)}" layout-margin>
 				<div layout=column flex layout-padding>
