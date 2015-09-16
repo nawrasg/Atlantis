@@ -56,7 +56,7 @@
 	<div class="panel-heading">Musith&egrave;que</div>
 	<div class="panel-body">
 		<md-input-container>
-			<md-select ng-model=type.id>
+			<md-select ng-model=type.id aria-label="filtre">
 				<md-option ng-value=type.id ng-repeat="type in types track by type.id">{{type.title}}</md-option>
 			</md-select>
 		</md-input-container>
