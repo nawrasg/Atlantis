@@ -66,7 +66,7 @@ function getUsers() {
 }
 function getDevices() {
 	$bdd = getBDD ();
-	$req = $bdd->query ( 'SELECT * FROM at_devices ORDER BY nom' );
+	$req = $bdd->query ( 'SELECT * FROM at_devices LEFT JOIN at_gcm ON at_devices.mac = at_gcm.mac ORDER BY nom' );
 	$arr = array ();
 	while ( $data = $req->fetch () ) {
 		$ping = exec ( '/atlantis/ping.sh ' . $data ['ip'] );
@@ -83,7 +83,8 @@ function getDevices() {
 				'type' => $data ['type'],
 				'connexion' => $data ['connexion'],
 				'username' => $data ['username'],
-				'online' => $ping 
+				'online' => $ping,
+				'gcm' => $data ['gcm'] 
 		);
 	}
 	$req->closeCursor ();
@@ -160,8 +161,12 @@ function delete($arr) {
 	if (isset ( $arr ['id'] )) {
 		$id = $arr ['id'];
 		$bdd = getBDD ();
-		$req = $bdd->exec ( "DELETE FROM at_devices WHERE id = '$id'" );
-		if ($req == 1) {
+		$req = $bdd->query ( "SELECT * FROM at_devices WHERE id = '$id'" );
+		$data = $req->fetch ();
+		$mac = $data ['mac'];
+		$bdd->exec ( "DELETE FROM at_gcm WHERE mac = '$mac'" );
+		$req2 = $bdd->exec ( "DELETE FROM at_devices WHERE id = '$id'" );
+		if ($req2 == 1) {
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
