@@ -66,7 +66,7 @@ function getUsers() {
 }
 function getDevices() {
 	$bdd = getBDD ();
-	$req = $bdd->query ( 'SELECT * FROM at_devices LEFT JOIN at_gcm ON at_devices.mac = at_gcm.mac ORDER BY nom' );
+	$req = $bdd->query ( 'SELECT at_devices.*, at_gcm.gcm FROM at_devices LEFT JOIN at_gcm ON at_devices.mac = at_gcm.mac ORDER BY nom' );
 	$arr = array ();
 	while ( $data = $req->fetch () ) {
 		$ping = exec ( '/atlantis/ping.sh ' . $data ['ip'] );
