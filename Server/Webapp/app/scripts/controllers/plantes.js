@@ -26,15 +26,34 @@ nApp.controller('PlantesCtrl', function($scope, $http, $sessionStorage, $filter,
 			},
 		}).then(function(nPlant) {
 			if(nPlant != null){
-//				plant = nPlant;
 				getPlants();
 			}
+		});
+	};
+	$scope.filter = function(item){
+		if(item == null || item == ''){
+			getPlants();
+		}else{
+			var result = [];
+			angular.forEach($scope.data, function(current){
+				if($filter('lowercase')(current.title).indexOf($filter('lowercase')(item)) > -1){
+					result.push(current);
+				}
+			})
+			$scope.plants = result;
+		}
+	};
+	$scope.add = function(){
+		var nURL = AtlantisUri.Plantes() + '?api=' + $sessionStorage.api;
+		$http.post(nURL).success(function(data, status){
+			getPlants();
 		});
 	};
 	function getPlants(){
 		var nURL = AtlantisUri.Plantes() + '?api=' + $sessionStorage.api;
 		$http.get(nURL).success(function(data, status){
 			if(status == 202){
+				$scope.data = data;
 				$scope.plants = data;
 			}
 		});
