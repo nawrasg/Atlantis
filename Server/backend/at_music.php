@@ -52,7 +52,7 @@ function delete($arr) {
 	if (isset ( $arr ['playlist'] )) {
 		deletePlaylist ( $arr ['playlist'] );
 	} else if (isset ( $arr ['welcome'] )) {
-		deleteWelcomeMusic ( $_REQUEST ['api'] );
+		deleteWelcomeMusic ( $arr ['api'] );
 	} else {
 		http_response_code ( 404 );
 	}
