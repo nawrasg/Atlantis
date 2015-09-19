@@ -44,8 +44,14 @@
 
             <ul class="nav navbar-nav" >
               <li><a ng-href="#home">Accueil</a></li>
-              <li><a ng-href="#sensors">Lumières et Capteurs</a></li>
-              <li><a ng-href="#plantes">Plantes</a></li>
+              <li class="dropdown">
+		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Domicile<span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="#sensors">Lumières et Capteurs</a></li>
+		            <li><a href="#plantes">Plantes</a></li>
+		            <li><a href="#history">Historique</a></li>
+		          </ul>
+		      </li>
               <li class="dropdown">
 		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contenu <span class="caret"></span></a>
 		          <ul class="dropdown-menu">
@@ -53,7 +59,7 @@
 		            <li><a href="#pharmacie">Pharmacie</a></li>
 		            <li><a href="#entretien">Hygiène et Entretien</a></li>
 		          </ul>
-		        </li>
+		      </li>
 		      <li class="dropdown">
 		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
 		          <ul class="dropdown-menu">
@@ -63,7 +69,7 @@
 		            <li role="separator" class="divider"></li>
 		            <li><a href="/owncloud">Cloud</a></li>
 		          </ul>
-		        </li>
+		      </li>
               <li><a ng-href="#settings">Paramètres</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -139,6 +145,7 @@
         <script src="scripts/controllers/plant_settings.js"></script>
         <script src="scripts/controllers/playlist_settings.js"></script>
         <script src="scripts/controllers/song_settings.js"></script>
+        <script src="scripts/controllers/history.js"></script>
         <!-- endbuild -->
 </body>
 </html>
