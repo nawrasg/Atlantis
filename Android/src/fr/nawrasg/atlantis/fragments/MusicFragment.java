@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.MusicAdapter;
+import fr.nawrasg.atlantis.async.DataDELETE;
 import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.async.DataPOST;
 import fr.nawrasg.atlantis.async.DataPUT;
@@ -174,7 +175,8 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 							Toast.LENGTH_LONG).show();
 					return true;
 				}
-				new RefreshPUT(mContext).execute(App.MUSIC, "welcome");
+				new DataDELETE(mContext).execute(App.MUSIC, "welcome=1");
+				mWelcomeMusic = -1;
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
