@@ -1,1 +1,20 @@
-<p>This is the history view.</p>
+<div class=right30>
+	<div class="panel panel-info">
+		<div class=panel-heading>
+			Options
+		</div>
+		<div class=panel-body>
+			<md-input-container>
+				<md-select ng-model=plante placeholder=Plante md-on-close="loadPlant()">
+					<md-option ng-value=plante ng-repeat="plante in plantes track by plante.id">{{plante.title}}</md-option>
+				</md-select>
+			</md-input-container>
+		</div>
+	</div>
+</div>
+<div class=left70>
+	<canvas id="line" class="chart chart-line" chart-data="data"
+	  chart-labels="labels" chart-legend="true" chart-series="series"
+	  chart-click="onClick" >
+	</canvas> 
+</div>
