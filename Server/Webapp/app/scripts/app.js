@@ -7,7 +7,7 @@
  * 
  * Main module of the application.
  */
-var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
+var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap', 'chart.js',
 		'ab-base64', 'ngStorage', 'ngMaterial', 'ngSanitize', 'ngFileUpload' ]);
 
 var toastPosition = {
