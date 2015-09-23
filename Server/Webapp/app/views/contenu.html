@@ -19,7 +19,7 @@
 				<img alt="statut" ng-src="{{status(placard.peremption, placard.status, placard.endroit)}}" style="background:url(images/ng_roling.png)">
 				<div layout=column flex layout-padding>
 					<label>{{placard.label}} ({{placard.quantite}})</label>
-					<p>{{peremption(placard.peremption, placard.ouvert, placard.endroit)}}</p>
+					<p>{{peremption(placard)}}</p>
 				</div>
 				<md-icon md-svg-src="images/svg/ic_add_black_36px.svg" ng-click="modify(placard, '+')"></md-icon>
 				<md-icon md-svg-src="images/svg/ic_remove_black_36px.svg" ng-click="modify(placard, '-')"  ng-hide="placard.quantite < 2"></md-icon>
@@ -39,7 +39,7 @@
 					<img alt="statut" ng-src="{{status(frigo.peremption, frigo.status, frigo.endroit)}}" style="background:url(images/ng_roling.png)">
 					<div layout=column flex layout-padding>
 						<label>{{frigo.label}} ({{frigo.quantite}})</label>
-						<p>{{peremption(frigo.peremption, frigo.ouvert, frigo.endroit)}}</p>
+						<p>{{peremption(frigo)}}</p>
 					</div>
 					<md-icon md-svg-src="images/svg/ic_filter_tilt_shift_black_36px.svg" ng-click="open(frigo)" ng-show="frigo.status == 0"></md-icon>
 					<md-icon md-svg-src="images/svg/ic_add_black_36px.svg" ng-click="modify(frigo, '+')"></md-icon>
@@ -59,7 +59,7 @@
 					<img alt="statut" ng-src="{{status(congelo.peremption, congelo.status, congelo.endroit)}}" style="background:url(images/ng_roling.png)">
 					<div layout=column flex layout-padding>
 						<label>{{congelo.label}} ({{congelo.quantite}})</label>
-						<p>{{peremption(congelo.peremption, congelo.ouvert, congelo.endroit)}}</p>
+						<p>{{peremption(congelo)}}</p>
 					</div>
 					<md-icon md-svg-src="images/svg/ic_add_black_36px.svg" ng-click="modify(congelo, '+')"></md-icon>
 					<md-icon md-svg-src="images/svg/ic_remove_black_36px.svg" ng-click="modify(congelo, '-')"  ng-hide="congelo.quantite < 2"></md-icon>

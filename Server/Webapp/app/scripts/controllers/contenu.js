@@ -109,17 +109,17 @@ nApp.controller('ContenuCtrl', function($scope, $http, $window, $sessionStorage,
 			}
 		}
 	};
-	$scope.peremption = function(day, open, place){
-		if(place == 'congelateur'){
-			return 'Congelé depuis ' + getDateUnit(day, $window);
+	$scope.peremption = function(produit){
+		if(produit.place == 'congelateur'){
+			return 'Congelé depuis ' + getDateUnit(produit.peremption, $window);
 		}else{
-			if(day < 0){
-				return 'Périmé depuis ' + getDateUnit(day, $window);
+			if(produit.peremption < 0){
+				return 'Périmé depuis ' + getDateUnit(produit.peremption, $window);
 			}else{
-				if(open == 1){
-					return 'Ouvert depuis ' + getDateUnit(day, $window);
+				if(produit.ouvert < 0){
+					return 'Ouvert depuis ' + getDateUnit(produit.ouvert, $window);
 				}else{
-					return 'A consommer dans ' + getDateUnit(day, $window);						
+					return 'A consommer dans ' + getDateUnit(produit.peremption, $window);						
 				}
 			}
 		}
