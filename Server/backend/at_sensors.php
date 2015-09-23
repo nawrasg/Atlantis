@@ -27,6 +27,12 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 		case 'DELETE' :
 			break;
 	}
+} else if ($argc > 1) {
+	switch ($argv [1]) {
+		case 'history' :
+			saveHistory();
+			break;
+	}
 }
 function get($arr) {
 	$zwave = new Zwave ();
@@ -84,6 +90,25 @@ function update($arr) {
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
+		}
+	}
+}
+function saveHistory() {
+	$bdd = getBDD ();
+	$zwave = new Zwave ();
+	$req = $bdd->query ( 'SELECT * FROM at_sensors WHERE history = 1' );
+	while ( $data = $req->fetch () ) {
+		$id = $data ['id'];
+		$sensor = $data ['sensor'];
+		$protocol = $data ['protocol'];
+		switch ($protocol) {
+			case 'zwave' :
+				$value = $zwave->getValue ( $sensor );
+				$timestamp = $zwave->GetTimestamp ( $sensor );
+				$date = date ( 'Y-m-d', $timestamp );
+				$time = date ( 'H:i:s', $timestamp );
+				$bdd->exec ( "INSERT INTO at_sensors_values VALUES ('', '$id', '$value', '$date', '$time')" );
+				break;
 		}
 	}
 }
