@@ -5,6 +5,11 @@
 		</div>
 		<div class=panel-body>
 			<md-input-container>
+				<md-select ng-model=capteur placeholder=Capteur md-on-close="loadSensor()">
+					<md-option ng-value=capteur ng-repeat="capteur in capteur track by capteur.id">{{capteur.title}}</md-option>
+				</md-select>
+			</md-input-container>
+			<md-input-container>
 				<md-select ng-model=plante placeholder=Plante md-on-close="loadPlant()">
 					<md-option ng-value=plante ng-repeat="plante in plantes track by plante.id">{{plante.title}}</md-option>
 				</md-select>
