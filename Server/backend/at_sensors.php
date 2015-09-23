@@ -30,7 +30,7 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 } else if ($argc > 1) {
 	switch ($argv [1]) {
 		case 'history' :
-			saveHistory();
+			saveHistory ();
 			break;
 	}
 }
