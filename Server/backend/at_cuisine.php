@@ -77,8 +77,12 @@ function get() {
 	while ( $data = $request->fetch () ) {
 		$date = strtotime ( $data ['peremption'] ) - $today;
 		$date = intval ( $date / 86400 );
-		$date2 = strtotime ( $data ['date2'] ) - $today;
-		$date2 = intval ( $date2 / 86400 );
+		if ($data ['date2'] == '0000-00-00') {
+			$date2 = 0;
+		} else {
+			$date2 = strtotime ( $data ['date2'] ) - $today;
+			$date2 = intval ( $date2 / 86400 );
+		}
 		if ($data ['nom'] == NULL) {
 			$label = $data ['element'];
 			$ean = NULL;
