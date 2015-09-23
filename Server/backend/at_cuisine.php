@@ -71,14 +71,13 @@ function open($id) {
 }
 function get() {
 	$bdd = getBDD ();
-	$request = $bdd->query ( 'SELECT * FROM at_cuisine LEFT JOIN at_ean ON at_cuisine.element = at_ean.ean ORDER BY date2 DESC, peremption' );
-	// $request = $bdd->query ( 'SELECT *, SUM(quantite) as quantity FROM (SELECT * FROM at_cuisine LEFT JOIN at_ean ON at_cuisine.element = at_ean.ean ORDER BY date2 DESC, peremption) as tble GROUP BY element' );
+	$request = $bdd->query ( 'SELECT * FROM at_cuisine LEFT JOIN at_ean ON at_cuisine.element = at_ean.ean ORDER BY peremption, date2 DESC' );
 	$today = strtotime ( now );
 	$result = array ();
 	while ( $data = $request->fetch () ) {
 		$date = strtotime ( $data ['peremption'] ) - $today;
 		$date = intval ( $date / 86400 );
-		$data2 = strtotime ( $data ['date2'] ) - $today;
+		$date2 = strtotime ( $data ['date2'] ) - $today;
 		$date2 = intval ( $date2 / 86400 );
 		if ($data ['nom'] == NULL) {
 			$label = $data ['element'];
