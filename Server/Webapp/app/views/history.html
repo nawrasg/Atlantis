@@ -14,12 +14,14 @@
 					<md-option ng-value=plante ng-repeat="plante in plantes track by plante.id">{{plante.title}}</md-option>
 				</md-select>
 			</md-input-container>
+			<label>Intervalle : {{interval}} jours</label>
+			<md-slider flex="" min="0" max="30" ng-model="interval" aria-label="intervalle" ng-init="interval=7"></md-slider>
 		</div>
 	</div>
 </div>
 <div class=left70>
 	<canvas id="line" class="chart chart-line" chart-data="data"
 	  chart-labels="labels" chart-legend="true" chart-series="series"
-	  chart-click="onClick" >
+	  chart-options="options">
 	</canvas> 
 </div>
