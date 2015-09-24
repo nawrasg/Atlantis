@@ -98,7 +98,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 					DrawerItem.create(202, "Géolocalisation", "ng_satellite", false, nContext),
 					DrawerItem.create(203, "Appareils Connectés", "ng_connected", false, nContext),
 					DrawerSection.create(300, "Général"),
-					//DrawerItem.create(301, "Historique", "ng_graph", false, nContext),
+					DrawerItem.create(301, "Historique", "ng_graph", false, nContext),
 					DrawerItem.create(302, "Paramètres", "ng_settings", false, nContext),
 					DrawerItem.create(303, "Quitter", "ng_exit", false, nContext) };
 			return nSections;
@@ -115,7 +115,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 					DrawerItem.create(202, "Géolocalisation", "ng_satellite", false, nContext),
 					DrawerItem.create(203, "Appareils Connectés", "ng_connected", false, nContext),
 					DrawerSection.create(300, "Général"),
-					//DrawerItem.create(301, "Historique", "ng_graph", false, nContext),
+					DrawerItem.create(301, "Historique", "ng_graph", false, nContext),
 					DrawerItem.create(302, "Paramètres", "ng_settings", false, nContext),
 					DrawerItem.create(303, "Quitter", "ng_exit", false, nContext) };
 			return nSections;
