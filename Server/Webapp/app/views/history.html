@@ -6,7 +6,7 @@
 		<div class=panel-body>
 			<md-input-container>
 				<md-select ng-model=capteur placeholder=Capteur md-on-close="loadSensor()">
-					<md-option ng-value=capteur ng-repeat="capteur in capteur track by capteur.id">{{capteur.title}}</md-option>
+					<md-option ng-value=capteur ng-repeat="capteur in capteurs track by capteur.id">{{capteur.alias}}</md-option>
 				</md-select>
 			</md-input-container>
 			<md-input-container>
