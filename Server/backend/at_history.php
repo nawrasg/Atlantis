@@ -18,9 +18,14 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 }
 function get($arr) {
 	$bdd = getBDD ();
+	if (isset ( $arr ['interval'] )) {
+		$interval = $arr ['interval'];
+	} else {
+		$interval = 7;
+	}
 	if (isset ( $arr ['plant'] )) {
 		$sensor = $arr ['plant'];
-		$req = $bdd->query ( "SELECT *, AVG(moisture), AVG(air_temperature), AVG(soil_temperature), AVG(soil_conductivity), AVG(light) FROM at_plants_history  WHERE sensor = '$sensor' AND date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY date" );
+		$req = $bdd->query ( "SELECT *, AVG(moisture), AVG(air_temperature), AVG(soil_temperature), AVG(soil_conductivity), AVG(light) FROM at_plants_history  WHERE sensor = '$sensor' AND date >= DATE_SUB(CURDATE(), INTERVAL $interval DAY) GROUP BY date" );
 		$output = array ();
 		while ( $data = $req->fetch () ) {
 			$output [] = array (
@@ -30,6 +35,19 @@ function get($arr) {
 					'soil_temperature_m' => $data ['AVG(soil_temperature)'],
 					'soil_conductivity_m' => $data ['AVG(soil_conductivity)'],
 					'date' => $data ['date'] 
+			);
+		}
+		http_response_code ( 202 );
+		return $output;
+	} else if (isset ( $arr ['sensor'] )) {
+		$sensor = $arr ['sensor'];
+		$req = $bdd->query ( "SELECT * FROM at_sensors_values WHERE sensor = '$sensor' AND date >= DATE_SUB(CURDATE(), INTERVAL $interval DAY) ORDER BY date, time" );
+		$output = array ();
+		while ( $data = $req->fetch () ) {
+			$output [] = array (
+					'value' => $data ['value'],
+					'date' => $data ['date'],
+					'time' => $data ['time'] 
 			);
 		}
 		http_response_code ( 202 );
@@ -46,9 +64,21 @@ function get($arr) {
 					'room' => $data ['room'] 
 			);
 		}
+		$req = $bdd->query ( 'SELECT at_sensors.*, at_sensors_devices.alias FROM at_sensors_values JOIN at_sensors ON at_sensors_values.sensor = at_sensors.id JOIN at_sensors_devices ON at_sensors.device = at_sensors_devices.device GROUP BY at_sensors.sensor' );
+		$output_sensors = array ();
+		while ( $data = $req->fetch () ) {
+			$output_sensors [] = array (
+					'id' => $data ['id'],
+					'sensor' => $data ['sensor'],
+					'type' => $data ['type'],
+					'unit' => $data ['unit'],
+					'alias' => $data ['alias'] 
+			);
+		}
 		http_response_code ( 202 );
 		return array (
-				'plants' => $output_plants 
+				'plants' => $output_plants,
+				'sensors' => $output_sensors 
 		);
 	}
 }
