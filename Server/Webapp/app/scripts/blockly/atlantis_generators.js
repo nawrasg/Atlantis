@@ -11,6 +11,11 @@ Blockly.PHP['at_gcm'] = function(block) {
 	var users = block.getFieldValue('USERS');
 	var code = '$msg = new PushMessage();\n';
 	code += '$msg->sendMessage("Atlantis", ' + message + ', ' + users + ');\n';
-	console.log(code);
+	return code;
+}
+
+Blockly.PHP['at_sleep'] = function(block) {
+	var sec = Blockly.PHP.valueToCode(block, 'SEC', Blockly.PHP.ORDER_ATOMIC);
+	var code = 'sleep(' + sec + ');\n';
 	return code;
 }

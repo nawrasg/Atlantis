@@ -36,3 +36,14 @@ Blockly.Blocks['at_gcm'] = {
 		this.setTooltip('Envoyer une notification');
 	}
 };
+
+Blockly.Blocks['at_sleep'] = {
+	init : function() {
+		this.appendValueInput("SEC").setCheck("Number").appendField(
+				"Pause (secondes)");
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
+		this.setColour(190);
+		this.setTooltip('Faire une pause');
+	}
+};
