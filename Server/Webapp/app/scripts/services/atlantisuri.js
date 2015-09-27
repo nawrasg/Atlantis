@@ -25,6 +25,7 @@ nApp.factory('AtlantisUri', function($sessionStorage) {
 		Plantes : function(){return mIP + 'backend/at_plants.php';},
 		Notify : function(){return mIP + 'backend/at_notify.php';},
 		Rooms : function(){return mIP + 'backend/at_rooms.php';},
+		Scenarios : function(){return mIP + 'backend/at_scenario.php';},
 		Sensors : function(){return mIP + 'backend/at_sensors.php';},
 		Speech : function(){return mIP + 'backend/at_speech.php';},
 		Settings : function(){return mIP + 'backend/at_settings.php';},

@@ -7,8 +7,9 @@
  * 
  * Main module of the application.
  */
-var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap', 'chart.js',
-		'ab-base64', 'ngStorage', 'ngMaterial', 'ngSanitize', 'ngFileUpload' ]);
+var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
+		'chart.js', 'ab-base64', 'ngStorage', 'ngMaterial', 'ngSanitize',
+		'ngFileUpload' ]);
 
 var toastPosition = {
 	bottom : false,
@@ -57,6 +58,9 @@ nApp.config(function($routeProvider) {
 	}).when('/history', {
 		templateUrl : 'views/history.html',
 		controller : 'HistoryCtrl'
+	}).when('/scenario', {
+		templateUrl : 'views/scenario.html',
+		controller : 'ScenarioCtrl'
 	}).otherwise({
 		redirectTo : '/home'
 	});

@@ -27,7 +27,7 @@
 
     <!-- Add your site or application content here -->
     <div class="header" >
-      <div class="navbar navbar-default" role="navigation" ng-hide="navigation">
+      <div class="navbar navbar-default" role="navigation" ng-hide="navigation" ng-controller="MainCtrl">
         <div class="container" >
           <div class="navbar-header">
 
@@ -51,6 +51,13 @@
 		            <li><a href="#sensors">Lumières et Capteurs</a></li>
 		            <li><a href="#plantes">Plantes</a></li>
 		            <li><a href="#history">Historique</a></li>
+		          </ul>
+		      </li>
+              <li class="dropdown">
+		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Scénarios<span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="#scenario">Créer un scénario</a></li>
+		            <li ng-repeat="scenario in scenarios"><a href="" ng-click="launch(scenario.file)">{{scenario.file}}</a></li>
 		          </ul>
 		      </li>
               <li class="dropdown">
@@ -116,6 +123,12 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/blockly/blockly_compressed.js"></script>
+        <script src="scripts/blockly/blocks_compressed.js"></script>
+        <script src="scripts/blockly/fr.js"></script>
+        <script src="scripts/blockly/php_compressed.js"></script>
+        <script src="scripts/blockly/atlantis.js"></script>
+        <script src="scripts/blockly/atlantis_generators.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/contenu.js"></script>
         <script src="scripts/controllers/pharmacie.js"></script>
@@ -149,6 +162,7 @@
         <script src="scripts/controllers/playlist_settings.js"></script>
         <script src="scripts/controllers/song_settings.js"></script>
         <script src="scripts/controllers/history.js"></script>
+        <script src="scripts/controllers/scenario.js"></script>
         <!-- endbuild -->
 </body>
 </html>
