@@ -12,7 +12,7 @@ class PushMessage {
 		$devices = array ();
 		$gcpm = new GCMPushMessage ( $this->apiKey );
 		$bdd = getBDD ();
-		$req = $bdd->prepare ( 'SELECT at_gcm.gcm FROM at_gcm JOIN at_devices ON at_gcm.mac = at_devices.mac JOIN at_users ON at_devices.username = at_users.nom WHERE at_users.type <= :type' );
+		$req = $bdd->prepare ( 'SELECT at_gcm.gcm FROM at_gcm JOIN at_devices ON at_gcm.mac = at_devices.mac JOIN at_users ON at_devices.username = at_users.id WHERE at_users.type <= :type' );
 		$req->execute ( array (
 				'type' => $level 
 		) );
