@@ -9,7 +9,7 @@ require_once __DIR__ . '/classes/Zwave.php';
 
 $page_level = 1;
 
-if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
+if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
 		case 'GET' :
 			echo json_encode ( get ( $_REQUEST ) );
