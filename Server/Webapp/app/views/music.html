@@ -60,6 +60,10 @@
 				<md-option ng-value=type.id ng-repeat="type in types track by type.id">{{type.title}}</md-option>
 			</md-select>
 		</md-input-container>
+		<md-input-container flex>
+			<label>Filtrer</label>
+			<input ng-model=search ng-change="filter(search)">
+		</md-input-container>
 		<div class="nList" ng-repeat="playlist in playlists track by playlist.id" ng-if="type.id == 0 || type.id == 1">
 			<img alt="" ng-src="{{songPic(playlist)}}" style="margin-right:15px" ng-click="editPlaylist(playlist)">
 			<a href="" ng-click="play(playlist)" flex>{{playlist.title}}</a>

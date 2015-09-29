@@ -19,6 +19,21 @@ nApp.controller('MusicCtrl', function($scope, $http, $sessionStorage, $filter, $
 		}
 		$http.put(nURL);
 	};
+	$scope.filter = function(search){
+		if(search == null || search == ''){
+			$scope.playlists = $filter('filter')($scope.data.songs, {type:'playlist'});
+			$scope.songs = $filter('filter')($scope.data.songs, {type:'song'});
+		}else{
+			var result = [];
+			angular.forEach($scope.data.songs, function(current){
+				if($filter('lowercase')(current.title).indexOf($filter('lowercase')(search)) > -1){
+					result.push(current);
+				}
+			})
+			$scope.playlists = $filter('filter')(result, {type:'playlist'});
+			$scope.songs = $filter('filter')(result, {type:'song'});
+		}
+	};
 	$scope.action = function(cmd){
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
 		switch(cmd){
@@ -131,6 +146,7 @@ nApp.controller('MusicCtrl', function($scope, $http, $sessionStorage, $filter, $
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
 		$http.get(nURL).success(function(data, status){
 			if(status == 202){
+				$scope.data = data;
 				$scope.on = (data.on == 1);
 				$scope.welcome = (data.welcome.id != -1);
 				$scope.playlists = $filter('filter')(data.songs, {type:'playlist'});
