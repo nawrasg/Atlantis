@@ -5,7 +5,7 @@
  * @name atlantisWebAppApp.AtlantisUri
  * @description # AtlantisUri Factory in the atlantisWebAppApp.
  */
-nApp.factory('AtlantisUri', function($sessionStorage) {
+nApp.factory('AtlantisUri', function() {
 	var mIP = '';
 	
 	return {
