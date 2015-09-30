@@ -23,18 +23,40 @@ if (isset ( $api ) && checkAPI ( $api, $page_level )) {
 		case 'GET' :
 			echo json_encode ( get ( $_GET ) );
 			break;
+		case 'DELETE' :
+			delete ( $_REQUEST );
+			break;
+	}
+}
+function delete($arr) {
+	if (isset ( $arr ['scenario'] )) {
+		$scenario = $arr ['scenario'];
+		$filename = __DIR__ . '/scenarios/' . $scenario . '.php';
+		$xml = __DIR__ . '/scenarios/xml/' . $scenario . '.xml';
+		$result = unlink ( $filename );
+		$result_xml = unlink ( $xml );
+		if ($result && $result_xml) {
+			http_response_code ( 202 );
+		} else {
+			http_response_code ( 400 );
+		}
+	} else {
+		http_response_code ( 404 );
 	}
 }
 function add($arr) {
-	if (isset ( $arr->name, $arr->code )) {
+	if (isset ( $arr->name, $arr->code, $arr->xml )) {
 		$filename = __DIR__ . '/scenarios/' . $arr->name . '.php';
+		$filename2 = __DIR__ . '/scenarios/xml/' . $arr->name . '.xml';
+		$xml = $arr->xml;
 		$data = "<?php\n";
 		$data .= 'function __autoload($class_name){' . "\n";
 		$data .= "\t" . 'require_once __DIR__.\'/../classes/\'.$class_name.\'.php\';' . "\n";
 		$data .= "}\n";
 		$data .= $arr->code;
 		$result = file_put_contents ( $filename, $data );
-		if (! $result) {
+		$result_xml = file_put_contents ( $filename2, $xml );
+		if (! $result && ! $result_xml) {
 			http_response_code ( 400 );
 		} else {
 			http_response_code ( 202 );
@@ -55,8 +77,11 @@ function get($arr) {
 		$result = array ();
 		foreach ( $files as $file ) {
 			if (pathinfo ( $file, PATHINFO_EXTENSION ) == 'php') {
+				$file = pathinfo ( $file, PATHINFO_FILENAME );
+				$xml = file_get_contents ( __DIR__ . '/scenarios/xml/' . $file . '.xml' );
 				$result [] = array (
-						'file' => pathinfo ( $file, PATHINFO_FILENAME ) 
+						'file' => $file,
+						'xml' => (! $xml ? '' : $xml) 
 				);
 			}
 		}
