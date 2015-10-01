@@ -12,9 +12,9 @@ nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage,
 	$scope.toggleAlarm = function(){
 		var nURL = AtlantisUri.Home() + '?api=' + $sessionStorage.api + '&alarm=' + $scope.alarm;
 		$http.put(nURL).success(function(data, status){
-			console.log(status);
-			console.log(data);
-			//TODO
+			if(status == 202){
+				showToast($mdToast, 'Alarme activée !');
+			}
 		});
 	};
 	$scope.addCourse = function(item){
