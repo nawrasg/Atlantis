@@ -20,34 +20,15 @@
 		</div>
 	</div>
 </div>
+<div layout=row layout-align="center center">
+	<md-button class="md-raised" ng-click="loadToolbox('atlantis')">Capteurs</md-button>
+	<md-button class="md-raised" ng-click="loadToolbox('logic')">Logique</md-button>
+	<md-button class="md-raised" ng-click="loadToolbox('control')">Contr&ocirc;le</md-button>
+</div>
 <div id="blocklyArea" class="container" style=""></div>
 <xml id="toolbox" style="display: none">
-	<category name="Control">
-		<block type="controls_if"></block>
-		<block type="controls_repeat_ext"></block>
-		<block type="logic_compare"></block>
-		<block type="math_number"></block>
-		<block type="math_arithmetic"></block>
-		<block type="text"></block>
-		<block type="text_print"></block>
-		<block type="at_sleep"></block>
-	</category>
-	<category name="Logique">
-      <block type="controls_if"></block>
-      <block type="logic_compare"></block>
-      <block type="logic_operation"></block>
-      <block type="logic_negate"></block>
-      <block type="logic_boolean"></block>
-      <block type="logic_null"></block>
-      <block type="logic_ternary"></block>
-    </category>
-	<sep></sep>
-	<category name="Atlantis">
-		<block type="at_light"></block>
-		<block type="at_switch"></block>
-		<block type="at_gcm"></block>
-	</category>
-	<category name="Variables" custom="VARIABLE"></category>
-	<category name="Functions" custom="PROCEDURE"></category>
+	<block type="at_light"></block>
+	<block type="at_switch"></block>
+	<block type="at_gcm"></block>
 </xml>
 <div id="blocklyDiv" style="position: absolute"></div>
