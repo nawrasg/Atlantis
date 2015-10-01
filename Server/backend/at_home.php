@@ -26,14 +26,7 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			) );
 			break;
 		case 'PUT' :
-			if (isset ( $_REQUEST ['alarm'] )) {
-				if ($_REQUEST ['alarm'] == 'true') {
-					$val = TRUE;
-				} else {
-					$val = FALSE;
-				}
-				$settings->setSettings ( 'Alarm', 'status', $val );
-			}
+			update ( $_REQUEST );
 			break;
 	}
 } else if ($argc > 1) {
@@ -44,6 +37,23 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 	}
 } else {
 	http_response_code ( 403 );
+}
+function update($arr) {
+	if (isset ( $arr ['alarm'] )) {
+		$settings = new Settings ();
+		if ($arr ['alarm'] == 'true') {
+			$val = TRUE;
+		} else {
+			$val = FALSE;
+		}
+		$settings->setSettings ( 'Alarm', 'status', $val );
+		$status = $settings->getSettings ( 'Alarm', 'status' );
+		if ($status == $val) {
+			http_response_code ( 202 );
+		} else {
+			http_response_code ( 400 );
+		}
+	}
 }
 function setWeather() {
 	$settings = new Settings ();
