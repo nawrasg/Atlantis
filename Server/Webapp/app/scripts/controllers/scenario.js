@@ -86,6 +86,22 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $mdToast, $sess
 			});			
 		}
 	};
+	$scope.loadToolbox = function(section){
+		var tool = '<xml id="toolbox" style="display: none">';
+		switch(section){
+		case 'atlantis':
+			tool += '<block type="at_light"></block><block type="at_switch"></block><block type="at_gcm"></block>';
+			break;
+		case 'logic':
+			tool += '<block type="controls_if"></block><block type="logic_compare"></block><block type="logic_operation"></block><block type="logic_negate"></block><block type="logic_boolean"></block><block type="logic_null"></block><block type="logic_ternary"></block>';
+			break;
+		case 'control':
+			tool += '<block type="controls_if"></block><block type="controls_repeat_ext"></block><block type="logic_compare"></block><block type="math_number"></block><block type="math_arithmetic"></block><block type="text"></block><block type="text_print"></block><block type="at_sleep"></block>';
+			break;
+		}
+		tool += '</xml>';
+		workspace.updateToolbox(tool);
+	};
 	function clear(){
 		var xml = Blockly.Xml.textToDom('<xml xmlns="http://www.w3.org/1999/xhtml"></xml>');
 		Blockly.Xml.domToWorkspace( Blockly.mainWorkspace, xml );
