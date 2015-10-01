@@ -54,7 +54,7 @@ Blockly.Blocks['at_light'] = {
 				new Blockly.FieldDropdown(getRooms), "ROOM");
 		this.appendValueInput("ON").setCheck("Boolean").appendField("Allumé");
 		this.appendValueInput("INTENSITY").setCheck("Number").appendField(
-				"Intensité (0-100%)");
+				"Intensité (0-255)");
 		this.appendDummyInput().appendField("Couleur")
 				.appendField(
 						new Blockly.FieldDropdown([ [ "Rouge", "red" ],
