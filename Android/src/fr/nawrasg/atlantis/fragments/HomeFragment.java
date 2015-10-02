@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -28,12 +27,13 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPOST;
+import fr.nawrasg.atlantis.async.DataPUT;
 
-public class HomeFragment extends Fragment implements OnTouchListener, OnClickListener {
+public class HomeFragment extends Fragment implements OnTouchListener {
 	private Context mContext;
 	@Bind(R.id.imgPlanPlan)
 	ImageView imgPlan;
@@ -41,7 +41,8 @@ public class HomeFragment extends Fragment implements OnTouchListener, OnClickLi
 	TextView txtWeatherToday;
 	@Bind(R.id.txtHomeWeatherTomorrow)
 	TextView txtWeatherTomorrow;
-	private Switch swtAlarm;
+	@Bind(R.id.swtPlanAlarm)
+	Switch swtAlarm;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,8 +56,6 @@ public class HomeFragment extends Fragment implements OnTouchListener, OnClickLi
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		// imgPlan.setOnTouchListener(this);
-		swtAlarm = (Switch) view.findViewById(R.id.swtPlanAlarm);
-		swtAlarm.setOnClickListener(this);
 		new HomeGET(mContext).execute(App.HOME);
 		loadPlan();
 	}
@@ -96,21 +95,9 @@ public class HomeFragment extends Fragment implements OnTouchListener, OnClickLi
 		return true;
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.swtPlanAlarm:
-//				toggleAlarm();
-				new DataPOST(mContext).execute(App.HOME, "alarm=" + swtAlarm.isChecked());
-				break;
-		}
-	}
-
+	@OnClick(R.id.swtPlanAlarm)
 	private void toggleAlarm() {
-		int nVal = 0;
-		if (swtAlarm.isChecked()) {
-			nVal = 1;
-		}
+		new DataPUT(mContext).execute(App.HOME, "alarm=" + swtAlarm.isChecked());
 	}
 
 	private void setWeather(TextView view, JSONObject json) throws JSONException {
