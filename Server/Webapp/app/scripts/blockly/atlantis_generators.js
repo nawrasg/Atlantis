@@ -1,8 +1,8 @@
 Blockly.PHP['at_switch'] = function(block) {
 	var status = Blockly.PHP.valueToCode(block, 'STATUS', Blockly.PHP.ORDER_ATOMIC);
-	var sensor = block.getFieldValue('SENSORS');
-	var code = '$zwave = new Zwave();\n';
-	code += '$zwave->command(' + sensor + ', ' + status + ');\n';
+	var room = block.getFieldValue('ROOM');
+	var code = '$relay = Relay::byRoom(' + room + ');\n';
+	code += '$relay->on(' + status + ');\n';
 	return code;
 }
 

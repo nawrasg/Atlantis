@@ -11,13 +11,13 @@ function getRooms() {
 Blockly.Blocks['at_switch'] = {
 	init : function() {
 		this.appendDummyInput().appendField("Prise").appendField(
-				new Blockly.FieldDropdown(getRooms), "SENSORS");
+				new Blockly.FieldDropdown(getRooms), "ROOM");
 		this.appendValueInput("STATUS").setCheck("Boolean").appendField("Etat");
 		this.setInputsInline(true);
 		this.setPreviousStatement(false);
 		this.setNextStatement(false);
 		this.setColour(190);
-		this.setTooltip('');
+		this.setTooltip('Contrôler une prise électrique.');
 	}
 };
 
@@ -33,7 +33,7 @@ Blockly.Blocks['at_gcm'] = {
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
 		this.setColour(190);
-		this.setTooltip('Envoyer une notification');
+		this.setTooltip('Envoyer une notification.');
 	}
 };
 
@@ -66,6 +66,5 @@ Blockly.Blocks['at_light'] = {
 		this.setNextStatement(true);
 		this.setColour(190);
 		this.setTooltip('Contrôler les ampoules');
-		getRooms();
 	}
 };
