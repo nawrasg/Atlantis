@@ -20,22 +20,13 @@ class Relay {
 		}
 		return $switch;
 	}
-	public function on() {
+	public function on($value) {
 		$zwave = new Zwave ();
 		foreach ( $this->switches as $switch ) {
 			switch ($switch ['protocol']) {
 				case 'zwave' :
-					$zwave->command ( $sensor ['sensor'], "'on'" );
-					break;
-			}
-		}
-	}
-	public function off() {
-		$zwave = new Zwave ();
-		foreach ( $this->switches as $switch ) {
-			switch ($switch ['protocol']) {
-				case 'zwave' :
-					$zwave->command ( $sensor ['sensor'], "'off'" );
+					$value == true ? $val = 'on' : $val = 'false';
+					$zwave->command ( $sensor ['sensor'], $val );
 					break;
 			}
 		}
