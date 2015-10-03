@@ -14,8 +14,14 @@
 					<md-option ng-value=plante ng-repeat="plante in plantes track by plante.id">{{plante.title}}</md-option>
 				</md-select>
 			</md-input-container>
-			<label>Intervalle : {{interval}} jours</label>
-			<md-slider flex="" min="0" max="30" ng-model="interval" aria-label="intervalle" ng-init="interval=7"></md-slider>
+			<md-input-container>
+				<label>De</label>
+				<input ng-model=from type=date class=dialog-close>
+			</md-input-container>
+			<md-input-container>
+				<label>Jusqu'&agrave;</label>
+				<input ng-model=to type=date class=dialog-close>
+			</md-input-container>
 		</div>
 	</div>
 </div>

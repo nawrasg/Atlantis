@@ -14,8 +14,13 @@ nApp.controller('HistoryCtrl', function($scope, $http, $sessionStorage,
 	$scope.options = nChartOptions;
 	get();
 	$scope.loadPlant = function() {
-		var nURL = AtlantisUri.History() + '?api=' + $sessionStorage.api;
-		nURL += '&plant=' + $scope.plante.id + '&interval=' + $scope.interval;
+		var nURL = AtlantisUri.History() + '?api=' + $sessionStorage.api + '&plant=' + $scope.plante.id;
+		if($scope.from != null){
+			nURL += '&from=' + $filter('date')($scope.from, 'yyyy-MM-dd');
+		}
+		if($scope.to != null){
+			nURL += '&to=' + $filter('date')($scope.to, 'yyyy-MM-dd');
+		}
 		$http.get(nURL).success(function(data, status) {
 			var nLabels = [];
 			var nMoisture = [];
