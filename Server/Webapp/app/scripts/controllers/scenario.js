@@ -90,7 +90,7 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $mdToast, $sess
 		var tool = '<xml id="toolbox" style="display: none">';
 		switch(section){
 		case 'atlantis':
-			tool += '<block type="at_light"></block><block type="at_switch"></block><block type="at_gcm"></block>';
+			tool += '<block type="at_light"></block><block type="at_switch"></block><block type="at_gcm"></block><block type="at_alarm_status"></block><block type="at_alarm"></block>';
 			break;
 		case 'logic':
 			tool += '<block type="controls_if"></block><block type="logic_compare"></block><block type="logic_operation"></block><block type="logic_negate"></block><block type="logic_boolean"></block><block type="logic_null"></block><block type="logic_ternary"></block>';
