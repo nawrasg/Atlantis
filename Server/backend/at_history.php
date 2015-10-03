@@ -32,7 +32,7 @@ function get($arr) {
 	}
 	if (isset ( $arr ['plant'] )) {
 		$sensor = $arr ['plant'];
-		$req = $bdd->query ( "SELECT *, AVG(moisture), AVG(air_temperature), AVG(soil_temperature), AVG(soil_conductivity), AVG(light) FROM at_plants_history  WHERE sensor = '$sensor' AND date BETWEEN $from AND $to GROUP BY date" );
+		$req = $bdd->query ( "SELECT *, AVG(moisture), AVG(air_temperature), AVG(soil_temperature), AVG(soil_conductivity), AVG(light) FROM at_plants_history  WHERE sensor = '$sensor' AND date BETWEEN '$from' AND '$to' GROUP BY date" );
 		$output = array ();
 		while ( $data = $req->fetch () ) {
 			$output [] = array (
@@ -48,7 +48,7 @@ function get($arr) {
 		return $output;
 	} else if (isset ( $arr ['sensor'] )) {
 		$sensor = $arr ['sensor'];
-		$req = $bdd->query ( "SELECT * FROM at_sensors_values WHERE sensor = '$sensor' AND date BETWEEN $from AND $to ORDER BY date, time" );
+		$req = $bdd->query ( "SELECT * FROM at_sensors_values WHERE sensor = '$sensor' AND date BETWEEN '$from' AND '$to' ORDER BY date, time" );
 		$output = array ();
 		while ( $data = $req->fetch () ) {
 			$output [] = array (
