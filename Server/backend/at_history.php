@@ -18,14 +18,21 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 }
 function get($arr) {
 	$bdd = getBDD ();
-	if (isset ( $arr ['interval'] )) {
-		$interval = $arr ['interval'];
+	if (isset ( $arr ['to'] )) {
+		$to = $arr ['to'];
 	} else {
-		$interval = 7;
+		$to = date ( 'Y-m-d' );
+	}
+	if (isset ( $arr ['from'] )) {
+		$from = $arr ['from'];
+	} else {
+		$date = new DateTime ();
+		$date->sub ( new DateInterval ( 'P3D' ) );
+		$from = $date->format ( 'Y-m-d' );
 	}
 	if (isset ( $arr ['plant'] )) {
 		$sensor = $arr ['plant'];
-		$req = $bdd->query ( "SELECT *, AVG(moisture), AVG(air_temperature), AVG(soil_temperature), AVG(soil_conductivity), AVG(light) FROM at_plants_history  WHERE sensor = '$sensor' AND date >= DATE_SUB(CURDATE(), INTERVAL $interval DAY) GROUP BY date" );
+		$req = $bdd->query ( "SELECT *, AVG(moisture), AVG(air_temperature), AVG(soil_temperature), AVG(soil_conductivity), AVG(light) FROM at_plants_history  WHERE sensor = '$sensor' AND date BETWEEN $from AND $to GROUP BY date" );
 		$output = array ();
 		while ( $data = $req->fetch () ) {
 			$output [] = array (
@@ -41,7 +48,7 @@ function get($arr) {
 		return $output;
 	} else if (isset ( $arr ['sensor'] )) {
 		$sensor = $arr ['sensor'];
-		$req = $bdd->query ( "SELECT * FROM at_sensors_values WHERE sensor = '$sensor' AND date >= DATE_SUB(CURDATE(), INTERVAL $interval DAY) ORDER BY date, time" );
+		$req = $bdd->query ( "SELECT * FROM at_sensors_values WHERE sensor = '$sensor' AND date BETWEEN $from AND $to ORDER BY date, time" );
 		$output = array ();
 		while ( $data = $req->fetch () ) {
 			$output [] = array (
