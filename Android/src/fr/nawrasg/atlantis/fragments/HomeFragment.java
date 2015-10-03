@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	}
 
 	@OnClick(R.id.swtPlanAlarm)
-	private void toggleAlarm() {
+	public void toggleAlarm() {
 		new DataPUT(mContext).execute(App.HOME, "alarm=" + swtAlarm.isChecked());
 	}
 
