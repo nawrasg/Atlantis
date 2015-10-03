@@ -57,6 +57,7 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $mdToast, $sess
 		if(scenario != null){
 			$scope.newScenario = scenario.file;
 			if(scenario.xml !== ''){
+				clear();
 				var xml = Blockly.Xml.textToDom(scenario.xml);
 				Blockly.Xml.domToWorkspace( Blockly.mainWorkspace, xml );			
 			}else{
@@ -66,6 +67,7 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $mdToast, $sess
 	};
 	$scope.new = function(){
 		$scope.newScenario = '';
+		$scope.scenario = null;
 		clear();
 	};
 	$scope.delete = function(){
@@ -103,8 +105,7 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $mdToast, $sess
 		workspace.updateToolbox(tool);
 	};
 	function clear(){
-		var xml = Blockly.Xml.textToDom('<xml xmlns="http://www.w3.org/1999/xhtml"></xml>');
-		Blockly.Xml.domToWorkspace( Blockly.mainWorkspace, xml );
+		Blockly.mainWorkspace.clear();
 	}
 	function get(){
 		var nURL = AtlantisUri.Scenarios() + '?api=' + $sessionStorage.api;
