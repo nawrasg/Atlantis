@@ -31,3 +31,14 @@ Blockly.PHP['at_light'] = function(block) {
 	code += '$light->brightness(' + intensity + ');\n';
 	return code;
 }
+
+Blockly.PHP['at_alarm_status'] = function(block) {
+	var code = '((new Settings())->getSettings(\'Alarm\', \'status\'))';
+	return [code, Blockly.PHP.ORDER_NONE];
+};
+
+Blockly.PHP['at_alarm'] = function(block) {
+	var status = Blockly.PHP.valueToCode(block, 'STATUS', Blockly.PHP.ORDER_ATOMIC);
+	var code = '(new Settings())->setSettings(\'Alarm\', \'status\', ' + status + ');\n';
+	return code;
+};

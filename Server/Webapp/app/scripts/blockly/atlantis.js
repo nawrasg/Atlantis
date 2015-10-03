@@ -68,3 +68,25 @@ Blockly.Blocks['at_light'] = {
 		this.setTooltip('Contrôler les ampoules');
 	}
 };
+Blockly.Blocks['at_alarm_status'] = {
+	init : function() {
+		this.appendDummyInput().appendField("Etat de l'alarme");
+		this.setOutput(true);
+		this.setColour(190);
+		this.setTooltip('Connaître l\'état de l\'alarme.');
+		this.setHelpUrl('http://www.example.com/');
+	}
+};
+
+Blockly.Blocks['at_alarm'] = {
+	init : function() {
+		this.appendDummyInput().appendField("Alarme");
+		this.appendValueInput("STATUS").setCheck("Boolean").appendField("Etat");
+		this.setInputsInline(true);
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
+		this.setColour(190);
+		this.setTooltip('Changer l\'état de l\'alarme.');
+		this.setHelpUrl('http://www.example.com/');
+	}
+};
