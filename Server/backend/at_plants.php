@@ -39,6 +39,9 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 		case 'update' :
 			getLiveValues ();
 			break;
+		case 'battery' :
+			checkBattery ();
+			break;
 	}
 }
 function update($arr) {
@@ -171,4 +174,11 @@ function getPlantId($sensor) {
 	$request->closeCursor ();
 	return $data ['id'];
 }
-
+function checkBattery() {
+	$bdd = getBDD ();
+	$req = $bdd->query ( 'SELECT t1.* FROM at_plants_history t1 LEFT JOIN at_plants_history t2 ON (t1.sensor = t2.sensor AND t1.date < t2.date) WHERE t2.date IS NULL AND t1.battery < 15' );
+	if ($req) {
+		$push = new PushMessage ();
+		$push->sendMessage ( 'Atlantis', 'Certains capteurs necessitent un changement de piles !' );
+	}
+}
