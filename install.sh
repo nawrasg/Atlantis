@@ -12,6 +12,9 @@ function install(){
 	chmod -R 777 backend/home &&
 	mkdir backend/home/plants &&
 	chmod -R 777 backend/home/plants &&
+	mkdir backend/scenarios &&
+	mkdir backend/scenarios/xml &&
+	chmod -R 777 backend/scenarios &&
 	crontab -l >> Atlantis-master/Server/crontab &&
 	crontab Atlantis-master/Server/crontab &&
 	rm -r Atlantis-master &&
