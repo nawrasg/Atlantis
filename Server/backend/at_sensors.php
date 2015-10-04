@@ -7,6 +7,7 @@ require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Settings.php';
 require_once __DIR__ . '/classes/Zwave.php';
+require_once __DIR__ . '/classes/PushMessage.php';
 
 $page_level = 1;
 $settings = new Settings ();
@@ -31,6 +32,9 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 	switch ($argv [1]) {
 		case 'history' :
 			saveHistory ();
+			break;
+		case 'battery' :
+			checkBattery ();
 			break;
 	}
 }
@@ -112,7 +116,22 @@ function saveHistory() {
 		}
 	}
 }
-
+function checkBattery() {
+	$zwave = new Zwave ();
+	$bdd = getBDD ();
+	$req = $bdd->query ( 'SELECT * FROM at_sensors WHERE type = "Battery"' );
+	while ( $data = $req->fetch () ) {
+		switch ($data ['protocol']) {
+			case 'zwave' :
+				$val = $zwave->getValue ( $data ['sensor'] );
+				if ($val <= 15) {
+					$push = new PushMessage ();
+					$push->sendMessage ( 'Atlantis', 'Certains capteurs necessitent un changement de piles !' );
+				}
+				break;
+		}
+	}
+}
 if (false) {
 	switch ($_GET ['action']) {
 		case 'actionners' :
