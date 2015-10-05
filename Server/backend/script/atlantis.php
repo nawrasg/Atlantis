@@ -8,7 +8,6 @@ require_once __DIR__ . '/../classes/Settings.php';
 while ( ! getBDD () )
 	;
 
-$settings = new Settings ();
 $push = new PushMessage ();
 $zwave = new Zwave ();
 
@@ -17,7 +16,7 @@ $arrMvt = loadSensors ();
 $arrMvt2 = initTimestamp ( $arrMvt );
 
 while ( true ) {
-	$alarm = $settings->getSettings ( 'Alarm', 'status' );
+	$alarm = (new Settings())->getSettings ( 'Alarm', 'status' );
 	if ($alarm) {
 		if (! $lastAlarm) {
 			$arrMvt2 = initTimestamp ( $arrMvt );
