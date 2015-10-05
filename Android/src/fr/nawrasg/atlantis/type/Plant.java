@@ -10,7 +10,7 @@ import android.os.Parcelable;
 import android.util.Base64;
 
 
-public class Plant implements Parcelable{
+public class Plant extends PDevice implements Parcelable{
 	private int mID, mRoom, mBattery;
 	private String mSensor, mTitle, mPicture, mColor, mDate, mTime;
 	private double mLight, mConductivity, mSoilTemperature, mAirTemperature, mMoisture;
@@ -144,6 +144,15 @@ public class Plant implements Parcelable{
 			return new Plant[size];
 		}
 	};
-	
-	
+
+
+	@Override
+	public String getID() {
+		return mID + "";
+	}
+
+	@Override
+	public String getType() {
+		return "plant";
+	}
 }
