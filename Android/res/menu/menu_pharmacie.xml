@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-	<item android:id="@+id/itemPharmacieAjouter"
-	    android:title="Ajouter"/>
-	<item android:id="@+id/itemPharmacieActualiser"
-	    android:title="Actualiser"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemPharmacieAjouter"
+        android:title="Ajouter"/>
+    <item
+        android:id="@+id/itemPharmacieActualiser"
+        android:title="Actualiser"/>
 </menu>
