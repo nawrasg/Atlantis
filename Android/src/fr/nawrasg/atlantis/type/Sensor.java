@@ -29,6 +29,7 @@ public class Sensor extends PDevice implements Parcelable {
 				mUpdate = json.optString("update");
 				mHistory = json.optInt("history");
 				mIgnore = json.optInt("ignore");
+				mAlias = json.optString("alias");
 			} else {
 				mRoom = json.optString("room");
 				mAlias = json.optString("alias");

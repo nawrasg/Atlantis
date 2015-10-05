@@ -17,19 +17,19 @@ public class Plant implements Parcelable{
 	
 	public Plant (JSONObject json){
 		try {
-			mID = json.getInt("id");
-			mSensor = json.getString("sensor");
+			mID = json.optInt("id");
+			mSensor = json.optString("sensor");
 			mTitle = json.optString("title");
 			mPicture = json.optString("picture");
 			mColor = json.optString("color");
 			mRoom = json.optInt("room");
-			mBattery = json.getInt("battery");
-			mLight = json.getDouble("light");
-			mConductivity = json.getDouble("conductivity");
-			mSoilTemperature = json.getDouble("stemperature");
-			mAirTemperature = json.getDouble("atemperature");
-			mMoisture = json.getDouble("moisture");
-			mDate = json.getString("date");
+			mBattery = json.optInt("battery");
+			mLight = json.optDouble("light");
+			mConductivity = json.optDouble("conductivity");
+			mSoilTemperature = json.optDouble("stemperature");
+			mAirTemperature = json.optDouble("atemperature");
+			mMoisture = json.optDouble("moisture");
+			mDate = json.optString("date");
 			mTime = json.getString("time");
 		} catch (JSONException e) {
 			
