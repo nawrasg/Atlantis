@@ -26,7 +26,7 @@ public class App {
 	public static final String ENTRETIEN = "backend/at_entretien.php";
 	public static final String GCM = "backend/at_gcm.php";
 	public static final String GEO = "backend/at_geo.php";
-	public static final String HISTORY = "backend/at_sensors_history.php";
+	public static final String HISTORY = "backend/at_history.php";
 	public static final String HOME = "backend/at_home.php";
 	public static final String JARVIS = "backend/jarvis";
 	public static final String LIGHTS = "backend/at_lights.php";
