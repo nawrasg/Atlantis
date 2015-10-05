@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/itemSearch"
         android:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always"
+        android:showAsAction="always"
         android:title="Rechercher"/>
     <item
         android:id="@+id/itemCuisineAdd"
         android:icon="@drawable/ic_action_new"
-        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom"
         android:title="Ajouter"/>
     <item
         android:id="@+id/itemCuisineAll"
-        android:icon="@drawable/ic_action_view_as_list"
-        app:showAsAction="ifRoom"
         android:checkable="true"
+        android:icon="@drawable/ic_action_view_as_list"
+        android:showAsAction="ifRoom"
         android:title="Tout afficher"/>
 
 </menu>
