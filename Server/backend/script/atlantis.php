@@ -11,31 +11,24 @@ while ( ! getBDD () )
 $push = new PushMessage ();
 $zwave = new Zwave ();
 
-$lastAlarm = $settings->getSettings ( 'Alarm', 'status' );
 $arrMvt = loadSensors ();
 $arrMvt2 = initTimestamp ( $arrMvt );
 
 while ( true ) {
-	$alarm = (new Settings())->getSettings ( 'Alarm', 'status' );
-	if ($alarm) {
-		if (! $lastAlarm) {
-			$arrMvt2 = initTimestamp ( $arrMvt );
-			$lastAlarm = TRUE;
-		}
-		foreach ( $arrMvt as $i => $sensor ) {
-			if ($sensor ['type'] == 'Door/Window') {
-				switch ($sensor ['protocol']) {
-					case 'zwave' :
-						if ($zwave->getValue ( $sensor ['sensor'] ) == 'on' && $zwave->GetTimestamp ( $sensor ['sensor'] ) != $arrMvt2 [$i]) {
+	$alarm = (new Settings ())->getSettings ( 'Alarm', 'status' );
+	foreach ( $arrMvt as $i => $sensor ) {
+		if ($sensor ['type'] == 'Door/Window') {
+			switch ($sensor ['protocol']) {
+				case 'zwave' :
+					if ($zwave->getValue ( $sensor ['sensor'] ) == 'on' && $zwave->GetTimestamp ( $sensor ['sensor'] ) != $arrMvt2 [$i]) {
+						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
+						if ($alarm) {
 							$push->sendMessageAll ( "Atlantis - Alarme", "Porte ouverte !" );
-							$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						}
-						break;
-				}
+					}
+					break;
 			}
 		}
-	} else {
-		$lastAlarm = false;
 	}
 	sleep ( 2 );
 }
