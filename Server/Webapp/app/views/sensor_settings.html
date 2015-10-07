@@ -19,6 +19,22 @@
 			<md-checkbox class=md-primary ng-model="sensor.ignore" ng-true-value="1" ng-false-value="0" aria-label="history">Ignorer ce capteur</md-checkbox>
 		</div>
 	</md-content>
+	<div ng-if="sensor.type == 'Door/Window'">
+		<div layout=row layout-align="start center">
+			<md-select ng-model=scenario aria-label="scenarios" placeholder="Sc&eacute;nario" flex>
+				<md-option ng-value=scenario ng-repeat="scenario in scenarios">{{scenario.file}}</md-option>
+			</md-select>
+			<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="addScenario(scenario)">
+			  	<md-icon md-svg-src="images/svg/ic_add_white_36px.svg"></md-icon>
+			</md-button>			
+		</div>
+		<md-content>
+			<div layout=row  layout-align="start center" ng-repeat="sc in scs track by sc.id">
+				<label flex>{{sc.scenario}}</label>
+				<md-icon md-svg-src="images/svg/ic_clear_black_36px.svg" ng-click="removeScenario(sc)"></md-icon>
+			</div>
+		</md-content>
+	</div>
 	<div class=md-actions>
 		<md-button class=md-warn ng-click=delete() ng-if="admin && sensor.type == 'section'">Supprimer</md-button>
 		<md-button ng-click=cancel()>Fermer</md-button>
