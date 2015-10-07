@@ -7,8 +7,8 @@
 	<div class=panel-heading>Contr&ocirc;les</div>
 	<div class=panel-body>
 		<md-select ng-model=scenario aria-label="scenarios" placeholder="Sc&eacute;nario" md-on-close="loadScenario(scenario)">
-				<md-option ng-value=scenario ng-repeat="scenario in scenarios">{{scenario.file}}</md-option>
-			</md-select>
+			<md-option ng-value=scenario ng-repeat="scenario in scenarios">{{scenario.file}}</md-option>
+		</md-select>
 		<md-input-container>
 			<label>Nom du sc&eacute;nario</label>
 			<input ng-model=newScenario ng-change="updateTitle()">
