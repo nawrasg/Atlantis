@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -37,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.adapters.spinner.HistoryAdapter;
 import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.type.PDevice;
 import fr.nawrasg.atlantis.type.Plant;
@@ -52,8 +52,8 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 	LineChart mLineChart;
 	@Bind(R.id.spHistory)
 	Spinner spHistory;
+	private HistoryAdapter mAdapter;
 	private ArrayList<PDevice> mList;
-	private ArrayList<String> mLabelList;
 	private Calendar mCalendar;
 
 	@Override
@@ -70,15 +70,10 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 		nParams.height = nHeight * 2 / 3;
 		mLineChart.setLayoutParams(nParams);
 		mLineChart.setDescription("Historique Atlantis");
-		// mLineChart.setStartAtZero(false);
 		mLineChart.setNoDataTextDescription("Pas de données disponibles !");
-		// mLineChart.setDrawYValues(false);
-		// mLineChart.setBackgroundColor(Color.GRAY);
 		mLineChart.setDragEnabled(true);
 		mLineChart.setScaleEnabled(true);
 		mLineChart.setDrawGridBackground(false);
-		//mLineChart.setDrawVerticalGrid(false);
-		//mLineChart.setDrawHorizontalGrid(false);
 		setHasOptionsMenu(true);
 		spHistory.setOnItemSelectedListener(this);
 		new SensorsGET(mContext).execute(App.HISTORY);
@@ -175,24 +170,20 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 		@Override
 		protected void onPostExecute(String result) {
 			mList = new ArrayList<>();
-			mLabelList = new ArrayList<>();
 			try {
 				JSONObject nJson = new JSONObject(result);
 				JSONArray nPlantArr = nJson.getJSONArray("plants");
 				for (int i = 0; i < nPlantArr.length(); i++) {
 					Plant nPlant = new Plant(nPlantArr.getJSONObject(i));
 					mList.add(nPlant);
-					mLabelList.add(nPlant.getTitle());
 				}
 				JSONArray nSensorArr = nJson.getJSONArray("sensors");
 				for (int i = 0; i < nSensorArr.length(); i++) {
 					Sensor nSensor = new Sensor(nSensorArr.getJSONObject(i));
 					mList.add(nSensor);
-					mLabelList.add(nSensor.getAlias() + " (" + nSensor.getType() + ")");
 				}
-				ArrayAdapter<String> nAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, mLabelList);
-				nAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				spHistory.setAdapter(nAdapter);
+				mAdapter = new HistoryAdapter(mContext, mList);
+				spHistory.setAdapter(mAdapter);
 			} catch (JSONException e) {
 				Log.e("Atlantis", e.toString());
 			}
@@ -219,7 +210,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 					valsComp.add(nEntrey);
 					xVals.add(nTemp.getString("date"));
 				}
-				LineDataSet set1 = new LineDataSet(valsComp, spHistory.getSelectedItem().toString());
+				LineDataSet set1 = new LineDataSet(valsComp, "");
 				set1.setColor(ColorTemplate.getHoloBlue());
 				set1.setCircleColor(ColorTemplate.getHoloBlue());
 				set1.setLineWidth(2f);
@@ -261,7 +252,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 					valsComp.add(nEntrey);
 					xVals.add(nTemp.getString("date"));
 				}
-				LineDataSet set1 = new LineDataSet(valsComp, spHistory.getSelectedItem().toString());
+				LineDataSet set1 = new LineDataSet(valsComp, "");
 				set1.setColor(ColorTemplate.getHoloBlue());
 				set1.setCircleColor(ColorTemplate.getHoloBlue());
 				set1.setLineWidth(2f);
