@@ -16,16 +16,17 @@ $zwave = new Zwave ();
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
 		case 'POST' :
-			$zwave->discover ();
-			http_response_code ( 202 );
+			add ( $_REQUEST );
 			break;
 		case 'GET' :
 			echo json_encode ( get ( $_GET ) );
+			http_response_code ( 202 );
 			break;
 		case 'PUT' :
 			update ( $_REQUEST );
 			break;
 		case 'DELETE' :
+			delete ( $_REQUEST );
 			break;
 	}
 } else if ($argc > 1) {
@@ -38,6 +39,34 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			break;
 	}
 }
+function delete($arr) {
+	if (isset ( $arr ['scenario'] )) {
+		$id = $arr ['scenario'];
+		$bdd = getBDD ();
+		$req = $bdd->exec ( "DELETE FROM at_sensors_scenarios WHERE id = $id" );
+		if ($req == 1) {
+			http_response_code ( 202 );
+		} else {
+			http_response_code ( 400 );
+		}
+	}
+}
+function add($arr) {
+	if (isset ( $arr ['sensor'], $arr ['scenario'] )) {
+		$bdd = getBDD ();
+		$sensor = $arr ['sensor'];
+		$scenario = $arr ['scenario'];
+		$req = $bdd->exec ( "INSERT INTO at_sensors_scenarios VALUES('', '$sensor', '$scenario')" );
+		if ($req == 1) {
+			http_response_code ( 202 );
+		} else {
+			http_response_code ( 400 );
+		}
+	} else {
+		$zwave->discover ();
+		http_response_code ( 202 );
+	}
+}
 function get($arr) {
 	$zwave = new Zwave ();
 	if (isset ( $arr ['id'] )) {
@@ -47,6 +76,19 @@ function get($arr) {
 				'devices' => $result,
 				'rooms' => $rooms 
 		);
+		return $result;
+	} else if (isset ( $arr ['scenario'] )) {
+		$bdd = getBDD ();
+		$sensor = $arr ['scenario'];
+		$req = $bdd->query ( "SELECT * FROM at_sensors_scenarios WHERE sensor = $sensor" );
+		$result = array ();
+		while ( $data = $req->fetch () ) {
+			$result [] = array (
+					'id' => $data ['id'],
+					'sensor' => $data ['sensor'],
+					'scenario' => $data ['scenario'] 
+			);
+		}
 		return $result;
 	} else {
 		$devices_zwave = $zwave->loadDevices ();
