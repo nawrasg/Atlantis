@@ -127,6 +127,8 @@ nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage,
 			return (sensor.value == 'on') ? 'Allumé' : 'Eteint';
 		case 'General purpose':
 			return 'Dernier mouvement détecté le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à HH:mm');
+		case 'Motion':
+			return 'Dernier mouvement détecté le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à HH:mm');
 		case 'sensorBinary':
 			return 'Dernier mouvement le ' + $filter('date')(sensor.update * 1000, 'dd/MM/yyyy à HH:mm');
 		default:
