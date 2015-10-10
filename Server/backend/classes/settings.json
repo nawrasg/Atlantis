@@ -37,5 +37,8 @@
     	"motion":true,
     	"door":true,
     	"tamper":true
+    },
+    "Daemon":{
+    	"pid":-1
     }
 }
