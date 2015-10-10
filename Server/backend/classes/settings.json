@@ -40,5 +40,8 @@
     },
     "Daemon":{
     	"pid":-1
+    },
+    "Weather":{
+    	"appid":""
     }
 }
