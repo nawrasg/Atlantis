@@ -12,7 +12,6 @@ require_once __DIR__ . '/classes/Weather.php';
 $page_level = 1;
 $settings = new Settings ();
 $vigilance = new VigilanceMeteo ();
-$weather = new Weather ();
 
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
@@ -66,18 +65,23 @@ function setWeather() {
 	$code2 = $weather->getWeatherCode ( 2 );
 	$description = $weather->getDescription ();
 	$description2 = $weather->getDescription ( 2 );
+	$date = date ( 'Y-m-d H:i:s' );
 	
-	$data = $weather->getCachedWeather ();
+	$result = array ();
+	$result [] = array (
+			'code' => $code,
+			'temperature' => $temp,
+			'description' => $description,
+			'update' => $date 
+	);
+	$result [] = array (
+			'code' => $code2,
+			'temperature' => $temp2,
+			'description' => $description2,
+			'update' => $date 
+	);
 	
-	$data [0]->temperature = $temp;
-	$data [0]->code = $code;
-	$data [0]->description = $description;
-	
-	$data [1]->temperature = $temp2;
-	$data [1]->code = $code2;
-	$data [1]->description = $description2;
-	
-	$weather->setCachedWeather ( $data );
+	$weather->setCachedWeather ( $result );
 }
 function getWeather() {
 	$settings = new Settings ();
