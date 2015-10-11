@@ -71,7 +71,7 @@ function open($id) {
 }
 function get() {
 	$bdd = getBDD ();
-	$request = $bdd->query ( 'SELECT * FROM at_cuisine LEFT JOIN at_ean ON at_cuisine.element = at_ean.ean ORDER BY peremption, date2 DESC' );
+	$request = $bdd->query ( 'SELECT * FROM at_cuisine LEFT JOIN at_ean ON at_cuisine.element = at_ean.ean ORDER BY date2 DESC, peremption' );
 	$today = strtotime ( now );
 	$result = array ();
 	while ( $data = $request->fetch () ) {
