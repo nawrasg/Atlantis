@@ -171,6 +171,15 @@ CREATE TABLE IF NOT EXISTS `at_sensors_values` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+CREATE TABLE IF NOT EXISTS `at_sensors_scenarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sensor` int(11) NOT NULL,
+  `scenario` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sensor` (`sensor`,`scenario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+
 CREATE TABLE IF NOT EXISTS `at_songsplaylists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `playlist` int(11) NOT NULL,
