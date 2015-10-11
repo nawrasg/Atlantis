@@ -52,8 +52,12 @@ function update($arr) {
 				http_response_code ( 202 );
 				return;
 			case 'Notification' :
-				if (isset ( $arr ['key'] ))
+				if (isset ( $arr ['key'] )) {
 					$settings->setSettings ( 'Notification', 'key', $arr ['key'] );
+				}
+				if (isset ( $arr ['appid'] )) {
+					$settings->setSettings ( 'Weather', 'appid', $arr ['appid'] );
+				}
 				http_response_code ( 202 );
 				return;
 			case 'Zwave' :
