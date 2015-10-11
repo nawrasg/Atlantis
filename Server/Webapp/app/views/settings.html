@@ -45,12 +45,16 @@
         			</div>
         		</div>
         		<div class="panel panel-info">
-        			<div class="panel-heading">Notifications</div>
+        			<div class="panel-heading">Services Tiers</div>
         			<div class="panel-body">
         				<md-content>
         					<md-input-container>
-        						<label>Cl&eacute; GCM</label>
+        						<label>Cl&eacute; Google Cloud Messaging</label>
         						<input ng-model=atlantis.Notification.key >
+       						</md-input-container>
+        					<md-input-container>
+        						<label>Cl&eacute; OpenWeatherMap</label>
+        						<input ng-model=atlantis.Weather.appid >
        						</md-input-container>
        						<div layout=row layout-align="end center">
        							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveNotification()">
