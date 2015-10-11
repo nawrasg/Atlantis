@@ -6,8 +6,7 @@
  * @description # AtlantisSettingsCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('AtlantisSettingsCtrl', function($scope, $http,
-		$sessionStorage, $mdToast, AtlantisUri) {
+nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage, $mdToast, AtlantisUri) {
 	
 	var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
 	$http.get(nURL).success(function(data, status) {
@@ -31,8 +30,9 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http,
 	};
 	$scope.saveNotification = function() {
 		var key = $scope.atlantis.Notification.key;
+		var appid = $scope.atlantis.Weather.appid;
 		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
-		nURL += '&section=Notification&key=' + key;
+		nURL += '&section=Notification&key=' + key + '&appid=' + appid;
 		$http.put(nURL).success(function(data, status) {
 			showToast($mdToast, status, data);
 		});
