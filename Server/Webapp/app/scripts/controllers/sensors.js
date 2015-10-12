@@ -102,6 +102,8 @@ nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage,
 			return 'images/ng_lightning.png';
 		case 'switchBinary':
 			return 'images/ng_switch.png';
+		case 'Motion':
+			return 'images/ng_motion.png';
 		default:
 			return 'images/ng_device.png';
 		}

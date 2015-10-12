@@ -19,7 +19,7 @@
 			<md-checkbox class=md-primary ng-model="sensor.ignore" ng-true-value="1" ng-false-value="0" aria-label="history">Ignorer ce capteur</md-checkbox>
 		</div>
 	</md-content>
-	<div ng-if="sensor.type == 'Door/Window'">
+	<div ng-if="sensor.type == 'Door/Window' || sensor.type == 'Motion'">
 		<div layout=row layout-align="start center">
 			<md-select ng-model=scenario aria-label="scenarios" placeholder="Sc&eacute;nario" flex>
 				<md-option ng-value=scenario ng-repeat="scenario in scenarios">{{scenario.file}}</md-option>
