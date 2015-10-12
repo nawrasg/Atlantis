@@ -40,7 +40,8 @@
     },
     "Daemon":{
     	"pid":-1,
-    	"stop":false
+    	"stop":false,
+    	"scenarios":false
     },
     "Weather":{
     	"appid":""
