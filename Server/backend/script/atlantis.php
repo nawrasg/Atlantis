@@ -18,7 +18,8 @@ $arrMvt2 = initTimestamp ( $arrMvt );
 $scenarios = loadScenarios ( $arrMvt );
 
 while ( true ) {
-	$alarm = (new Settings ())->getSettings ( 'Alarm', 'status' );
+	$settings = new Settings ();
+	$alarm = $settings->getSettings ( 'Alarm', 'status' );
 	foreach ( $arrMvt as $i => $sensor ) {
 		if ($sensor ['type'] == 'Door/Window') {
 			switch ($sensor ['protocol']) {
@@ -47,7 +48,17 @@ while ( true ) {
 		}
 	}
 	sleep ( 2 );
+	if ($settings->getSettings ( 'Daemon', 'stop' )) {
+		$settings->setSettings ( 'Daemon', 'stop', false );
+		$settings->setSettings ( 'Daemon', 'pid', - 1 );
+		break;
+	}
+	if ($settings->getSettings ( 'Daemon', 'scenarios' )) {
+		$settings->setSettings ( 'Daemon', 'scenarios', false );
+		$scenarios = loadScenarios ( $arrMvt );
+	}
 }
+exit ();
 function loadSensors() {
 	$arrMvt = array ();
 	$bdd = getBDD ();
