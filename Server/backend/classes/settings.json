@@ -39,7 +39,8 @@
     	"tamper":true
     },
     "Daemon":{
-    	"pid":-1
+    	"pid":-1,
+    	"stop":false
     },
     "Weather":{
     	"appid":""
