@@ -58,6 +58,7 @@ function add($arr) {
 		$scenario = $arr ['scenario'];
 		$req = $bdd->exec ( "INSERT INTO at_sensors_scenarios VALUES('', '$sensor', '$scenario')" );
 		if ($req == 1) {
+			(new Settings ())->setSettings ( 'Daemon', 'scenarios', true );
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
