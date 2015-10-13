@@ -47,7 +47,7 @@ while ( true ) {
 			}
 		}
 	}
-	sleep ( 2 );
+	sleep ( 0.5 );
 	if ($settings->getSettings ( 'Daemon', 'stop' )) {
 		$settings->setSettings ( 'Daemon', 'stop', false );
 		$settings->setSettings ( 'Daemon', 'pid', - 1 );
