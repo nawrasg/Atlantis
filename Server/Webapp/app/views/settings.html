@@ -1,6 +1,33 @@
 <div>
   <md-content class="md-padding">
     <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Etat Syst&egrave;me">
+        <md-content class="md-padding" ng-controller="StatusSettingsCtrl">
+        	<div class=left50>
+        		<div class="panel panel-info">
+        			<div class=panel-heading>Daemon</div>
+        			<div class=panel-body>
+        				<div layout=row layout-align="start center">
+        					<md-button class="md-raised md-primary" ng-click="startDaemon()" flex>D&eacute;marrer</md-button>
+        					<md-button class="md-raised md-warn" ng-click="stopDaemon()" flex>Arr&ecirc;ter</md-button>
+        				</div>
+        				<label style="margin-top:20px">Etat : {{daemon}}</label>
+        			</div>
+        		</div>
+        	</div>
+        	<div class=right50>
+        		<div class="panel panel-info">
+        			<div class="panel-heading">Serveur</div>
+        			<div class="panel-body">
+        				<div layout=row layout-align="start center">
+        					<label flex=50>Espace libre : {{free_hdd}}%</label>
+        					<md-progress-circular md-mode="determinate" value="{{free_hdd}}" />
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </md-content>
+      </md-tab>
       <md-tab label="Param&egrave;tres Atlantis">
         <md-content class="md-padding" ng-controller="AtlantisSettingsCtrl">
         	<div class="left50">
