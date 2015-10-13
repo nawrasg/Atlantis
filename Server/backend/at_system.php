@@ -28,18 +28,22 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 }
 function get() {
 	$pid = (new Settings ())->getSettings ( 'Daemon', 'pid' );
-	exec ( "ps -p $pid", $result );
-	if (count ( $result ) > 1) {
-		$result = $result [1];
-		$result = preg_replace ( "/\s+/", " ", $result );
-		$data = explode ( " ", $result );
-		if ($data [3] == 'php') {
-			$daemon = true;
+	if ($pid == - 1) {
+		$daemon = false;
+	} else {
+		exec ( "ps -p $pid", $result );
+		if (count ( $result ) > 1) {
+			$result = $result [1];
+			$result = preg_replace ( "/\s+/", " ", $result );
+			$data = explode ( " ", $result );
+			if ($data [3] == 'php') {
+				$daemon = true;
+			} else {
+				$daemon = false;
+			}
 		} else {
 			$daemon = false;
 		}
-	} else {
-		$daemon = false;
 	}
 	$free_disk = disk_free_space ( '/' ) / disk_total_space ( '/' );
 	$output = array (
