@@ -90,3 +90,17 @@ Blockly.Blocks['at_alarm'] = {
 		this.setHelpUrl('http://www.example.com/');
 	}
 };
+
+Blockly.Blocks['at_music'] = {
+	init : function() {
+		this.appendDummyInput().appendField("Lecteur de musique");
+		this.appendValueInput("PLAY").setCheck("Boolean")
+				.appendField("Lecture");
+		this.appendValueInput("VOLUME").setCheck("Number").appendField(
+				"Volume (0-100)");
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
+		this.setColour(190);
+		this.setTooltip('Contrôler le lecteur de musique');
+	}
+};

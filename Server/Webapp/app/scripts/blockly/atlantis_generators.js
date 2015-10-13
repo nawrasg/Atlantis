@@ -42,3 +42,19 @@ Blockly.PHP['at_alarm'] = function(block) {
 	var code = '(new Settings())->setSettings(\'Alarm\', \'status\', ' + status + ');\n';
 	return code;
 };
+
+Blockly.PHP['at_music'] = function(block) {
+	var value_play = Blockly.PHP.valueToCode(block, 'PLAY', Blockly.PHP.ORDER_ATOMIC);
+	var value_volume = Blockly.PHP.valueToCode(block, 'VOLUME', Blockly.PHP.ORDER_ATOMIC);
+	var code = '';
+	if(value_play){
+		code = '$music = new Music();\n';
+		code += '$music->play();\n';
+		if(typeof value_volume === 'number'){
+			code += '$music->volume(' + value_volume + ', true);\n';
+		}
+	}else{
+		code = '(new Music())->stop();\n';
+	}
+	return code;
+};
