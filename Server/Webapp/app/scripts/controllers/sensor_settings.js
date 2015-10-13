@@ -80,6 +80,8 @@ nApp.controller('SensorSettingsCtrl', function($scope, $rootScope, $mdDialog, $f
 		switch(sensor.type){
 		case 'Door/Window':
 			return true;
+		case 'Motion':
+			return true;
 		default:
 			return false;
 		}
