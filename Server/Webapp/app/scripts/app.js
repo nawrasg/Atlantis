@@ -61,6 +61,9 @@ nApp.config(function($routeProvider) {
 	}).when('/scenario', {
 		templateUrl : 'views/scenario.html',
 		controller : 'ScenarioCtrl'
+	}).when('/cameras', {
+		templateUrl : 'views/cameras.html',
+		controller : 'CamerasCtrl'
 	}).otherwise({
 		redirectTo : '/home'
 	});
