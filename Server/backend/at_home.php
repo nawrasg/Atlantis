@@ -52,6 +52,10 @@ function update($arr) {
 		} else {
 			http_response_code ( 400 );
 		}
+		$scenario = __DIR__ . '/scenarios/alarm.php';
+		if (file_exists ( $scenario )) {
+			include $scenario;
+		}
 	}
 }
 function setWeather() {
