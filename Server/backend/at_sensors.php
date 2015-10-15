@@ -132,7 +132,18 @@ function update($arr) {
 		$ignore = $arr ['ignore'];
 		$bdd = getBDD ();
 		$req = $bdd->exec ( "UPDATE at_sensors SET `history` = '$history', `ignore` = '$ignore' WHERE id = '$sensor'" );
-		echo json_encode ( $req );
+		// echo json_encode ( $req );
+		if ($req == 1) {
+			http_response_code ( 202 );
+		} else {
+			http_response_code ( 400 );
+		}
+	}
+	if (isset ( $arr ['sensor'], $arr ['type'] )) {
+		$sensor = $arr ['sensor'];
+		$type = $arr ['type'];
+		$bdd = getBDD ();
+		$req = $bdd->exec ( "UPDATE at_sensors SET `type` = '$type' WHERE id = '$sensor'" );
 		if ($req == 1) {
 			http_response_code ( 202 );
 		} else {

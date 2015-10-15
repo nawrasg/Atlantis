@@ -8,6 +8,16 @@
 
 nApp.controller('SensorSettingsCtrl', function($scope, $rootScope, $mdDialog, $filter, $sessionStorage, $http, $mdToast, AtlantisUri, sensor) {
 	$scope.sensor = sensor;
+	$scope.types = [{id:'Battery', label:'Niveau de batterie'},
+	                {id:'Tamper', label:'Détecteur d\'arrachement'},
+	                {id:'Door/Window', label:'Détecteur d\'ouverture'},
+	                {id:'Temperature', label:'Détecteur de température'},
+	                {id:'Luminiscence', label:'Détecteur de luminosité'},
+	                {id:'Motion', label:'Détecteur de mouvement'},
+	                {id:'switchBinary', label:'Prise murale'},
+	                {id:'sensorBinary', label:'Détecteur binaire'},
+	                {id:'Power', label:'Puissance (W)'},
+	                {id:'Electric', label:'Consommation électrique'}];
 	if(isScenario()){
 		getScenarios();	
 	}
@@ -51,7 +61,7 @@ nApp.controller('SensorSettingsCtrl', function($scope, $rootScope, $mdDialog, $f
 		if(sensor.type === "section"){
 			nURL += "&device=" + $scope.sensor.id + "&alias=" + $scope.sensor.alias + "&room=" + $scope.sensor.room;
 		}else{
-			nURL += "&sensor=" + $scope.sensor.id + "&history=" + $scope.sensor.history + "&ignore=" + $scope.sensor.ignore;
+			nURL += "&sensor=" + $scope.sensor.id + "&history=" + $scope.sensor.history + "&ignore=" + $scope.sensor.ignore + '&type=' + $scope.sensor.type;
 		}
 		$http.put(nURL).success(function(data, status){
 			if(status == 202){
