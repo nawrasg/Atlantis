@@ -9,6 +9,7 @@ nApp.factory('AtlantisUri', function() {
 	var mIP = '';
 	
 	return {
+		Cameras : function(){return mIP + 'backend/at_cameras.php';},
 		Courses : function(){return mIP + 'backend/at_courses.php';},
 		Cuisine : function() {return mIP + 'backend/at_cuisine.php';},
 		Devices : function(){return mIP + 'backend/at_ccdevices.php';},
