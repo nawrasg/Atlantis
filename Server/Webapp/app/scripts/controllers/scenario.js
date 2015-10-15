@@ -6,7 +6,8 @@
  * @description # ScenarioCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('ScenarioCtrl', function($scope, $window, $http, $mdToast, $sessionStorage, AtlantisUri) {
+nApp.controller('ScenarioCtrl', function($scope, $window, $http, $filter, $mdToast, $sessionStorage, AtlantisUri) {
+	var reservedScenarios = [{id:'alarm', description:'Ce script est exécuté lorsque l\'alarme est activée ou désactivée.'}];
 	var blocklyArea = document.getElementById('blocklyArea');
 	var blocklyDiv = document.getElementById('blocklyDiv');
 	var workspace = Blockly.inject(blocklyDiv, {
@@ -51,7 +52,12 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $mdToast, $sess
 		})
 	};
 	$scope.updateTitle = function(){
-		$scope.newScenario = encodeURIComponent($scope.newScenario);
+		var filtered = $filter('filter')(reservedScenarios, {id:$scope.newScenario});
+		if(filtered.length == 1 && filtered[0].id == $scope.newScenario){
+			$scope.scenario_description = filtered[0].description; 
+		}else{
+			$scope.scenario_description = null;
+		}
 	};
 	$scope.loadScenario = function(scenario){
 		if(scenario != null){
