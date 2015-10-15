@@ -21,6 +21,7 @@
 					<label>{{placard.label}} ({{placard.quantite}})</label>
 					<p>{{peremption(placard)}}</p>
 				</div>
+				<md-icon md-svg-src="images/svg/ic_filter_tilt_shift_black_36px.svg" ng-click="open(placard)" ng-show="placard.status == 0"></md-icon>
 				<md-icon md-svg-src="images/svg/ic_add_black_36px.svg" ng-click="modify(placard, '+')"></md-icon>
 				<md-icon md-svg-src="images/svg/ic_remove_black_36px.svg" ng-click="modify(placard, '-')"  ng-hide="placard.quantite < 2"></md-icon>
 				<md-icon md-svg-src="images/svg/ic_clear_black_36px.svg" ng-click="modify(placard, '.')"></md-icon>
