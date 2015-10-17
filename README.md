@@ -20,7 +20,6 @@ Atlantis est un système domotique libre et gratuit sous licence GPL 3.
 * Gestion des caméras de surveillance
 * Lecteur de musique
 * Musique de bienvenue : lorsque vous rentrez chez vous, votre morceau préféré est joué
-* Géolocalisation des appareils utilisant Atlantis
 
 ##Demo
 * Application web (utiliser un quelconque identifiant) : <http://atlantis.nawrasg.fr/>
