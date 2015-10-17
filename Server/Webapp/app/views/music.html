@@ -61,7 +61,7 @@
 			</md-select>
 		</md-input-container>
 		<md-input-container flex>
-			<label>Filtrer</label>
+			<label>Recherchez</label>
 			<input ng-model=search ng-change="filter(search)">
 		</md-input-container>
 		<div class="nList" ng-repeat="playlist in playlists track by playlist.id" ng-if="type.id == 0 || type.id == 1">
