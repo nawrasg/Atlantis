@@ -1,6 +1,6 @@
 #Atlantis
-Version 0.2  
-GPL v4 - Nawras GEORGI - Septembre 2015  
+Version 0.3  
+GPL v3 - Nawras GEORGI - Septembre 2015  
 ***
 
 
