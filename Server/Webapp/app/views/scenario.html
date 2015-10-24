@@ -23,7 +23,7 @@
 		</div>
 	</div>
 </div>
-<div layout=row layout-align="center center">
+<div layout=row layout-align="center center" ng-if="tools">
 	<md-button class="md-raised" ng-click="loadToolbox('atlantis')">Capteurs</md-button>
 	<md-button class="md-raised" ng-click="loadToolbox('logic')">Logique</md-button>
 	<md-button class="md-raised" ng-click="loadToolbox('control')">Contr&ocirc;le</md-button>
@@ -31,6 +31,7 @@
 <div id="blocklyArea" class="container" style=""></div>
 <xml id="toolbox" style="display: none">
 	<block type="at_light"></block>
+	<block type="at_light_status"></block>
 	<block type="at_switch"></block>
 	<block type="at_music"></block>
 	<block type="at_gcm"></block>
