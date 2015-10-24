@@ -58,3 +58,14 @@ Blockly.PHP['at_music'] = function(block) {
 	}
 	return code;
 };
+
+Blockly.PHP['at_light_status'] = function(block) {
+	var dropdown_id = block.getFieldValue('ID');
+	var code = 'Light::byID(' + dropdown_id + ')->isOn()';
+	return [ code, Blockly.PHP.ORDER_NONE ];
+};
+
+Blockly.PHP['at_alarm_status'] = function(block) {
+	var code = '(new Alarm())->isOn()';
+	return [ code, Blockly.PHP.ORDER_NONE ];
+};
