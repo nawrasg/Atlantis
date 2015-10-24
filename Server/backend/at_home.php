@@ -6,6 +6,7 @@ header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Settings.php';
+require_once __DIR__ . '/classes/Alarm.php';
 require_once __DIR__ . '/classes/VigilanceMeteo.php';
 require_once __DIR__ . '/classes/Weather.php';
 
@@ -39,22 +40,18 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 }
 function update($arr) {
 	if (isset ( $arr ['alarm'] )) {
-		$settings = new Settings ();
+		$alarm = new Alarm ();
 		if ($arr ['alarm'] == 'true') {
-			$val = TRUE;
+			$val = true;
+			$alarm->on ();
 		} else {
-			$val = FALSE;
+			$val = false;
+			$alarm->off ();
 		}
-		$settings->setSettings ( 'Alarm', 'status', $val );
-		$status = $settings->getSettings ( 'Alarm', 'status' );
-		if ($status == $val) {
+		if ($alarm->isOn () == $val) {
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
-		}
-		$scenario = __DIR__ . '/scenarios/alarm.php';
-		if (file_exists ( $scenario )) {
-			include $scenario;
 		}
 	}
 }
