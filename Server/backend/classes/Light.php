@@ -20,6 +20,23 @@ class Light {
 		}
 		return $light;
 	}
+	public static function byID($id) {
+		$light = new Light ();
+		$light->lights = array ();
+		$bdd = getBDD ();
+		$req = $bdd->query ( "SELECT * FROM at_lights WHERE id = $id" );
+		while ( $data = $req->fetch () ) {
+			$light->lights [] = array (
+					'id' => $data ['id'],
+					'name' => $data ['name'],
+					'protocol' => $data ['protocol'],
+					'ip' => $data ['ip'],
+					'room' => $data ['room'],
+					'uid' => $data ['uid'] 
+			);
+		}
+		return $light;
+	}
 	public function color($color) {
 		$hue = new Hue ();
 		foreach ( $this->lights as $light ) {
@@ -54,6 +71,19 @@ class Light {
 					$hue->setBrightness ( $uid, $value );
 					break;
 			}
+		}
+	}
+	public function isOn() {
+		if (count ( $this->lights ) != 1) {
+			return false;
+		}
+		$light = $this->lights [0];
+		$protocol = $light ['protocol'];
+		switch ($protocol) {
+			case 'hue' :
+				$hue = new Hue ();
+				$uid = $light ['uid'];
+				return $hue->isOn ( $uid );
 		}
 	}
 }
