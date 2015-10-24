@@ -32,6 +32,7 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $filter, $mdToa
 	$window.addEventListener('resize', onresize, false);
 	onresize();
 	get();
+	getToolbox();
 	$scope.save = function(){
 		var code = Blockly.PHP.workspaceToCode(workspace);
 		var xml = Blockly.Xml.workspaceToDom( Blockly.mainWorkspace );
@@ -98,7 +99,7 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $filter, $mdToa
 		var tool = '<xml id="toolbox" style="display: none">';
 		switch(section){
 		case 'atlantis':
-			tool += '<block type="at_light"></block><block type="at_switch"></block><block type="at_music"></block><block type="at_gcm"></block><block type="at_alarm_status"></block><block type="at_alarm"></block>';
+			tool += '<block type="at_light"></block><block type="at_light_status"></block><block type="at_switch"></block><block type="at_music"></block><block type="at_gcm"></block><block type="at_alarm_status"></block><block type="at_alarm"></block>';
 			break;
 		case 'logic':
 			tool += '<block type="controls_if"></block><block type="logic_compare"></block><block type="logic_operation"></block><block type="logic_negate"></block><block type="logic_boolean"></block><block type="logic_null"></block><block type="logic_ternary"></block>';
@@ -120,5 +121,14 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $filter, $mdToa
 				$scope.scenarios = data;
 			}
 		});
+	}
+	function getToolbox(){
+		$http.get(AtlantisUri.Lights() + '?api=' + $sessionStorage.api).success(function(data, status){
+			if(status == 202){
+				$window.lights = data.lights;
+				$window.rooms = data.rooms;
+			}
+		});
+		$scope.tools = true;
 	}
 });
