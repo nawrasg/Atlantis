@@ -1,16 +1,13 @@
 <?php
 require_once __DIR__ . '/connexion.php';
 require_once __DIR__ . '/Settings.php';
-
 class Hue {
 	var $user, $ip;
-
 	public function __construct() {
 		$settings = new Settings ();
 		$this->ip = $settings->getSettings ( "Hue", "ip" );
 		$this->user = $settings->getSettings ( "Hue", "user" );
 	}
-
 	public function loadRawData($id = NULL) {
 		if ($id == NULL) {
 			$link = 'http://' . $this->ip . '/api/' . $this->user . '/lights';
@@ -21,7 +18,6 @@ class Hue {
 		$arr = json_decode ( $json );
 		return $arr;
 	}
-
 	public function discover($new = FALSE) {
 		if ($new) {
 		} else {
@@ -32,13 +28,12 @@ class Hue {
 					$name = $light->name;
 					$uid = $light->uniqueid;
 					$this->insertLight ( $name, $uid );
-				}else{
+				} else {
 					break;
 				}
 			}
 		}
 	}
-
 	private function insertLight($name, $uid) {
 		$bdd = getBDD ();
 		$req = $bdd->prepare ( 'INSERT INTO at_lights VALUES("", :name, "hue", "light", NULL, NULL, :uid)' );
@@ -48,7 +43,6 @@ class Hue {
 		) );
 		$req->closeCursor ();
 	}
-
 	public function loadLights() {
 		$bdd = getBDD ();
 		$req = $bdd->query ( 'SELECT * FROM at_lights WHERE `protocol` = "hue"' );
@@ -57,7 +51,7 @@ class Hue {
 			$details = $this->getLightDetails ( $data ['uid'] );
 			$arr [] = array_merge ( array (
 					'id' => $data ['id'],
-					//'name' => $data ['name'],
+					// 'name' => $data ['name'],
 					'protocol' => $data ['protocol'],
 					'room' => $data ['room'],
 					'uid' => $data ['uid'] 
@@ -66,8 +60,7 @@ class Hue {
 		$req->closeCursor ();
 		return $arr;
 	}
-	
-	private function sendHTTP($method, $url, $body){
+	private function sendHTTP($method, $url, $body) {
 		$ch = curl_init ( $url );
 		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, TRUE );
 		curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, $method );
@@ -79,7 +72,6 @@ class Hue {
 			return $response;
 		}
 	}
-
 	public function on($uid, $status) {
 		$lights = $this->loadRawData ();
 		for($i = 1; $i < 4; $i ++) {
@@ -91,12 +83,11 @@ class Hue {
 							'on' => ($status == "true" ? TRUE : FALSE) 
 					) );
 					$url = 'http://' . $this->ip . '/api/' . $this->user . '/lights/' . $i . '/state';
-					return $this->sendHTTP("PUT", $url, $body);
+					return $this->sendHTTP ( "PUT", $url, $body );
 				}
 			}
 		}
 	}
-
 	public function setBrightness($uid, $value) {
 		$lights = $this->loadRawData ();
 		for($i = 1; $i < 4; $i ++) {
@@ -105,82 +96,94 @@ class Hue {
 				$uniqueid = $light->uniqueid;
 				if ($uniqueid == $uid) {
 					$body = json_encode ( array (
-							'bri' => intval($value) 
+							'bri' => intval ( $value ) 
 					) );
 					$url = 'http://' . $this->ip . '/api/' . $this->user . '/lights/' . $i . '/state';
-					return $this->sendHTTP("PUT", $url, $body);
+					return $this->sendHTTP ( "PUT", $url, $body );
 				}
 			}
 		}
 	}
-		
-	public function toggleLight($uid){
-		$i = $this->getLightIndex($uid);
-		$light = $this->loadRawData($i);
+	public function toggleLight($uid) {
+		$i = $this->getLightIndex ( $uid );
+		$light = $this->loadRawData ( $i );
 		$ct = $light->state->ct;
-		if($ct != 155){
-			$body = json_encode(array('ct' => 155));
-		}else{
-			$body = json_encode(array('ct' => 369));			
+		if ($ct != 155) {
+			$body = json_encode ( array (
+					'ct' => 155 
+			) );
+		} else {
+			$body = json_encode ( array (
+					'ct' => 369 
+			) );
 		}
 		$url = 'http://' . $this->ip . '/api/' . $this->user . '/lights/' . $i . '/state';
-		$this->sendHTTP("PUT", $url, $body);
+		$this->sendHTTP ( "PUT", $url, $body );
 	}
-	
-	public function setColor($uid, $value){
-		switch($value){
-			case 'white':
-				$body = json_encode(array('ct' => 155));
+	public function setColor($uid, $value) {
+		switch ($value) {
+			case 'white' :
+				$body = json_encode ( array (
+						'ct' => 155 
+				) );
 				break;
-			case 'yellow':
-				$body = json_encode(array('ct' => 369));
+			case 'yellow' :
+				$body = json_encode ( array (
+						'ct' => 369 
+				) );
 				break;
-			case 'red':
-				$body = json_encode(array('hue' => 0, 'sat' => 254));
+			case 'red' :
+				$body = json_encode ( array (
+						'hue' => 0,
+						'sat' => 254 
+				) );
 				break;
-			case 'blue':
-				$body = json_encode(array('hue' => 46920, 'sat' => 254));
+			case 'blue' :
+				$body = json_encode ( array (
+						'hue' => 46920,
+						'sat' => 254 
+				) );
 				break;
-			case 'green':
-				$body = json_encode(array('hue' => 25500, 'sat' => 254));
+			case 'green' :
+				$body = json_encode ( array (
+						'hue' => 25500,
+						'sat' => 254 
+				) );
 				break;
-				
 		}
-		$i = $this->getLightIndex($uid);
+		$i = $this->getLightIndex ( $uid );
 		$url = 'http://' . $this->ip . '/api/' . $this->user . '/lights/' . $i . '/state';
-		$this->sendHTTP("PUT", $url, $body);
+		$this->sendHTTP ( "PUT", $url, $body );
 	}
-	
-	public function setName($uid, $name){
-		$i = $this->getLightIndex($uid);
+	public function setName($uid, $name) {
+		$i = $this->getLightIndex ( $uid );
 		$url = 'http://' . $this->ip . '/api/' . $this->user . '/lights/' . $i;
-		$body = json_encode(array('name' => $name));
-		$result = $this->sendHTTP("PUT", $url, $body);
+		$body = json_encode ( array (
+				'name' => $name 
+		) );
+		$result = $this->sendHTTP ( "PUT", $url, $body );
 	}
-	
-	private function getLightIndex($uid){
+	private function getLightIndex($uid) {
 		$lights = $this->loadRawData ();
 		for($i = 1; $i < 4; $i ++) {
 			$light = $lights->$i;
 			if ($light != NULL) {
 				$uniqueid = $light->uniqueid;
 				if ($uniqueid == $uid) {
-					return  $i;
+					return $i;
 				}
 			}
 		}
 	}
-	
-	public function toggle($uid){
-		$i = $this->getLightIndex($uid);
-		$light = $this->loadRawData($i);
-		if($light->state->on){
-			$this->on($uid, "false");
-		}else{
-			$this->on($uid, "true");
+	public function toggle($uid) {
+		$i = $this->getLightIndex ( $uid );
+		$light = $this->loadRawData ( $i );
+		if ($light->state->on) {
+			$this->on ( $uid, "false" );
+		} else {
+			$this->on ( $uid, "true" );
 		}
 	}
-
 	private function getLightDetails($uid) {
 		$lights = $this->loadRawData ();
 		for($i = 1; $i < 4; $i ++) {
@@ -196,9 +199,9 @@ class Hue {
 					$arr = array (
 							'reachable' => $reachable,
 							'on' => $status,
-							'brightness' => $brightness ,
+							'brightness' => $brightness,
 							'ct' => $ct,
-							'name' => $name
+							'name' => $name 
 					);
 					return $arr;
 				}
@@ -208,7 +211,15 @@ class Hue {
 		}
 		return FALSE;
 	}
-	
+	public function isOn($uid) {
+		$i = $this->getLightIndex ( $uid );
+		$light = $this->loadRawData ( $i );
+		if ($light->state->on && $light->state->reachable) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public function delete() {
 		$bdd = getBDD ();
 		$req = $bdd->exec ( 'TRUNCATE TABLE at_lights' );
