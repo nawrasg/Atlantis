@@ -7,15 +7,27 @@ function getRooms() {
 	}
 	return nResult;
 }
+function getLights(){
+	if(window.lights == null){
+		return [['', '']];
+	}
+	var nResult = [];
+	for(var i = 0; i < window.lights.length; i++){
+		var name = window.lights[i].name;
+		var id = window.lights[i].id;
+		nResult.push([name, id]);
+	}
+	return nResult;
+}
 
 Blockly.Blocks['at_switch'] = {
 	init : function() {
 		this.appendDummyInput().appendField("Prise").appendField(
 				new Blockly.FieldDropdown(getRooms), "ROOM");
-		this.appendValueInput("STATUS").setCheck("Boolean").appendField("Etat");
-		this.setInputsInline(true);
-		this.setPreviousStatement(false);
-		this.setNextStatement(false);
+		this.appendValueInput("STATUS").setCheck("Boolean").appendField("Allumé (V/F)");
+		this.setInputsInline(false);
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
 		this.setColour(190);
 		this.setTooltip('Contrôler une prise électrique.');
 	}
@@ -70,7 +82,7 @@ Blockly.Blocks['at_light'] = {
 };
 Blockly.Blocks['at_alarm_status'] = {
 	init : function() {
-		this.appendDummyInput().appendField("Etat de l'alarme");
+		this.appendDummyInput().appendField("Alarme activée");
 		this.setOutput(true);
 		this.setColour(190);
 		this.setTooltip('Connaître l\'état de l\'alarme.');
@@ -95,12 +107,22 @@ Blockly.Blocks['at_music'] = {
 	init : function() {
 		this.appendDummyInput().appendField("Lecteur de musique");
 		this.appendValueInput("PLAY").setCheck("Boolean")
-				.appendField("Lecture");
+				.appendField("Lecture (V/F)");
 		this.appendValueInput("VOLUME").setCheck("Number").appendField(
 				"Volume (0-100)");
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
 		this.setColour(190);
-		this.setTooltip('Contrôler le lecteur de musique');
+		this.setTooltip('Contrôler le lecteur de musique.');
+	}
+};
+
+Blockly.Blocks['at_light_status'] = {
+	init : function() {
+		this.appendDummyInput().appendField("Ampoule Allumée")
+				.appendField(new Blockly.FieldDropdown(getLights), "ID");
+		this.setOutput(true, "Boolean");
+		this.setColour(190);
+		this.setTooltip('Obtenir l\'état de l\'ampoule (allumée ou éteinte).');
 	}
 };
