@@ -91,6 +91,24 @@ function get($arr) {
 			);
 		}
 		return $result;
+	} else if (isset ( $arr ['type'] )) {
+		$type = $arr ['type'];
+		$bdd = getBDD ();
+		$req = $bdd->query ( "SELECT at_sensors.*, at_sensors_devices.alias, at_sensors_devices.room FROM at_sensors INNER JOIN at_sensors_devices ON at_sensors.device = at_sensors_devices.device WHERE `type` = '$type' AND `ignore` = 0" );
+		$result = array ();
+		while ( $data = $req->fetch () ) {
+			$result [] = array (
+					'id' => $data ['id'],
+					'sensor' => $data ['sensor'],
+					'protocol' => $data ['protocol'],
+					'type' => $data ['type'],
+					'unit' => $data ['unit'],
+					'history' => $data ['history'],
+					'date' => $data ['date'],
+					'time' => $data ['time'] 
+			);
+		}
+		return $result;
 	} else {
 		$devices_zwave = $zwave->loadDevices ();
 		$result = array_merge ( $devices_zwave );
