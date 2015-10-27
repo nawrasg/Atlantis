@@ -99,7 +99,7 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $filter, $mdToa
 		var tool = '<xml id="toolbox" style="display: none">';
 		switch(section){
 		case 'atlantis':
-			tool += '<block type="at_light"></block><block type="at_light_status"></block><block type="at_switch"></block><block type="at_music"></block><block type="at_gcm"></block><block type="at_alarm_status"></block><block type="at_alarm"></block>';
+			tool += '<block type="at_light"></block><block type="at_light_status"></block><block type="at_switch"></block><block type="at_music"></block><block type="at_gcm"></block><block type="at_alarm_status"></block><block type="at_alarm"></block><block type="at_time"></block>';
 			break;
 		case 'logic':
 			tool += '<block type="controls_if"></block><block type="logic_compare"></block><block type="logic_operation"></block><block type="logic_negate"></block><block type="logic_boolean"></block><block type="logic_null"></block><block type="logic_ternary"></block>';
@@ -129,6 +129,11 @@ nApp.controller('ScenarioCtrl', function($scope, $window, $http, $filter, $mdToa
 				$window.rooms = data.rooms;
 			}
 		});
-		$scope.tools = true;
+		$http.get(AtlantisUri.Sensors() + '?api=' + $sessionStorage.api + '&type=switchBinary').success(function(data, status){
+			if(status == 202){
+				$window.switches = data;
+			}
+		});
+		$scope.tools = true;			
 	}
 });

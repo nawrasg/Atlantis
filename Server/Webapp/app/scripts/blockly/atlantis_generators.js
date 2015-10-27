@@ -47,10 +47,10 @@ Blockly.PHP['at_music'] = function(block) {
 	var value_play = Blockly.PHP.valueToCode(block, 'PLAY', Blockly.PHP.ORDER_ATOMIC);
 	var value_volume = Blockly.PHP.valueToCode(block, 'VOLUME', Blockly.PHP.ORDER_ATOMIC);
 	var code = '';
-	if(value_play){
+	if(value_play === 'true'){
 		code = '$music = new Music();\n';
 		code += '$music->play();\n';
-		if(typeof value_volume === 'number'){
+		if(value_volume != '' && typeof parseInt(value_volume) == 'number'){
 			code += '$music->volume(' + value_volume + ', true);\n';
 		}
 	}else{
@@ -67,5 +67,26 @@ Blockly.PHP['at_light_status'] = function(block) {
 
 Blockly.PHP['at_alarm_status'] = function(block) {
 	var code = '(new Alarm())->isOn()';
+	return [ code, Blockly.PHP.ORDER_NONE ];
+};
+
+Blockly.PHP['at_time'] = function(block) {
+	var dropdown_operation = block.getFieldValue('OPERATION');
+	var value_time = Blockly.PHP.valueToCode(block, 'TIME', Blockly.PHP.ORDER_ATOMIC);
+	var code = '';
+	if(value_time != ''){
+		switch(dropdown_operation){
+		case '=':
+			code = '(time() == strtotime(' + value_time + '))';
+		case '<':
+			code = '(time() < strtotime(' + value_time + '))';
+		case '<=':
+			code = '(time() <= strtotime(' + value_time + '))';
+		case '>':
+			code = '(time() > strtotime(' + value_time + '))';
+		case '>=':
+			code = '(time() >= strtotime(' + value_time + '))';
+		}
+	}
 	return [ code, Blockly.PHP.ORDER_NONE ];
 };

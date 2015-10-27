@@ -19,6 +19,9 @@ function getLights(){
 	}
 	return nResult;
 }
+function getSwitches(){
+	
+}
 
 Blockly.Blocks['at_switch'] = {
 	init : function() {
@@ -124,5 +127,20 @@ Blockly.Blocks['at_light_status'] = {
 		this.setOutput(true, "Boolean");
 		this.setColour(190);
 		this.setTooltip('Obtenir l\'état de l\'ampoule (allumée ou éteinte).');
+	}
+};
+
+Blockly.Blocks['at_time'] = {
+	init : function() {
+		this.appendDummyInput().appendField("Heure actuelle").appendField(
+				new Blockly.FieldDropdown([ [ "=", "=" ], [ "<", "<" ],
+						[ "<=", "<=" ], [ ">", ">" ], [ ">=", ">=" ] ]),
+				"OPERATION");
+		this.appendValueInput("TIME").setCheck("String").appendField("(HH:MM)");
+		this.setInputsInline(true);
+		this.setOutput(true, "Boolean");
+		this.setColour(190);
+		this.setTooltip('');
+		this.setHelpUrl('http://www.example.com/');
 	}
 };
