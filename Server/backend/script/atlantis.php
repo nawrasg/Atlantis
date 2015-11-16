@@ -11,7 +11,6 @@ while ( ! getBDD () )
 	;
 
 $push = new PushMessage ();
-$zwave = new Zwave ();
 
 $arrMvt = loadSensors ();
 $arrMvt2 = initTimestamp ( $arrMvt );
@@ -19,6 +18,7 @@ $scenarios = loadScenarios ( $arrMvt );
 
 while ( true ) {
 	$settings = new Settings ();
+	$zwave = new Zwave ( true );
 	$alarm = $settings->getSettings ( 'Alarm', 'status' );
 	foreach ( $arrMvt as $i => $sensor ) {
 		if ($sensor ['type'] == 'Door/Window') {
