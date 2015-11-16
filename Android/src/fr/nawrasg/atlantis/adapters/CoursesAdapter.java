@@ -7,7 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.Element;
 
@@ -17,7 +21,9 @@ public class CoursesAdapter extends ArrayAdapter<Element>{
 	private Element mElement;
 	
 	static class CoursesViewHolder{
-		public TextView title, quantity;
+		TextView title;
+		TextView quantity;
+		public CheckBox done;
 	}
 	
 	public CoursesAdapter(Context context, List<Element> objects) {
@@ -28,7 +34,12 @@ public class CoursesAdapter extends ArrayAdapter<Element>{
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		mElement = mList.get(position); 
+		mElement = mList.get(position);
+		if(mElement.isDone()){
+			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View nView = inflater.inflate(R.layout.row_null, parent, false);
+			return nView;
+		}
 		View nView = convertView;
 		if(nView == null){
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -36,6 +47,16 @@ public class CoursesAdapter extends ArrayAdapter<Element>{
 			final CoursesViewHolder nHolder = new CoursesViewHolder();
 			nHolder.title = (TextView)nView.findViewById(R.id.lblCoursesTitle);
 			nHolder.quantity = (TextView)nView.findViewById(R.id.lblCoursesQuantity);
+			nHolder.done = (CheckBox) nView.findViewById(R.id.cbCoursesDone);
+			nHolder.done.setTag(mElement);
+			nHolder.done.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Element element = (Element) nHolder.done.getTag();
+					element.done(true);
+					notifyDataSetChanged();
+				}
+			});
 			nView.setTag(nHolder);
 		}
 		CoursesViewHolder nHolder = new CoursesViewHolder();
