@@ -7,12 +7,14 @@ import org.json.JSONObject;
 public class Element {
 	private String mName;
 	private int mQuantity, mID;
+	private boolean mDone;
 	
 	public Element(JSONObject x){
 		try{
 			mID = x.getInt("id");
 			mName = x.getString("name");
 			mQuantity = x.getInt("quantity");
+			mDone = false;
 		}catch(Exception e){
 			
 		}
@@ -52,5 +54,13 @@ public class Element {
 
 	public void decrement(){
 		mQuantity--;
+	}
+
+	public boolean isDone(){
+		return mDone;
+	}
+
+	public void done(boolean value){
+		mDone = value;
 	}
 }
