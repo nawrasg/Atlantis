@@ -19,6 +19,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import fr.nawrasg.atlantis.adapters.DrawerAdapter;
+import fr.nawrasg.atlantis.fragments.CameraFragment;
 import fr.nawrasg.atlantis.fragments.ConnectedDevicesFragment;
 import fr.nawrasg.atlantis.fragments.CoursesFragment;
 import fr.nawrasg.atlantis.fragments.CuisineAddFragment;
@@ -272,6 +273,9 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 			case 2:
 				loadFragment(new LightFragment(), true);
 				loadFragment(new SensorsFragment(), false);
+				break;
+			case 3:
+				loadFragment(new CameraFragment(), true);
 				break;
 			case 101:
 				loadFragment(new CoursesFragment(), true);
