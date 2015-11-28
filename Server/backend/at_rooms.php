@@ -11,7 +11,7 @@ $page_level = 1;
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
 		case 'GET' :
-			
+			echo json_encode ( get () );
 			break;
 		case 'POST' :
 			echo json_encode ( add ( $_REQUEST ) );
@@ -23,6 +23,19 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			delete ( $_REQUEST );
 			break;
 	}
+}
+function get() {
+	$bdd = getBDD ();
+	$req = $bdd->query ( 'SELECT * FROM at_room' );
+	$arr = array ();
+	while ( $data = $req->fetch () ) {
+		$arr [] = array (
+				'id' => $data ['id'],
+				'room' => $data ['room'] 
+		);
+	}
+	$req->closeCursor ();
+	return $arr;
 }
 function add($arr) {
 	if (isset ( $arr ['label'] )) {
