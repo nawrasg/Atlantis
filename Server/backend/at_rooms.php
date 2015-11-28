@@ -35,6 +35,7 @@ function get() {
 		);
 	}
 	$req->closeCursor ();
+	http_response_code ( 202 );
 	return $arr;
 }
 function add($arr) {
