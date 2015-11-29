@@ -42,9 +42,7 @@ nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage, $filter,
 	};
 	$scope.getRoomLabel = function(light) {
 		if (light.room != null && light.room != '') {
-			var nRoom = $filter('filter')($rootScope.rooms, {
-				id : light.room
-			});
+			var nRoom = $filter('filter')($rootScope.rooms, {id : light.room});
 			if (nRoom != null && nRoom.length == 1) {
 				return '(' + nRoom[0].room + ')';
 			}
