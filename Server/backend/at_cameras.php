@@ -15,14 +15,32 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			http_response_code ( 202 );
 			break;
 		case 'POST' :
-			
+			add ( $_REQUEST );
 			break;
 		case 'PUT' :
 			update ( $_REQUEST );
 			break;
 		case 'DELETE' :
-			
+			delete ( $_REQUEST );
 			break;
+	}
+}
+function delete($arr) {
+	if (checkAPI ( $arr ['api'], 0 )) {
+		if (isset ( $arr ['id'] )) {
+			$id = $arr ['id'];
+			$bdd = getBDD ();
+			$req = $bdd->exec ( "DELETE FROM at_cameras WHERE id = $id" );
+			if (! $req) {
+				http_response_code ( 400 );
+			} else {
+				http_response_code ( 202 );
+			}
+		} else {
+			http_response_code ( 404 );
+		}
+	} else {
+		http_response_code ( 403 );
 	}
 }
 function add($arr) {
@@ -30,18 +48,21 @@ function add($arr) {
 		$ip = $arr ['ip'];
 		$type = $arr ['type'];
 		$image = $arr ['image'];
+		isset ( $arr ['video'] ) ? $video = $arr ['video'] : $video = NULL;
+		isset ( $arr ['alias'] ) ? $alias = $arr ['alias'] : $alias = NULL;
+		isset ( $arr ['room'] ) ? $room = $arr ['room'] : $room = NULL;
+		if (isset ( $arr ['username'], $arr ['password'] )) {
+			$username = $arr ['username'];
+			$password = $arr ['password'];
+		} else {
+			$username = NULL;
+			$password = NULL;
+		}
 		$bdd = getBDD ();
-		$req = $bdd->exec ( "INSERT INTO at_cameras VALUES('', '$ip', '$type', '$image', NULL, NULL, NULL, NULL, NULL)" );
+		$req = $bdd->exec ( "INSERT INTO at_cameras VALUES('', '$ip', '$type', '$image', '$video', '$username', '$password', '$alias', '$room')" );
 		if (! $req) {
 			http_response_code ( 400 );
 		} else {
-			$id = $bdd->lastInsertId ();
-			if (isset ( $arr ['video'] )) {
-			}
-			if (isset ( $arr ['username'], $arr ['password'] )) {
-			}
-			if (isset ( $arr ['alias'], $arr ['room'] )) {
-			}
 			http_response_code ( 202 );
 		}
 	} else {
