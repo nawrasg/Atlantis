@@ -16,7 +16,7 @@
 </md-content>
 <div>
 	<md-card ng-repeat="camera in cameras track by camera.id" style="float:left">
-		<img alt=plant ng-src="{{'backend/home/cameras/' + camera.id + '.png'}}">
+		<img alt=camera ng-src="{{getImageUrl(camera)}}">
 		<md-card-content layout=row>
 			<div layout-align="center start" layout=column>
 				<h3 ng-click="editCamera(camera)">{{getTitle(camera)}} {{getRoomLabel(camera)}}</h3>
@@ -30,11 +30,11 @@
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_image.png">
-					Image : <a href="http://{{camera.ip}}/{{camera.image}}" target="_blank"> http://{{camera.ip}}/{{camera.image}}</a>
+					Image : <a href="" ng-click="refresh(camera)"> http://{{camera.ip}}/{{camera.image}}</a>
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_video.png">
-					Vid&eacute;o : <a href="http://{{camera.ip}}/{{camera.video}}" target="_blank"> http://{{camera.ip}}/{{camera.video}}</a>
+					Vid&eacute;o : <a href="" ng-click="refreshVideo(camera)"> http://{{camera.ip}}/{{camera.video}}</a>
 				</div>
 			</div>
 		</md-card-content>
