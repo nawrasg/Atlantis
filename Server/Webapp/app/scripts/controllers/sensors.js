@@ -7,8 +7,7 @@
  */
 var nApp = angular.module('atlantisWebAppApp');
 
-nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage,
-		$filter, $mdDialog, $rootScope, AtlantisUri) {
+nApp.controller('SensorsCtrl', function($scope, $http, $sessionStorage, $filter, $mdDialog, $rootScope, AtlantisUri) {
 	getLights($scope, $http);
 	getSensors($scope, $http);
 	var lightOptions = {
