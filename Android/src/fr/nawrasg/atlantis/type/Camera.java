@@ -17,6 +17,7 @@ public class Camera {
 		mUsername = camera.optString("username");
 		mPassword = camera.optString("password");
 		mAlias = camera.optString("alias");
+		mRoomLabel = camera.optString("room_label");
 	}
 
 	public int getID() {
@@ -55,7 +56,9 @@ public class Camera {
 		return mAlias;
 	}
 
+	public String getRoomLabel() {return mRoomLabel; }
+
 	private int mID, mRoom;
-	private String mIP, mType, mImageUrl, mVideoUrl, mUsername, mPassword, mAlias;
+	private String mIP, mType, mImageUrl, mVideoUrl, mUsername, mPassword, mAlias, mRoomLabel;
 
 }
