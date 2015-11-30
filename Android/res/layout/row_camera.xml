@@ -24,15 +24,50 @@
             android:contentDescription="picture"
             android:scaleType="fitCenter"/>
 
-        <TextView
-            android:id="@+id/txtCameraAlias"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <TextView
-            android:id="@+id/txtCameraRoom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/txtCameraAlias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtCameraType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ng_camera_2"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/txtCameraIpAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ng_adresse_ip"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/txtCameraImageUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ng_image"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/txtCameraVideoUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ng_video"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
     </LinearLayout>
-
 </android.support.v7.widget.CardView>
