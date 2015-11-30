@@ -2,6 +2,7 @@ package fr.nawrasg.atlantis.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,12 +40,22 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.CameraView
 	@Override
 	public void onBindViewHolder(CameraViewHolder holder, int position) {
 		final Camera nCamera = mList.get(position);
-		Picasso.with(mContext).load(App.getFullUrl(mContext) + "backend/home/cameras/" + nCamera.getID() + ".png").into(holder.image);
-		if(nCamera.getAlias().equals("null")){
-			holder.alias.setText(nCamera.getType());
+		Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?api=" + App.getAPI(mContext) + "&id=" + nCamera.getID()).into(holder.image);
+		String nAlias = "";
+		if(nCamera.getAlias().equals("null") || nCamera.getAlias().equals("")){
+			nAlias = nCamera.getType();
 		}else{
-			holder.alias.setText(nCamera.getAlias());
+			nAlias = nCamera.getAlias();
 		}
+		String nRoomLabel = nCamera.getRoomLabel();
+		if(!nRoomLabel.equals("null") && !nRoomLabel.equals("")){
+			nAlias += " (" + nRoomLabel + ")";
+		}
+		holder.alias.setText(nAlias);
+		holder.type.setText("Type : " + nCamera.getType());
+		holder.imageUrl.setText("Image : " + nCamera.getImageUrl());
+		holder.videoUrl.setText("Video : " + nCamera.getVideoUrl());
+		holder.ipAddress.setText("Adresse IP : " + nCamera.getIP());
 	}
 
 	@Override
@@ -55,7 +66,10 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.CameraView
 	static class CameraViewHolder extends RecyclerView.ViewHolder {
 		@Bind(R.id.imgCameraImage) ImageView image;
 		@Bind(R.id.txtCameraAlias) TextView alias;
-		@Bind(R.id.txtCameraRoom) TextView room;
+		@Bind(R.id.txtCameraType) TextView type;
+		@Bind(R.id.txtCameraIpAddress) TextView ipAddress;
+		@Bind(R.id.txtCameraImageUrl) TextView imageUrl;
+		@Bind(R.id.txtCameraVideoUrl) TextView videoUrl;
 
 		public CameraViewHolder(View itemView) {
 			super(itemView);
