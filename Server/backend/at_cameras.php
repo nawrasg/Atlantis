@@ -101,7 +101,7 @@ function get($arr) {
 		$id = $arr ['id'];
 		$req = $bdd->query ( "SELECT * FROM at_cameras WHERE id = $id" );
 	} else {
-		$req = $bdd->query ( 'SELECT * FROM at_cameras' );
+		$req = $bdd->query ( 'SELECT at_cameras.*, at_room.room AS room_label FROM at_cameras INNER JOIN at_room ON at_cameras.room = at_room.id' );
 	}
 	$output = array ();
 	while ( $data = $req->fetch () ) {
@@ -114,7 +114,8 @@ function get($arr) {
 				'username' => $data ['username'],
 				'password' => $data ['password'],
 				'alias' => $data ['alias'],
-				'room' => $data ['room'] 
+				'room' => $data ['room'],
+				'room_label' => $data['room_label']
 		);
 	}
 	return $output;
