@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,17 +39,17 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.CameraView
 	}
 
 	@Override
-	public void onBindViewHolder(CameraViewHolder holder, int position) {
+	public void onBindViewHolder(final CameraViewHolder holder, int position) {
 		final Camera nCamera = mList.get(position);
 		Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?api=" + App.getAPI(mContext) + "&id=" + nCamera.getID()).into(holder.image);
 		String nAlias = "";
-		if(nCamera.getAlias().equals("null") || nCamera.getAlias().equals("")){
+		if (nCamera.getAlias().equals("null") || nCamera.getAlias().equals("")) {
 			nAlias = nCamera.getType();
-		}else{
+		} else {
 			nAlias = nCamera.getAlias();
 		}
 		String nRoomLabel = nCamera.getRoomLabel();
-		if(!nRoomLabel.equals("null") && !nRoomLabel.equals("")){
+		if (!nRoomLabel.equals("null") && !nRoomLabel.equals("")) {
 			nAlias += " (" + nRoomLabel + ")";
 		}
 		holder.alias.setText(nAlias);
@@ -56,6 +57,12 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.CameraView
 		holder.imageUrl.setText("Image : " + nCamera.getImageUrl());
 		holder.videoUrl.setText("Video : " + nCamera.getVideoUrl());
 		holder.ipAddress.setText("Adresse IP : " + nCamera.getIP());
+		holder.image.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?api=" + App.getAPI(mContext) + "&id=" + nCamera.getID()).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.image);
+			}
+		});
 	}
 
 	@Override
@@ -64,12 +71,18 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.CameraView
 	}
 
 	static class CameraViewHolder extends RecyclerView.ViewHolder {
-		@Bind(R.id.imgCameraImage) ImageView image;
-		@Bind(R.id.txtCameraAlias) TextView alias;
-		@Bind(R.id.txtCameraType) TextView type;
-		@Bind(R.id.txtCameraIpAddress) TextView ipAddress;
-		@Bind(R.id.txtCameraImageUrl) TextView imageUrl;
-		@Bind(R.id.txtCameraVideoUrl) TextView videoUrl;
+		@Bind(R.id.imgCameraImage)
+		ImageView image;
+		@Bind(R.id.txtCameraAlias)
+		TextView alias;
+		@Bind(R.id.txtCameraType)
+		TextView type;
+		@Bind(R.id.txtCameraIpAddress)
+		TextView ipAddress;
+		@Bind(R.id.txtCameraImageUrl)
+		TextView imageUrl;
+		@Bind(R.id.txtCameraVideoUrl)
+		TextView videoUrl;
 
 		public CameraViewHolder(View itemView) {
 			super(itemView);
