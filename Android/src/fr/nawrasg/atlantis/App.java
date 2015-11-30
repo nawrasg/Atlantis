@@ -29,7 +29,7 @@ public class App {
 	public static final String GEO = "backend/at_geo.php";
 	public static final String HISTORY = "backend/at_history.php";
 	public static final String HOME = "backend/at_home.php";
-	public static final String JARVIS = "backend/jarvis";
+	public static final String Images = "backend/at_images.php";
 	public static final String LIGHTS = "backend/at_lights.php";
 	public static final String MUSIC = "backend/at_music.php";
 	public static final String NOTIFY = "backend/at_notify.php";
