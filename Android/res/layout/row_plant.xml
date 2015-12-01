@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cvPlant"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="20dp"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardElevation="5dp"
-    card_view:cardMaxElevation="15dp" >
+<android.support.v7.widget.CardView android:id="@+id/cvPlant"
+                                    xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="20dp"
+                                    card_view:cardCornerRadius="5dp"
+                                    card_view:cardElevation="5dp"
+                                    card_view:cardMaxElevation="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="vertical"
-            android:padding="20dp" >
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/lblPlantTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textStyle="bold" 
-                android:textSize="25sp"/>
+                android:textSize="25sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/lblPlantBattery"
@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ng_battery"
                 android:drawablePadding="20dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/lblPlantMoisture"
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ng_humidity"
                 android:drawablePadding="20dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/lblPlantConductivity"
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ng_lightning"
                 android:drawablePadding="20dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/lblPlantLight"
@@ -59,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ng_sun"
                 android:drawablePadding="20dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/lblPlantSoilTemperature"
@@ -67,7 +67,7 @@
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ng_thermostat"
                 android:drawablePadding="20dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/lblPlantAirTemperature"
@@ -75,7 +75,7 @@
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ng_thermostat"
                 android:drawablePadding="20dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/lblPlantTimestamp"
@@ -83,7 +83,7 @@
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ng_time"
                 android:drawablePadding="20dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"/>
         </LinearLayout>
 
         <ImageView
@@ -92,7 +92,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="picture"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
