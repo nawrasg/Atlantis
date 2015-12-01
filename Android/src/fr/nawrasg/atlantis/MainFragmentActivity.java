@@ -84,7 +84,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 		loadFragment(new PlantFragment(), false);
 		handleIntent(getIntent());
 	}
-	
+
 	private DrawerItemInterface[] createNavigationMenu() {
 		if (findViewById(R.id.main_fragment2) != null) {
 			DrawerItemInterface[] nSections = { DrawerItem.create(0, "Accueil", "ng_screen", false, nContext),
