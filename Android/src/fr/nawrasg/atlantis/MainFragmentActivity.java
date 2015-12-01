@@ -36,6 +36,7 @@ import fr.nawrasg.atlantis.fragments.PINFragment;
 import fr.nawrasg.atlantis.fragments.PharmacieAddFragment;
 import fr.nawrasg.atlantis.fragments.PharmacieFragment;
 import fr.nawrasg.atlantis.fragments.PlantFragment;
+import fr.nawrasg.atlantis.fragments.ScenarioFragment;
 import fr.nawrasg.atlantis.fragments.SensorsFragment;
 import fr.nawrasg.atlantis.interfaces.DrawerItemInterface;
 import fr.nawrasg.atlantis.preferences.MainPreferenceFragment;
@@ -84,7 +85,6 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 		handleIntent(getIntent());
 	}
 	
-
 	private DrawerItemInterface[] createNavigationMenu() {
 		if (findViewById(R.id.main_fragment2) != null) {
 			DrawerItemInterface[] nSections = { DrawerItem.create(0, "Accueil", "ng_screen", false, nContext),
@@ -94,7 +94,8 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 					DrawerItem.create(102, "Cuisine", "ng_kittle", false, nContext),
 					DrawerItem.create(103, "Pharmacie", "ng_medicine", false, nContext),
 					DrawerItem.create(104, "Hygiène et Entretien", "ng_soap", false, nContext),
-					DrawerSection.create(200, "Services"), DrawerItem.create(204, "Musique", "ng_player", false, nContext),
+					DrawerSection.create(200, "Services"),
+					DrawerItem.create(204, "Musique", "ng_player", false, nContext),
 					DrawerItem.create(201, "Plantes", "ng_plant", false, nContext),
 					DrawerItem.create(202, "Géolocalisation", "ng_satellite", false, nContext),
 					DrawerItem.create(203, "Appareils Connectés", "ng_connected", false, nContext),
@@ -108,6 +109,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 					DrawerItem.create(2, "Lumières", "ng_bulb", false, nContext),
 					DrawerItem.create(1, "Capteurs", "ng_device", false, nContext),
 					DrawerItem.create(3, "Caméras", "ng_camera", false, nContext),
+					DrawerItem.create(4, "Scénarios", "ng_scenario", false, nContext),
 					DrawerSection.create(100, "Bases de données"),
 					DrawerItem.create(101, "Liste des courses", "ng_todo", false, nContext),
 					DrawerItem.create(102, "Cuisine", "ng_kittle", false, nContext),
@@ -276,6 +278,9 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 				break;
 			case 3:
 				loadFragment(new CameraFragment(), true);
+				break;
+			case 4:
+				loadFragment(new ScenarioFragment(), true);
 				break;
 			case 101:
 				loadFragment(new CoursesFragment(), true);
