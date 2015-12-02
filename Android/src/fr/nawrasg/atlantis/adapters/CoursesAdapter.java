@@ -6,11 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.Element;
 
@@ -20,9 +21,16 @@ public class CoursesAdapter extends ArrayAdapter<Element> {
 	private Element mElement;
 
 	static class CoursesViewHolder {
+		@Bind(R.id.lblCoursesTitle)
 		TextView title;
+		@Bind(R.id.lblCoursesQuantity)
 		TextView quantity;
+		@Bind(R.id.cbCoursesDone)
 		CheckBox done;
+
+		public CoursesViewHolder(View view) {
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public CoursesAdapter(Context context, List<Element> objects) {
@@ -34,36 +42,25 @@ public class CoursesAdapter extends ArrayAdapter<Element> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		mElement = mList.get(position);
-		View nView = convertView;
-		if (nView == null) {
+		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			nView = inflater.inflate(R.layout.row_course, parent, false);
-			final CoursesViewHolder nHolder = new CoursesViewHolder();
-			nHolder.title = (TextView) nView.findViewById(R.id.lblCoursesTitle);
-			nHolder.quantity = (TextView) nView.findViewById(R.id.lblCoursesQuantity);
-			nHolder.done = (CheckBox) nView.findViewById(R.id.cbCoursesDone);
-			nHolder.done.setTag(mElement);
-			nView.setTag(nHolder);
+			convertView = inflater.inflate(R.layout.row_course, parent, false);
+			CoursesViewHolder nHolder = new CoursesViewHolder(convertView);
+			nHolder.done.setTag(position);
+			convertView.setTag(nHolder);
 		}
-		final CoursesViewHolder nHolder = (CoursesViewHolder) nView.getTag();
-		mElement = (Element) nHolder.done.getTag();
+		final CoursesViewHolder nHolder = (CoursesViewHolder) convertView.getTag();
 		nHolder.title.setText(mElement.getName());
 		nHolder.quantity.setText(mElement.getQuantity() + "");
 		nHolder.done.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mElement = (Element) nHolder.done.getTag();
-				mElement.done(true);
+				nHolder.done.setChecked(false);
+				int nPosition = ((Integer) nHolder.done.getTag()).intValue();
+				mList.remove(nPosition);
 				notifyDataSetChanged();
 			}
 		});
-		LinearLayout nLayout = (LinearLayout) nView.findViewById(R.id.llCoursesRow);
-		if(mElement.isDone()){
-			nLayout.setVisibility(View.GONE);
-		}else{
-			nLayout.setVisibility(View.VISIBLE);
-		}
-		return nView;
+		return convertView;
 	}
-
 }
