@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         android:summary="Sécurité"
-        android:title="Sécurité" >
+        android:title="Sécurité">
         <EditTextPreference
             android:icon="@drawable/ic_action_secure"
             android:key="api"
             android:summary="Définir une clé pour s&apos;identifier aurpsè du serveur"
-            android:title="Clé de Connexion" />
+            android:title="Clé de Connexion"/>
 
         <CheckBoxPreference
             android:icon="@drawable/ic_action_secure"
             android:key="pin"
             android:summary="Sécuriser les paramètres"
-            android:title="Activer code PIN" />
+            android:title="Activer code PIN"/>
 
         <EditTextPreference
             android:icon="@drawable/ic_action_accounts"
             android:inputType="numberPassword"
             android:key="pinCode"
             android:summary="Modifier le code PIN"
-            android:title="Code PIN" />
+            android:title="Code PIN"/>
 
         <CheckBoxPreference
             android:icon="@drawable/ic_action_screen_locked_to_landscape"
             android:key="ssl"
             android:summary="Utiliser HTTPS en dehors du réseau domestique"
-            android:title="Utiliser SSL" />
+            android:title="Utiliser SSL"/>
 
-        <!--<Preference
-            android:icon="@drawable/ic_action_storage"
-            android:key="admin"
-            android:summary="Accès aux fonctions d&apos;administration"
-            android:title="Fonctions avancées" />-->
     </PreferenceCategory>
 
 </PreferenceScreen>
