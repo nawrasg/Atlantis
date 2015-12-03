@@ -45,6 +45,15 @@ while ( true ) {
 					}
 					break;
 			}
+		} else if ($sensor ['type'] == 'Tamper') {
+			switch ($sensor ['protocol']) {
+				case 'zwave' :
+					if ($zwave->GetTimestamp ( $sensor ['sensor'] ) != $arrMvt2 [$i]) {
+						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
+						$txt = "Le capteur " . $sensor ['alias'] . " dans " . $sensor ['room_label'] . " a ete trafique !";
+						$push->sendMessageAll ( "Atlantis - Alarme", $txt );
+					}
+			}
 		}
 	}
 	sleep ( 0.5 );
@@ -62,7 +71,7 @@ exit ();
 function loadSensors() {
 	$arrMvt = array ();
 	$bdd = getBDD ();
-	$req = $bdd->query ( 'SELECT at_sensors.id, at_sensors.sensor, at_sensors.protocol, at_sensors.type, at_sensors_devices.room FROM at_sensors INNER JOIN at_sensors_devices ON `at_sensors`.`device` = `at_sensors_devices`.`device` WHERE `at_sensors`.`ignore` = 0 AND `at_sensors`.`type` = "Door/Window" OR `at_sensors`.`type` = "Temperature" OR `at_sensors`.`type` = "Motion"' );
+	$req = $bdd->query ( 'SELECT at_sensors.id, at_sensors.sensor, at_sensors.protocol, at_sensors.type, at_sensors_devices.room, at_sensors_devices.alias, at_room.room AS room_label FROM at_sensors INNER JOIN at_sensors_devices ON `at_sensors`.`device` = `at_sensors_devices`.`device` INNER JOIN at_room ON at_sensors_devices.room = at_room.id WHERE `at_sensors`.`ignore` = 0 AND `at_sensors`.`type` = "Door/Window" OR `at_sensors`.`type` = "Temperature" OR `at_sensors`.`type` = "Motion" OR `at_sensors`.`type` = "Tamper"' );
 	while ( $data = $req->fetch () ) {
 		array_push ( $arrMvt, $data );
 	}
