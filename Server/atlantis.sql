@@ -19,6 +19,20 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+CREATE TABLE IF NOT EXISTS `at_cameras` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(20) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `image` varchar(200) NOT NULL,
+  `video` varchar(200) DEFAULT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `alias` varchar(150) DEFAULT NULL,
+  `room` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ip` (`ip`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE IF NOT EXISTS `at_courses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
