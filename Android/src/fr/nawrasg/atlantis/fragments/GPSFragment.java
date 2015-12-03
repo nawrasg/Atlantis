@@ -25,6 +25,7 @@ import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.preferences.GeoPreferenceFragment;
 
 public class GPSFragment extends Fragment {
 	private Context nContext;
@@ -89,6 +90,9 @@ public class GPSFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+			case R.id.itemGPSOptions:
+				((MainFragmentActivity) getActivity()).loadFragment(new GeoPreferenceFragment(), true);
+				return true;
 			case R.id.itemGPSMap:
 				((MainFragmentActivity) getActivity()).loadFragment(new MapsFragment(), true);
 				return true;
