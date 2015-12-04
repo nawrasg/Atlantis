@@ -14,28 +14,74 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 	}
 }
 function get($arr) {
-	if (isset ( $arr ['id'] )) {
+	if (isset ( $arr ['id'], $arr ['type'] )) {
 		$id = $arr ['id'];
-		$bdd = getBDD ();
-		$req = $bdd->query ( "SELECT * FROM at_cameras WHERE id = $id" );
-		$data = $req->fetch ();
-		if (! $data) {
-			http_response_code ( 404 );
-			return;
+		$type = $arr ['type'];
+		switch ($type) {
+			case 'plant' :
+				getPlant ( $id );
+				break;
+			case 'camera' :
+				getCamera ( $id );
+				break;
 		}
-		saveImage ( $data );
-		$path = __DIR__ . "/home/cameras/$id.png";
-		if (file_exists ( $path )) {
-			http_response_code ( 202 );
-			$img = fopen ( $path, 'rb' );
-			header ( "Content-Type: image/png" );
-			header ( "Content-Length: " . filesize ( $path ) );
-			header ( "Timestamp: " . filemtime ( $path ) );
-			header ( "Source: Atlantis" );
-			fpassthru ( $img );
-		} else {
-			http_response_code ( 404 );
+	} else if (isset ( $arr ['type'] )) {
+		$type = $arr ['type'];
+		switch ($type) {
+			case 'plan' :
+				getPlan ();
+				break;
 		}
+	}
+}
+function getPlan() {
+	$path = __DIR__ . "/home/plan.png";
+	if (file_exists ( $path )) {
+		http_response_code ( 202 );
+		$img = fopen ( $path, 'rb' );
+		header ( "Content-Type: image/png" );
+		header ( "Content-Length: " . filesize ( $path ) );
+		header ( "Timestamp: " . filemtime ( $path ) );
+		header ( "Source: Atlantis" );
+		fpassthru ( $img );
+	} else {
+		http_response_code ( 404 );
+	}
+}
+function getPlant($id) {
+	$path = __DIR__ . "/home/plants/$id.png";
+	if (file_exists ( $path )) {
+		http_response_code ( 202 );
+		$img = fopen ( $path, 'rb' );
+		header ( "Content-Type: image/png" );
+		header ( "Content-Length: " . filesize ( $path ) );
+		header ( "Timestamp: " . filemtime ( $path ) );
+		header ( "Source: Atlantis" );
+		fpassthru ( $img );
+	} else {
+		http_response_code ( 404 );
+	}
+}
+function getCamera($id) {
+	$bdd = getBDD ();
+	$req = $bdd->query ( "SELECT * FROM at_cameras WHERE id = $id" );
+	$data = $req->fetch ();
+	if (! $data) {
+		http_response_code ( 404 );
+		return;
+	}
+	saveImage ( $data );
+	$path = __DIR__ . "/home/cameras/$id.png";
+	if (file_exists ( $path )) {
+		http_response_code ( 202 );
+		$img = fopen ( $path, 'rb' );
+		header ( "Content-Type: image/png" );
+		header ( "Content-Length: " . filesize ( $path ) );
+		header ( "Timestamp: " . filemtime ( $path ) );
+		header ( "Source: Atlantis" );
+		fpassthru ( $img );
+	} else {
+		http_response_code ( 404 );
 	}
 }
 function saveImage($arr) {
