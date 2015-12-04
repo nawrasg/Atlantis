@@ -41,7 +41,7 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.CameraView
 	@Override
 	public void onBindViewHolder(final CameraViewHolder holder, int position) {
 		final Camera nCamera = mList.get(position);
-		Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?api=" + App.getAPI(mContext) + "&id=" + nCamera.getID()).into(holder.image);
+		Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?type=camera&api=" + App.getAPI(mContext) + "&id=" + nCamera.getID()).into(holder.image);
 		String nAlias = "";
 		if (nCamera.getAlias().equals("null") || nCamera.getAlias().equals("")) {
 			nAlias = nCamera.getType();
@@ -60,7 +60,7 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.CameraView
 		holder.image.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?api=" + App.getAPI(mContext) + "&id=" + nCamera.getID()).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.image);
+				Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?type=camera&api=" + App.getAPI(mContext) + "&id=" + nCamera.getID()).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.image);
 			}
 		});
 	}
