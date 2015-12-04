@@ -72,7 +72,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
 	@Override
 	public void onBindViewHolder(PlantViewHolder arg0, int arg1) {
 		final Plant nPlant = mList.get(arg1);
-		Picasso.with(mContext).load(App.getFullUrl(mContext) + "backend/home/plants/" + nPlant.getId() + ".png").into(arg0.imgPlant);
+		Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?type=plant&api=" + App.getAPI(mContext) + "&id=" + nPlant.getID()).into(arg0.imgPlant);
 		if(!nPlant.getTitle().equals("null")) arg0.lblTitle.setText(nPlant.getTitle());
 		arg0.lblAirTemp.setText("Air : " + nPlant.getAirTemperature() + "°C");
 		arg0.lblSoilTemp.setText("Terreau : " + nPlant.getSoilTemperature() + "°C");
