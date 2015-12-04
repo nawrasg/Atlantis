@@ -34,7 +34,6 @@ public class App {
 	public static final String MUSIC = "backend/at_music.php";
 	public static final String NOTIFY = "backend/at_notify.php";
 	public static final String PHARMACIE = "backend/at_pharmacie.php";
-	public static final String PLAN = "backend/home/plan.png";
 	public static final String PLANTE = "backend/at_plants.php";
 	public static final String SCENARIOS = "backend/at_scenario.php";
 	public static final String SENSORS = "backend/at_sensors.php";
