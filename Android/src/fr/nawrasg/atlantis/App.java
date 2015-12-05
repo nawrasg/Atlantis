@@ -37,6 +37,7 @@ public class App {
 	public static final String PLANTE = "backend/at_plants.php";
 	public static final String SCENARIOS = "backend/at_scenario.php";
 	public static final String SENSORS = "backend/at_sensors.php";
+	public static final String SETTINGS = "backend/at_settings.php";
 	public static final String SPEECH = "backend/at_speech.php";
 	public static final String WELCOME = "backend/at_welcome.php";
 
