@@ -12,7 +12,7 @@ $page_level = 0;
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
 		case 'GET' :
-			echo get ();
+			echo get ( $_GET );
 			http_response_code ( 202 );
 			break;
 		case 'POST' :
@@ -28,9 +28,17 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 } else {
 	http_response_code ( 401 );
 }
-function get() {
+function get($arr) {
 	$settings = new Settings ();
-	return $settings->getAllSettings ();
+	if (isset ( $arr ['type'] )) {
+		$type = $arr ['type'];
+		switch ($type) {
+			case 'Atlantis' :
+				return json_encode ( $settings->getSectionSettings ( 'Atlantis' ) );
+		}
+	} else {
+		return $settings->getAllSettings ();
+	}
 }
 function update($arr) {
 	if (isset ( $arr ['section'] )) {
