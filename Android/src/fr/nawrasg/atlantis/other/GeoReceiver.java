@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Vibrator;
+import android.support.v4.content.WakefulBroadcastReceiver;
+
 import fr.nawrasg.atlantis.R;
 
-public class GeoReceiver extends BroadcastReceiver{
+public class GeoReceiver extends WakefulBroadcastReceiver {
 	private NotificationManager nNM;
 	private Notification nN;
 	private Vibrator nVibrate;
