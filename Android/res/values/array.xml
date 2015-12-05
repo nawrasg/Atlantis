@@ -17,8 +17,8 @@
         <item>Silencieux</item>
     </string-array>
     <string-array name="geo_ring_profil_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>ring</item>
+        <item>viber</item>
+        <item>silence</item>
     </string-array>
 </resources>
