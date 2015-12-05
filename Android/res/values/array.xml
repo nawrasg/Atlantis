@@ -11,5 +11,14 @@
         <item>Capteurs</item>
         <item>Actionneurs</item>
     </string-array>
-
+    <string-array name="geo_ring_profil_entries">
+        <item>Sonnerie</item>
+        <item>Vibreur</item>
+        <item>Silencieux</item>
+    </string-array>
+    <string-array name="geo_ring_profil_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>
