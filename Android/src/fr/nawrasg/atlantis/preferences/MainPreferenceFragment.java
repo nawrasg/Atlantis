@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
+
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 
 public class MainPreferenceFragment extends PreferenceFragment implements OnPreferenceClickListener{
-	private Preference mConnection, mSecurity, mOthers, mCall;
+	private Preference mConnection, mSecurity, mOthers;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,6 @@ public class MainPreferenceFragment extends PreferenceFragment implements OnPref
 		mSecurity.setOnPreferenceClickListener(this);
 		mOthers = findPreference("main_divers");
 		mOthers.setOnPreferenceClickListener(this);
-		//mCall = findPreference("main_callnotifier");
-		//mCall.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -36,9 +35,6 @@ public class MainPreferenceFragment extends PreferenceFragment implements OnPref
 				return true;
 			case "main_divers":
 				loadPreferences(new DiversPreferenceFragment());
-				return true;
-			case "main_callnotifier":
-				loadPreferences(new CallNotifierPreferenceFragment());
 				return true;
 		}
 		return false;
