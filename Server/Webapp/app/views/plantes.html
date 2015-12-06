@@ -16,7 +16,7 @@
 </md-content>
 <div>
 	<md-card ng-repeat="plant in plants track by plant.id" style="float:left">
-		<img alt=plant ng-src="{{'backend/home/plants/' + plant.id + '.png'}}">
+		<img alt=plant ng-src="{{getPlantImage(plant)}}">
 		<md-card-content layout=row>
 			<div layout-align="center start" layout=column>
 				<h3 ng-click="editPlant(plant)">{{plant.title}} {{getRoomLabel(plant)}}</h3>

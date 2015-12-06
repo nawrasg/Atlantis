@@ -49,6 +49,9 @@ nApp.controller('PlantesCtrl', function($scope, $http, $sessionStorage, $filter,
 			getPlants();
 		});
 	};
+	$scope.getPlantImage = function(plant){
+		return AtlantisUri.Images() + '?api=' + $sessionStorage.api + '&type=plant&id=' + plant.id;
+	};
 	function getPlants(){
 		var nURL = AtlantisUri.Plantes() + '?api=' + $sessionStorage.api;
 		$http.get(nURL).success(function(data, status){
