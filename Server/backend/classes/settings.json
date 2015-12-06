@@ -19,11 +19,6 @@
         "videos":"",
         "music":""
     },
-    "Silence":{
-        "on":false,
-        "H1": 6,
-        "H2": 23
-    },
     "Zwave":{
         "IP":"",
         "Port":""
