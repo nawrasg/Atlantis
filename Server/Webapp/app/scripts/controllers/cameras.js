@@ -59,7 +59,7 @@ nApp.controller('CamerasCtrl', function($scope, $rootScope, $http, $sessionStora
 	};
 	$scope.getImageUrl = function(camera){
 		if(camera.id >= 0){
-			return AtlantisUri.Images() + '?id=' + camera.id + '&api=' + $sessionStorage.api;
+			return AtlantisUri.Images() + '?type=camera&id=' + camera.id + '&api=' + $sessionStorage.api;
 		}
 	}
 	function get(){
