@@ -9,6 +9,9 @@
 nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage, $filter, $mdDialog, $mdToast, $window, AtlantisUri) {
 	get();
 	getCourses();
+	$scope.getPlan = function(){
+		return AtlantisUri.Images() + '?api=' + $sessionStorage.api + '&type=plan';
+	};
 	$scope.toggleAlarm = function(){
 		var nURL = AtlantisUri.Home() + '?api=' + $sessionStorage.api + '&alarm=' + $scope.alarm;
 		$http.put(nURL).success(function(data, status){
