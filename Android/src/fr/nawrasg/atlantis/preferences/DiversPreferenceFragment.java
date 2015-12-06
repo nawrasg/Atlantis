@@ -52,7 +52,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 	public boolean onPreferenceClick(Preference preference) {
 		switch (preference.getKey()) {
 			case "import":
-				new SettingsGET(mContext).execute(App.HOME, "setup");
+				new SettingsGET(mContext).execute(App.SETTINGS, "type=Atlantis");
 				return true;
 			case "gcm":
 				GcmSubscription();
@@ -110,8 +110,8 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 	private void importSettings(JSONObject json) {
 		try {
 			App.setString(mContext, "urlExterne", json.getString("url"));
-			App.setString(mContext, "wifiSSID", json.getString("ssid"));
-			App.setString(mContext, "wifiBSSID", json.getString("mac"));
+			//App.setString(mContext, "wifiSSID", json.getString("ssid"));
+			//App.setString(mContext, "wifiBSSID", json.getString("mac"));
 			App.setFloat(mContext, "homeRadius", (float) json.getDouble("radius"));
 			App.setFloat(mContext, "homeLong", (float) json.getDouble("long"));
 			App.setFloat(mContext, "homeLat", (float) json.getDouble("lat"));
