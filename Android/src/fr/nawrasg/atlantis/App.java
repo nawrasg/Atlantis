@@ -18,7 +18,7 @@ import fr.nawrasg.atlantis.other.CheckConnection;
 public class App {
 	public static final int CODE_PLAN = 5;
 	public static final int VOICE_RECOGNITION_REQUEST = 0x10101;
-
+	public static final String CALL_NOTIFIER = "backend/at_call_notifier.php";
 	public static final String CAMERAS = "backend/at_cameras.php";
 	public static final String COURSES = "backend/at_courses.php";
 	public static final String CUISINE = "backend/at_cuisine.php";
