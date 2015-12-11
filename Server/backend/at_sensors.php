@@ -64,7 +64,7 @@ function add($arr) {
 			http_response_code ( 400 );
 		}
 	} else {
-		$zwave->discover ();
+		(new Zwave ())->discover ();
 		http_response_code ( 202 );
 	}
 }
