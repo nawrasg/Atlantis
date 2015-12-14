@@ -150,6 +150,25 @@
         	</div>
         </md-content>
       </md-tab>
+      <md-tab label="Divers">
+      	<md-content class="md-padding" ng-controller="DiversSettingsCtrl">
+      		<div class="left50">
+        		<div class="panel panel-info">
+        			<div class="panel-heading">Call Notifier</div>
+        			<div class="panel-body">
+        				<md-content>
+        					<md-switch ng-model="call.status" style="float:right" ng-change="toggleCall('status', call.status)" aria-label="call"></md-switch>
+        					<div style="clear:both"></div>
+        					<md-checkbox ng-model="call.light" aria-label="light" ng-change="toggleCall('light', call.light)">Signalisation avec la lumi&egrave;re</md-checkbox>
+        					<md-checkbox ng-model="call.voice" aria-label="voice" ng-change="toggleCall('voice', call.voice)">Signalisation avec la voix</md-checkbox>
+        					<md-checkbox ng-model="call.caller" aria-label="caller" ng-change="toggleCall('caller', call.caller)">Lecture du nom de l'appelant</md-checkbox>
+        					<md-checkbox ng-model="call.message" aria-label="message" ng-change="toggleCall('message', call.message)">Lecture du contenu du message</md-checkbox>
+        				</md-content>
+        			</div>
+        		</div>
+        	</div>
+      	</md-content>
+      </md-tab>
       <md-tab label="Utilisateurs">
         <md-content class="md-padding" ng-controller='UsersSettingsCtrl'>
         	<div class="panel panel-info right30">

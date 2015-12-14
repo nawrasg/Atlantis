@@ -1,7 +1,7 @@
 <?php
 header ( 'Access-Control-Allow-Origin: *' );
 header ( 'Access-Control-Allow-Headers: origin, x-requested-with, content-type, accept' );
-header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
+header ( 'Access-Control-Allow-Methods: GET, PUT' );
 
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
@@ -15,14 +15,8 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			echo get ( $_GET );
 			http_response_code ( 202 );
 			break;
-		case 'POST' :
-			
-			break;
 		case 'PUT' :
 			update ( $_REQUEST );
-			break;
-		case 'DELETE' :
-			
 			break;
 	}
 } else {
@@ -35,14 +29,16 @@ function get($arr) {
 		switch ($type) {
 			case 'Atlantis' :
 				return json_encode ( $settings->getSectionSettings ( 'Atlantis' ) );
+			case 'CallNotifier' :
+				return json_encode ( $settings->getSectionSettings ( 'CallNotifier' ) );
 		}
 	} else {
 		return $settings->getAllSettings ();
 	}
 }
 function update($arr) {
+	$settings = new Settings ();
 	if (isset ( $arr ['section'] )) {
-		$settings = new Settings ();
 		switch ($arr ['section']) {
 			case 'Atlantis' :
 				if (isset ( $arr ['url'] ))
@@ -86,6 +82,13 @@ function update($arr) {
 				if (isset ( $arr ['music'] )) {
 					$settings->setSettings ( 'Files', 'music', $arr ['music'] );
 					http_response_code ( 202 );
+				}
+				return;
+			case 'CallNotifier' :
+				if (isset ( $arr ['key'], $arr ['value'] )) {
+					$key = $arr ['key'];
+					$value = filter_var ( $arr ['value'], FILTER_VALIDATE_BOOLEAN );
+					$settings->setSettings ( 'CallNotifier', $key, $value );
 				}
 				return;
 		}
