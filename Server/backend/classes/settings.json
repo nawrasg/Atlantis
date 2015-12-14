@@ -40,5 +40,12 @@
     },
     "Weather":{
     	"appid":""
+    },
+    "CallNotifier":{
+    	"status":false,
+    	"light":false,
+    	"voice":false,
+    	"caller":false,
+    	"message":false
     }
 }
