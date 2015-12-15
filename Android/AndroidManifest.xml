@@ -95,6 +95,14 @@
 
         <receiver android:name=".other.RingingReceiver"/>
 
+        <service android:name=".other.BasicDreamService"
+                 android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.service.dreams.DreamService"/>
+            </intent-filter>
+        </service>
+
         <provider
             android:name="fr.nawrasg.atlantis.other.AtlantisContentProvider"
             android:authorities="fr.nawrasg.atlantis.provider"
