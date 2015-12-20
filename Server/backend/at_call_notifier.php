@@ -36,6 +36,7 @@ function call($arr) {
 		(new Player())->sound(Player::NOTIFICATION);
 		(new Player())->sound(Player::INCOMING_CALL);	
 	}
+	//TODO Light
 }
 function message($arr) {
 	$settings = new Settings ();
@@ -43,4 +44,5 @@ function message($arr) {
 		(new Player())->sound(Player::NOTIFICATION);
 		(new Player())->sound(Player::INCOMING_MESSAGE);
 	}
+	//TODO Light
 }
