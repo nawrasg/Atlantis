@@ -7,7 +7,19 @@
  */
 
 nApp.controller('UsersSettingsCtrl', function($scope, $http, $sessionStorage, $filter, $mdDialog, AtlantisUri) {
-	
+	$scope.filter = function(item){
+		if(item == null || item == ''){
+			loadUsers();
+		}else{
+			var result = [];
+			angular.forEach($scope.users, function(current){
+				if($filter('lowercase')(current.nom).indexOf($filter('lowercase')(item)) > -1){
+					result.push(current);
+				}
+			})
+			$scope.users = result;
+		}
+	};
 	$scope.addUser = function(e){
 		$mdDialog.show({
 			templateUrl: 'views/user_add.html',
@@ -55,10 +67,14 @@ nApp.controller('UsersSettingsCtrl', function($scope, $http, $sessionStorage, $f
 			}
 		});
 	};
-	var nURL = AtlantisUri.Users() + '?api=' + $sessionStorage.api;
-	$http.get(nURL).success(function(data, status){
-		if(status == 202){
-			$scope.users = data;
-		}
-	});
+	loadUsers();
+	function loadUsers(){
+		var nURL = AtlantisUri.Users() + '?api=' + $sessionStorage.api;
+		$http.get(nURL).success(function(data, status){
+			if(status == 202){
+				$scope.users = data;
+				console.log(data);
+			}
+		});
+	}
 });
