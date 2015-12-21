@@ -183,7 +183,7 @@
         	<div class="panel panel-info">
         		<div class="panel-heading">Utilisateurs</div>
         		<div class="panel-body">
-        			<div layout=row layout-align="center center" ng-repeat="user in users"  layout-padding>
+        			<div layout=row layout-align="center center" ng-repeat="user in users track by user.id"  layout-padding>
         				<label flex>{{user.nom}}</label>
         				<div flex layout=row><p>{{user.cle}}</p><md-icon md-svg-src="images/svg/ic_cached_black_36px.svg" ng-click="changeAPI(user)"></md-icon></div>
 						<md-icon md-svg-src="images/svg/ic_edit_black_36px.svg" ng-click="editUser(user)"></md-icon>
