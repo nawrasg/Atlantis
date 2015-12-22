@@ -36,7 +36,7 @@ function get() {
 			$result = $result [1];
 			$result = preg_replace ( "/\s+/", " ", $result );
 			$data = explode ( " ", $result );
-			if ($data [3] == 'php') {
+			if ($data [count ( $data ) - 1] == 'php') {
 				$daemon = true;
 			} else {
 				$daemon = false;
