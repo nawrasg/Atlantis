@@ -147,6 +147,46 @@
         				</md-content>
         			</div>
         		</div>
+        		
+        		<!-- Mail Settings -->
+        		<div class="panel panel-info">
+        			<div class="panel-heading">Mail</div>
+        			<div class="panel-body">
+        				<md-content>
+        					<div layout=row>
+        						<md-input-container flex>
+	        						<label>Serveur SMTP</label>
+	        						<input ng-model=atlantis.SMTP.server >
+	        					</md-input-container>
+	        					<md-input-container flex>
+	        						<label>Port SMTP</label>
+	        						<input ng-model=atlantis.SMTP.port >
+	        					</md-input-container>
+        					</div>
+        					<div layout=row>
+        						<input type="radio" ng-model="atlantis.SMTP.security" value="no" flex>Aucune s&eacute;curit&eacute;</input>
+        						<input type="radio" ng-model="atlantis.SMTP.security" value="tls" flex>TLS</input>
+        						<input type="radio" ng-model="atlantis.SMTP.security" value="ssl" flex>SSL</input>
+        					</div>
+        					<input type="checkbox" ng-model="atlantis.SMTP.auth">Authentification</input>
+        					<div layout=row ng-if="atlantis.SMTP.auth">
+        						<md-input-container flex>
+	        						<label>Nom d'utilisateur</label>
+	        						<input ng-model=atlantis.SMTP.username >
+	        					</md-input-container>
+	        					<md-input-container flex>
+	        						<label>Mot de passe</label>
+	        						<input ng-model=atlantis.SMTP.password >
+	        					</md-input-container>
+        					</div>
+        					<div layout=row layout-align="end center">
+       							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveMail()">
+								  <md-icon md-svg-src="images/svg/ic_check_black_36px.svg"></md-icon>
+								</md-button>
+       						</div>
+        				</md-content>
+        			</div>
+        		</div>
         	</div>
         </md-content>
       </md-tab>
