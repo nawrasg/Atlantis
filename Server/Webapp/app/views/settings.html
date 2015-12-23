@@ -155,6 +155,16 @@
         				<md-content>
         					<div layout=row>
         						<md-input-container flex>
+	        						<label>Nom exp&eacute;diteur</label>
+	        						<input ng-model=atlantis.SMTP.fromName >
+	        					</md-input-container>
+	        					<md-input-container flex>
+	        						<label>Adresse mail exp&eacute;diteur</label>
+	        						<input ng-model=atlantis.SMTP.fromMail >
+	        					</md-input-container>
+        					</div>
+        					<div layout=row>
+        						<md-input-container flex>
 	        						<label>Serveur SMTP</label>
 	        						<input ng-model=atlantis.SMTP.server >
 	        					</md-input-container>
