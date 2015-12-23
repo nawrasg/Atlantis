@@ -61,6 +61,23 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage,
 			showToast($mdToast, status, data);
 		});
 	};
-	
-
+	$scope.saveMail = function(){
+		var server = $scope.atlantis.SMTP.server;
+		var port = $scope.atlantis.SMTP.port;
+		var security = $scope.atlantis.SMTP.security;
+		var auth = $scope.atlantis.SMTP.auth;
+		var username = $scope.atlantis.SMTP.username;
+		var password = $scope.atlantis.SMTP.password;
+		var fromName = $scope.atlantis.SMTP.fromName;
+		var fromMail = $scope.atlantis.SMTP.fromMail;
+		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api + '&section=SMTP';
+		nURL += '&server=' + server + '&port=' + port + '&security=' + security + '&auth=' + auth;
+		nURL += '&username=' + username + '&password=' + password + '&fromName=' + fromName + '&fromMail=' + fromMail;
+		$http.put(nURL).success(function(data, status){
+			console.log(status, data);
+			if(status == 202){
+				//TODO
+			}
+		});
+	};
 });
