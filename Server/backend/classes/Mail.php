@@ -5,23 +5,23 @@ require_once __DIR__ . '/PHPMailer/class.smtp.php';
 class Mail {
 	var $mail;
 	function __construct() {
-		$settings = new Settings();
+		$settings = new Settings ();
 		$this->mail = new PHPMailer ();
 		$this->mail->isSMTP ();
-		$fromName = $settings->getSettings('SMTP', 'fromName');
-		$fromMail = $settings->getSettings('SMTP', 'fromMail');
-		$this->mail->setFrom($fromMail, $fromName);
+		$fromName = $settings->getSettings ( 'SMTP', 'fromName' );
+		$fromMail = $settings->getSettings ( 'SMTP', 'fromMail' );
+		$this->mail->setFrom ( $fromMail, $fromName );
 		$this->mail->Subject = 'Atlantis';
-		$this->mail->Host = $settings->getSettings('SMTP', 'server');
-		$this->mail->Port = $settings->getSettings('SMTP', 'port');
-		$security = $settings->getSettings('SMTP', 'security');
-		if($security != 'no'){
+		$this->mail->Host = $settings->getSettings ( 'SMTP', 'server' );
+		$this->mail->Port = $settings->getSettings ( 'SMTP', 'port' );
+		$security = $settings->getSettings ( 'SMTP', 'security' );
+		if ($security != 'no') {
 			$this->mail->SMTPSecure = $security;
 		}
-		if($settings->getSettings('SMTP', 'auth')){
+		if ($settings->getSettings ( 'SMTP', 'auth' )) {
 			$this->mail->SMTPAuth = true;
-			$this->mail->Username = $settings->getSettings('SMTP', 'username');
-			$this->mail->Password = $settings->getSettings('SMTP', 'password');
+			$this->mail->Username = $settings->getSettings ( 'SMTP', 'username' );
+			$this->mail->Password = $settings->getSettings ( 'SMTP', 'password' );
 		}
 	}
 	function addTo($address, $name = null) {
@@ -31,13 +31,19 @@ class Mail {
 			$this->mail->addAddress ( $address, $name );
 		}
 	}
-	function setSubject($subject){
+	function setSubject($subject) {
 		$this->mail->Subject = $subject;
 	}
-	function setBody($body){
+	function setBody($body) {
 		$this->mail->Body = $body;
 	}
-	function send($users = null) {
+	function send() {
+		return $this->mail->send ();
+	}
+	function sendTo($to, $subject, $body) {
+		$this->mail->addAddress ( $to );
+		$this->mail->Subject = $subject;
+		$this->mail->Body = $body;
 		return $this->mail->send ();
 	}
 }
