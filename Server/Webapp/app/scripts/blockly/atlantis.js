@@ -7,27 +7,28 @@ function getRooms() {
 	}
 	return nResult;
 }
-function getLights(){
-	if(window.lights == null){
-		return [['', '']];
+function getLights() {
+	if (window.lights == null) {
+		return [ [ '', '' ] ];
 	}
 	var nResult = [];
-	for(var i = 0; i < window.lights.length; i++){
+	for (var i = 0; i < window.lights.length; i++) {
 		var name = window.lights[i].name;
 		var id = window.lights[i].id;
-		nResult.push([name, id]);
+		nResult.push([ name, id ]);
 	}
 	return nResult;
 }
-function getSwitches(){
-	
+function getSwitches() {
+
 }
 
 Blockly.Blocks['at_switch'] = {
 	init : function() {
 		this.appendDummyInput().appendField("Prise").appendField(
 				new Blockly.FieldDropdown(getRooms), "ROOM");
-		this.appendValueInput("STATUS").setCheck("Boolean").appendField("Allumé (V/F)");
+		this.appendValueInput("STATUS").setCheck("Boolean").appendField(
+				"Allumé (V/F)");
 		this.setInputsInline(false);
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
@@ -109,8 +110,8 @@ Blockly.Blocks['at_alarm'] = {
 Blockly.Blocks['at_music'] = {
 	init : function() {
 		this.appendDummyInput().appendField("Lecteur de musique");
-		this.appendValueInput("PLAY").setCheck("Boolean")
-				.appendField("Lecture (V/F)");
+		this.appendValueInput("PLAY").setCheck("Boolean").appendField(
+				"Lecture (V/F)");
 		this.appendValueInput("VOLUME").setCheck("Number").appendField(
 				"Volume (0-100)");
 		this.setPreviousStatement(true);
@@ -122,8 +123,8 @@ Blockly.Blocks['at_music'] = {
 
 Blockly.Blocks['at_light_status'] = {
 	init : function() {
-		this.appendDummyInput().appendField("Ampoule Allumée")
-				.appendField(new Blockly.FieldDropdown(getLights), "ID");
+		this.appendDummyInput().appendField("Ampoule Allumée").appendField(
+				new Blockly.FieldDropdown(getLights), "ID");
 		this.setOutput(true, "Boolean");
 		this.setColour(190);
 		this.setTooltip('Obtenir l\'état de l\'ampoule (allumée ou éteinte).');
@@ -139,6 +140,23 @@ Blockly.Blocks['at_time'] = {
 		this.appendValueInput("TIME").setCheck("String").appendField("(HH:MM)");
 		this.setInputsInline(true);
 		this.setOutput(true, "Boolean");
+		this.setColour(190);
+		this.setTooltip('');
+		this.setHelpUrl('http://www.example.com/');
+	}
+};
+
+Blockly.Blocks['at_mail'] = {
+	init : function() {
+		this.appendDummyInput()
+        .appendField("Envoyer un mail");
+		this.appendValueInput("TO").setCheck("String").appendField(
+				"Destinataire");
+		this.appendValueInput("SUBJECT").setCheck("String")
+				.appendField("Sujet");
+		this.appendValueInput("BODY").setCheck("String").appendField("Message");
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
 		this.setColour(190);
 		this.setTooltip('');
 		this.setHelpUrl('http://www.example.com/');

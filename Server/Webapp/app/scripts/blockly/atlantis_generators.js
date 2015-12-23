@@ -90,3 +90,12 @@ Blockly.PHP['at_time'] = function(block) {
 	}
 	return [ code, Blockly.PHP.ORDER_NONE ];
 };
+
+Blockly.PHP['at_mail'] = function(block) {
+	var value_to = Blockly.PHP.valueToCode(block, 'TO', Blockly.PHP.ORDER_ATOMIC);
+	var value_subject = Blockly.PHP.valueToCode(block, 'SUBJECT', Blockly.PHP.ORDER_ATOMIC);
+	var value_body = Blockly.PHP.valueToCode(block, 'BODY', Blockly.PHP.ORDER_ATOMIC);
+	
+	var code = '(new Mail())->sendTo(' + value_to + ', ' + value_subject + ', ' + value_body + ');\n';
+	return code;
+};
