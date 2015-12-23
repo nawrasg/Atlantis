@@ -8,6 +8,9 @@ class Mail {
 		$settings = new Settings();
 		$this->mail = new PHPMailer ();
 		$this->mail->isSMTP ();
+		$fromName = $settings->getSettings('SMTP', 'fromName');
+		$fromMail = $settings->getSettings('SMTP', 'fromMail');
+		$this->mail->setFrom($fromMail, $fromName);
 		$this->mail->Subject = 'Atlantis';
 		$this->mail->Host = $settings->getSettings('SMTP', 'server');
 		$this->mail->Port = $settings->getSettings('SMTP', 'port');
@@ -18,6 +21,7 @@ class Mail {
 		if($settings->getSettings('SMTP', 'auth')){
 			$this->mail->SMTPAuth = true;
 			$this->mail->Username = $settings->getSettings('SMTP', 'username');
+			$this->mail->Password = $settings->getSettings('SMTP', 'password');
 		}
 	}
 	function addTo($address, $name = null) {
