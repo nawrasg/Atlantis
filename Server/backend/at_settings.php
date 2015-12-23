@@ -91,6 +91,36 @@ function update($arr) {
 					$settings->setSettings ( 'CallNotifier', $key, $value );
 				}
 				return;
+			case 'SMTP' :
+				if (isset ( $arr ['server'] )) {
+					$settings->setSettings ( 'SMTP', 'server', $arr ['server'] );
+				}
+				if (isset ( $arr ['port'] )) {
+					$port = filter_var ( $arr ['port'], FILTER_VALIDATE_INT );
+					if ($port) {
+						$settings->setSettings ( 'SMTP', 'port', $port );
+					}
+				}
+				if (isset ( $arr ['security'] )) {
+					$settings->setSettings ( 'SMTP', 'security', $arr ['security'] );
+				}
+				if (isset ( $arr ['auth'] )) {
+					$auth = filter_var ( $arr ['auth'], FILTER_VALIDATE_BOOLEAN );
+					$settings->setSettings ( 'SMTP', 'auth', $auth );
+				}
+				if (isset ( $arr ['username'], $arr ['password'] )) {
+					$username = $arr ['username'];
+					$password = $arr ['password'];
+					$settings->setSettings ( 'SMTP', 'username', $username );
+					$settings->setSettings ( 'SMTP', 'password', $password );
+				}
+				if(isset($arr['fromName'], $arr['fromMail'])){
+					$name = $arr['fromName'];
+					$mail = $arr['fromMail'];
+					$settings->setSettings ( 'SMTP', 'fromName', $name );
+					$settings->setSettings ( 'SMTP', 'fromMail', $mail );
+				}
+				return;
 		}
 	} else {
 		http_response_code ( 404 );
