@@ -54,6 +54,8 @@
     	"security":"no",
     	"auth":false,
     	"username":"",
-    	"password":""
+    	"password":"",
+    	"fromName":"",
+    	"fromMail":""
     }
 }
