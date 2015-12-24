@@ -57,5 +57,8 @@
     	"password":"",
     	"fromName":"",
     	"fromMail":""
+    },
+    "Mode":{
+    	"mode":"day"
     }
 }
