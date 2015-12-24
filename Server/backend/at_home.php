@@ -7,6 +7,7 @@ require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Settings.php';
 require_once __DIR__ . '/classes/Alarm.php';
+require_once __DIR__ . '/classes/Mode.php';
 require_once __DIR__ . '/classes/VigilanceMeteo.php';
 require_once __DIR__ . '/classes/Weather.php';
 
@@ -52,6 +53,17 @@ function update($arr) {
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
+		}
+	}
+	if(isset($arr['mode'])){
+		$mode_value = $arr['mode'];
+		$mode = new Mode();
+		switch($mode_value){
+			case Mode::DAY:
+			case Mode::NIGHT:
+			case Mode::AWAY:
+				$mode->setMode($mode_value);
+				return;
 		}
 	}
 }
