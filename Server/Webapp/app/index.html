@@ -92,6 +92,27 @@
     <div class="container">
 		<ng-view></ng-view>
     </div>
+    
+    <div ng-controller="ModeCtrl">
+	    <md-fab-speed-dial md-direction="up" class="md-fling md-fab-bottom-right">
+		  <md-fab-trigger>
+		    <md-button aria-label="menu" class="md-fab md-warn">
+		      <md-icon md-svg-src="images/svg/ic_menu_white_24px.svg"></md-icon>
+		    </md-button>
+		  </md-fab-trigger>
+		  <md-fab-actions>
+		    <md-button aria-label="Mode Absent" class="md-fab md-raised" ng-click="setMode('away')">
+		      <md-icon md-svg-src="images/svg/ic_directions_walk_black_24px.svg"></md-icon>
+		    </md-button>
+		    <md-button aria-label="Mode Nuit" class="md-fab md-raised" ng-click="setMode('night')">
+		      <md-icon md-svg-src="images/svg/ic_airline_seat_individual_suite_black_24px.svg"></md-icon>
+		    </md-button>
+		    <md-button aria-label="Demander position s" class="md-fab md-raised" ng-click="setMode('day')" >
+		      <md-icon md-svg-src="images/svg/ic_weekend_black_24px.svg"></md-icon>
+		    </md-button>
+		  </md-fab-actions>
+		</md-fab-speed-dial>
+	</div>
 
    <!--  <div class="footer">
       <div class="container">
@@ -122,52 +143,53 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/blockly/blockly_compressed.js"></script>
-        <script src="scripts/blockly/blocks_compressed.js"></script>
-        <script src="scripts/blockly/fr.js"></script>
-        <script src="scripts/blockly/php_compressed.js"></script>
-        <script src="scripts/blockly/atlantis.js"></script>
-        <script src="scripts/blockly/atlantis_generators.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/contenu.js"></script>
-        <script src="scripts/controllers/pharmacie.js"></script>
-        <script src="scripts/controllers/entretien.js"></script>
-        <script src="scripts/controllers/devices.js"></script>
-        <script src="scripts/controllers/sensors.js"></script>
-        <script src="scripts/controllers/geo.js"></script>
-        <script src="scripts/controllers/login.js"></script>
-        <script src="scripts/controllers/music.js"></script>
-        <script src="scripts/controllers/home.js"></script>
-        <script src="scripts/controllers/light_settings.js"></script>
-        <script src="scripts/controllers/deconnexion.js"></script>
-        <script src="scripts/controllers/settings.js"></script>
-        <script src="scripts/services/atlantisuri.js"></script>
-        <script src="scripts/controllers/user_add.js"></script>
-        <script src="scripts/controllers/users_settings.js"></script>
-        <script src="scripts/controllers/atlantis_settings.js"></script>
-        <script src="scripts/controllers/security_settings.js"></script>
-        <script src="scripts/directives/ngenter.js"></script>
-        <script src="scripts/controllers/plantes.js"></script>
-        <script src="scripts/controllers/room.js"></script>
-        <script src="scripts/controllers/cuisine_add.js"></script>
-        <script src="scripts/controllers/pharmacie_add.js"></script>
-        <script src="scripts/controllers/entretien_add.js"></script>
-        <script src="scripts/controllers/devices_add.js"></script>
-        <script src="scripts/controllers/home_plan.js"></script>
-        <script src="scripts/controllers/sensors_settings.js"></script>
-        <script src="scripts/controllers/lights_settings.js"></script>
-        <script src="scripts/controllers/sensor_settings.js"></script>
-        <script src="scripts/controllers/plant_settings.js"></script>
-        <script src="scripts/controllers/playlist_settings.js"></script>
-        <script src="scripts/controllers/song_settings.js"></script>
-        <script src="scripts/controllers/history.js"></script>
-        <script src="scripts/controllers/scenario.js"></script>
-        <script src="scripts/controllers/status_settings.js"></script>
-        <script src="scripts/controllers/cameras.js"></script>
-        <script src="scripts/controllers/camera_add.js"></script>
-        <script src="scripts/controllers/divers_settings.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/blockly/blockly_compressed.js"></script>
+    <script src="scripts/blockly/blocks_compressed.js"></script>
+    <script src="scripts/blockly/fr.js"></script>
+    <script src="scripts/blockly/php_compressed.js"></script>
+    <script src="scripts/blockly/atlantis.js"></script>
+    <script src="scripts/blockly/atlantis_generators.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/contenu.js"></script>
+    <script src="scripts/controllers/pharmacie.js"></script>
+    <script src="scripts/controllers/entretien.js"></script>
+    <script src="scripts/controllers/devices.js"></script>
+    <script src="scripts/controllers/sensors.js"></script>
+    <script src="scripts/controllers/geo.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/music.js"></script>
+    <script src="scripts/controllers/home.js"></script>
+    <script src="scripts/controllers/light_settings.js"></script>
+    <script src="scripts/controllers/deconnexion.js"></script>
+    <script src="scripts/controllers/settings.js"></script>
+    <script src="scripts/services/atlantisuri.js"></script>
+    <script src="scripts/controllers/user_add.js"></script>
+    <script src="scripts/controllers/users_settings.js"></script>
+    <script src="scripts/controllers/atlantis_settings.js"></script>
+    <script src="scripts/controllers/security_settings.js"></script>
+    <script src="scripts/directives/ngenter.js"></script>
+    <script src="scripts/controllers/plantes.js"></script>
+    <script src="scripts/controllers/room.js"></script>
+    <script src="scripts/controllers/cuisine_add.js"></script>
+    <script src="scripts/controllers/pharmacie_add.js"></script>
+    <script src="scripts/controllers/entretien_add.js"></script>
+    <script src="scripts/controllers/devices_add.js"></script>
+    <script src="scripts/controllers/home_plan.js"></script>
+    <script src="scripts/controllers/sensors_settings.js"></script>
+    <script src="scripts/controllers/lights_settings.js"></script>
+    <script src="scripts/controllers/sensor_settings.js"></script>
+    <script src="scripts/controllers/plant_settings.js"></script>
+    <script src="scripts/controllers/playlist_settings.js"></script>
+    <script src="scripts/controllers/song_settings.js"></script>
+    <script src="scripts/controllers/history.js"></script>
+    <script src="scripts/controllers/scenario.js"></script>
+    <script src="scripts/controllers/status_settings.js"></script>
+    <script src="scripts/controllers/cameras.js"></script>
+    <script src="scripts/controllers/camera_add.js"></script>
+    <script src="scripts/controllers/divers_settings.js"></script>
+    <script src="scripts/controllers/mode.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
