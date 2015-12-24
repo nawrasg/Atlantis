@@ -19,6 +19,7 @@ import android.os.PowerManager;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -29,7 +30,7 @@ import fr.nawrasg.atlantis.async.DataPUT;
 
 public class GCMService extends IntentService {
 	public static Ringtone RINGTONE;
-	public static final int NOTIFICATION_ID = 1;
+	public static int NOTIFICATION_ID = 1;
 	public static final int NOTIFICATIONLED_ID = 2;
 	private NotificationManager mNotificationManager;
 	private Vibrator nVibrate;
@@ -143,11 +144,27 @@ public class GCMService extends IntentService {
 		AudioManager nAudio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainFragmentActivity.class), 0);
+		int nIcon = R.drawable.home;
+		long nTime = System.currentTimeMillis();
+		Intent nIntent = new Intent(this, MainFragmentActivity.class);
+		nIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent nPI = PendingIntent.getActivity(this, 0, nIntent, 0);
+		Notification nNotification = new Notification.Builder(this)
+				.setContentTitle(title)
+				.setContentText(msg)
+				.setSmallIcon(nIcon)
+				.setContentIntent(nPI)
+				.build();
+		nNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+		mNotificationManager.notify(NOTIFICATION_ID, nNotification);
+
+
+		/*PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainFragmentActivity.class), 0);
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.home)
 				.setContentTitle(title).setStyle(new NotificationCompat.BigTextStyle().bigText(msg)).setContentText(msg);
 		mBuilder.setContentIntent(contentIntent);
-		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());*/
+		NOTIFICATION_ID++;
 
 		if (nAudio.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
 			nVibrate = (Vibrator) getSystemService(VIBRATOR_SERVICE);
