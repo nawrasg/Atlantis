@@ -17,12 +17,21 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -55,9 +64,92 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		// imgPlan.setOnTouchListener(this);
+		createFAB();
 		new HomeGET(mContext).execute(App.HOME);
 		loadPlan();
+	}
+
+	private void createFAB(){
+		ImageView nMenuIcon = new ImageView(getActivity());
+		Drawable nMenuDrawable = getResources().getDrawable(R.drawable.ic_dehaze_white_24dp);
+		nMenuIcon.setImageDrawable(nMenuDrawable);
+		FloatingActionButton nFAB = new FloatingActionButton.Builder(getActivity())
+				.setContentView(nMenuIcon)
+				.setTheme(FloatingActionButton.THEME_DARK)
+				.build();
+
+		ImageView nDayIcon = new ImageView(getActivity());
+		Drawable nDayDrawable = getResources().getDrawable(R.drawable.ic_weekend_white_18dp);
+		nDayIcon.setImageDrawable(nDayDrawable);
+		SubActionButton.Builder nItemBuilder = new SubActionButton.Builder(getActivity());
+		SubActionButton nDayButton = nItemBuilder
+				.setContentView(nDayIcon)
+				.setTheme(SubActionButton.THEME_DARK)
+				.build();
+		nDayButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setMode("day");
+			}
+		});
+
+		ImageView nNightIcon = new ImageView(getActivity());
+		Drawable nNightDrawable = getResources().getDrawable(R.drawable.ic_airline_seat_individual_suite_white_18dp);
+		nNightIcon.setImageDrawable(nNightDrawable);
+		SubActionButton nNightButton = nItemBuilder
+				.setContentView(nNightIcon)
+				.setTheme(SubActionButton.THEME_DARK)
+				.build();
+		nNightButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setMode("night");
+			}
+		});
+
+		ImageView nAwayIcon = new ImageView(getActivity());
+		Drawable nAwayDrawable = getResources().getDrawable(R.drawable.ic_directions_walk_white_18dp);
+		nAwayIcon.setImageDrawable(nAwayDrawable);
+		SubActionButton nAwayButton = nItemBuilder
+				.setContentView(nAwayIcon)
+				.setTheme(SubActionButton.THEME_DARK)
+				.build();
+		nAwayButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setMode("away");
+			}
+		});
+
+		FloatingActionMenu nActionMenu = new FloatingActionMenu
+				.Builder(getActivity())
+				.addSubActionView(nDayButton)
+				.addSubActionView(nNightButton)
+				.addSubActionView(nAwayButton)
+				.attachTo(nFAB)
+				.build();
+	}
+
+	private void setMode(String mode){
+		String nURL = App.getFullUrl(mContext) + App.HOME + "?api=" + App.getAPI(mContext) + "&mode=" + mode;
+		OkHttpClient client = new OkHttpClient();
+		FormEncodingBuilder nBody = new FormEncodingBuilder();
+		Request request = new Request.Builder()
+				.url(nURL)
+				.put(nBody.build())
+				.build();
+
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+				//TODO
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				//TODO
+			}
+		});
 	}
 
 	private void loadPlan() {
