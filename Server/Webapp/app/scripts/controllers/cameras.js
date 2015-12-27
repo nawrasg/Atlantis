@@ -61,11 +61,25 @@ nApp.controller('CamerasCtrl', function($scope, $rootScope, $http, $sessionStora
 		if(camera.id >= 0){
 			return AtlantisUri.Images() + '?type=camera&id=' + camera.id + '&api=' + $sessionStorage.api;
 		}
-	}
+	};
+	$scope.filter = function(item){
+		if(item == null || item == ''){
+			get();
+		}else{
+			var result = [];
+			angular.forEach($scope.data, function(current){
+				if($filter('lowercase')(current.alias).indexOf($filter('lowercase')(item)) > -1 || $filter('lowercase')(current.type).indexOf($filter('lowercase')(item)) > -1){
+					result.push(current);
+				}
+			})
+			$scope.cameras = result;
+		}
+	};
 	function get(){
 		var nURL = AtlantisUri.Cameras() + '?api=' + $sessionStorage.api;
 		$http.get(nURL).success(function(data, status){
 			if(status == 202){
+				$scope.data = data;
 				$scope.cameras = data;
 			}
 		})
