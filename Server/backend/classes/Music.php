@@ -56,8 +56,8 @@ class Music {
 	}
 
 	public function add($path) {
-		$p = str_replace ( " ", "\ ", $path );
-		exec ( 'sudo mocp -a ' . $p );
+		$path = addcslashes($path, " ()'&,");
+		exec ( 'sudo mocp -a ' . $path );
 	}
 
 	public function isOn() {
