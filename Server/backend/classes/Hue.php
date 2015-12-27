@@ -34,6 +34,37 @@ class Hue {
 			}
 		}
 	}
+	function scan() {
+		exec ( 'gssdp-discover --timeout=5', $output, $code );
+		$size = count ( $output );
+		for($i = 0; $i < $size; $i ++) {
+			if ($output [$i] == 'resource available') {
+				$i = $i + 2;
+				$res = explode ( "Location: ", $output [$i] );
+				$hue = $this->isHue ( $res [1] );
+				if ($hue) {
+					(new Settings ())->setSettings ( 'Hue', 'ip', $hue );
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	private function isHue($url) {
+		$file = simplexml_load_file ( $url );
+		$json = json_decode ( json_encode ( $file ) );
+		$modelName = $json->device->modelName;
+		$modelNumber = $json->device->modelNumber;
+		if ($modelName == 'Philips hue bridge 2012' && $modelNumber == '929000226503') {
+			$url = $json->URLBase;
+			$url = explode ( '/', $url );
+			$url = explode ( ':', $url [2] );
+			$url = $url [0];
+			return $url;
+		} else {
+			return false;
+		}
+	}
 	private function insertLight($name, $uid) {
 		$bdd = getBDD ();
 		$req = $bdd->prepare ( 'INSERT INTO at_lights VALUES("", :name, "hue", "light", NULL, NULL, :uid)' );
