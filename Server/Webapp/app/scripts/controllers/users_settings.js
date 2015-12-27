@@ -73,7 +73,6 @@ nApp.controller('UsersSettingsCtrl', function($scope, $http, $sessionStorage, $f
 		$http.get(nURL).success(function(data, status){
 			if(status == 202){
 				$scope.users = data;
-				console.log(data);
 			}
 		});
 	}
