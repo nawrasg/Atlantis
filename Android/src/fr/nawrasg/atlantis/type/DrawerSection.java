@@ -1,5 +1,7 @@
 package fr.nawrasg.atlantis.type;
 
+import android.content.Context;
+
 import fr.nawrasg.atlantis.interfaces.DrawerItemInterface;
 
 public class DrawerSection implements DrawerItemInterface{
@@ -11,6 +13,12 @@ public class DrawerSection implements DrawerItemInterface{
     	DrawerSection nDS = new DrawerSection();
     	nDS.setLabel(label);
     	return nDS;
+	}
+
+	public static DrawerSection create(int id, int label, Context context) {
+		DrawerSection nDS = new DrawerSection();
+		nDS.setLabel(context.getResources().getString(label));
+		return nDS;
 	}
     
 	private void setLabel(String label2) {
