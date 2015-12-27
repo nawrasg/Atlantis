@@ -1,7 +1,7 @@
 <?php
 header ( 'Access-Control-Allow-Origin: *' );
 header ( 'Access-Control-Allow-Headers: origin, x-requested-with, content-type, accept' );
-header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
+header ( 'Access-Control-Allow-Methods: GET, POST, PUT' );
 
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
@@ -15,14 +15,8 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			echo json_encode ( get () );
 			http_response_code ( 202 );
 			break;
-		case 'POST' :
-			
-			break;
 		case 'PUT' :
 			update ( $_REQUEST );
-			break;
-		case 'DELETE' :
-			
 			break;
 	}
 }
