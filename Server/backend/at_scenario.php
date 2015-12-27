@@ -13,7 +13,7 @@ if ($input) {
 	$input = json_decode ( $input );
 	$api = $input->api;
 } else {
-	$api = $_GET ['api'];
+	$api = $_REQUEST ['api'];
 }
 if (isset ( $api ) && checkAPI ( $api, $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
