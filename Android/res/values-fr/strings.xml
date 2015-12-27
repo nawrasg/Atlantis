@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Atlantis</string>
-    <string name="action_settings">Settings</string>
-    <string-array name="section_array">
-        <item>Accueil</item>
-        <item>Liste des courses</item>
-        <item>Cuisine</item>
-        <item>Pharmacie</item>
-        <item>Appareils Connectés</item>
-        <item>Paramètres</item>
-        <item>Actualiser</item>
-        <item>Quitter</item>
-    </string-array>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
-    <string name="switch_off">Off</string>
-    <string name="switch_on">On</string>
 
     <!-- MainFragmentActivity -->
     <string name="main_menu_home">Accueil</string>
     <string name="main_menu_lights">Lumières</string>
     <string name="main_menu_sensors">Capteurs</string>
+    <string name="main_menu_lights_sensors">Lumières et Capteurs</string>
     <string name="main_menu_cameras">Caméras</string>
     <string name="main_menu_scenarios">Scénarios</string>
+    <string name="main_menu_cameras_scenarios">Caméras et Scénarios</string>
     <string name="main_menu_db">Bases de données</string>
     <string name="main_menu_shopping_list">Liste des courses</string>
     <string name="main_menu_kitchen">Cuisine</string>
@@ -38,4 +24,5 @@
     <string name="main_menu_history">Historique</string>
     <string name="main_menu_settings">Paramètres</string>
     <string name="main_menu_exit">Quitter</string>
+
 </resources>
