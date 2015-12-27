@@ -19,6 +19,16 @@ public class DrawerItem implements DrawerItemInterface {
         item.setUpdateActionBarTitle(updateActionBarTitle);
         return item;
     }
+
+	public static DrawerItem create( int id, int label, String icon, boolean updateActionBarTitle, Context context ) {
+		DrawerItem item = new DrawerItem();
+		item.setId(id);
+		item.setLabel(context.getResources().getString(label));
+		item.setIcon(context.getResources().getIdentifier(icon, "drawable", context.getPackageName()));
+		item.setUpdateActionBarTitle(updateActionBarTitle);
+		return item;
+	}
+
 	private void setLabel(String label2) {
 		this.label = label2;
 	}
