@@ -8,6 +8,7 @@ require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/PushMessage.php';
 
 $page_level = 2;
+$admin_level = 0;
 
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
@@ -32,6 +33,9 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			}
 			break;
 		case 'DELETE' :
+			if (checkAPI ( $_REQUEST ['api'], $admin_level )) {
+				delete ( $_REQUEST );
+			}
 			break;
 	}
 } else if ($argc > 1) {
@@ -42,6 +46,20 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 		case 'battery' :
 			checkBattery ();
 			break;
+	}
+}
+function delete($arr) {
+	if (isset ( $arr ['id'] )) {
+		$id = $arr ['id'];
+		$bdd = getBDD ();
+		$req = $bdd->exec ( "DELETE FROM at_plants WHERE id = $id" );
+		if ($req > 0) {
+			http_response_code ( 202 );
+		} else {
+			http_response_code ( 403 );
+		}
+	} else {
+		http_response_code ( 404 );
 	}
 }
 function update($arr) {
