@@ -17,7 +17,6 @@ class Music {
 	public function stop() {
 		exec ( 'sudo mocp -s' );
 		$this->clearPlaylist ();
-		// $this->off();
 	}
 
 	public function next() {
@@ -49,7 +48,6 @@ class Music {
 	}
 
 	public function start() {
-		// $this->on();
 		exec ( 'sudo mocp -p' );
 	}
 
