@@ -25,7 +25,9 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 			echo put ( $_REQUEST );
 			break;
 		case 'DELETE' :
-			delete ( $_REQUEST );
+			if(checkAPI($_REQUEST['api'], $admin_level)){
+				delete ( $_REQUEST );
+			}
 			break;
 	}
 } else {
