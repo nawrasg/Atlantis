@@ -7,6 +7,7 @@ require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
 
 $page_level = 1;
+$admin_level = 0;
 
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
@@ -21,7 +22,9 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			update ( $_REQUEST );
 			break;
 		case 'DELETE' :
-			delete ( $_REQUEST );
+			if(checkAPI($_REQUEST['api'], $admin_level)){
+				delete ( $_REQUEST );
+			}
 			break;
 	}
 }
