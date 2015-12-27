@@ -12,7 +12,7 @@ $page_level = 1;
 $settings = new Settings ();
 $hue = new Hue ();
 
-if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
+if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
 		case 'GET' :
 			$result = get ();
