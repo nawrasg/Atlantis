@@ -3,6 +3,7 @@ require_once __DIR__ . '/../classes/connexion.php';
 require_once __DIR__ . '/../classes/Zwave.php';
 require_once __DIR__ . '/../classes/PushMessage.php';
 require_once __DIR__ . '/../classes/Settings.php';
+require_once __DIR__ . '/../classes/Mode.php';
 
 $pid = getmypid ();
 (new Settings ())->setSettings ( 'Daemon', 'pid', $pid );
@@ -11,6 +12,7 @@ while ( ! getBDD () )
 	;
 
 $push = new PushMessage ();
+$mode = new Mode();
 
 $arrMvt = loadSensors ();
 $arrMvt2 = initTimestamp ( $arrMvt );
@@ -27,7 +29,7 @@ while ( true ) {
 					if ($zwave->getValue ( $sensor ['sensor'] ) == 'on' && $zwave->GetTimestamp ( $sensor ['sensor'] ) != $arrMvt2 [$i]) {
 						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						execScenario ( $i, $scenarios );
-						if ($alarm) {
+						if($mode->getMode() == Mode::NIGHT || $mode->getMode() == Mode::AWAY){
 							$push->sendMessageAll ( "Atlantis - Alarme", "Porte ouverte !" );
 						}
 					}
@@ -39,7 +41,7 @@ while ( true ) {
 					if ($zwave->GetTimestamp ( $sensor ['sensor'] ) != $arrMvt2 [$i]) {
 						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						execScenario ( $i, $scenarios );
-						if ($alarm) {
+						if($mode->getMode() == Mode::AWAY){
 							$push->sendMessageAll ( "Atlantis - Alarme", "Mouvement !" );
 						}
 					}
