@@ -87,43 +87,44 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 
 	private DrawerItemInterface[] createNavigationMenu() {
 		if (findViewById(R.id.main_fragment2) != null) {
-			DrawerItemInterface[] nSections = { DrawerItem.create(0, "Accueil", "ng_screen", false, nContext),
-					DrawerItem.create(2, "Lumières et Capteurs", "ng_bulb", false, nContext),
-					DrawerSection.create(100, "Bases de données"),
-					DrawerItem.create(101, "Liste des courses", "ng_todo", false, nContext),
-					DrawerItem.create(102, "Cuisine", "ng_kittle", false, nContext),
-					DrawerItem.create(103, "Pharmacie", "ng_medicine", false, nContext),
-					DrawerItem.create(104, "Hygiène et Entretien", "ng_soap", false, nContext),
-					DrawerSection.create(200, "Services"),
-					DrawerItem.create(204, "Musique", "ng_player", false, nContext),
-					DrawerItem.create(201, "Plantes", "ng_plant", false, nContext),
-					DrawerItem.create(202, "Géolocalisation", "ng_satellite", false, nContext),
-					DrawerItem.create(203, "Appareils Connectés", "ng_connected", false, nContext),
-					DrawerSection.create(300, "Général"),
-					DrawerItem.create(301, "Historique", "ng_graph", false, nContext),
-					DrawerItem.create(302, "Paramètres", "ng_settings", false, nContext),
-					DrawerItem.create(303, "Quitter", "ng_exit", false, nContext) };
+			DrawerItemInterface[] nSections = { DrawerItem.create(0, R.string.main_menu_home, "ng_screen", false, nContext),
+					DrawerItem.create(2, R.string.main_menu_lights_sensors, "ng_bulb", false, nContext),
+					DrawerItem.create(3, R.string.main_menu_cameras_scenarios, "ng_camera", false, nContext),
+					DrawerSection.create(100, R.string.main_menu_db, nContext),
+					DrawerItem.create(101, R.string.main_menu_shopping_list, "ng_todo", false, nContext),
+					DrawerItem.create(102, R.string.main_menu_kitchen, "ng_kittle", false, nContext),
+					DrawerItem.create(103, R.string.main_menu_drugstore, "ng_medicine", false, nContext),
+					DrawerItem.create(104, R.string.main_menu_upkeep, "ng_soap", false, nContext),
+					DrawerSection.create(200, R.string.main_menu_services, nContext),
+					DrawerItem.create(204, R.string.main_menu_music, "ng_player", false, nContext),
+					DrawerItem.create(201, R.string.main_menu_plants, "ng_plant", false, nContext),
+					DrawerItem.create(202, R.string.main_menu_gps, "ng_satellite", false, nContext),
+					DrawerItem.create(203, R.string.main_menu_devices, "ng_connected", false, nContext),
+					DrawerSection.create(300, R.string.main_menu_general, nContext),
+					DrawerItem.create(301, R.string.main_menu_history, "ng_graph", false, nContext),
+					DrawerItem.create(302, R.string.main_menu_settings, "ng_settings", false, nContext),
+					DrawerItem.create(303, R.string.main_menu_exit, "ng_exit", false, nContext) };
 			return nSections;
 		} else {
-			DrawerItemInterface[] nSections = { DrawerItem.create(0, "Accueil", "ng_screen", false, nContext),
-					DrawerItem.create(2, "Lumières", "ng_bulb", false, nContext),
-					DrawerItem.create(1, "Capteurs", "ng_device", false, nContext),
-					DrawerItem.create(3, "Caméras", "ng_camera", false, nContext),
-					DrawerItem.create(4, "Scénarios", "ng_scenario", false, nContext),
-					DrawerSection.create(100, "Bases de données"),
-					DrawerItem.create(101, "Liste des courses", "ng_todo", false, nContext),
-					DrawerItem.create(102, "Cuisine", "ng_kittle", false, nContext),
-					DrawerItem.create(103, "Pharmacie", "ng_medicine", false, nContext),
-					DrawerItem.create(104, "Hygiène et Entretien", "ng_soap", false, nContext),
-					DrawerSection.create(200, "Services"),
-					DrawerItem.create(204, "Musique", "ng_player", false, nContext),
-					DrawerItem.create(201, "Plantes", "ng_plant", false, nContext),
-					DrawerItem.create(202, "Géolocalisation", "ng_satellite", false, nContext),
-					DrawerItem.create(203, "Appareils Connectés", "ng_connected", false, nContext),
-					DrawerSection.create(300, "Général"),
-					DrawerItem.create(301, "Historique", "ng_graph", false, nContext),
-					DrawerItem.create(302, "Paramètres", "ng_settings", false, nContext),
-					DrawerItem.create(303, "Quitter", "ng_exit", false, nContext) };
+			DrawerItemInterface[] nSections = { DrawerItem.create(0, R.string.main_menu_home, "ng_screen", false, nContext),
+					DrawerItem.create(2, R.string.main_menu_lights, "ng_bulb", false, nContext),
+					DrawerItem.create(1, R.string.main_menu_sensors, "ng_device", false, nContext),
+					DrawerItem.create(3, R.string.main_menu_cameras, "ng_camera", false, nContext),
+					DrawerItem.create(4, R.string.main_menu_scenarios, "ng_scenario", false, nContext),
+					DrawerSection.create(100, R.string.main_menu_db, nContext),
+					DrawerItem.create(101, R.string.main_menu_shopping_list, "ng_todo", false, nContext),
+					DrawerItem.create(102, R.string.main_menu_kitchen, "ng_kittle", false, nContext),
+					DrawerItem.create(103, R.string.main_menu_drugstore, "ng_medicine", false, nContext),
+					DrawerItem.create(104, R.string.main_menu_upkeep, "ng_soap", false, nContext),
+					DrawerSection.create(200, R.string.main_menu_services, nContext),
+					DrawerItem.create(204, R.string.main_menu_music, "ng_player", false, nContext),
+					DrawerItem.create(201, R.string.main_menu_plants, "ng_plant", false, nContext),
+					DrawerItem.create(202, R.string.main_menu_gps, "ng_satellite", false, nContext),
+					DrawerItem.create(203, R.string.main_menu_devices, "ng_connected", false, nContext),
+					DrawerSection.create(300, R.string.main_menu_general, nContext),
+					DrawerItem.create(301, R.string.main_menu_history, "ng_graph", false, nContext),
+					DrawerItem.create(302, R.string.main_menu_history, "ng_settings", false, nContext),
+					DrawerItem.create(303, R.string.main_menu_exit, "ng_exit", false, nContext) };
 			return nSections;
 		}
 	}
@@ -278,6 +279,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 				break;
 			case 3:
 				loadFragment(new CameraFragment(), true);
+				loadFragment(new ScenarioFragment(), false);
 				break;
 			case 4:
 				loadFragment(new ScenarioFragment(), true);
