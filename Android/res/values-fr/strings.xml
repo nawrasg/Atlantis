@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Atlantis</string>
+    <string name="app_date_format">dd-MM-yyyy HH:mm:ss</string>
 
     <!-- MainFragmentActivity -->
     <string name="main_menu_home">Accueil</string>
@@ -62,4 +63,13 @@
     <string name="adapter_plant_item_air">Air :</string>
     <string name="adapter_plant_item_terreau">Terreau :</string>
 
+    <!-- SensorAdapter -->
+    <string name="adapter_sensor_item_electric_consumption">Consommation électrique :</string>
+    <string name="adapter_sensor_item_battery">Autonomie :</string>
+    <string name="adapter_sensor_item_temperature">Température :</string>
+    <string name="adapter_sensor_item_lum">Luminosité :</string>
+    <string name="adapter_sensor_item_tamper_date">Capteur trafiqué le</string>
+    <string name="adapter_sensor_item_door_status">Etat :</string>
+    <string name="adapter_sensor_item_last_detected_motion">Dernier mouvement détecté le</string>
+    <string name="adapter_sensor_item_last_motion">Dernier mouvement le</string>
 </resources>
