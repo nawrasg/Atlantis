@@ -53,10 +53,10 @@ public class PharmacieAdapter extends ArrayAdapter<Medicament> {
 		long nDate = mMedicament.getDate();
 		String nUnit = mMedicament.getDateUnit();
 		if(nDate > 0){
-			nHolder.description.setText("A consommer dans " + nDate + " " + nUnit);
+			nHolder.description.setText(mContext.getResources().getString(R.string.adapter_pharmacie_item_date_to_use) + " " + nDate + " " + nUnit);
 			nHolder.icon2.setImageDrawable(null);
 		}else{
-			nHolder.description.setText("Périmé depuis " + Math.abs(nDate) + " " + nUnit);
+			nHolder.description.setText(mContext.getResources().getString(R.string.adapter_pharmacie_item_date_peremption) + " " + Math.abs(nDate) + " " + nUnit);
 			nHolder.icon2.setImageResource(R.drawable.ng_ball_red);			
 		}
 		return nView;
