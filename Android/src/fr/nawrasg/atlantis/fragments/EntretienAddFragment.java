@@ -90,7 +90,7 @@ public class EntretienAddFragment extends Fragment {
 
 	private void save() {
 		if (txtNom.getText().toString().equals("") || txtDate.getText().toString().equals("")) {
-			Toast.makeText(mContext, "Merci de préciser le nom du produit ainsi que sa date de péremption !", Toast.LENGTH_LONG).show();
+			Toast.makeText(mContext, getResources().getString(R.string.fragment_entretien_add_save_warning), Toast.LENGTH_LONG).show();
 			return;
 		}
 		try {
