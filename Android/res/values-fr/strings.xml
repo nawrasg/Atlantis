@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Atlantis</string>
     <string name="app_date_format">dd-MM-yyyy HH:mm:ss</string>
+    <string name="app_last_connection">Dernière connexion le</string>
 
     <!-- MainFragmentActivity -->
     <string name="main_menu_home">Accueil</string>
