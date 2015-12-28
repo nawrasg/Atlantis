@@ -25,4 +25,29 @@
     <string name="main_menu_settings">Paramètres</string>
     <string name="main_menu_exit">Quitter</string>
 
+    <!-- HomeFragment -->
+    <string name="fragment_home_mode">Mode :</string>
+    <string name="fragment_home_mode_day">Jour</string>
+    <string name="fragment_home_mode_night">Nuit</string>
+    <string name="fragment_home_mode_away">Absent</string>
+
+    <!-- CoursesFragment -->
+    <string name="fragment_courses_notification">Liste de courses modifiée !</string>
+    <string name="fragment_courses_button_add">Ajouter</string>
+    <string name="fragment_courses_button_cancel">Annuler</string>
+    <string name="fragment_courses_add_product">Ajouter un produit</string>
+
+    <!-- Adapters -->
+    <!-- CameraAdapter -->
+    <string name="adapter_camera_item_type">Type :</string>
+    <string name="adapter_camera_item_image">Image :</string>
+    <string name="adapter_camera_item_video">Vidéo :</string>
+    <string name="adapter_camera_item_ip_address">Adresse IP :</string>
+
+    <!-- CuisineAdapter -->
+    <string name="adapter_cuisine_item_date_frozen">Congelé depuis</string>
+    <string name="adapter_cuisine_item_date_peremption">Périmé depuis</string>
+    <string name="adapter_cuisine_item_date_open">Ouvert depuis</string>
+    <string name="adapter_cuisine_item_date_to_use">A consommer dans</string>
+
 </resources>
