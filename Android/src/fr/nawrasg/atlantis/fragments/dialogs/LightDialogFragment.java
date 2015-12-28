@@ -46,7 +46,7 @@ public class LightDialogFragment extends DialogFragment implements OnClickListen
 		View nView = inflater.inflate(R.layout.fragment_dialog_light, null);
 		ButterKnife.bind(this, nView);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setPositiveButton("Enregistrer", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(mContext.getString(R.string.fragment_dialog_button_save), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				String nVal = "set=" + mLight.getID();
 				int nPosition = spRoom.getSelectedItemPosition();
@@ -63,7 +63,7 @@ public class LightDialogFragment extends DialogFragment implements OnClickListen
 				new DataPUT(mContext).execute(App.LIGHTS, nVal);
 				dismiss();
 			}
-		}).setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+		}).setNegativeButton(mContext.getString(R.string.fragment_dialog_button_cancel), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dismiss();
 			}
