@@ -31,7 +31,7 @@ public class DeviceDialogFragment extends DialogFragment{
 		View nView = inflater.inflate(R.layout.fragment_dialog_device, null);
 		ButterKnife.bind(this, nView);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setPositiveButton("Terminer", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(mContext.getString(R.string.fragment_dialog_button_end), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dismiss();
 			}
