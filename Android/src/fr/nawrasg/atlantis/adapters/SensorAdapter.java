@@ -166,7 +166,7 @@ public class SensorAdapter extends ArrayAdapter<Sensor> {
 
 	private String getDate(String date){
 		try {
-			Date nDate = new SimpleDateFormat(mContext.getString(R.string.app_date_format)).parse(date);
+			Date nDate = new SimpleDateFormat(mContext.getString(R.string.app_datetime_format)).parse(date);
 			return mDateFormat.format(nDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
