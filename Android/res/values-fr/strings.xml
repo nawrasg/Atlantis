@@ -72,4 +72,7 @@
     <string name="adapter_sensor_item_door_status">Etat :</string>
     <string name="adapter_sensor_item_last_detected_motion">Dernier mouvement détecté le</string>
     <string name="adapter_sensor_item_last_motion">Dernier mouvement le</string>
+
+    <!-- DialogFragment -->
+    <string name="fragment_dialog_button_end">Terminer</string>
 </resources>
