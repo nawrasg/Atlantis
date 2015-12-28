@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,22 +35,23 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPUT;
 
 public class HomeFragment extends Fragment implements OnTouchListener {
 	private Context mContext;
+	private FloatingActionButton mFAB;
+	private FloatingActionMenu mActionMenu;
+	private SubActionButton mDayButton, mNightButton, mAwayButton;
 	@Bind(R.id.imgPlanPlan)
 	ImageView imgPlan;
 	@Bind(R.id.txtHomeWeatherToday)
 	TextView txtWeatherToday;
 	@Bind(R.id.txtHomeWeatherTomorrow)
 	TextView txtWeatherTomorrow;
-	@Bind(R.id.swtPlanAlarm)
-	Switch swtAlarm;
+	@Bind(R.id.txtHomeMode)
+	TextView txtMode;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,11 +69,11 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		loadPlan();
 	}
 
-	private void createFAB(){
+	private void createFAB() {
 		ImageView nMenuIcon = new ImageView(getActivity());
 		Drawable nMenuDrawable = getResources().getDrawable(R.drawable.ic_dehaze_white_24dp);
 		nMenuIcon.setImageDrawable(nMenuDrawable);
-		FloatingActionButton nFAB = new FloatingActionButton.Builder(getActivity())
+		mFAB = new FloatingActionButton.Builder(getActivity())
 				.setContentView(nMenuIcon)
 				.setTheme(FloatingActionButton.THEME_DARK)
 				.build();
@@ -82,55 +82,83 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		Drawable nDayDrawable = getResources().getDrawable(R.drawable.ic_weekend_white_18dp);
 		nDayIcon.setImageDrawable(nDayDrawable);
 		SubActionButton.Builder nItemBuilder = new SubActionButton.Builder(getActivity());
-		SubActionButton nDayButton = nItemBuilder
+		mDayButton = nItemBuilder
 				.setContentView(nDayIcon)
 				.setTheme(SubActionButton.THEME_DARK)
 				.build();
-		nDayButton.setOnClickListener(new View.OnClickListener() {
+		mDayButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setMode("day");
+				mActionMenu.close(true);
 			}
 		});
 
 		ImageView nNightIcon = new ImageView(getActivity());
 		Drawable nNightDrawable = getResources().getDrawable(R.drawable.ic_airline_seat_individual_suite_white_18dp);
 		nNightIcon.setImageDrawable(nNightDrawable);
-		SubActionButton nNightButton = nItemBuilder
+		mNightButton = nItemBuilder
 				.setContentView(nNightIcon)
 				.setTheme(SubActionButton.THEME_DARK)
 				.build();
-		nNightButton.setOnClickListener(new View.OnClickListener() {
+		mNightButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setMode("night");
+				mActionMenu.close(true);
 			}
 		});
 
 		ImageView nAwayIcon = new ImageView(getActivity());
 		Drawable nAwayDrawable = getResources().getDrawable(R.drawable.ic_directions_walk_white_18dp);
 		nAwayIcon.setImageDrawable(nAwayDrawable);
-		SubActionButton nAwayButton = nItemBuilder
+		mAwayButton = nItemBuilder
 				.setContentView(nAwayIcon)
 				.setTheme(SubActionButton.THEME_DARK)
 				.build();
-		nAwayButton.setOnClickListener(new View.OnClickListener() {
+		mAwayButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setMode("away");
+				mActionMenu.close(true);
 			}
 		});
 
-		FloatingActionMenu nActionMenu = new FloatingActionMenu
+		mActionMenu = new FloatingActionMenu
 				.Builder(getActivity())
-				.addSubActionView(nDayButton)
-				.addSubActionView(nNightButton)
-				.addSubActionView(nAwayButton)
-				.attachTo(nFAB)
+				.addSubActionView(mDayButton)
+				.addSubActionView(mNightButton)
+				.addSubActionView(mAwayButton)
+				.attachTo(mFAB)
 				.build();
 	}
 
-	private void setMode(String mode){
+	@Override
+	public void onDestroy() {
+		if (mFAB != null) {
+			mFAB.detach();
+		}
+		super.onDestroy();
+	}
+
+	private void setModeLabel(String mode){
+		String nModePrefix = getResources().getString(R.string.fragment_home_mode);
+		String nModePost = "";
+		switch (mode) {
+			case "day":
+				nModePost = getResources().getString(R.string.fragment_home_mode_day);
+				break;
+			case "night":
+				nModePost = getResources().getString(R.string.fragment_home_mode_night);
+				break;
+			case "away":
+				nModePost = getResources().getString(R.string.fragment_home_mode_away);
+				break;
+		}
+		txtMode.setText(nModePrefix + " " + nModePost);
+	}
+
+	private void setMode(String mode) {
 		String nURL = App.getFullUrl(mContext) + App.HOME + "?api=" + App.getAPI(mContext) + "&mode=" + mode;
 		OkHttpClient client = new OkHttpClient();
 		FormEncodingBuilder nBody = new FormEncodingBuilder();
@@ -146,8 +174,25 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 			}
 
 			@Override
-			public void onResponse(Response response) throws IOException {
+			public void onResponse(final Response response) throws IOException {
 				//TODO
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						if (response.code() == 202) {
+							try {
+								JSONObject nResponse = new JSONObject(response.body().string());
+								String nMode = nResponse.getString("mode");
+								setModeLabel(nMode);
+							} catch (JSONException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+						}
+					}
+				});
 			}
 		});
 	}
@@ -179,17 +224,12 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		int touchY = (int) event.getY();
 
 		int imageX = touchX - viewCoords[0]; // viewCoords[0] is the X
-												// coordinate
+		// coordinate
 		int imageY = touchY - viewCoords[1]; // viewCoords[1] is the y
-												// coordinate
+		// coordinate
 		// Toast.makeText(mContext, imageX + " " + imageY,
 		// Toast.LENGTH_SHORT).show();
 		return true;
-	}
-
-	@OnClick(R.id.swtPlanAlarm)
-	public void toggleAlarm() {
-		new DataPUT(mContext).execute(App.HOME, "alarm=" + swtAlarm.isChecked());
 	}
 
 	private void setWeather(TextView view, JSONObject json) throws JSONException {
@@ -231,20 +271,16 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 
 		@Override
 		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
+			if (getResultCode() == 202) {
 				try {
 					JSONObject nJson = new JSONObject(result);
-					boolean nAlarm = nJson.getBoolean("alarm");
-					if (nAlarm) {
-						swtAlarm.setChecked(true);
-					} else {
-						swtAlarm.setChecked(false);
-					}
 					JSONArray nArr = nJson.getJSONArray("weather");
 					JSONObject nJsonC = nArr.getJSONObject(0);
 					setWeather(txtWeatherToday, nJsonC);
 					nJsonC = nArr.getJSONObject(1);
 					setWeather(txtWeatherTomorrow, nJsonC);
+					String nMode = nJson.getString("mode");
+					setModeLabel(nMode);
 				} catch (JSONException e) {
 					Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
 				}
