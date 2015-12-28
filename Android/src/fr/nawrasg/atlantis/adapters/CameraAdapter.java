@@ -53,10 +53,10 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.CameraView
 			nAlias += " (" + nRoomLabel + ")";
 		}
 		holder.alias.setText(nAlias);
-		holder.type.setText(mContext.getResources().getString(R.string.adapter_camera_item_type) + nCamera.getType());
-		holder.imageUrl.setText(mContext.getResources().getString(R.string.adapter_camera_item_image) + nCamera.getImageUrl());
-		holder.videoUrl.setText(mContext.getResources().getString(R.string.adapter_camera_item_video) + nCamera.getVideoUrl());
-		holder.ipAddress.setText(mContext.getResources().getString(R.string.adapter_camera_item_ip_address) + nCamera.getIP());
+		holder.type.setText(mContext.getResources().getString(R.string.adapter_camera_item_type) + " " + nCamera.getType());
+		holder.imageUrl.setText(mContext.getResources().getString(R.string.adapter_camera_item_image) + " " + nCamera.getImageUrl());
+		holder.videoUrl.setText(mContext.getResources().getString(R.string.adapter_camera_item_video) + " " + nCamera.getVideoUrl());
+		holder.ipAddress.setText(mContext.getResources().getString(R.string.adapter_camera_item_ip_address) + " " + nCamera.getIP());
 		holder.image.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
