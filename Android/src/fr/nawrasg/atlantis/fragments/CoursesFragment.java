@@ -203,7 +203,7 @@ public class CoursesFragment extends ListFragment {
 
 	public void sendNotification() {
 		try {
-			String nMsg = URLEncoder.encode("Liste de courses modifiée !", "UTF-8");
+			String nMsg = URLEncoder.encode(getResources().getString(R.string.fragment_courses_notification), "UTF-8");
 			new DataPOST(mContext).execute(App.NOTIFY, "msg=" + nMsg);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -217,7 +217,7 @@ public class CoursesFragment extends ListFragment {
 		final AutoCompleteTextView txtAdd = (AutoCompleteTextView) view.findViewById(R.id.txtAutoAdd);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, list);
 		txtAdd.setAdapter(adapter);
-		inputBoxBuilder.setPositiveButton("Ajouter", new DialogInterface.OnClickListener() {
+		inputBoxBuilder.setPositiveButton(getResources().getString(R.string.fragment_courses_button_add), new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -246,13 +246,13 @@ public class CoursesFragment extends ListFragment {
 					}
 				}
 			}
-		}).setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+		}).setNegativeButton(getResources().getString(R.string.fragment_courses_button_cancel), new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.cancel();
 			}
-		}).setTitle("Ajouter un produit");
+		}).setTitle(getResources().getString(R.string.fragment_courses_add_product));
 		AlertDialog inputBox = inputBoxBuilder.create();
 		inputBox.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		inputBox.show();
