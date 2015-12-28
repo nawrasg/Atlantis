@@ -55,7 +55,7 @@ public class SensorDialogFragment extends DialogFragment{
 		mDevice = getArguments().getString("device");
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(mDevice)
-               .setPositiveButton("Sauvegarder", new DialogInterface.OnClickListener() {
+               .setPositiveButton(mContext.getString(R.string.fragment_dialog_button_save), new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        if(mSensor.getType().equals("section")){
                     	   String nVal = "type=section";
@@ -78,7 +78,7 @@ public class SensorDialogFragment extends DialogFragment{
                        dismiss();
                    }
                })
-               .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+               .setNegativeButton(mContext.getString(R.string.fragment_dialog_button_cancel), new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        dismiss();
                    }
@@ -146,7 +146,7 @@ public class SensorDialogFragment extends DialogFragment{
 			setRoom();
 		}else{
 			setView(false);			
-			lblTimestamp.setText("Dernière connexion le " + mSensor.getUpdate());
+			lblTimestamp.setText(mContext.getString(R.string.app_last_connection) + " " + mSensor.getUpdate());
 			cbHistory.setChecked(mSensor.getHistory());
 			cbIgnore.setChecked(mSensor.getIgnore());
 		}
