@@ -75,4 +75,6 @@
 
     <!-- DialogFragment -->
     <string name="fragment_dialog_button_end">Terminer</string>
+    <string name="fragment_dialog_button_save">Enregistrer</string>
+    <string name="fragment_dialog_button_cancel">Annuler</string>
 </resources>
