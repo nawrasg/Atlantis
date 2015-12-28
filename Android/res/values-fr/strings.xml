@@ -50,4 +50,7 @@
     <string name="adapter_cuisine_item_date_open">Ouvert depuis</string>
     <string name="adapter_cuisine_item_date_to_use">A consommer dans</string>
 
+    <!-- EntretienAdapter -->
+    <string name="adapter_entretien_item_date_to_use">A consommer dans</string>
+    <string name="adapter_entretien_item_date_peremption">Périmé depuis</string>
 </resources>
