@@ -114,19 +114,19 @@ public class SensorAdapter extends ArrayAdapter<Sensor> {
 				case "Electric ":
 				case "Electric":
 				case "Power":
-					lblSensorName.setText("Consommation électrique : " + mSensor.getValue() + " " + mSensor.getUnit());
+					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_electric_consumption) + " " + mSensor.getValue() + " " + mSensor.getUnit());
 					imgSensorIcon.setImageResource(R.drawable.ng_lightning);
 					break;
 				case "Battery":
-					lblSensorName.setText("Autonomie : " + mSensor.getValue() + " " + mSensor.getUnit());
+					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_battery) + " " + mSensor.getValue() + " " + mSensor.getUnit());
 					imgSensorIcon.setImageResource(R.drawable.ng_battery);
 					break;
 				case "Temperature":
-					lblSensorName.setText("Température : " + mSensor.getValue() + " " + mSensor.getUnit());
+					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_temperature) + " " + mSensor.getValue() + " " + mSensor.getUnit());
 					imgSensorIcon.setImageResource(R.drawable.ng_thermostat);
 					break;
 				case "Luminiscence":
-					lblSensorName.setText("Luminosité : " + mSensor.getValue() + " " + mSensor.getUnit());
+					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_lum) + " " + mSensor.getValue() + " " + mSensor.getUnit());
 					imgSensorIcon.setImageResource(R.drawable.ng_sun);
 					break;
 				case "switchBinary":
@@ -139,19 +139,19 @@ public class SensorAdapter extends ArrayAdapter<Sensor> {
 					imgSensorIcon.setImageResource(R.drawable.interrupt32);
 					break;
 				case "Tamper":
-					lblSensorName.setText("Capteur trafiqué le " + getDate(mSensor.getUpdate()));
+					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_tamper_date) + " " + getDate(mSensor.getUpdate()));
 					imgSensorIcon.setImageResource(R.drawable.ng_alert);
 					break;
 				case "Door/Window":
-					lblSensorName.setText("Etat : " + (mSensor.getValue().equals("on") ? "Ouvert" : "Fermé"));
+					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_door_status) + " " + (mSensor.getValue().equals("on") ? "Ouvert" : "Fermé"));
 					imgSensorIcon.setImageResource(R.drawable.ng_device);
 					break;
 				case "General purpose":
-					lblSensorName.setText("Dernier mouvement détecté le " + getDate(mSensor.getUpdate()));
+					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_last_detected_motion) + " " + getDate(mSensor.getUpdate()));
 					imgSensorIcon.setImageResource(R.drawable.ng_device);
 					break;
 				case "sensorBinary":
-					lblSensorName.setText("Dernier mouvement le " + getDate(mSensor.getUpdate()));
+					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_last_motion) + " " + getDate(mSensor.getUpdate()));
 					imgSensorIcon.setImageResource(R.drawable.ng_device);
 					break;
 				default:
@@ -166,7 +166,7 @@ public class SensorAdapter extends ArrayAdapter<Sensor> {
 
 	private String getDate(String date){
 		try {
-			Date nDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(date);
+			Date nDate = new SimpleDateFormat(mContext.getString(R.string.app_date_format)).parse(date);
 			return mDateFormat.format(nDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
