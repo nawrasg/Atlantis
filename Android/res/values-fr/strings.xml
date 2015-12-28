@@ -40,6 +40,9 @@
     <string name="fragment_courses_button_cancel">Annuler</string>
     <string name="fragment_courses_add_product">Ajouter un produit</string>
 
+    <!-- EntretienAddFragment -->
+    <string name="fragment_entretien_add_save_warning">Merci de préciser le nom du produit ainsi que sa date de péremption !</string>
+
     <!-- Adapters -->
     <!-- CameraAdapter -->
     <string name="adapter_camera_item_type">Type :</string>
