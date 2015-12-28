@@ -57,4 +57,9 @@
     <!-- PharmacieAdapter -->
     <string name="adapter_pharmacie_item_date_to_use">A consommer dans</string>
     <string name="adapter_pharmacie_item_date_peremption">Périmé depuis</string>
+
+    <!-- PlantAdapter -->
+    <string name="adapter_plant_item_air">Air :</string>
+    <string name="adapter_plant_item_terreau">Terreau :</string>
+
 </resources>
