@@ -102,18 +102,18 @@ public class CuisineAdapter extends ArrayAdapter<Produit> implements Filterable{
 		String nDateUnit = mProduit.getDateUnit();
 		int nStatus = mProduit.getStatus();
 		if (mProduit.getPlace().equals("congelateur")) {
-			nHolder.description.setText("Congelé depuis " + nDate + " " + nDateUnit);
+			nHolder.description.setText(mContext.getResources().getString(R.string.adapter_cuisine_item_date_frozen) + " " + nDate + " " + nDateUnit);
 			nHolder.icon2.setImageResource(R.drawable.ng_ball_blue);
 		} else {
 			if (nDate < 0) {
-				nHolder.description.setText("Périmé depuis " + Math.abs(nDate) + " " + nDateUnit);
+				nHolder.description.setText(mContext.getResources().getString(R.string.adapter_cuisine_item_date_peremption) + " " + Math.abs(nDate) + " " + nDateUnit);
 				nHolder.icon2.setImageResource(R.drawable.ng_ball_red);
 			} else {
 				if (nStatus == 1) {
-					nHolder.description.setText("Ouvert depuis " + Math.abs(mProduit.getDate2()) + " " + mProduit.getDate2Unit());
+					nHolder.description.setText(mContext.getResources().getString(R.string.adapter_cuisine_item_date_open) + " " + Math.abs(mProduit.getDate2()) + " " + mProduit.getDate2Unit());
 					nHolder.icon2.setImageResource(R.drawable.ng_ball_orange);
 				} else {
-					nHolder.description.setText("A consommer dans " + Math.abs(nDate) + " " + nDateUnit);
+					nHolder.description.setText(mContext.getResources().getString(R.string.adapter_cuisine_item_date_to_use) + " " + Math.abs(nDate) + " " + nDateUnit);
 					if(mProduit.getPlace().equals("frigidaire")){
 						nHolder.icon2.setImageResource(R.drawable.ng_ball_green);												
 					}else{
