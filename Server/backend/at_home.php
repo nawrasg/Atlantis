@@ -23,11 +23,12 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			echo json_encode ( array (
 					'alarm' => $alarm,
 					'weather' => getWeather (),
-					'rooms' => getRooms () 
+					'rooms' => getRooms (),
+					'mode' => (new Mode ())->getMode () 
 			) );
 			break;
 		case 'PUT' :
-			update ( $_REQUEST );
+			echo json_encode ( update ( $_REQUEST ) );
 			break;
 	}
 } else if ($argc > 1) {
@@ -55,15 +56,16 @@ function update($arr) {
 			http_response_code ( 400 );
 		}
 	}
-	if(isset($arr['mode'])){
-		$mode_value = $arr['mode'];
-		$mode = new Mode();
-		switch($mode_value){
-			case Mode::DAY:
-			case Mode::NIGHT:
-			case Mode::AWAY:
-				$mode->setMode($mode_value);
-				return;
+	if (isset ( $arr ['mode'] )) {
+		$mode_value = $arr ['mode'];
+		$mode = new Mode ();
+		switch ($mode_value) {
+			case Mode::DAY :
+			case Mode::NIGHT :
+			case Mode::AWAY :
+				$mode->setMode ( $mode_value );
+				http_response_code ( 202 );
+				return array('mode' => $mode_value);
 		}
 	}
 }
