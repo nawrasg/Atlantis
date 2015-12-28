@@ -42,7 +42,7 @@ public class DeviceInfoDialogFragment extends DialogFragment {
 		View nView = inflater.inflate(R.layout.fragment_dialog_device_info, null);
 		ButterKnife.bind(this, nView);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setPositiveButton("Enregistrer", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(mContext.getString(R.string.fragment_dialog_button_save), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				try {
 					String nDeviceTitle = URLEncoder.encode(txtTitle.getText().toString(), "UTF-8");
@@ -57,7 +57,7 @@ public class DeviceInfoDialogFragment extends DialogFragment {
 				}
 				dismiss();
 			}
-		}).setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+		}).setNegativeButton(mContext.getString(R.string.fragment_dialog_button_cancel), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dismiss();
 			}
