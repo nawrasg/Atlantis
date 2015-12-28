@@ -74,8 +74,8 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
 		final Plant nPlant = mList.get(arg1);
 		Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?type=plant&api=" + App.getAPI(mContext) + "&id=" + nPlant.getID()).into(arg0.imgPlant);
 		if(!nPlant.getTitle().equals("null")) arg0.lblTitle.setText(nPlant.getTitle());
-		arg0.lblAirTemp.setText("Air : " + nPlant.getAirTemperature() + "°C");
-		arg0.lblSoilTemp.setText("Terreau : " + nPlant.getSoilTemperature() + "°C");
+		arg0.lblAirTemp.setText(mContext.getResources().getString(R.string.adapter_plant_item_air) + " " + nPlant.getAirTemperature() + "°C");
+		arg0.lblSoilTemp.setText(mContext.getResources().getString(R.string.adapter_plant_item_terreau) + " " + nPlant.getSoilTemperature() + "°C");
 		arg0.lblBattery.setText(nPlant.getBatteryLevel() + "%");
 		arg0.lblLum.setText(nPlant.getLight() + "");
 		arg0.lblMoisture.setText(nPlant.getMoisture() + "%");
