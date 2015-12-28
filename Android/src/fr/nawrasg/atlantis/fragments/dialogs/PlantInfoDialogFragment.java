@@ -50,7 +50,7 @@ public class PlantInfoDialogFragment extends DialogFragment{
 		View nView = inflater.inflate(R.layout.fragment_dialog_plant_info, null);
 		ButterKnife.bind(this, nView);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setPositiveButton("Enregistrer", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(mContext.getString(R.string.fragment_dialog_button_save), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				String nTitle;
 				try {
@@ -62,7 +62,7 @@ public class PlantInfoDialogFragment extends DialogFragment{
 					e.printStackTrace();
 				}
 			}
-		}).setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+		}).setNegativeButton(mContext.getString(R.string.fragment_dialog_button_cancel), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dismiss();
 			}
@@ -87,7 +87,7 @@ public class PlantInfoDialogFragment extends DialogFragment{
 						Bitmap nPicture = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), data.getData());
 						imgPlant.setImageBitmap(nPicture);
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-						nPicture.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object   
+						nPicture.compress(Bitmap.CompressFormat.PNG, 100, baos);
 						byte[] b = baos.toByteArray(); 
 						String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 					} catch (FileNotFoundException e) {
