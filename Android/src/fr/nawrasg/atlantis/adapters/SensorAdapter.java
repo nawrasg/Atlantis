@@ -135,9 +135,6 @@ public class SensorAdapter extends ArrayAdapter<Sensor> {
 						swtSensorToggle.setChecked(mSensor.isOn());
 					}
 					break;
-				case "interrupt":
-					imgSensorIcon.setImageResource(R.drawable.interrupt32);
-					break;
 				case "Tamper":
 					lblSensorName.setText(mContext.getString(R.string.adapter_sensor_item_tamper_date) + " " + getDate(mSensor.getUpdate()));
 					imgSensorIcon.setImageResource(R.drawable.ng_alert);
