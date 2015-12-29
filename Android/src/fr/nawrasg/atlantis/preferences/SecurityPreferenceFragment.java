@@ -19,8 +19,6 @@ public class SecurityPreferenceFragment extends PreferenceFragment implements On
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.pref_security);
 		mContext = getActivity();
-		//mAdminPreference = findPreference("admin");
-		//mAdminPreference.setOnPreferenceClickListener(this);
 	}
 
 	@Override
