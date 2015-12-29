@@ -29,7 +29,7 @@ public class PlantFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_plant, container, false);
-		getActivity().getActionBar().setIcon(R.drawable.plante);
+		getActivity().getActionBar().setIcon(R.drawable.ng_plant);
 		mContext = super.getActivity();
 		return nView;
 	}
