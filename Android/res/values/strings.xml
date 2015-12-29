@@ -1,41 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Fix -->
     <string name="app_name">Atlantis</string>
-    <string name="action_settings">Settings</string>
-    <string-array name="section_array">
-        <item>Accueil</item>
-        <item>Liste des courses</item>
-        <item>Cuisine</item>
-        <item>Pharmacie</item>
-        <item>Appareils Connectés</item>
-        <item>Paramètres</item>
-        <item>Actualiser</item>
-        <item>Quitter</item>
-    </string-array>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="switch_off">Off</string>
-    <string name="switch_on">On</string>
+
+    <string name="app_datetime_format">dd-MM-yyyy HH:mm:ss</string>
+    <string name="app_date_format">yyyy-MM-dd</string>
+    <string name="app_last_connection">Last connection on</string>
 
     <!-- MainFragmentActivity -->
-    <string name="main_menu_home">Accueil</string>
-    <string name="main_menu_lights">Lumières</string>
-    <string name="main_menu_sensors">Capteurs</string>
-    <string name="main_menu_cameras">Caméras</string>
-    <string name="main_menu_scenarios">Scénarios</string>
-    <string name="main_menu_db">Bases de données</string>
-    <string name="main_menu_shopping_list">Liste des courses</string>
-    <string name="main_menu_kitchen">Cuisine</string>
-    <string name="main_menu_drugstore">Pharmacie</string>
-    <string name="main_menu_upkeep">Hygiène et Entretien</string>
+    <string name="main_menu_home">Home</string>
+    <string name="main_menu_lights">Lights</string>
+    <string name="main_menu_sensors">Sensors</string>
+    <string name="main_menu_lights_sensors">Lights and Sensors</string>
+    <string name="main_menu_cameras">Cameras</string>
+    <string name="main_menu_scenarios">Scenarios</string>
+    <string name="main_menu_cameras_scenarios">Cameras and Scenarios</string>
+    <string name="main_menu_db">Databases</string>
+    <string name="main_menu_shopping_list">Shopping List</string>
+    <string name="main_menu_kitchen">Kitchen</string>
+    <string name="main_menu_drugstore">Medicine Cabinet</string>
+    <string name="main_menu_upkeep">Hygiene and Upkeep</string>
     <string name="main_menu_services">Services</string>
-    <string name="main_menu_music">Musique</string>
-    <string name="main_menu_plants">Plantes</string>
-    <string name="main_menu_gps">Géolocalisation</string>
-    <string name="main_menu_devices">Appareils Connectés</string>
-    <string name="main_menu_general">Général</string>
-    <string name="main_menu_history">Historique</string>
-    <string name="main_menu_settings">Paramètres</string>
-    <string name="main_menu_exit">Quitter</string>
+    <string name="main_menu_music">Music</string>
+    <string name="main_menu_plants">Plants</string>
+    <string name="main_menu_gps">Geolocation</string>
+    <string name="main_menu_devices">Connected Devices</string>
+    <string name="main_menu_general">General</string>
+    <string name="main_menu_history">History</string>
+    <string name="main_menu_settings">Settings</string>
+    <string name="main_menu_exit">Exit</string>
+
+    <!-- HomeFragment -->
+    <string name="fragment_home_mode">Mode:</string>
+    <string name="fragment_home_mode_day">Day</string>
+    <string name="fragment_home_mode_night">Night</string>
+    <string name="fragment_home_mode_away">Away</string>
+
+    <!-- CoursesFragment -->
+    <string name="fragment_courses_notification">Shopping list modified!</string>
+    <string name="fragment_courses_button_add">Add</string>
+    <string name="fragment_courses_button_cancel">Cancel</string>
+    <string name="fragment_courses_add_product">Add a product</string>
+
+    <!-- PharmacieAddFragment -->
+    <string name="fragment_pharmacie_add_save_warning">Please register the medicine name and expiry date!</string>
+
+    <!-- EntretienAddFragment -->
+    <string name="fragment_entretien_add_save_warning">Please register the product name and expiry date!</string>
+
+    <!-- HistoryFragment -->
+    <string name="fragment_history_chart_description">Atlantis History</string>
+    <string name="fragment_history_chart_no_data">No available data!</string>
+
+    <!-- MapsFragment -->
+    <string name="fragment_maps_no_maps">Cannot load the map!</string>
+
+    <!-- MusicFragment -->
+    <string name="fragment_music_welcome_no_playlist">You cannot define a playlist as a welcome music!</string>
+    <string name="fragment_music_welcome_instructions">To define the welcome music, long click on the desired title!</string>
+
+    <!-- PINFragment -->
+    <string name="fragment_pin_password_incorrect">Password incorrect!</string>
+
+    <!-- ConnectionPreferenceFragment -->
+    <string name="fragment_preference_connection_wifi_description_registered">registered networks</string>
+    <string name="fragment_preference_connection_wifi_offline">The Wifi is disabled!</string>
+
+    <!-- DiversPreferenceFragment -->
+    <string name="fragment_preference_divers_gcm_registered_device">Registered device</string>
+    <string name="fragment_preference_divers_gcm_registration_progress">Registration in progress...</string>
+    <string name="fragment_preference_divers_gcm_registration_done">Registration done!</string>
+    <string name="fragment_preference_divers_gcm_not_available">Google Play services are not available!</string>
+    <string name="fragment_preference_divers_settings_import_success">Settings imported successfully!</string>
+    <string name="fragment_preference_divers_settings_import_fail">Cannot import settings!</string>
+
+    <!-- DialogFragment -->
+    <string name="fragment_dialog_button_end">End</string>
+    <string name="fragment_dialog_button_save">Save</string>
+    <string name="fragment_dialog_button_cancel">Cancel</string>
+
+    <!-- Adapters -->
+    <!-- CameraAdapter -->
+    <string name="adapter_camera_item_type">Type:</string>
+    <string name="adapter_camera_item_image">Image:</string>
+    <string name="adapter_camera_item_video">Video:</string>
+    <string name="adapter_camera_item_ip_address">IP Address:</string>
+
+    <!-- CuisineAdapter -->
+    <string name="adapter_cuisine_item_date_frozen">Frozen for</string>
+    <string name="adapter_cuisine_item_date_peremption">Expired for</string>
+    <string name="adapter_cuisine_item_date_open">Opened for</string>
+    <string name="adapter_cuisine_item_date_to_use">To consume in</string>
+
+    <!-- EntretienAdapter -->
+    <string name="adapter_entretien_item_date_to_use">To consume in</string>
+    <string name="adapter_entretien_item_date_peremption">Expired for</string>
+
+    <!-- PharmacieAdapter -->
+    <string name="adapter_pharmacie_item_date_to_use">To consume in</string>
+    <string name="adapter_pharmacie_item_date_peremption">Expired for</string>
+
+    <!-- PlantAdapter -->
+    <string name="adapter_plant_item_air">Air:</string>
+    <string name="adapter_plant_item_terreau">Ground:</string>
+
+    <!-- SensorAdapter -->
+    <string name="adapter_sensor_item_electric_consumption">Electric consumption:</string>
+    <string name="adapter_sensor_item_battery">Battery life:</string>
+    <string name="adapter_sensor_item_temperature">Temperature:</string>
+    <string name="adapter_sensor_item_lum">Luminosity:</string>
+    <string name="adapter_sensor_item_tamper_date">Sensor tampered on</string>
+    <string name="adapter_sensor_item_door_status">Status:</string>
+    <string name="adapter_sensor_item_last_detected_motion">Last motion detected on</string>
+    <string name="adapter_sensor_item_last_motion">Last motion on</string>
+
+    <!-- GCMService -->
+    <string name="service_gcm_position_send">Position sent!</string>
+    <string name="service_gcm_ring_description">To stop the ringtone, please press Found.</string>
+    <string name="service_gcm_ring_found">Found!</string>
+
+    <!-- WifiService -->
+    <string name="service_wifi_atlantis_connected">Connected to Atlantis!</string>
+
+    <!-- xml -->
+    <!-- pref_connection -->
+    <string name="xml_pref_connection_settings_title">Connection Settings</string>
+    <string name="xml_pref_connection_settings_summary">Connection Settings</string>
+    <string name="xml_pref_connection_url_public_title">Public URL</string>
+    <string name="xml_pref_connection_url_public_summary">Entre the public address</string>
+    <string name="xml_pref_connection_url_private_title">Private URL</string>
+    <string name="xml_pref_connection_url_private_summary">Entre the private URL</string>
+    <string name="xml_pref_connection_url_private_use_title">Local Connection</string>
+    <string name="xml_pref_connection_url_private_use_summary">Use the private URL at home</string>
+    <string name="xml_pref_connection_wifi_home_title">None</string>
+    <string name="xml_pref_connection_wifi_home_summary">Define the home wifi network</string>
+
+    <!-- pref_divers -->
+    <string name="xml_pref_divers_settings_import_title">Import settings</string>
+    <string name="xml_pref_divers_settings_import_summary">Import Atlantis basic settings</string>
+    <string name="xml_pref_divers_gcm_title">GCM registration</string>
+    <string name="xml_pref_divers_gcm_summary">Register to receive notifications</string>
+
+    <!-- pref_geo -->
+    <string name="xml_pref_geo_incoming_title">Incoming</string>
+    <string name="xml_pref_geo_incoming_summary">Incoming</string>
+    <string name="xml_pref_geo_incoming_wifi_title">Turn on the wifi</string>
+    <string name="xml_pref_geo_incoming_alarm_title">Turn off the alarm</string>
+    <string name="xml_pref_geo_incoming_ring_profil_title">Ringtone profile</string>
+    <string name="xml_pref_geo_outgoing_title">Outgoing</string>
+    <string name="xml_pref_geo_outgoing_summary">Outgoing</string>
+    <string name="xml_pref_geo_outgoing_wifi_title">Turn off the wifi</string>
+    <string name="xml_pref_geo_outgoing_alarm_title">The on the alarm</string>
+    <string name="xml_pref_geo_outgoing_ring_profil_title">Ringtone profile</string>
+
+    <!-- pref_main -->
+    <string name="xml_pref_main_connection_title">Connection settings</string>
+    <string name="xml_pref_main_security_title">Security settings</string>
+    <string name="xml_pref_main_divers_title">Other settings</string>
+
+    <!-- pref_security -->
+    <string name="xml_pref_security_title">Security</string>
+    <string name="xml_pref_security_summary">Security</string>
+    <string name="xml_pref_security_api_title">Connection key</string>
+    <string name="xml_pref_security_api_summary">Define a key to use for identification</string>
+    <string name="xml_pref_security_pin_title">Activate the PIN code</string>
+    <string name="xml_pref_security_pin_summary">Secure settings</string>
+    <string name="xml_pref_security_pin_code_title">PIN Code</string>
+    <string name="xml_pref_security_pin_code_summary">Modify the PIN code</string>
+    <string name="xml_pref_security_ssl_title">Use SSL</string>
+    <string name="xml_pref_security_ssl_summary">Use HTTPS to secure the connection with Atlantis</string>
+
+    <!-- menu -->
+    <string name="menu_delete">Delete</string>
+    <string name="menu_increment">Increment</string>
+    <string name="menu_decrement">Decrement</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_add">Add</string>
+
+    <!-- context_cuisine -->
+    <string name="menu_context_cuisine_open_title">Open</string>
+    <string name="menu_context_cuisine_avoid_title">Ignore</string>
+
+    <!-- context_devices -->
+    <string name="menu_context_devices_details_title">Details</string>
+
+    <!-- fragment_courses -->
+    <string name="menu_fragment_courses_add">Add</string>
+    <string name="menu_fragment_courses_notification">Notify</string>
+    <string name="menu_fragment_courses_offline">Offline Mode</string>
+    <string name="menu_fragment_courses_clear">Clear</string>
+
+    <!-- fragment_cuisine -->
+    <string name="menu_fragment_cuisine_add">Add</string>
+    <string name="menu_fragment_cuisine_show_all">Show all</string>
+
+    <!-- fragment_devices -->
+    <string name="menu_fragment_devices_add">Add a device</string>
+
+    <!-- fragment_devices_add -->
+    <string name="menu_fragment_devices_add_add">Add</string>
+    <string name="menu_fragment_devices_add_this_device">This device</string>
+
+    <!-- fragment_gps -->
+    <string name="menu_fragment_gps_options">Options</string>
+    <string name="menu_fragment_gps_map">Map</string>
+
+    <!-- fragment_maps -->
+    <string name="menu_fragment_maps_request">Request</string>
+
+    <!-- fragment_music -->
+    <string name="menu_music_vocal_message">Vocal message</string>
+    <string name="menu_music_on">On</string>
+    <string name="menu_music_welcome_music">Welcome music</string>
+
+    <!-- fragment_music_context -->
+    <string name="menu_music_context_welcome_music_set">Define as a welcome music</string>
+
+    <!-- menu_prefs -->
+    <string name="menu_prefs_settings_export">Export settings</string>
+
+    <!-- layout -->
+    <!-- fragment_cuisine_add -->
+    <string name="layout_fragment_cuisine_add_product_label">Product name</string>
+    <string name="layout_fragment_cuisine_add_product_quantity">Quantity</string>
+    <string name="layout_fragment_cuisine_add_product_date_peremption">Expiry date</string>
+
+    <!-- fragment_devices_add -->
+    <string name="layout_fragment_devices_add_device_label">Device name</string>
+    <string name="layout_fragment_devices_add_device_ip_address">IP Address</string>
+    <string name="layout_fragment_devices_add_device_mac_address">MAC Address</string>
+    <string name="layout_fragment_devices_add_device_type">Type</string>
+    <string name="layout_fragment_devices_add_device_connection">Connection</string>
+
+    <!-- fragment_dialog_device_info -->
+    <string name="layout_fragment_dialog_device_user">User</string>
+
+    <!-- fragment_dialog_light -->
+    <string name="layout_fragment_dialog_light_name">Label:</string>
+    <string name="layout_fragment_dialog_light_room">Room:</string>
+
+    <!-- fragment_dialog_plant_info -->
+    <string name="layout_fragment_dialog_plant_info_name">Plant label:</string>
+    <string name="layout_fragment_dialog_plant_info_photo">Plant photo:</string>
+
+    <!-- fragment_dialog_sensor -->
+    <string name="layout_fragment_dialog_sensor_alias">Alias:</string>
+    <string name="layout_fragment_dialog_sensor_room">Room:</string>
+    <string name="layout_fragment_dialog_sensor_history">Turn on sensor history</string>
+    <string name="layout_fragment_dialog_sensor_ignore">Ignore this sensor</string>
+
+    <!-- fragment_entretien_add -->
+    <string name="layout_fragment_entretien_add_label">Product name</string>
+    <string name="layout_fragment_entretien_add_quantity">Quantity</string>
+    <string name="layout_fragment_entretien_add_date_peremption">Expiray date</string>
+
+    <!-- fragment_history -->
+    <string name="layout_fragment_history_from">From</string>
+    <string name="layout_fragment_history_to">To</string>
+
+    <!-- fragment_lights -->
+    <string name="layout_fragment_lights_hue_not_available">Please verify that the Hue bridge is connected!</string>
+
+    <!-- fragment_pharmacie_add -->
+    <string name="layout_fragment_pharmacie_add_name">Medicine name</string>
+    <string name="layout_fragment_pharmacie_add_quantity">Quantity</string>
+    <string name="layout_fragment_pharmacie_add_date_peremption">Expiry date</string>
+
+    <!-- fragment_pin -->
+    <string name="layout_fragment_pin_auth">Login</string>
+
+    <!-- fragment_speech -->
+    <string name="layout_fragment_speech_text">Text to send:</string>
+
+    <!-- fragment_gps -->
+    <string name="layout_fragment_gps_geo_turn_on">Turn on the geolocation</string>
+    <string name="layout_fragment_gps_define_home">Define your home:</string>
+    <string name="layout_fragment_gps_coords">Latitude / Longitude</string>
+    <string name="layout_fragment_gps_define_circle">Define the perimeter:</string>
+    <string name="layout_fragment_gps_radius_hint">in meters</string>
+    <string name="layout_fragment_gps_clear_data">Clear</string>
+
+    <!-- fragment_dialog_courses -->
+    <string name="layout_fragment_dialog_courses_description">Enter a product name and its quantity (apple, 2)</string>
+
+    <!-- row_light -->
+    <string name="layout_row_lights_switch_on">On</string>
+    <string name="layout_row_lights_switch_off">Off</string>
+
+    <!-- row_sensor_switch -->
+    <string name="layout_row_sensor_switch_on">On</string>
+    <string name="layout_row_sensor_switch_off">Off</string>
 </resources>
