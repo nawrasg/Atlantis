@@ -20,8 +20,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -31,7 +29,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -55,7 +52,7 @@ public class CoursesFragment extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View nView = inflater.inflate(R.layout.layout_courses, container, false);
+		View nView = inflater.inflate(R.layout.fragment_courses, container, false);
 		mContext = getActivity();
 		new EanGET(mContext, false).execute(App.EAN);
 		setHasOptionsMenu(true);
@@ -177,21 +174,15 @@ public class CoursesFragment extends ListFragment {
 		} else {
 			mIsOffline = true;
 			Iterator<String> nIterator = nSet.iterator();
-			ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
-			HashMap<String, String> map;
 			nList = new ArrayList<Element>();
 			while (nIterator.hasNext()) {
 				String nRow = nIterator.next();
 				String[] nData = nRow.split(",");
 				Element nElement = new Element(nData[0], nData[1]);
-				map = nElement.getMap();
 				nList.add(nElement);
-				listItem.add(map);
 			}
-			SimpleAdapter mSchedule = new SimpleAdapter(mContext, listItem, R.layout.row, new String[] { "titre", "quantite" },
-					new int[] { R.id.listTitle, R.id.listQte });
-			ListView l = getListView();
-			l.setAdapter(mSchedule);
+			mAdapter = new CoursesAdapter(mContext, nList);
+			setListAdapter(mAdapter);
 		}
 	}
 
@@ -211,7 +202,7 @@ public class CoursesFragment extends ListFragment {
 	}
 
 	public void addItem() {
-		View view = getActivity().getLayoutInflater().inflate(R.layout.layout_inputdialog, null);
+		View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_courses, null);
 		AlertDialog.Builder inputBoxBuilder = new AlertDialog.Builder(mContext);
 		inputBoxBuilder.setView(view);
 		final AutoCompleteTextView txtAdd = (AutoCompleteTextView) view.findViewById(R.id.txtAutoAdd);
