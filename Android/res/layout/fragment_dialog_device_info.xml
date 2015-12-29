@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="20dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@+id/txtDeviceDialogTitle"
-        android:text="Nom de l&apos;appareil" />
+        android:text="@string/layout_fragment_devices_add_device_label"/>
 
     <EditText
         android:id="@+id/txtDeviceDialogTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:inputType="text" />
+        android:inputType="text"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@+id/txtDeviceDialogIp"
-        android:text="Adresse IP" />
+        android:text="@string/layout_fragment_devices_add_device_ip_address"/>
 
     <EditText
         android:id="@+id/txtDeviceDialogIp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:inputType="text" />
+        android:inputType="text"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@+id/spDeviceDialogUser"
-        android:text="Utilisateur" />
+        android:text="@string/layout_fragment_dialog_device_user"/>
 
     <Spinner
         android:id="@+id/spDeviceDialogUser"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

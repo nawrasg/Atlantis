@@ -29,14 +29,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="De"/>
+                android:text="@string/layout_fragment_history_from"/>
 
             <Button
                 android:id="@+id/btnHistoryTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Jusqu'à"/>
+                android:text="@string/layout_fragment_history_to"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
