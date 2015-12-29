@@ -1,12 +1,10 @@
 <div class=right30>
 	<div class="panel panel-info">
-		<div class=panel-heading>
-			Options
-		</div>
-		<div class=panel-body>
+		<div class=panel-heading>Options</div>
+		<div class=panel-body layout=column>
 			<md-input-container>
 				<md-select ng-model=capteur placeholder=Capteur md-on-close="loadSensor()">
-					<md-option ng-value=capteur ng-repeat="capteur in capteurs track by capteur.id">{{capteur.alias}}</md-option>
+					<md-option ng-value=capteur ng-repeat="capteur in capteurs track by capteur.id">{{capteur.alias}} ({{capteur.type}})</md-option>
 				</md-select>
 			</md-input-container>
 			<md-input-container>
