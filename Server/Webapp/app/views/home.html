@@ -8,10 +8,7 @@
 					<td width='50%' style='text-align:center'><b>Demain</b><br><img alt="" ng-src="{{day2}}"><br>{{meteo2}}</td>
 				</tr>
 			</table>
-			<div layout="row" layout-align="start center" flex>
-				<label>Alarme</label>
-				<md-switch ng-model="alarm" ng-change="toggleAlarm()" aria-label="alarm" />
-			</div>
+			<label>Mode : {{getMode(mode)}}</label>
 		</div>
 	</div>
 	<div class="panel panel-info">
