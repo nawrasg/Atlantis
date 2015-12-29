@@ -93,8 +93,8 @@
 		<ng-view></ng-view>
     </div>
     
-    <div ng-hide="navigation" ng-controller="ModeCtrl">
-	    <md-fab-speed-dial md-direction="up" class="md-fling md-fab-bottom-right">
+    <div ng-hide="navigation" ng-controller="ModeCtrl" >
+	    <md-fab-speed-dial md-open=false md-direction="up" class="md-fling md-fab-bottom-right" ng-cloak>
 		  <md-fab-trigger>
 		    <md-button aria-label="menu" class="md-fab md-warn">
 		      <md-icon md-svg-src="images/svg/ic_menu_white_24px.svg"></md-icon>
