@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-	<item android:id="@+id/itemPharmaciePlus"
-	    android:title="Incrémenter" />
-	<item android:id="@+id/itemPharmacieMinus"
-	    android:title="Décrémenter" />
-	<item android:id="@+id/itemPharmacieDel"
-	    android:title="Supprimer" />    
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemPharmaciePlus"
+        android:title="@string/menu_increment"/>
+    <item
+        android:id="@+id/itemPharmacieMinus"
+        android:title="@string/menu_decrement"/>
+    <item
+        android:id="@+id/itemPharmacieDel"
+        android:title="@string/menu_delete"/>
 
 </menu>
