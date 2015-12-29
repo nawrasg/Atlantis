@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:attr/activatedBackgroundIndicator"
-    android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:paddingRight="10dp"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/activatedBackgroundIndicator"
+                android:gravity="center_vertical"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:paddingRight="10dp"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall">
 
     <ImageView
         android:id="@+id/itemDrawer_Icon"
@@ -14,7 +14,7 @@
         android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:paddingLeft="25dp"
-        android:paddingRight="15dp" />
+        android:paddingRight="15dp"/>
 
     <TextView
         android:id="@+id/itemDrawer_Item"
@@ -23,6 +23,6 @@
         android:layout_toRightOf="@id/itemDrawer_Icon"
         android:gravity="center_vertical"
         android:text="TextView"
-        android:textColor="#000000" />
+        android:textColor="#000000"/>
 
 </RelativeLayout>
