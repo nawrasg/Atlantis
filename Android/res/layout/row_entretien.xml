@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imgEntretienIcon"
@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="icon"
-        android:padding="10dp" />
+        android:padding="10dp"/>
 
     <ImageView
         android:id="@+id/imgEntretienIcon2"
@@ -19,23 +19,23 @@
         android:layout_alignBottom="@+id/imgEntretienIcon"
         android:layout_alignRight="@+id/imgEntretienIcon"
         android:contentDescription="icon"
-        android:padding="10dp" />
+        android:padding="10dp"/>
 
     <TextView
         android:id="@+id/lblEntretienTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/listIcon"
+        android:layout_alignTop="@id/imgEntretienIcon"
         android:layout_toRightOf="@id/imgEntretienIcon"
         android:paddingTop="15dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/lblEntretienDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/lblEntretienTitle"
-        android:layout_below="@id/lblEntretienTitle" />
+        android:layout_below="@id/lblEntretienTitle"/>
 
     <TextView
         android:id="@+id/lblEntretienQuantity"
@@ -45,6 +45,6 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="30dp"
         android:background="@drawable/qte"
-        android:gravity="center" />
+        android:gravity="center"/>
 
 </RelativeLayout>
