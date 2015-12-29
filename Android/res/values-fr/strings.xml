@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Atlantis</string>
     <string name="app_datetime_format">dd-MM-yyyy HH:mm:ss</string>
     <string name="app_date_format">yyyy-MM-dd</string>
     <string name="app_last_connection">Dernière connexion le</string>
@@ -40,8 +39,42 @@
     <string name="fragment_courses_button_cancel">Annuler</string>
     <string name="fragment_courses_add_product">Ajouter un produit</string>
 
+    <!-- PharmacieAddFragment -->
+    <string name="fragment_pharmacie_add_save_warning">Merci de préciser le nom du médicament ainsi que sa date de péremption !</string>
+
     <!-- EntretienAddFragment -->
     <string name="fragment_entretien_add_save_warning">Merci de préciser le nom du produit ainsi que sa date de péremption !</string>
+
+    <!-- HistoryFragment -->
+    <string name="fragment_history_chart_description">Historique Atlantis</string>
+    <string name="fragment_history_chart_no_data">Pas de données disponibles !</string>
+
+    <!-- MapsFragment -->
+    <string name="fragment_maps_no_maps">Impossible de charger la carte !</string>
+
+    <!-- MusicFragment -->
+    <string name="fragment_music_welcome_no_playlist">Impossible de définir une playlist comme musique de bienvenue !</string>
+    <string name="fragment_music_welcome_instructions">Pour définir un morceau de bienvenue, maintenez l\'appui sur le morceau désiré !</string>
+
+    <!-- PINFragment -->
+    <string name="fragment_pin_password_incorrect">Mot de passe incorrect !</string>
+
+    <!-- ConnectionPreferenceFragment -->
+    <string name="fragment_preference_connection_wifi_description_registered">réseaux enregistrés</string>
+    <string name="fragment_preference_connection_wifi_offline">Le WiFi n\'est pas activé !</string>
+
+    <!-- DiversPreferenceFragment -->
+    <string name="fragment_preference_divers_gcm_registered_device">Appareil enregistré</string>
+    <string name="fragment_preference_divers_gcm_registration_progress">Enregistrement en cours...</string>
+    <string name="fragment_preference_divers_gcm_registration_done">Fin d\'enregistrement !</string>
+    <string name="fragment_preference_divers_gcm_not_available">Les services Google Play ne sont pas disponibles !</string>
+    <string name="fragment_preference_divers_settings_import_success">Paramètres importés avec succès !</string>
+    <string name="fragment_preference_divers_settings_import_fail">Impossible de récupérer les paramètres !</string>
+
+    <!-- DialogFragment -->
+    <string name="fragment_dialog_button_end">Terminer</string>
+    <string name="fragment_dialog_button_save">Enregistrer</string>
+    <string name="fragment_dialog_button_cancel">Annuler</string>
 
     <!-- Adapters -->
     <!-- CameraAdapter -->
@@ -78,8 +111,183 @@
     <string name="adapter_sensor_item_last_detected_motion">Dernier mouvement détecté le</string>
     <string name="adapter_sensor_item_last_motion">Dernier mouvement le</string>
 
-    <!-- DialogFragment -->
-    <string name="fragment_dialog_button_end">Terminer</string>
-    <string name="fragment_dialog_button_save">Enregistrer</string>
-    <string name="fragment_dialog_button_cancel">Annuler</string>
+    <!-- GCMService -->
+    <string name="service_gcm_position_send">Position envoyée !</string>
+    <string name="service_gcm_ring_description">Pour arrêter la sonnerie, cliquez sur Trouvé.</string>
+    <string name="service_gcm_ring_found">Trouvé !</string>
+
+    <!-- WifiService -->
+    <string name="service_wifi_atlantis_connected">Connecté à Atlantis !</string>
+
+    <!-- xml -->
+    <!-- pref_connection -->
+    <string name="xml_pref_connection_settings_title">Paramètres de Connexion</string>
+    <string name="xml_pref_connection_settings_summary">Paramètres de Connexion</string>
+    <string name="xml_pref_connection_url_public_title">URL Public</string>
+    <string name="xml_pref_connection_url_public_summary">Entrer l\'adresse URL publique</string>
+    <string name="xml_pref_connection_url_private_title">URL Privée</string>
+    <string name="xml_pref_connection_url_private_summary">Entrer l\'adresse URL privée</string>
+    <string name="xml_pref_connection_url_private_use_title">Connexion Locale</string>
+    <string name="xml_pref_connection_url_private_use_summary">Utiliser l\'URL privée chez soi</string>
+    <string name="xml_pref_connection_wifi_home_title">Aucun</string>
+    <string name="xml_pref_connection_wifi_home_summary">Définir le WIFI domestique</string>
+
+    <!-- pref_divers -->
+    <string name="xml_pref_divers_settings_import_title">Importer les paramètres</string>
+    <string name="xml_pref_divers_settings_import_summary">Importer les paramètres de base d\'Atlantis</string>
+    <string name="xml_pref_divers_gcm_title">Enregistrement GCM</string>
+    <string name="xml_pref_divers_gcm_summary">S\'enregistrer pour recevoir des notifications</string>
+
+    <!-- pref_geo -->
+    <string name="xml_pref_geo_incoming_title">En rentrant</string>
+    <string name="xml_pref_geo_incoming_summary">En rentrant</string>
+    <string name="xml_pref_geo_incoming_wifi_title">Allumer le wifi</string>
+    <string name="xml_pref_geo_incoming_alarm_title">Eteindre l\'alarme</string>
+    <string name="xml_pref_geo_incoming_ring_profil_title">Profil de sonnerie</string>
+    <string name="xml_pref_geo_outgoing_title">En sortant</string>
+    <string name="xml_pref_geo_outgoing_summary">En sortant</string>
+    <string name="xml_pref_geo_outgoing_wifi_title">Eteindre le wifi</string>
+    <string name="xml_pref_geo_outgoing_alarm_title">Allumer l\'alarme</string>
+    <string name="xml_pref_geo_outgoing_ring_profil_title">Profil de sonnerie</string>
+
+    <!-- pref_main -->
+    <string name="xml_pref_main_connection_title">Paramètres de connexion</string>
+    <string name="xml_pref_main_security_title">Paramètres de sécurité</string>
+    <string name="xml_pref_main_divers_title">Divers</string>
+
+    <!-- pref_security -->
+    <string name="xml_pref_security_title">Sécurité</string>
+    <string name="xml_pref_security_summary">Sécurité</string>
+    <string name="xml_pref_security_api_title">Clé de Connexion</string>
+    <string name="xml_pref_security_api_summary">Définir une clé pour s\'identifier auprès du serveur</string>
+    <string name="xml_pref_security_pin_title">Activer code PIN</string>
+    <string name="xml_pref_security_pin_summary">Sécuriser les paramètres</string>
+    <string name="xml_pref_security_pin_code_title">Code PIN</string>
+    <string name="xml_pref_security_pin_code_summary">Modifier le code PIN</string>
+    <string name="xml_pref_security_ssl_title">Utiliser SSL</string>
+    <string name="xml_pref_security_ssl_summary">Utiliser HTTPS pour sécuriser la connexion avec Atlantis</string>
+
+    <!-- menu -->
+    <string name="menu_delete">Supprimer</string>
+    <string name="menu_increment">Incrémenter</string>
+    <string name="menu_decrement">Décrémenter</string>
+    <string name="menu_refresh">Actualiser</string>
+    <string name="menu_search">Rechercher</string>
+    <string name="menu_save">Enregistrer</string>
+    <string name="menu_add">Ajouter</string>
+
+    <!-- context_cuisine -->
+    <string name="menu_context_cuisine_open_title">Ouvrir</string>
+    <string name="menu_context_cuisine_avoid_title">Ignorer</string>
+
+    <!-- context_devices -->
+    <string name="menu_context_devices_details_title">Détails</string>
+
+    <!-- fragment_courses -->
+    <string name="menu_fragment_courses_add">Ajouter</string>
+    <string name="menu_fragment_courses_notification">Notifier</string>
+    <string name="menu_fragment_courses_offline">Mode hors-connexion</string>
+    <string name="menu_fragment_courses_clear">Tout effacer</string>
+
+    <!-- fragment_cuisine -->
+    <string name="menu_fragment_cuisine_add">Ajouter</string>
+    <string name="menu_fragment_cuisine_show_all">Tout afficher</string>
+
+    <!-- fragment_devices -->
+    <string name="menu_fragment_devices_add">Ajouter un appareil</string>
+
+    <!-- fragment_devices_add -->
+    <string name="menu_fragment_devices_add_add">Ajouter</string>
+    <string name="menu_fragment_devices_add_this_device">Cet appareil</string>
+
+    <!-- fragment_gps -->
+    <string name="menu_fragment_gps_options">Options</string>
+    <string name="menu_fragment_gps_map">Carte</string>
+
+    <!-- fragment_maps -->
+    <string name="menu_fragment_maps_request">Demander</string>
+
+    <!-- fragment_music -->
+    <string name="menu_music_vocal_message">Message vocal</string>
+    <string name="menu_music_on">Allumé</string>
+    <string name="menu_music_welcome_music">Musique de bienvenue</string>
+
+    <!-- fragment_music_context -->
+    <string name="menu_music_context_welcome_music_set">Définir comme musique de bienvenue</string>
+
+    <!-- menu_prefs -->
+    <string name="menu_prefs_settings_export">Exporter les paramètres</string>
+
+    <!-- layout -->
+    <!-- fragment_cuisine_add -->
+    <string name="layout_fragment_cuisine_add_product_label">Nom du produit</string>
+    <string name="layout_fragment_cuisine_add_product_quantity">Quantité</string>
+    <string name="layout_fragment_cuisine_add_product_date_peremption">Date de péremption</string>
+
+    <!-- fragment_devices_add -->
+    <string name="layout_fragment_devices_add_device_label">Nom de l\'appareil</string>
+    <string name="layout_fragment_devices_add_device_ip_address">Adresse IP</string>
+    <string name="layout_fragment_devices_add_device_mac_address">Adresse MAC</string>
+    <string name="layout_fragment_devices_add_device_type">Catégorie</string>
+    <string name="layout_fragment_devices_add_device_connection">Connexion</string>
+    
+    <!-- fragment_dialog_device_info -->
+    <string name="layout_fragment_dialog_device_user">Utilisateur</string>
+
+    <!-- fragment_dialog_light -->
+    <string name="layout_fragment_dialog_light_name">Nom :</string>
+    <string name="layout_fragment_dialog_light_room">Pièce :</string>
+
+    <!-- fragment_dialog_plant_info -->
+    <string name="layout_fragment_dialog_plant_info_name">Nom de la plante :</string>
+    <string name="layout_fragment_dialog_plant_info_photo">Photo de la plante :</string>
+
+    <!-- fragment_dialog_sensor -->
+    <string name="layout_fragment_dialog_sensor_alias">Alias :</string>
+    <string name="layout_fragment_dialog_sensor_room">Pièce :</string>
+    <string name="layout_fragment_dialog_sensor_history">Activer l\'historique</string>
+    <string name="layout_fragment_dialog_sensor_ignore">Ignorer ce capteur</string>
+
+    <!-- fragment_entretien_add -->
+    <string name="layout_fragment_entretien_add_label">Nom du produit</string>
+    <string name="layout_fragment_entretien_add_quantity">Quantité</string>
+    <string name="layout_fragment_entretien_add_date_peremption">Date de péremption</string>
+
+    <!-- fragment_history -->
+    <string name="layout_fragment_history_from">De</string>
+    <string name="layout_fragment_history_to">Jusqu\'à</string>
+
+    <!-- fragment_lights -->
+    <string name="layout_fragment_lights_hue_not_available">Merci de vérifier que le bridge Hue est connecté !</string>
+
+    <!-- fragment_pharmacie_add -->
+    <string name="layout_fragment_pharmacie_add_name">Nom du médicament</string>
+    <string name="layout_fragment_pharmacie_add_quantity">Quantité</string>
+    <string name="layout_fragment_pharmacie_add_date_peremption">Date de péremption</string>
+
+    <!-- fragment_pin -->
+    <string name="layout_fragment_pin_auth">S\'identifier</string>
+
+    <!-- fragment_speech -->
+    <string name="layout_fragment_speech_text">Texte à envoyer :</string>
+
+    <!-- fragment_gps -->
+    <string name="layout_fragment_gps_geo_turn_on">Activer la géolocalisation</string>
+    <string name="layout_fragment_gps_define_home">Définir le domicile :</string>
+    <string name="layout_fragment_gps_coords">Latitude / Longitude</string>
+    <string name="layout_fragment_gps_define_circle">Définir le périmètre :</string>
+    <string name="layout_fragment_gps_radius_hint">En mètres</string>
+    <string name="layout_fragment_gps_clear_data">Effacer les données</string>
+
+    <!-- fragment_dialog_courses -->
+    <string name="layout_fragment_dialog_courses_description">Entrer un produit et une quantité (pomme, 2)</string>
+
+    <!-- row_light -->
+    <string name="layout_row_lights_switch_on">On</string>
+    <string name="layout_row_lights_switch_off">Off</string>
+
+    <!-- row_sensor_switch -->
+    <string name="layout_row_sensor_switch_on">On</string>
+    <string name="layout_row_sensor_switch_off">Off</string>
+
 </resources>
