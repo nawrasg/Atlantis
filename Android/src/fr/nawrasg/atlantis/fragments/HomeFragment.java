@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,9 +70,17 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		loadPlan();
 	}
 
+	private Drawable getDraw(int resource){
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			return getResources().getDrawable(resource, mContext.getTheme());
+		}else{
+			return getResources().getDrawable(resource, null);
+		}
+	}
+
 	private void createFAB() {
 		ImageView nMenuIcon = new ImageView(getActivity());
-		Drawable nMenuDrawable = getResources().getDrawable(R.drawable.ic_dehaze_white_24dp);
+		Drawable nMenuDrawable = getDraw(R.drawable.ic_dehaze_white_24dp);
 		nMenuIcon.setImageDrawable(nMenuDrawable);
 		mFAB = new FloatingActionButton.Builder(getActivity())
 				.setContentView(nMenuIcon)
@@ -79,7 +88,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 				.build();
 
 		ImageView nDayIcon = new ImageView(getActivity());
-		Drawable nDayDrawable = getResources().getDrawable(R.drawable.ic_weekend_white_18dp);
+		Drawable nDayDrawable = getDraw(R.drawable.ic_weekend_white_18dp);
 		nDayIcon.setImageDrawable(nDayDrawable);
 		SubActionButton.Builder nItemBuilder = new SubActionButton.Builder(getActivity());
 		mDayButton = nItemBuilder
@@ -95,7 +104,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		});
 
 		ImageView nNightIcon = new ImageView(getActivity());
-		Drawable nNightDrawable = getResources().getDrawable(R.drawable.ic_airline_seat_individual_suite_white_18dp);
+		Drawable nNightDrawable = getDraw(R.drawable.ic_airline_seat_individual_suite_white_18dp);
 		nNightIcon.setImageDrawable(nNightDrawable);
 		mNightButton = nItemBuilder
 				.setContentView(nNightIcon)
@@ -110,7 +119,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		});
 
 		ImageView nAwayIcon = new ImageView(getActivity());
-		Drawable nAwayDrawable = getResources().getDrawable(R.drawable.ic_directions_walk_white_18dp);
+		Drawable nAwayDrawable = getDraw(R.drawable.ic_directions_walk_white_18dp);
 		nAwayIcon.setImageDrawable(nAwayDrawable);
 		mAwayButton = nItemBuilder
 				.setContentView(nAwayIcon)
