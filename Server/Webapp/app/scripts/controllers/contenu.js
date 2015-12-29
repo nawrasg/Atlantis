@@ -41,6 +41,7 @@ nApp.controller('ContenuCtrl', function($scope, $http, $window, $sessionStorage,
 		$http.put(nURL).success(function(data, status){
 			if(status == 202){
 				item.status = 1;
+				getCuisine();
 			}
 		})
 	};
@@ -72,7 +73,8 @@ nApp.controller('ContenuCtrl', function($scope, $http, $window, $sessionStorage,
 				$http.put(nURL).success(function(data, status){
 					if(status == 202){
 						item.quantite = parseInt(item.quantite) - 1;	
-						item.status = 0;					
+						item.status = 0;	
+						getCuisine();
 					}
 				});			
 			}
