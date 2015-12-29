@@ -17,23 +17,19 @@
 			</div>
 		</div>
 		<div class="panel-body">
-			<table width="100%">
-				<tr>
-					<td width="33%" style="text-align: center"></td>
-					<td width="33%" style="text-align: center"></td>
-					<td width="33%" style="text-align: center"><md-switch ng-model="on" ng-change="toggleMusic()" aria-label="music" style="float:right"></md-switch></td>
-				</tr>
-				<tr>
-					<td width="33%" style="text-align: center"><img src="images/music/ic_action_stop.png" ng-click="action('stop')"></td>
-					<td width="33%" style="text-align: center"><img src="images/music/ic_action_pause.png" ng-click="action('pause')"></td>
-					<td width="33%" style="text-align: center"><img src="images/music/ic_action_repeat.png" ng-click="action('repeat')"></td>
-				</tr>
-				<tr>
-					<td width="33%" style="text-align: center"><img src="images/music/ic_action_previous.png" ng-click="action('previous')"></td>
-					<td width="33%" style="text-align: center"><img src="images/music/ic_action_next.png" ng-click="action('next')"></td>
-					<td width="33%" style="text-align: center"><img src="images/music/ic_action_shuffle.png" ng-click="action('shuffle')"></td>
-				</tr>
-			</table>
+			<div layout=row layout-align="end center">
+				<md-switch ng-model="on" ng-change="toggleMusic()" aria-label="music" style="float:right"></md-switch>
+			</div>
+			<div layout=row>
+				<div flex style="text-align: center"><img src="images/music/ic_action_stop.png" ng-click="action('stop')"></div>
+				<div flex style="text-align: center"><img src="images/music/ic_action_pause.png" ng-click="action('pause')"></div>
+				<div flex style="text-align: center"><img src="images/music/ic_action_repeat.png" ng-click="action('repeat')"></div>
+			</div>
+			<div layout=row>
+				<div flex style="text-align: center"><img src="images/music/ic_action_previous.png" ng-click="action('previous')"></div>
+				<div flex style="text-align: center"><img src="images/music/ic_action_next.png" ng-click="action('next')"></div>
+				<div flex style="text-align: center"><img src="images/music/ic_action_shuffle.png" ng-click="action('shuffle')"></div>
+			</div>
 			<md-slider flex="" min="0" max="10" ng-model="volume" aria-label="red" class="" ng-change="changeVol(volume)"></md-slider>
 		</div>
 	</div>
