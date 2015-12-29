@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:contentDescription="mp3"
         android:padding="10dp"
-        android:src="@drawable/mp3"/>
+        android:src="@drawable/ng_note"/>
 
     <TextView
         android:id="@+id/lblSongTitle"
@@ -25,6 +25,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"/>
-
 
 </RelativeLayout>
