@@ -3,5 +3,5 @@
 
     <item
         android:id="@+id/itemCuisineAdd"
-        android:title="Ajouter"/>
+        android:title="@string/menu_add"/>
 </menu>

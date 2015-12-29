@@ -42,7 +42,7 @@ public class PINFragment extends Fragment{
 			closeKeyboard(getActivity(), txtPIN.getWindowToken());
 			getFragmentManager().beginTransaction().replace(R.id.main_fragment, new MainPreferenceFragment()).commit();
 		}else{
-			Toast.makeText(getActivity(), "Mot de passe incorrect !", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), getResources().getString(R.string.fragment_pin_password_incorrect), Toast.LENGTH_SHORT).show();
 		}
 	}
 	

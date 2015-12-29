@@ -26,7 +26,7 @@ public class ConnectionPreferenceFragment extends PreferenceFragment implements 
 		mConnection = new CheckConnection(mContext);
 		mWifiPreference = findPreference("wifiHome");
 		mWifiPreference.setOnPreferenceClickListener(this);
-		mWifiPreference.setTitle(App.getPrefSetSize(mContext, "wifiSet") + " réseaux enregistrés");
+		mWifiPreference.setTitle(App.getPrefSetSize(mContext, "wifiSet") + " " + getResources().getString(R.string.fragment_preference_connection_wifi_description_registered));
 	}
 	
 	@Override
@@ -36,9 +36,9 @@ public class ConnectionPreferenceFragment extends PreferenceFragment implements 
 				if (mConnection.checkConnection() == CheckConnection.TYPE_WIFI) {
 					String y = mWM.getConnectionInfo().getBSSID();
 					App.addPrefSetString(mContext, "wifiSet", y);
-					mWifiPreference.setTitle(App.getPrefSetSize(mContext, "wifiSet") + " réseaux enregistrés");
+					mWifiPreference.setTitle(App.getPrefSetSize(mContext, "wifiSet") + " " + getResources().getString(R.string.fragment_preference_connection_wifi_description_registered));
 				} else {
-					Toast.makeText(mContext, "Le WiFi n'est pas activé !", Toast.LENGTH_LONG).show();
+					Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_connection_wifi_offline), Toast.LENGTH_LONG).show();
 				}
 				return true;
 		}

@@ -3,9 +3,9 @@
 
     <item
         android:id="@+id/menuDeviceInfo"
-        android:title="Détails"/>
+        android:title="@string/menu_context_devices_details_title"/>
     <item
         android:id="@+id/menuDeviceDelete"
-        android:title="Supprimer"/>
+        android:title="@string/menu_delete"/>
 
 </menu>

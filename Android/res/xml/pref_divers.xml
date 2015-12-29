@@ -5,13 +5,13 @@
         <Preference
             android:icon="@drawable/ic_action_import_export"
             android:key="import"
-            android:summary="Importer les paramètres de base"
-            android:title="Importer les paramètres" />
+            android:summary="@string/xml_pref_divers_settings_import_summary"
+            android:title="@string/xml_pref_divers_settings_import_title" />
         <Preference
             android:icon="@drawable/ic_action_send_now"
             android:key="gcm"
-            android:summary="S&apos;enregistrer pour recevoir des notifications"
-            android:title="Enregistrement GCM" />
+            android:summary="@string/xml_pref_divers_gcm_summary"
+            android:title="@string/xml_pref_divers_gcm_title" />
         
     </PreferenceCategory>
 

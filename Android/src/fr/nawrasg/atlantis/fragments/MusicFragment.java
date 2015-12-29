@@ -128,7 +128,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 				if (nSong.getType().equals("song")) {
 					new RefreshPUT(mContext).execute(App.MUSIC, "welcome=" + nSong.getID());
 				} else {
-					Toast.makeText(mContext, "Impossible de définir une playlist comme musique de bienvenue !",
+					Toast.makeText(mContext, getResources().getString(R.string.fragment_music_welcome_no_playlist),
 							Toast.LENGTH_SHORT).show();
 				}
 				return true;
@@ -171,7 +171,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 				return true;
 			case R.id.itemMusicWelcomeMusic:
 				if (mWelcomeMusic < 0) {
-					Toast.makeText(mContext, "Pour définir un morceau de bienvenue, maintenez l'appui sur le morceau désiré !",
+					Toast.makeText(mContext, getResources().getString(R.string.fragment_music_welcome_instructions),
 							Toast.LENGTH_LONG).show();
 					return true;
 				}

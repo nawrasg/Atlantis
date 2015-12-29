@@ -101,7 +101,7 @@ public class GCMService extends IntentService {
 		switch (command) {
 			case "geo":
 				sendPosition();
-				sendNotification("Atlantis", "Position envoyée !");
+				sendNotification(nContext.getString(R.string.app_name), nContext.getString(R.string.service_gcm_position_send));
 				break;
 			case "geoi":
 				sendPosition();
@@ -126,9 +126,9 @@ public class GCMService extends IntentService {
 		PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0, nIntent, 0);
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.home)
-				.setContentTitle("Atlantis")
-				.setContentText("Pour arrêter la sonnerie, cliquez sur Trouvé !")
-				.addAction(R.drawable.ic_notifications_off_black_24dp, "Trouvé !", contentIntent);
+				.setContentTitle(nContext.getString(R.string.app_name))
+				.setContentText(nContext.getString(R.string.service_gcm_ring_description))
+				.addAction(R.drawable.ic_notifications_off_black_24dp, nContext.getString(R.string.service_gcm_ring_found), contentIntent);
 		nNM.notify(NOTIFICATION_ID, mBuilder.build());
 		try {
 			Thread.sleep(1000 * 30);

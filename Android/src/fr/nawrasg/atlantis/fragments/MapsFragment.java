@@ -39,7 +39,7 @@ public class MapsFragment extends Fragment {
 		View nView = inflater.inflate(R.layout.fragment_maps, container, false);
 		MapFragment nFragment = getMapFragment();
 		if (nFragment == null) {
-			Toast.makeText(mContext, "Impossible de charger la carte !", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, getResources().getString(R.string.fragment_maps_no_maps), Toast.LENGTH_SHORT).show();
 		} else {
 			mMap = nFragment.getMap();
 			mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -75,7 +75,7 @@ public class MapsFragment extends Fragment {
 		LatLng nHomeCoords;
 		if (nLat != 0 && nLong != 0) {
 			nHomeCoords = new LatLng(nLat, nLong);
-			MarkerOptions nMarker = new MarkerOptions().position(nHomeCoords).title("Atlantis");
+			MarkerOptions nMarker = new MarkerOptions().position(nHomeCoords).title(getResources().getString(R.string.app_name));
 			nMarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 			mMap.addMarker(nMarker);
 			if (zoom) {

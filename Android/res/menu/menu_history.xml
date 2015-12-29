@@ -5,6 +5,6 @@
         android:id="@+id/itemHistoryRefresh"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="always"
-        android:title="Actualiser"/>
+        android:title="@string/menu_refresh"/>
 
 </menu>

@@ -44,7 +44,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 		mGcmPreference = findPreference("gcm");
 		mGcmPreference.setOnPreferenceClickListener(this);
 		if(!App.getPrefString(mContext, PROPERTY_REG_ID).equals("")){
-			mGcmPreference.setSummary("Appareil enregistré");
+			mGcmPreference.setSummary(getResources().getString(R.string.fragment_preference_divers_gcm_registered_device));
 		}
 	}
 
@@ -74,19 +74,19 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 			mGCM = GoogleCloudMessaging.getInstance(mContext);
 			nRegId = getRegistrationId();
 			registerGCM();
-			Toast.makeText(mContext, "Fin d'enregistrement !", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_gcm_registration_done), Toast.LENGTH_SHORT).show();
 		} else {
-			Toast.makeText(mContext, "Les services Google Play ne sont pas disponibles !", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_gcm_not_available), Toast.LENGTH_SHORT).show();
 		}
 	}
 	
 	private String getRegistrationId() {
 		String registrationId = App.getString(mContext, PROPERTY_REG_ID);
 		if (registrationId.isEmpty()) {
-			Toast.makeText(mContext, "Enregistrement en cours...", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_gcm_registration_progress), Toast.LENGTH_SHORT).show();
 			return "";
 		}
-		Toast.makeText(mContext, "Déjà enregistré !", Toast.LENGTH_SHORT).show();
+		Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_gcm_registered_device), Toast.LENGTH_SHORT).show();
 		return registrationId;
 	}
 	
@@ -96,7 +96,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
 				GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(), PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			} else {
-				Toast.makeText(mContext, "Les services Google Play ne sont pas disponibles !", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_gcm_not_available), Toast.LENGTH_SHORT).show();
 			}
 			return false;
 		}
@@ -115,7 +115,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 			App.setFloat(mContext, "homeRadius", (float) json.getDouble("radius"));
 			App.setFloat(mContext, "homeLong", (float) json.getDouble("long"));
 			App.setFloat(mContext, "homeLat", (float) json.getDouble("lat"));
-			Toast.makeText(mContext, "Paramètres importés avec succès !", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_settings_import_success), Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
 			Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
@@ -135,7 +135,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 				if (nJson.getString("name").equals("Atlantis")) {
 					importSettings(nJson);
 				} else {
-					Toast.makeText(mContext, "Impossible de récupérer les paramètres !", Toast.LENGTH_LONG).show();
+					Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_settings_import_fail), Toast.LENGTH_LONG).show();
 				}
 			} catch (Exception e) {
 				Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();

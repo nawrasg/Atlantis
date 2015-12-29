@@ -5,17 +5,17 @@
         android:id="@+id/itemSearch"
         android:actionViewClass="android.widget.SearchView"
         android:showAsAction="always"
-        android:title="Rechercher"/>
+        android:title="@string/menu_search"/>
     <item
         android:id="@+id/itemCuisineAdd"
         android:icon="@drawable/ic_action_new"
         android:showAsAction="ifRoom"
-        android:title="Ajouter"/>
+        android:title="@string/menu_fragment_cuisine_add"/>
     <item
         android:id="@+id/itemCuisineAll"
         android:checkable="true"
         android:icon="@drawable/ic_action_view_as_list"
         android:showAsAction="ifRoom"
-        android:title="Tout afficher"/>
+        android:title="@string/menu_fragment_cuisine_show_all"/>
 
 </menu>

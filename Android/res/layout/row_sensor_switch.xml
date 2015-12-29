@@ -36,7 +36,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
-        android:textOff="@string/switch_off"
-        android:textOn="@string/switch_on"/>
+        android:textOff="@string/layout_row_sensor_switch_off"
+        android:textOn="@string/layout_row_sensor_switch_on"/>
 
 </RelativeLayout>

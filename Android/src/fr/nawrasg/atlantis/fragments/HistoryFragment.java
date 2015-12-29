@@ -69,8 +69,8 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 		ViewGroup.LayoutParams nParams = mLineChart.getLayoutParams();
 		nParams.height = nHeight * 2 / 3;
 		mLineChart.setLayoutParams(nParams);
-		mLineChart.setDescription("Historique Atlantis");
-		mLineChart.setNoDataTextDescription("Pas de données disponibles !");
+		mLineChart.setDescription(getResources().getString(R.string.fragment_history_chart_description));
+		mLineChart.setNoDataTextDescription(getResources().getString(R.string.fragment_history_chart_no_data));
 		mLineChart.setDragEnabled(true);
 		mLineChart.setScaleEnabled(true);
 		mLineChart.setDrawGridBackground(false);

@@ -3,5 +3,5 @@
         android:id="@+id/itemSearch"
         android:actionViewClass="android.widget.SearchView"
         android:showAsAction="always"
-        android:title="Rechercher"/>
+        android:title="@string/menu_search"/>
 </menu>

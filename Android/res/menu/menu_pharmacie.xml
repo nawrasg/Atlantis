@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/itemPharmacieAjouter"
-        android:title="Ajouter"/>
+        android:title="@string/menu_add"/>
     <item
         android:id="@+id/itemPharmacieActualiser"
-        android:title="Actualiser"/>
+        android:title="@string/menu_refresh"/>
 </menu>

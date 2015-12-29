@@ -2,30 +2,30 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory
-        android:summary="Paramètres Connexion"
-        android:title="Paramètres de Connexion" >
+        android:summary="@string/xml_pref_connection_settings_summary"
+        android:title="@string/xml_pref_connection_settings_title" >
         <EditTextPreference
             android:icon="@drawable/ic_action_network_cell"
             android:key="urlExterne"
-            android:summary="Entrer l&apos;adresse URL publique"
-            android:title="URL Public" />
+            android:summary="@string/xml_pref_connection_url_public_summary"
+            android:title="@string/xml_pref_connection_url_public_title" />
         <EditTextPreference
             android:icon="@drawable/ic_action_network_wifi"
             android:key="urlInterne"
-            android:summary="Entrer l&apos;adresse IP privée"
-            android:title="IP Privée" />
+            android:summary="@string/xml_pref_connection_url_private_summary"
+            android:title="@string/xml_pref_connection_url_private_title" />
 
         <CheckBoxPreference
             android:icon="@drawable/ic_action_network_wifi"
             android:key="wifi"
-            android:summary="Utiliser l&apos;adresse IP privée chez soi"
-            android:title="Connexion Privée" />
+            android:summary="@string/xml_pref_connection_url_private_use_summary"
+            android:title="@string/xml_pref_connection_url_private_use_title" />
 
         <Preference
             android:icon="@drawable/ic_action_make_available_offline"
             android:key="wifiHome"
-            android:summary="Définir le WIFI domestique"
-            android:title="Aucun" />
+            android:summary="@string/xml_pref_connection_wifi_home_summary"
+            android:title="@string/xml_pref_connection_wifi_home_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

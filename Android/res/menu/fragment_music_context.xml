@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/itemContextMusicWelcome"
-        android:title="Définir comme musique de bienvenue"/>
+        android:title="@string/menu_music_context_welcome_music_set"/>
 
 </menu>

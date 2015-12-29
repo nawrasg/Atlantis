@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:summary="En rentrant"
-        android:title="En rentrant">
+        android:summary="@string/xml_pref_geo_incoming_summary"
+        android:title="@string/xml_pref_geo_incoming_title">
 
         <CheckBoxPreference
             android:icon="@drawable/ic_action_network_wifi"
             android:key="geo_enter_wifi"
-            android:title="Allumer le wifi"/>
+            android:title="@string/xml_pref_geo_incoming_wifi_title"/>
 
         <CheckBoxPreference
             android:icon="@drawable/ic_action_secure"
             android:key="geo_enter_alarm"
-            android:title="Eteindre l'alarme"/>
+            android:title="@string/xml_pref_geo_incoming_alarm_title"/>
 
         <ListPreference
             android:defaultValue="1"
@@ -20,22 +20,22 @@
             android:entryValues="@array/geo_ring_profil_values"
             android:icon="@drawable/ic_action_ring_volume"
             android:key="geo_enter_ring"
-            android:title="Profil de sonnerie"/>
+            android:title="@string/xml_pref_geo_incoming_ring_profil_title"/>
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:summary="En sortant"
-        android:title="En sortant">
+        android:summary="@string/xml_pref_geo_outgoing_summary"
+        android:title="@string/xml_pref_geo_outgoing_title">
 
         <CheckBoxPreference
             android:icon="@drawable/ic_action_network_wifi"
             android:key="geo_exit_wifi"
-            android:title="Eteindre le wifi"/>
+            android:title="@string/xml_pref_geo_outgoing_wifi_title"/>
 
         <CheckBoxPreference
             android:icon="@drawable/ic_action_secure"
             android:key="geo_exit_alarm"
-            android:title="Allumer l'alarme"/>
+            android:title="@string/xml_pref_geo_outgoing_alarm_title"/>
 
         <ListPreference
             android:defaultValue="1"
@@ -43,6 +43,6 @@
             android:entryValues="@array/geo_ring_profil_values"
             android:icon="@drawable/ic_action_ring_volume"
             android:key="geo_exit_ring"
-            android:title="Profil de sonnerie"/>
+            android:title="@string/xml_pref_geo_outgoing_ring_profil_title"/>
     </PreferenceCategory>
 </PreferenceScreen>

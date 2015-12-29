@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/itemExport"
-        android:title="Exporter les paramètres"/>
+        android:title="@string/menu_prefs_settings_export"/>
 
 </menu>

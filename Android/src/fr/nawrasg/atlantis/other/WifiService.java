@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.widget.Toast;
 import fr.nawrasg.atlantis.App;
+import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.async.DataGET;
 
 public class WifiService extends IntentService {
@@ -27,7 +28,7 @@ public class WifiService extends IntentService {
 
 			@Override
 			public void run() {
-				Toast.makeText(nContext, "Connecté à Atlantis !", Toast.LENGTH_SHORT).show();
+				Toast.makeText(nContext, nContext.getString(R.string.service_wifi_atlantis_connected), Toast.LENGTH_SHORT).show();
 				new DataGET(nContext, false).execute(App.WELCOME);
 			}
 

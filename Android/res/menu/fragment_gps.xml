@@ -5,12 +5,12 @@
         android:id="@+id/itemGPSOptions"
         android:icon="@drawable/ic_action_storage"
         android:showAsAction="ifRoom"
-        android:title="Options"/>
+        android:title="@string/menu_fragment_gps_options"/>
 
     <item
         android:id="@+id/itemGPSMap"
         android:icon="@drawable/ic_action_map"
         android:showAsAction="ifRoom"
-        android:title="Carte"/>
+        android:title="@string/menu_fragment_gps_map"/>
 
 </menu>
