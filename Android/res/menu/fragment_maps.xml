@@ -5,11 +5,11 @@
         android:id="@+id/itemMapsRefresh"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="ifRoom"
-        android:title="Actualiser"/>
+        android:title="@string/menu_refresh"/>
     <item
         android:id="@+id/itemMapsRequest"
         android:icon="@drawable/ic_action_send_now"
         android:showAsAction="ifRoom"
-        android:title="Demander"/>
+        android:title="@string/menu_fragment_maps_request"/>
 
 </menu>
