@@ -53,7 +53,7 @@ public class ConnectedDevicesFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_devices, container, false);
 		c = getActivity();
-		getActivity().getActionBar().setIcon(R.drawable.devices);
+		getActivity().getActionBar().setIcon(R.drawable.ng_connected);
 		nSensorManager = (SensorManager) c.getSystemService(Context.SENSOR_SERVICE);
 		nAccelerometer = nSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		nShakeListener = new ShakeListener();
