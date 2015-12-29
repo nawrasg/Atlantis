@@ -8,7 +8,7 @@
 </div>
 <div class="panel panel-info">
 	<div class=panel-heading>Contr&ocirc;les</div>
-	<div class=panel-body>
+	<div class=panel-body layout=column>
 		<md-select ng-model=scenario aria-label="scenarios" placeholder="Sc&eacute;nario" md-on-close="loadScenario(scenario)">
 			<md-option ng-value=scenario ng-repeat="scenario in scenarios">{{scenario.file}}</md-option>
 		</md-select>
@@ -16,7 +16,7 @@
 			<label>Nom du sc&eacute;nario</label>
 			<input ng-model=newScenario ng-change="updateTitle()">
 		</md-input-container>
-		<div layout>
+		<div layout=row>
 			<md-button class="md-raised" ng-click="new()" flex>Nouveau</md-button>		
 			<md-button class="md-raised md-primary" ng-click="save()" flex>Enregistrer</md-button>		
 			<md-button class="md-raised md-warn" ng-click="delete()" flex>Supprimer</md-button>		
