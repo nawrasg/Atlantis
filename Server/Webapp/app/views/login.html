@@ -1,23 +1,18 @@
 <md-whiteframe class="md-whiteframe-z1" layout="column" style="width:500px;min-height:200px;display:block;margin:auto;padding-bottom:25px">
 	<md-toolbar>
       <div class="md-toolbar-tools">
-        
           <img alt="" src="images/atlantis.png" style="margin-right:20px">
-        
-        <h2>
-          <span>Authentification</span>
-        </h2>
+        <h2><span>Authentification</span></h2>
         <span flex=""></span>
         <md-button class="md-icon-button" aria-label="More" ng-click="auth()">
           <img alt="go" src="images/svg/ic_send_white_24px.svg">
         </md-button>
       </div>
     </md-toolbar>
-    <div style="padding:50px">
+    <div style="padding:20px" layout=column>
 	<md-input-container class="md-icon-float">
       <!-- Use floating label instead of placeholder -->
       <label>Nom d'utilisateur</label>
-      
       <input ng-model="user.username" type="text">
     </md-input-container>
     <md-input-container class="md-icon-float">
