@@ -33,6 +33,7 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-aria/angular-aria.js',
+      'bower_components/angular-messages/angular-messages.js',
       'bower_components/angular-material/angular-material.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/ng-file-upload/ng-file-upload.js',
