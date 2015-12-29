@@ -1,3 +1,9 @@
+<style>
+.row_cuisine{
+	padding-left: 10px;
+	padding-top: 10px
+}
+</style>
 <md-content>
 	<div layout=row layout-padding>
 		<md-input-container flex>
@@ -17,7 +23,7 @@
 		<md-content ng-repeat="placard in placards" ng-show="placard.ignore == 0 || (placard.ignore == 1 && avoid)">
 			<div layout=row layout-align="start center" >
 				<img alt="statut" ng-src="{{status(placard.peremption, placard.status, placard.endroit)}}" style="background:url(images/ng_roling.png)">
-				<div layout=column flex layout-padding>
+				<div class="row_cuisine" layout=column flex>
 					<label>{{placard.label}} ({{placard.quantite}})</label>
 					<p>{{peremption(placard)}}</p>
 				</div>
@@ -38,7 +44,7 @@
 			<md-content ng-repeat="frigo in frigos" ng-show="frigo.ignore == 0 || (frigo.ignore == 1 && avoid)">
 				<div layout=row layout-align="start center">
 					<img alt="statut" ng-src="{{status(frigo.peremption, frigo.status, frigo.endroit)}}" style="background:url(images/ng_roling.png)">
-					<div layout=column flex layout-padding>
+					<div class="row_cuisine" layout=column flex>
 						<label>{{frigo.label}} ({{frigo.quantite}})</label>
 						<p>{{peremption(frigo)}}</p>
 					</div>
@@ -58,7 +64,7 @@
 			<md-content ng-repeat="congelo in congelos" ng-show="congelo.ignore == 0 || (congelo.ignore == 1 && avoid)">
 				<div layout=row layout-align="start center">
 					<img alt="statut" ng-src="{{status(congelo.peremption, congelo.status, congelo.endroit)}}" style="background:url(images/ng_roling.png)">
-					<div layout=column flex layout-padding>
+					<div class="row_cuisine" layout=column flex>
 						<label>{{congelo.label}} ({{congelo.quantite}})</label>
 						<p>{{peremption(congelo)}}</p>
 					</div>

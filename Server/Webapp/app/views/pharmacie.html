@@ -1,3 +1,9 @@
+<style>
+.row_pharmacie{
+	padding-left: 10px;
+	padding-top: 10px
+}
+</style>
 <md-content>
 	<div layout=row layout-padding>
 		<md-input-container flex>
@@ -15,7 +21,7 @@
 		<md-content ng-repeat="pharmacie in pharmacies">
 			<div layout=row layout-align="start center" >
 				<img alt="statut" ng-src="{{status(pharmacie.peremption)}}" style="background:url(images/ng_pill.png)">
-				<div layout=column flex layout-padding>
+				<div class=row_pharmacie layout=column flex>
 					<label>{{pharmacie.nom}} ({{pharmacie.quantite}})</label>
 					<p>{{peremption(pharmacie.peremption)}}</p>
 				</div>

@@ -1,3 +1,9 @@
+<style>
+.row_entretien{
+	padding-left: 10px;
+	padding-top: 10px
+}
+</style>
 <md-content>
 	<div layout=row layout-padding>
 		<md-input-container flex>
@@ -15,7 +21,7 @@
 		<md-content ng-repeat="entretien in entretiens">
 			<div layout=row layout-align="start center" >
 				<img alt="statut" ng-src="{{status(entretien.peremption)}}" style="background:url(images/ng_lemon.png)">
-				<div layout=column flex layout-padding>
+				<div class="row_entretien" layout=column flex>
 					<label>{{entretien.nom}} ({{entretien.quantite}})</label>
 					<p>{{peremption(entretien.peremption)}}</p>
 				</div>
