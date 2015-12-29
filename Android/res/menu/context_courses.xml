@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-	
-	<item android:id="@+id/itemCoursesPlus"
-	    android:title="Incrémenter" />
-	<item android:id="@+id/itemCoursesMinus"
-	    android:title="Décrémenter" />
-	<item android:id="@+id/itemCoursesDel"
-	    android:title="Supprimer" />    
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemCoursesPlus"
+        android:title="@string/menu_increment"/>
+    <item
+        android:id="@+id/itemCoursesMinus"
+        android:title="@string/menu_decrement"/>
+    <item
+        android:id="@+id/itemCoursesDel"
+        android:title="@string/menu_delete"/>
 
 </menu>
