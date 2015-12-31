@@ -8,6 +8,7 @@ require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Settings.php';
 
 $page_level = 1;
+$admin_level = 0;
 
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
@@ -16,7 +17,9 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 			http_response_code ( 202 );
 			break;
 		case 'PUT' :
-			update ( $_REQUEST );
+			if (checkAPI ( $_REQUEST ['api'], $admin_level )) {
+				update ( $_REQUEST );
+			}
 			break;
 	}
 }
@@ -51,7 +54,7 @@ function update($arr) {
 		switch ($arr ['daemon']) {
 			case 'start' :
 				$filename = __DIR__ . '/script/atlantis.php';
-				exec ( "nohup php $filename &" );
+				exec ( "nohup php $filename >> system.log &" );
 				http_response_code ( 202 );
 				break;
 			case 'stop' :
