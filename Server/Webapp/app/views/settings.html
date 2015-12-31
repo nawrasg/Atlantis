@@ -34,7 +34,7 @@
         		<div class="panel panel-info">
         			<div class="panel-heading">G&eacute;n&eacute;ral</div>
         			<div class="panel-body">
-        				<md-content>
+        				<md-content layout=column>
         					<md-input-container>
         						<label>DNS URL</label>
         						<input ng-model=atlantis.Atlantis.url >
@@ -74,7 +74,7 @@
         		<div class="panel panel-info">
         			<div class="panel-heading">Services Tiers</div>
         			<div class="panel-body">
-        				<md-content>
+        				<md-content layout=column>
         					<md-input-container>
         						<label>Cl&eacute; Google Cloud Messaging</label>
         						<input ng-model=atlantis.Notification.key >
@@ -233,9 +233,10 @@
         	<div class="panel panel-info">
         		<div class="panel-heading">Utilisateurs</div>
         		<div class="panel-body">
-        			<div layout=row layout-align="center center" ng-repeat="user in users track by user.id"  layout-padding>
+        			<div layout=row layout-align="center center" ng-repeat="user in users track by user.id">
         				<label flex>{{user.nom}}</label>
-        				<div flex layout=row><p>{{user.cle}}</p><md-icon md-svg-src="images/svg/ic_cached_black_36px.svg" ng-click="changeAPI(user)"></md-icon></div>
+        				<div flex layout=row><p>{{user.cle}}</p></div>
+        				<md-icon md-svg-src="images/svg/ic_cached_black_36px.svg" ng-click="changeAPI(user)"></md-icon>
 						<md-icon md-svg-src="images/svg/ic_edit_black_36px.svg" ng-click="editUser(user)"></md-icon>
 						<md-icon md-svg-src="images/svg/ic_clear_black_36px.svg" ng-click="delUser(user)"></md-icon>
         			</div>
