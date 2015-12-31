@@ -118,7 +118,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 					DrawerItem.create(203, R.string.main_menu_devices, "ng_connected", false, nContext),
 					DrawerSection.create(300, R.string.main_menu_general, nContext),
 					DrawerItem.create(301, R.string.main_menu_history, "ng_graph", false, nContext),
-					DrawerItem.create(302, R.string.main_menu_history, "ng_settings", false, nContext),
+					DrawerItem.create(302, R.string.main_menu_settings, "ng_settings", false, nContext),
 					DrawerItem.create(303, R.string.main_menu_exit, "ng_exit", false, nContext) };
 			return nSections;
 		}
