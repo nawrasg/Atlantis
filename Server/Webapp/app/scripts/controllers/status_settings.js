@@ -13,6 +13,7 @@ nApp.controller('StatusSettingsCtrl', function($scope, $http, $sessionStorage, $
 		$http.put(nURL).success(function(data, status){
 			if(status == 202){
 				showToast($mdToast, 'Démarrage en cours...');
+				$scope.daemon = 'En cours...';
 			}else{
 				showToast($mdToast, 'Un problème technique est survenu (' + status + ')');
 			}
@@ -23,6 +24,7 @@ nApp.controller('StatusSettingsCtrl', function($scope, $http, $sessionStorage, $
 		$http.put(nURL).success(function(data, status){
 			if(status == 202){
 				showToast($mdToast, 'Arrêt en cours...');
+				$scope.daemon = 'A l\'arrêt.';
 			}else{
 				showToast($mdToast, 'Un problème technique est survenu (' + status + ')');
 			}
