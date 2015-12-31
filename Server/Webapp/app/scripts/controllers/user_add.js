@@ -19,9 +19,9 @@ nApp.controller('UserAddCtrl', function($scope, $http, $sessionStorage, $mdDialo
 	}];
 	if(user != null){
 		$scope.user = {name: user.nom, phone: user.phone, mail: user.mail, type: {id:user.type}};
-		$scope.btnSubmit = "Modifiez";
+		$scope.btnSubmit = "Modifier";
 	}else{
-		$scope.btnSubmit = "Ajoutez";
+		$scope.btnSubmit = "Ajouter";
 	}
 	
 	$scope.submit = function(){
