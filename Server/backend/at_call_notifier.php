@@ -7,6 +7,7 @@ require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Settings.php';
 require_once __DIR__ . '/classes/Player.php';
+require_once __DIR__ . '/classes/Light.php';
 
 $page_level = 1;
 
@@ -36,7 +37,7 @@ function call($arr) {
 		(new Player())->sound(Player::NOTIFICATION);
 		(new Player())->sound(Player::INCOMING_CALL);	
 	}
-	//TODO Light
+	light_notification(true);
 }
 function message($arr) {
 	$settings = new Settings ();
@@ -44,5 +45,16 @@ function message($arr) {
 		(new Player())->sound(Player::NOTIFICATION);
 		(new Player())->sound(Player::INCOMING_MESSAGE);
 	}
-	//TODO Light
+	light_notification(false);
+}
+function light_notification($call = true){
+	$lights = Light::allLights();
+	$status = $lights->isOn();
+	for($i = 0; $i < 2; $i++){
+		$lights->on(true);
+		sleep(1);
+		$lights->on(false);
+		sleep(1);
+	}
+	
 }
