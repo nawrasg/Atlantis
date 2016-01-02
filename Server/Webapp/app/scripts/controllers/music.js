@@ -113,7 +113,7 @@ nApp.controller('MusicCtrl', function($scope, $http, $sessionStorage, $filter, $
 	};
 	$scope.changeVol = function(volume){
 		var nURL = AtlantisUri.Music() + '?api=' + $sessionStorage.api;
-		nURL += '&action=vol&source=1&level=' + volume;
+		nURL += '&action=vol&level=' + volume;
 		$http.put(nURL).success(function(data, status){
 		});
 	};
