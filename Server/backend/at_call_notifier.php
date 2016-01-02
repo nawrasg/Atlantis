@@ -32,29 +32,33 @@ function get($arr) {
 	}
 }
 function call($arr) {
+	light_notification(true);
 	$settings = new Settings ();
 	if($settings->getSettings('CallNotifier', 'voice')){
 		(new Player())->sound(Player::NOTIFICATION);
 		(new Player())->sound(Player::INCOMING_CALL);	
 	}
-	light_notification(true);
 }
 function message($arr) {
+	light_notification(false);
 	$settings = new Settings ();
 	if($settings->getSettings('CallNotifier', 'voice')){
 		(new Player())->sound(Player::NOTIFICATION);
 		(new Player())->sound(Player::INCOMING_MESSAGE);
 	}
-	light_notification(false);
 }
 function light_notification($call = true){
 	$lights = Light::allLights();
 	$status = $lights->isOn();
-	for($i = 0; $i < 2; $i++){
+	if($call){
+		$number = 2;
+	}else{
+		$number = 3;
+	}
+	for($i = 0; $i < $number; $i++){
 		$lights->on(true);
 		sleep(1);
 		$lights->on(false);
 		sleep(1);
 	}
-	
 }
