@@ -110,15 +110,10 @@ function update($arr) {
 				}
 				break;
 			case 'vol' :
-				if (isset ( $arr ['level'], $arr ['source'] )) {
-					if ($arr ['source'] == 0) {
-						$source = FALSE;
-					} else {
-						$source = TRUE;
-					}
+				if (isset ( $arr ['level'] )) {
 					$vol = $arr ['level'];
 					$vol *= 10;
-					$music->volume ( $vol, $source );
+					$music->volume ( $vol );
 					echo 200;
 				} else {
 					echo 404;
@@ -225,8 +220,7 @@ function get($arr) {
 				'on' => ($music->isOn () ? 1 : 0),
 				'play' => ($music->isPlay () ? 1 : 0),
 				'welcome' => isWelcomeMusic ( $arr ['api'] ),
-				'vol' => $music->getVol ( true ),
-				'headphone' => $music->getVol ( TRUE ),
+				'vol' => $music->getVol (),
 				'songs' => getSongs () 
 		);
 		http_response_code ( 202 );
