@@ -37,6 +37,19 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage,
 			showToast($mdToast, status, data);
 		});
 	};
+	$scope.saveAudio = function(){
+		var source = $scope.atlantis.Audio.source;
+		var welcome = $scope.atlantis.Audio.welcome;
+		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
+		nURL += '&section=Audio&source=' + source + '&welcome=' + welcome;
+		$http.put(nURL).success(function(data, status) {
+			if(status == 202){
+				showToast($mdToast, 'Paramètres modifiés avec succès !');
+			}else{
+				showToast($mdToast, 'Impossible de modifier les paramètres (erreur ' + status + ') !');
+			}
+		});
+	};
 	$scope.saveSensors = function() {
 		var hue_ip = $scope.atlantis.Hue.ip;
 		var hue_user = $scope.atlantis.Hue.user;

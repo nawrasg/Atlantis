@@ -64,6 +64,15 @@ function update($arr) {
 				}
 				http_response_code ( 202 );
 				return;
+			case 'Audio' :
+				if (isset ( $arr ['source'] )) {
+					$settings->setSettings ( 'Audio', 'source', intval($arr ['source']) );
+				}
+				if (isset ( $arr ['welcome'] )) {
+					$settings->setSettings ( 'Audio', 'welcome', intval($arr ['welcome']) );
+				}
+				http_response_code ( 202 );
+				return;
 			case 'Zwave' :
 				if (isset ( $arr ['ip'] ))
 					$settings->setSettings ( 'Zwave', 'IP', $arr ['ip'] );
