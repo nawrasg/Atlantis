@@ -108,6 +108,6 @@ function execScenario($i, $scenarios) {
 	foreach ( $scenarios [$i] as $scenario ) {
 		$name = $scenario ['scenario'];
 		$filename = __DIR__ . "/../scenarios/$name.php";
-		exec ( "nohup php $filename &" );
+		exec ( "nohup php $filename >/dev/null 2>&1 &" );
 	}
 }
