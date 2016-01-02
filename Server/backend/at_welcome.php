@@ -4,10 +4,12 @@ header ( 'Access-Control-Allow-Origin: *' );
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Player.php';
+require_once __DIR__ . '/classes/Settings.php';
 
 $page_level = 0;
 
 if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
+	$welcome_interval = (new Settings())->getSettings('Audio', 'welcome');
 	$bdd = getBDD ();
 	$req = $bdd->prepare ( 'SELECT * FROM at_welcome WHERE mac = :mac' );
 	$req->execute ( array (
@@ -17,7 +19,7 @@ if (isset ( $_GET ['api'] ) && checkAPI ( $_GET ['api'], $page_level )) {
 	if ($data) {
 		$diff = strtotime ( now ) - strtotime ( $data ['jour'] . " " . $data ['heure'] );
 		$diff /= 3600;
-		if ($diff > 6) {
+		if ($diff > $welcome_interval) {
 			welcome ( $_GET ['api'] );
 		}
 	}
