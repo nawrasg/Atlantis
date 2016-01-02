@@ -49,7 +49,7 @@ function message($arr) {
 }
 function light_notification($call = true){
 	$lights = Light::allLights();
-	$status = $lights->isOn();
+	$pattern = $lights->isOn();
 	if($call){
 		$number = 2;
 	}else{
@@ -61,4 +61,5 @@ function light_notification($call = true){
 		$lights->on(false);
 		sleep(1);
 	}
+	$lights->status($pattern);
 }
