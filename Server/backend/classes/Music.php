@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/Settings.php';
 
 class Music {
 
@@ -6,12 +7,9 @@ class Music {
 		exec ( 'sudo mocp -G' );
 	}
 
-	public function volume($level = 90, $headphone = FALSE) {
-		if($headphone){
-			exec ( 'sudo amixer cset numid=6 -- ' . $level . '%', $output, $code );
-		}else{
-			exec ( 'sudo amixer cset numid=1 -- ' . $level . '%', $output, $code );
-		}
+	public function volume($level = 90) {
+		$source = (new Settings())->getSettings('Audio', 'source');
+		exec ( "sudo amixer cset numid=$source -- $level%", $output, $code );
 	}
 
 	public function stop() {
@@ -82,12 +80,9 @@ class Music {
 		}
 	}
 
-	public function getVol($headphone = FALSE) {
-		if ($headphone) {
-			exec ( 'sudo amixer cget numid=6', $output, $var );
-		} else {
-			exec ( 'sudo amixer cget numid=1', $output, $var );
-		}
+	public function getVol() {
+		$source = (new Settings())->getSettings('Audio', 'source');
+		exec ( "sudo amixer cget numid=$source", $output, $var );
 		$line = $output [2];
 		$data = explode ( '=', $line );
 		return $this->map ( $data [1], 0, 64, 0, 10 );
