@@ -60,5 +60,9 @@
     },
     "Mode":{
     	"mode":"day"
+    },
+    "Audio":{
+    	"source":1,
+    	"welcome":6
     }
 }
