@@ -94,14 +94,14 @@ class Light {
 		$size = count ( $this->lights );
 		$hue = new Hue ();
 		if ($size != 1) {
-			$status = array ();
+			$status = array_fill(0, $size, false);
 			for($i = 0; $i < $size; $i ++) {
-				$light = $this->lights [0];
+				$light = $this->lights [$i];
 				$protocol = $light ['protocol'];
 				switch ($protocol) {
 					case 'hue' :
 						$uid = $light ['uid'];
-						array_push ( $status, $hue->isOn ( $uid ) );
+						$status[$i] = $hue->isOn ( $uid );
 						break;
 				}
 			}
@@ -128,7 +128,8 @@ class Light {
 			switch($protocol){
 				case 'hue':
 					$uid = $light['uid'];
-					$hue->on($uid, $status[$i]);
+					$status = ($pattern[$i] == true) ? 'true' : 'false';
+					$hue->on($uid, $status);
 					break;
 			}
 		}
