@@ -6,7 +6,8 @@
  * @description # HomeCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage, $filter, $mdDialog, $mdToast, $window, AtlantisUri) {
+nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage, $filter, $mdDialog, $mdToast, $window, AtlantisUri, AtlantisRoot) {
+	$scope.atlantis = AtlantisRoot;
 	get();
 	getCourses();
 	$scope.getPlan = function(){
@@ -107,7 +108,7 @@ nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage,
 			$scope.day2 = getWeatherIcon(data.weather[1].code);
 			$scope.meteo1 = $filter('firstUpper')(data.weather[0].description) + ' ' + data.weather[0].temperature + '°';
 			$scope.meteo2 = $filter('firstUpper')(data.weather[1].description) + ' ' + data.weather[1].temperature + '°';
-			$scope.mode = data.mode;
+			$scope.atlantis.mode = data.mode;
 		});
 	}
 	function getWeatherIcon(code){
