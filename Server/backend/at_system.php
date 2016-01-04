@@ -62,6 +62,10 @@ function update($arr) {
 				http_response_code ( 202 );
 				break;
 		}
+	} else if (isset ( $arr ['nightFrom'], $arr ['nightTo'] )) {
+		(new Settings ())->setSettings ( 'Mode', 'nightFrom', $arr ['nightFrom'] );
+		(new Settings ())->setSettings ( 'Mode', 'nightTo', $arr ['nightTo'] );
+		http_response_code ( 202 );
 	} else {
 		http_response_code ( 404 );
 	}
