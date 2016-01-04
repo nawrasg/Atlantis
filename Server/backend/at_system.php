@@ -43,9 +43,12 @@ function get() {
 		}
 	}
 	$free_disk = disk_free_space ( '/' ) / disk_total_space ( '/' );
+	$settings = new Settings ();
 	$output = array (
 			'daemon' => $daemon,
-			'free_hdd' => $free_disk 
+			'free_hdd' => $free_disk,
+			'nightFrom' => $settings->getSettings ( 'Mode', 'nightFrom' ),
+			'nightTo' => $settings->getSettings ( 'Mode', 'nightTo' ) 
 	);
 	return $output;
 }
