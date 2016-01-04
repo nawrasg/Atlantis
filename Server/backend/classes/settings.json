@@ -59,7 +59,9 @@
     	"fromMail":""
     },
     "Mode":{
-    	"mode":"day"
+    	"mode":"day",
+    	"nightFrom":"23:00",
+    	"nightTo":"07:00"
     },
     "Audio":{
     	"source":1,
