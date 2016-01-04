@@ -54,7 +54,7 @@ function update($arr) {
 		switch ($arr ['daemon']) {
 			case 'start' :
 				$filename = __DIR__ . '/script/atlantis.php';
-				exec ( "nohup php $filename >> system.log &" );
+				exec ( "nohup php $filename >/dev/null 2>&1 &" );
 				http_response_code ( 202 );
 				break;
 			case 'stop' :

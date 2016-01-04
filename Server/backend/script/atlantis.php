@@ -20,7 +20,7 @@ $scenarios = loadScenarios ( $arrMvt );
 
 while ( true ) {
 	$settings = new Settings ();
-	$zwave = new Zwave ( true );
+	$zwave = new Zwave ();
 	$alarm = $settings->getSettings ( 'Alarm', 'status' );
 	foreach ( $arrMvt as $i => $sensor ) {
 		if ($sensor ['type'] == 'Door/Window') {
