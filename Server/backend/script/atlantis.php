@@ -12,7 +12,7 @@ while ( ! getBDD () )
 	;
 
 $push = new PushMessage ();
-$mode = new Mode();
+$mode = new Mode ();
 
 $arrMvt = loadSensors ();
 $arrMvt2 = initTimestamp ( $arrMvt );
@@ -29,7 +29,7 @@ while ( true ) {
 					if ($zwave->getValue ( $sensor ['sensor'] ) == 'on' && $zwave->GetTimestamp ( $sensor ['sensor'] ) != $arrMvt2 [$i]) {
 						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						execScenario ( $i, $scenarios );
-						if($mode->getMode() == Mode::NIGHT || $mode->getMode() == Mode::AWAY){
+						if ($mode->getMode () == Mode::NIGHT || $mode->getMode () == Mode::AWAY) {
 							$push->sendMessageAll ( "Atlantis - Alarme", "Porte ouverte !" );
 						}
 					}
@@ -41,7 +41,7 @@ while ( true ) {
 					if ($zwave->GetTimestamp ( $sensor ['sensor'] ) != $arrMvt2 [$i]) {
 						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						execScenario ( $i, $scenarios );
-						if($mode->getMode() == Mode::AWAY){
+						if ($mode->getMode () == Mode::AWAY) {
 							$push->sendMessageAll ( "Atlantis - Alarme", "Mouvement !" );
 						}
 					}
@@ -57,6 +57,7 @@ while ( true ) {
 					}
 			}
 		}
+		checkModeHours ();
 	}
 	sleep ( 0.5 );
 	if ($settings->getSettings ( 'Daemon', 'stop' )) {
@@ -109,5 +110,16 @@ function execScenario($i, $scenarios) {
 		$name = $scenario ['scenario'];
 		$filename = __DIR__ . "/../scenarios/$name.php";
 		exec ( "nohup php $filename >/dev/null 2>&1 &" );
+	}
+}
+function checkModeHours() {
+	$settings = new Settings ();
+	$mode = new Mode ();
+	$from = $settings->getSettings ( 'Mode', 'nightFrom' );
+	$to = $settings->getSettings ( 'Mode', 'nightTo' );
+	if (time () > strtotime ( $from ) && $mode->getMode () == Mode::DAY) {
+		$mode->setMode ( Mode::NIGHT );
+	} else if (time () < strtotime ( $from ) && time () > strtotime ( $to ) && $mode->getMode () == Mode::NIGHT) {
+		$mode->setMode ( Mode::DAY );
 	}
 }
