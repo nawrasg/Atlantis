@@ -8,6 +8,7 @@
 
 nApp.controller('StatusSettingsCtrl', function($scope, $http, $sessionStorage, $mdToast, AtlantisUri) {
 	get();
+	getCallNotifier()
 	$scope.startDaemon = function(){
 		var nURL = AtlantisUri.System() + '?api=' + $sessionStorage.api + '&daemon=start';
 		$http.put(nURL).success(function(data, status){
@@ -56,6 +57,12 @@ nApp.controller('StatusSettingsCtrl', function($scope, $http, $sessionStorage, $
 			}
 		});
 	};
+	$scope.toggleCall = function(settings, status){
+		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api + '&section=CallNotifier&key=' + settings + '&value=' + status;
+		$http.put(nURL).success(function(data, status){
+			//TODO
+		});
+	};
 	function get(){
 		var nURL = AtlantisUri.System() + '?api=' + $sessionStorage.api;
 		$http.get(nURL).success(function(data, status){
@@ -69,6 +76,14 @@ nApp.controller('StatusSettingsCtrl', function($scope, $http, $sessionStorage, $
 				var from = data.nightFrom.split(':');
 				var to = data.nightTo.split(':');
 				$scope.night = {from:new Date(1970, 0, 1, from[0], from[1]), to:new Date(1970, 0, 1, to[0], to[1]), status: data.nightAuto};
+			}
+		});
+	}
+	function getCallNotifier(){
+		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api + '&type=CallNotifier';
+		$http.get(nURL).success(function(data, status){
+			if(status == 202){
+				$scope.call = data;
 			}
 		});
 	}
