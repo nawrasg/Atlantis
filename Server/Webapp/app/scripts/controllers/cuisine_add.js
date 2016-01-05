@@ -6,7 +6,7 @@
  * @description # CuisineAddCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('CuisineAddCtrl', function($scope, $http, $filter, $localStorage, $sessionStorage, $mdDialog, $mdToast, AtlantisUri) {
+nApp.controller('CuisineAddCtrl', function($scope, $http, $filter, $sessionStorage, $mdDialog, $mdToast, AtlantisUri) {
 	$scope.places = [
 	                 {
 	                	 id:'placard',
@@ -19,13 +19,13 @@ nApp.controller('CuisineAddCtrl', function($scope, $http, $filter, $localStorage
 	                	 label:'Frigidaire'
 	                 }
 	                 ];
-	if($localStorage.ean == null || $localStorage.ean == '') {
+	if($sessionStorage.ean == null || $sessionStorage.ean == '') {
 		getEAN();
 	}else{
-		$scope.items = $localStorage.ean;
+		$scope.items = $sessionStorage.ean;
 	}
 	$scope.filterList = function(item){
-		var items = $localStorage.ean;
+		var items = $sessionStorage.ean;
 		var results = [];
 		angular.forEach(items, function(current){
 			if($filter('lowercase')(current.ean).indexOf($filter('lowercase')(item)) > -1 || $filter('lowercase')(current.nom).indexOf($filter('lowercase')(item)) > -1){
@@ -76,8 +76,8 @@ nApp.controller('CuisineAddCtrl', function($scope, $http, $filter, $localStorage
 	function getEAN(){
 		var nURL = AtlantisUri.Ean() + '?api=' + $sessionStorage.api;
 		$http.get(nURL).success(function(data, status){
-			$localStorage.ean = data;
-			$scope.items = $localStorage.ean;
+			$sessionStorage.ean = data;
+			$scope.items = $sessionStorage.ean;
 		});
 	}
 });
