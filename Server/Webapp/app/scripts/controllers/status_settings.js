@@ -51,7 +51,6 @@ nApp.controller('StatusSettingsCtrl', function($scope, $http, $sessionStorage, $
 		var nURL = AtlantisUri.System() + '?api=' + $sessionStorage.api;
 		nURL += '&nightFrom=' + fromDate.getHours() + ':' + fromDate.getMinutes() + '&nightTo=' + toDate.getHours() + ':' + toDate.getMinutes();
 		$http.put(nURL).success(function(data, status){
-			console.log(status, data);
 			if(status == 202){
 				showToast($mdToast, 'Horaires modifiés avec succès !');
 			}
