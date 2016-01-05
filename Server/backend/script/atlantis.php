@@ -114,12 +114,14 @@ function execScenario($i, $scenarios) {
 }
 function checkModeHours() {
 	$settings = new Settings ();
-	$mode = new Mode ();
-	$from = $settings->getSettings ( 'Mode', 'nightFrom' );
-	$to = $settings->getSettings ( 'Mode', 'nightTo' );
-	if (time () > strtotime ( $from ) && $mode->getMode () == Mode::DAY) {
-		$mode->setMode ( Mode::NIGHT );
-	} else if (time () < strtotime ( $from ) && time () > strtotime ( $to ) && $mode->getMode () == Mode::NIGHT) {
-		$mode->setMode ( Mode::DAY );
+	if ($settings->getSettings ( 'Mode', 'nightAuto' )) {
+		$mode = new Mode ();
+		$from = $settings->getSettings ( 'Mode', 'nightFrom' );
+		$to = $settings->getSettings ( 'Mode', 'nightTo' );
+		if (time () > strtotime ( $from ) && $mode->getMode () == Mode::DAY) {
+			$mode->setMode ( Mode::NIGHT );
+		} else if (time () < strtotime ( $from ) && time () > strtotime ( $to ) && $mode->getMode () == Mode::NIGHT) {
+			$mode->setMode ( Mode::DAY );
+		}
 	}
 }

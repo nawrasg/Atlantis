@@ -18,7 +18,10 @@
         			<div class="panel-heading">Mode</div>
         			<div class="panel-body">
         				<md-content layout=column>
-        					<p>Activer le mode nuit</p>
+        					<div layout=row layout-align="start center">
+        						<p flex>Activer le mode nuit</p>
+        						<md-switch ng-model="night.status" ng-change="toggleNightMode(night.status)" aria-label="night"></md-switch>
+        					</div>
         					<div layout=row>
         						<md-input-container flex>
 									<label>De</label>

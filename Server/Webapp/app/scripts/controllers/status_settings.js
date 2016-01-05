@@ -30,6 +30,18 @@ nApp.controller('StatusSettingsCtrl', function($scope, $http, $sessionStorage, $
 			}
 		})
 	};
+	$scope.toggleNightMode = function(mode){
+		var nURL = AtlantisUri.System() + '?api=' + $sessionStorage.api + '&nightAuto=' + mode;
+		$http.put(nURL).success(function(data, status){
+			if(status == 202){
+				if(mode){
+					showToast($mdToast, 'Fonction activée !');
+				}else{
+					showToast($mdToast, 'Fonction désactivée !');
+				}
+			}
+		});
+	};
 	$scope.saveNightModeTime = function(){
 		var from = $scope.night.from;
 		var to = $scope.night.to;
@@ -56,7 +68,7 @@ nApp.controller('StatusSettingsCtrl', function($scope, $http, $sessionStorage, $
 				}
 				var from = data.nightFrom.split(':');
 				var to = data.nightTo.split(':');
-				$scope.night = {from:new Date(1970, 0, 1, from[0], from[1]), to:new Date(1970, 0, 1, to[0], to[1])};
+				$scope.night = {from:new Date(1970, 0, 1, from[0], from[1]), to:new Date(1970, 0, 1, to[0], to[1]), status: data.nightAuto};
 			}
 		});
 	}

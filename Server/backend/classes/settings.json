@@ -61,7 +61,8 @@
     "Mode":{
     	"mode":"day",
     	"nightFrom":"23:00",
-    	"nightTo":"07:00"
+    	"nightTo":"07:00",
+    	"nightAuto":false
     },
     "Audio":{
     	"source":1,

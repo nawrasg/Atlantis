@@ -48,7 +48,8 @@ function get() {
 			'daemon' => $daemon,
 			'free_hdd' => $free_disk,
 			'nightFrom' => $settings->getSettings ( 'Mode', 'nightFrom' ),
-			'nightTo' => $settings->getSettings ( 'Mode', 'nightTo' ) 
+			'nightTo' => $settings->getSettings ( 'Mode', 'nightTo' ),
+			'nightAuto' => $settings->getSettings ( 'Mode', 'nightAuto' ) 
 	);
 	return $output;
 }
@@ -68,6 +69,10 @@ function update($arr) {
 	} else if (isset ( $arr ['nightFrom'], $arr ['nightTo'] )) {
 		(new Settings ())->setSettings ( 'Mode', 'nightFrom', $arr ['nightFrom'] );
 		(new Settings ())->setSettings ( 'Mode', 'nightTo', $arr ['nightTo'] );
+		http_response_code ( 202 );
+	} else if (isset ( $arr ['nightAuto'] )) {
+		$value = filter_var ( $arr ['nightAuto'], FILTER_VALIDATE_BOOLEAN );
+		(new Settings ())->setSettings ( 'Mode', 'nightAuto', $value );
 		http_response_code ( 202 );
 	} else {
 		http_response_code ( 404 );
