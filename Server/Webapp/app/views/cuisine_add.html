@@ -23,15 +23,15 @@
 				<input ng-model=quantity class=dialog-close type=number>
 			</md-input-container>
 			<md-input-container flex>
-				<label>Date</label>
-				<input ng-model=date type=date class=dialog-close>
-			</md-input-container>		
+				<md-select ng-model=place.id placeholder=Endroit>
+					<md-option ng-value=place.id ng-repeat="place in places">{{place.label}}</md-option>
+				</md-select>
+			</md-input-container>
 		</div>
 		<md-input-container flex>
-			<md-select ng-model=place.id placeholder=Endroit>
-				<md-option ng-value=place.id ng-repeat="place in places">{{place.label}}</md-option>
-			</md-select>
-		</md-input-container>
+			<label>Date de p&eacute;remption</label>
+			<input ng-model=date type=date class=dialog-close>
+		</md-input-container>		
 	</md-content>
 	<div class=md-actions>
 		<md-button ng-click=cancel()>Annuler</md-button>
