@@ -24,13 +24,13 @@
 		<div layout=row>
 			<md-input-container flex>
 				<label>Type de l'appareil</label>
-				<md-select ng-model=type.id placeholder=Type>
+				<md-select ng-model=type.id placeholder="Type de l'appareil">
 					<md-option ng-value=type.id ng-repeat="type in types">{{type.label}}</md-option>
 				</md-select>
 			</md-input-container>
 			<md-input-container flex>
 				<label>Type de connexion</label>
-				<md-select ng-model=connection.id placeholder=Connexion>
+				<md-select ng-model=connection.id placeholder="Type de connexion">
 					<md-option ng-value=connection.id ng-repeat="connection in connections">{{connection.label}}</md-option>
 				</md-select>
 			</md-input-container>

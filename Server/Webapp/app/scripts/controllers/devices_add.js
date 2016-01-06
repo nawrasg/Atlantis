@@ -7,30 +7,13 @@
  */
 
 nApp.controller('DevicesAddCtrl', function($scope, $http, $sessionStorage, $mdDialog, $mdToast, AtlantisUri, users, device) {
-	$scope.types = [{
-		id:'windows',
-		label:'Microsoft Windows'
-	},{
-		id:'smartphone',
-		label: 'Smartphone'
-	},{
-		id:'linux',
-		label: 'Linux'
-	},{
-		id:'imprimante',
-		label: 'Imprimante'
-	},{
-		id:'autre',
-		label: 'Autre'
-	}];
-	$scope.connections = [{
-		id:'wifi',
-		label:'Wifi'
-	},{
-		id:'ethernet',
-		label: 'Ethernet'
-	}];
-	$scope.gcm = device.gcm;
+	$scope.types = [{id:'windows', label:'Microsoft Windows'},
+	                {id:'smartphone', label: 'Smartphone'},
+	                {id:'linux', label: 'Linux'},
+	                {id:'imprimante', label: 'Imprimante'},
+	                {id:'autre', label: 'Autre'}];
+	$scope.connections = [{id:'wifi',label:'Wifi'},
+	                      {id:'ethernet',label: 'Ethernet'}];
 	$scope.users = users;
 	if(device != null){
 		$scope.btnSubmit = 'Modifier';
@@ -40,6 +23,7 @@ nApp.controller('DevicesAddCtrl', function($scope, $http, $sessionStorage, $mdDi
 		$scope.type = {id:device.type};
 		$scope.connection = {id:device.connexion};
 		$scope.user = {id:device.username};
+		$scope.gcm = device.gcm;
 	}else{
 		$scope.btnSubmit = 'Ajouter';
 	}
