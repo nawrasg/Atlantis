@@ -15,15 +15,17 @@
 		<md-content ng-repeat="device in devices track by device.id">
 			<div layout=row layout-align="start center">
 				<img alt="statut" ng-src="{{status(device.online)}}" ng-style="{'background-image':type(device.type)}" layout-margin>
-				<div layout=column flex layout-padding>
+				<div layout=column flex >
 					<label>{{device.nom}}</label>
 					<span>{{device.ip}}</span>
 					<span>{{device.mac}}</span>
 				</div>
-				<img alt="connection" ng-src="{{connection(device.connexion)}}" layout-margin>
-				<md-icon md-svg-src="images/svg/ic_dns_black_36px.svg" ng-click="ping(device)" layout-margin></md-icon>
-				<md-icon md-svg-src="images/svg/ic_edit_black_36px.svg" ng-click="edit(device)" layout-margin></md-icon>
-				<md-icon md-svg-src="images/svg/ic_clear_black_36px.svg" ng-click="del(device)"></md-icon>
+				<div layout=row >
+					<img alt="connection" ng-src="{{connection(device.connexion)}}" layout-margin>
+					<md-icon md-svg-src="images/svg/ic_dns_black_36px.svg" ng-click="ping(device)" layout-margin></md-icon>
+					<md-icon md-svg-src="images/svg/ic_edit_black_36px.svg" ng-click="edit(device)" layout-margin></md-icon>
+					<md-icon md-svg-src="images/svg/ic_clear_black_36px.svg" ng-click="del(device)"></md-icon>				
+				</div>
 			</div>
 			<md-divider ng-if="!$last"></md-divider>
 		</md-content>
