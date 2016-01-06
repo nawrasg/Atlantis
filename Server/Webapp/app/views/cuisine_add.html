@@ -1,30 +1,34 @@
 <md-dialog layout-padding>
 	<md-subheader>Ajouter un produit</md-subheader>
 	<md-content  layout=column>
-		<md-autocomplete
-			md-floating-label="Produit/Recherchez"
-			md-search-text-change="itemChange()" 
-			md-selected-item-change="itemSelect()"
-			md-selected-item="selectedItem" 
-			md-search-text="searchText" 
-			md-items="item in filterList(searchText)" 
-			md-item-text="item.nom">
-  			<span md-highlight-text="searchText">{{item.nom}}</span>
-		</md-autocomplete>
-		<md-input-container>
-			<label>Code-barre</label>
-			<input ng-model=codebarre class=dialog-close>
-		</md-input-container>
-		<md-input-container>
-			<label>Quantit&eacute;</label>
-			<input ng-model=quantity class=dialog-close type=number>
-		</md-input-container>
-		<md-input-container>
-			<label>Date</label>
-			<input ng-model=date type=date class=dialog-close>
-		</md-input-container>
-		<md-input-container>
-			<md-select ng-model=place.id placeholder=Endroit flex>
+		<div layout=row>
+			<md-autocomplete flex
+				md-floating-label="Produit"
+				md-search-text-change="itemChange()" 
+				md-selected-item-change="itemSelect()"
+				md-selected-item="selectedItem" 
+				md-search-text="searchText" 
+				md-items="item in filterList(searchText)" 
+				md-item-text="item.nom">
+	  			<span md-highlight-text="searchText">{{item.nom}}</span>
+			</md-autocomplete>
+			<md-input-container flex>
+				<label>Code-barre</label>
+				<input ng-model=codebarre class=dialog-close>
+			</md-input-container>		
+		</div>
+		<div layout=row>
+			<md-input-container flex>
+				<label>Quantit&eacute;</label>
+				<input ng-model=quantity class=dialog-close type=number>
+			</md-input-container>
+			<md-input-container flex>
+				<label>Date</label>
+				<input ng-model=date type=date class=dialog-close>
+			</md-input-container>		
+		</div>
+		<md-input-container flex>
+			<md-select ng-model=place.id placeholder=Endroit>
 				<md-option ng-value=place.id ng-repeat="place in places">{{place.label}}</md-option>
 			</md-select>
 		</md-input-container>
