@@ -102,13 +102,13 @@ nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage,
 	function get(){
 		var nURL = AtlantisUri.Home() + '?api=' + $sessionStorage.api;
 		$http.get(nURL).success(function(data, status){
+			$scope.atlantis.mode = data.mode;
 			$sessionStorage.rooms = data.rooms;
 			$scope.weather = [];
 			$scope.day1 = getWeatherIcon(data.weather[0].code);
 			$scope.day2 = getWeatherIcon(data.weather[1].code);
 			$scope.meteo1 = $filter('firstUpper')(data.weather[0].description) + ' ' + data.weather[0].temperature + '°';
 			$scope.meteo2 = $filter('firstUpper')(data.weather[1].description) + ' ' + data.weather[1].temperature + '°';
-			$scope.atlantis.mode = data.mode;
 		});
 	}
 	function getWeatherIcon(code){
