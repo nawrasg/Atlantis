@@ -20,11 +20,11 @@
 					<span>{{device.ip}}</span>
 					<span>{{device.mac}}</span>
 				</div>
+				<img alt="connection" ng-src="{{connection(device.connexion)}}" layout-margin>
 				<div layout=row >
-					<img alt="connection" ng-src="{{connection(device.connexion)}}" layout-margin>
 					<md-icon md-svg-src="images/svg/ic_dns_black_36px.svg" ng-click="ping(device)" layout-margin></md-icon>
 					<md-icon md-svg-src="images/svg/ic_edit_black_36px.svg" ng-click="edit(device)" layout-margin></md-icon>
-					<md-icon md-svg-src="images/svg/ic_clear_black_36px.svg" ng-click="del(device)"></md-icon>				
+					<md-icon md-svg-src="images/svg/ic_clear_black_36px.svg" ng-click="del(device)" layout-margin></md-icon>				
 				</div>
 			</div>
 			<md-divider ng-if="!$last"></md-divider>
