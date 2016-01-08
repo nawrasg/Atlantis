@@ -7,7 +7,10 @@
  */
 
 nApp.controller('ScenarioCtrl', function($scope, $window, $http, $filter, $mdToast, $sessionStorage, AtlantisUri) {
-	var reservedScenarios = [{id:'alarm', description:'Ce script est exécuté lorsque l\'alarme est activée ou désactivée.'}];
+	var reservedScenarios = [{id:'alarm', description:'Ce scénario est exécuté lorsque l\'alarme est déclenchée.'},
+	                         {id:'mode_day', description:'Ce scénario est exécuté lorsque le mode jour est activé.'},
+	                         {id:'mode_night', description:'Ce scénario est exécuté lorsque le mode nuit est activé.'},
+	                         {id:'mode_away', description:'Ce scénario est exécuté lorsque le mode absent est activé.'}];
 	var blocklyArea = document.getElementById('blocklyArea');
 	var blocklyDiv = document.getElementById('blocklyDiv');
 	var workspace = Blockly.inject(blocklyDiv, {
