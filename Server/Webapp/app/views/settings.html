@@ -259,11 +259,39 @@
         	</div>
         </md-content>
       </md-tab>
-      <md-tab label="Divers">
-      	<md-content class="md-padding" ng-controller="DiversSettingsCtrl">
-      		<div class="left50">
-        		
-        	</div>
+      <md-tab label="S&eacute;curit&eacute;">
+      	<md-content class="md-padding" ng-controller="SecuritySettingsCtrl">
+      		<div class=left50>
+      			<div class="panel panel-danger">
+	       			<div class=panel-heading>Alarme</div>
+	       			<div class=panel-body>
+	       				<md-content>
+	       					<md-checkbox ng-model="test" aria-label="light" ng-change="test">Prendre des photos en cas de mouvement</md-checkbox>
+	       				</md-content>
+	       			</div>
+	       		</div>
+      		</div>
+       		<div class=right50>
+       			<div class="panel panel-info">
+	       			<div class=panel-heading>Autres</div>
+	       			<div class=panel-body layout=column>
+	       				<md-content>
+	       					<md-checkbox ng-model="test" aria-label="light" ng-change="test">Alerter en cas de temp&eacute;rature anormale</md-checkbox>
+	       					<div layout=row>
+	       						<md-input-container flex>
+	        						<label>Seuil haut</label>
+	        						<input ng-model="" >
+	        					</md-input-container>
+	        					<md-input-container flex>
+	        						<label>Seuil bas</label>
+	        						<input ng-model="" >
+	        					</md-input-container>
+	       					</div>
+	       					<md-checkbox ng-model="test" aria-label="light" ng-change="test">Eteindre les appareils &eacute;lectriques en cas d'orage</md-checkbox>
+	       				</md-content>
+	       			</div>
+	       		</div>
+       		</div>
       	</md-content>
       </md-tab>
       <md-tab label="Utilisateurs">
