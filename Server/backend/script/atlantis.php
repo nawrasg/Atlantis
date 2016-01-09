@@ -13,6 +13,7 @@ while ( ! getBDD () )
 
 $push = new PushMessage ();
 $mode = new Mode ();
+$alarm = new Alarm ();
 
 $arrMvt = loadSensors ();
 $arrMvt2 = initTimestamp ( $arrMvt );
@@ -30,7 +31,7 @@ while ( true ) {
 						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						execScenario ( $i, $scenarios );
 						if ($mode->getMode () == Mode::NIGHT || $mode->getMode () == Mode::AWAY) {
-							$push->sendMessageAll ( "Atlantis - Alarme", "Porte ouverte !" );
+							$alarm->execAlarm();
 						}
 					}
 					break;
@@ -42,7 +43,7 @@ while ( true ) {
 						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						execScenario ( $i, $scenarios );
 						if ($mode->getMode () == Mode::AWAY) {
-							$push->sendMessageAll ( "Atlantis - Alarme", "Mouvement !" );
+							$alarm->execAlarm();
 						}
 					}
 					break;
