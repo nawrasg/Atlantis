@@ -31,6 +31,8 @@ function get($arr) {
 				return json_encode ( $settings->getSectionSettings ( 'Atlantis' ) );
 			case 'CallNotifier' :
 				return json_encode ( $settings->getSectionSettings ( 'CallNotifier' ) );
+			case 'Security' :
+				return json_encode ( $settings->getSectionSettings ( 'Security' ) );
 		}
 	} else {
 		return $settings->getAllSettings ();
@@ -66,10 +68,10 @@ function update($arr) {
 				return;
 			case 'Audio' :
 				if (isset ( $arr ['source'] )) {
-					$settings->setSettings ( 'Audio', 'source', intval($arr ['source']) );
+					$settings->setSettings ( 'Audio', 'source', intval ( $arr ['source'] ) );
 				}
 				if (isset ( $arr ['welcome'] )) {
-					$settings->setSettings ( 'Audio', 'welcome', intval($arr ['welcome']) );
+					$settings->setSettings ( 'Audio', 'welcome', intval ( $arr ['welcome'] ) );
 				}
 				http_response_code ( 202 );
 				return;
@@ -92,6 +94,7 @@ function update($arr) {
 					$settings->setSettings ( 'Files', 'music', $arr ['music'] );
 					http_response_code ( 202 );
 				}
+				http_response_code ( 202 );
 				return;
 			case 'CallNotifier' :
 				if (isset ( $arr ['key'], $arr ['value'] )) {
@@ -99,6 +102,7 @@ function update($arr) {
 					$value = filter_var ( $arr ['value'], FILTER_VALIDATE_BOOLEAN );
 					$settings->setSettings ( 'CallNotifier', $key, $value );
 				}
+				http_response_code ( 202 );
 				return;
 			case 'SMTP' :
 				if (isset ( $arr ['server'] )) {
@@ -123,12 +127,28 @@ function update($arr) {
 					$settings->setSettings ( 'SMTP', 'username', $username );
 					$settings->setSettings ( 'SMTP', 'password', $password );
 				}
-				if(isset($arr['fromName'], $arr['fromMail'])){
-					$name = $arr['fromName'];
-					$mail = $arr['fromMail'];
+				if (isset ( $arr ['fromName'], $arr ['fromMail'] )) {
+					$name = $arr ['fromName'];
+					$mail = $arr ['fromMail'];
 					$settings->setSettings ( 'SMTP', 'fromName', $name );
 					$settings->setSettings ( 'SMTP', 'fromMail', $mail );
 				}
+				http_response_code ( 202 );
+				return;
+			case 'Security' :
+				if (isset ( $arr ['photos'] )) {
+					$value = filter_var ( $arr ['photos'], FILTER_VALIDATE_BOOLEAN );
+					$settings->setSettings ( 'Security', 'photos', $value );
+				}
+				if (isset ( $arr ['photosNumber'] )) {
+					$value = filter_var ( $arr ['photosNumber'], FILTER_VALIDATE_INT );
+					$settings->setSettings ( 'Security', 'photosNumber', $value );
+				}
+				if (isset ( $arr ['photosSeconds'] )) {
+					$value = filter_var ( $arr ['photosSeconds'], FILTER_VALIDATE_INT );
+					$settings->setSettings ( 'Security', 'photosSeconds', $value );
+				}
+				http_response_code ( 202 );
 				return;
 		}
 	} else {
