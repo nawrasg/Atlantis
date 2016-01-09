@@ -148,6 +148,18 @@ function update($arr) {
 					$value = filter_var ( $arr ['photosSeconds'], FILTER_VALIDATE_INT );
 					$settings->setSettings ( 'Security', 'photosSeconds', $value );
 				}
+				if (isset ( $arr ['temperature'] )) {
+					$value = filter_var ( $arr ['temperature'], FILTER_VALIDATE_BOOLEAN );
+					$settings->setSettings ( 'Security', 'temperature', $value );
+				}
+				if (isset ( $arr ['temperatureHigh'] )) {
+					$value = filter_var ( $arr ['temperatureHigh'], FILTER_VALIDATE_INT );
+					$settings->setSettings ( 'Security', 'temperatureHigh', $value );
+				}
+				if (isset ( $arr ['temperatureLow'] )) {
+					$value = filter_var ( $arr ['temperatureLow'], FILTER_VALIDATE_INT );
+					$settings->setSettings ( 'Security', 'temperatureLow', $value );
+				}
 				http_response_code ( 202 );
 				return;
 		}
