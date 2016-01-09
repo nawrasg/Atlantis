@@ -4,6 +4,7 @@ require_once __DIR__ . '/../classes/Zwave.php';
 require_once __DIR__ . '/../classes/PushMessage.php';
 require_once __DIR__ . '/../classes/Settings.php';
 require_once __DIR__ . '/../classes/Mode.php';
+require_once __DIR__ . '/../classes/Alarm.php';
 
 $pid = getmypid ();
 (new Settings ())->setSettings ( 'Daemon', 'pid', $pid );
