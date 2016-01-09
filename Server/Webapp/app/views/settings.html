@@ -269,7 +269,22 @@
 	       			<div class=panel-heading>Alarme</div>
 	       			<div class=panel-body>
 	       				<md-content>
-	       					<md-checkbox ng-model="test" aria-label="light" ng-change="test">Prendre des photos en cas de mouvement</md-checkbox>
+	       					<md-checkbox ng-model="security.photos" aria-label="photos">Prendre des photos en cas de mouvement</md-checkbox>
+	       					<div layout=row>
+	       						<md-input-container flex>
+	        						<label>Nombre de photos</label>
+	        						<input ng-model="security.photosNumber" >
+	        					</md-input-container>
+	        					<md-input-container flex>
+	        						<label>Intervalle entre photos</label>
+	        						<input ng-model="security.photosSeconds" >
+	        					</md-input-container>
+	       					</div>
+	       					<div layout=row layout-align="end center">
+       							<md-button class="md-icon-button" aria-label="FAB" ng-click="savePhotos()">
+								  <md-icon md-svg-src="images/svg/ic_check_black_36px.svg"></md-icon>
+								</md-button>
+       						</div>
 	       				</md-content>
 	       			</div>
 	       		</div>
