@@ -19,6 +19,9 @@ class Alarm {
 			$this->on ();
 		}
 	}
+	public function execAlarm(){
+		$this->exec_scenario();
+	}
 	private function exec_scenario() {
 		$scenario = __DIR__ . '/../scenarios/alarm.php';
 		if (file_exists ( $scenario )) {
