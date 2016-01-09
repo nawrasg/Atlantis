@@ -294,18 +294,23 @@
 	       			<div class=panel-heading>Autres</div>
 	       			<div class=panel-body layout=column>
 	       				<md-content>
-	       					<md-checkbox ng-model="test" aria-label="light" ng-change="test">Alerter en cas de temp&eacute;rature anormale</md-checkbox>
+	       					<md-checkbox ng-model="security.temperature" aria-label="temperature" >Alerter en cas de temp&eacute;rature anormale</md-checkbox>
 	       					<div layout=row>
 	       						<md-input-container flex>
 	        						<label>Seuil haut</label>
-	        						<input ng-model="" >
+	        						<input ng-model="security.temperatureHigh" >
 	        					</md-input-container>
 	        					<md-input-container flex>
 	        						<label>Seuil bas</label>
-	        						<input ng-model="" >
+	        						<input ng-model="security.temperatureLow" >
 	        					</md-input-container>
 	       					</div>
 	       					<md-checkbox ng-model="test" aria-label="light" ng-change="test">Eteindre les appareils &eacute;lectriques en cas d'orage</md-checkbox>
+	       					<div layout=row layout-align="end center">
+       							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveTemperature()">
+								  <md-icon md-svg-src="images/svg/ic_check_black_36px.svg"></md-icon>
+								</md-button>
+       						</div>
 	       				</md-content>
 	       			</div>
 	       		</div>
