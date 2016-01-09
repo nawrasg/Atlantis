@@ -8,6 +8,20 @@
 
 nApp.controller('SecuritySettingsCtrl', function($scope, $http, $sessionStorage, $mdToast, AtlantisUri) {
 	get();
+	$scope.saveTemperature = function(){
+		var temperature = $scope.security.temperature;
+		var high = $scope.security.temperatureHigh;
+		var low = $scope.security.temperatureLow;
+		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api + '&section=Security';
+		nURL += '&temperature=' + temperature + '&temperatureHigh=' + high + '&temperatureLow=' + low;
+		$http.put(nURL).success(function(data, status){
+			if(status == 202){
+				showToast($mdToast, 'Paramètres modifiés avec succès !');
+			}else{
+				showToast($mdToast, 'Impossible de modifier les paramètres de sécurité (erreur ' + status + ') !');
+			}
+		});
+	};
 	$scope.savePhotos = function(){
 		var photos = $scope.security.photos;
 		var nb = $scope.security.photosNumber;
