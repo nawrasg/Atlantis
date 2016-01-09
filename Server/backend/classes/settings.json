@@ -27,11 +27,13 @@
     	"ip": "",
     	"user": ""
     },
-    "Alarm":{
-    	"status": false,
-    	"motion":true,
-    	"door":true,
-    	"tamper":true
+    "Security":{
+    	"photos":true,
+    	"photosNumber":5,
+    	"photosSeconds":1,
+    	"temperature":false,
+    	"temperatureHigh":27,
+    	"temperatureLow":16
     },
     "Daemon":{
     	"pid":-1,
