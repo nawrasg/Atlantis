@@ -101,6 +101,13 @@ function saveImage($arr) {
 		curl_close ( $ch );
 		$id = $arr ['id'];
 		$path = __DIR__ . "/home/cameras/$id.png";
+		$directory = __DIR__ . "/home/cameras/$id";
 		file_put_contents ( $path, $image );
+		if(!file_exists($directory)){
+			mkdir($directory);
+		}
+		$current_date = date('Y-m-d_H-i-s');
+		$image_history = $directory."/$current_date.png";
+		file_put_contents($image_history, $image);
 	}
 }
