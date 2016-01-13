@@ -35,6 +35,10 @@ function get($arr) {
 				return json_encode ( $settings->getSectionSettings ( 'Security' ) );
 		}
 	} else {
+		if (isset ( $arr ['download'] )) {
+			header('Content-type: text/plain');
+			header('Content-Disposition: attachment; filename="settings.ats"');
+		}
 		return $settings->getAllSettings ();
 	}
 }
