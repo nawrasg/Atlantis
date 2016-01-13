@@ -6,11 +6,12 @@
  * @description # SettingsCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('SettingsCtrl', function($scope, $mdDialog) {
+nApp.controller('SettingsCtrl', function($scope, $window, $sessionStorage, AtlantisUri) {
 	initAccountType();
-
-	
-	
+	$scope.exportSettings = function(){
+		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api + '&download=1';
+		$window.open(nURL, '_blank');
+	};
 	function initAccountType(){
 		var types = [];
 		types.push({id:0, label:'Administrateur'});
