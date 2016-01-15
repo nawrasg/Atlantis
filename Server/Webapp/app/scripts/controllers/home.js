@@ -105,29 +105,13 @@ nApp.controller('HomeCtrl', function($scope, $rootScope, $http, $sessionStorage,
 			$scope.atlantis.mode = data.mode;
 			$sessionStorage.rooms = data.rooms;
 			$scope.weather = [];
-			$scope.day1 = getWeatherIcon(data.weather[0].code);
-			$scope.day2 = getWeatherIcon(data.weather[1].code);
+			$scope.day1 = getWeatherIcon(data.weather[0].icon);
+			$scope.day2 = getWeatherIcon(data.weather[1].icon);
 			$scope.meteo1 = $filter('firstUpper')(data.weather[0].description) + ' ' + data.weather[0].temperature + '°';
 			$scope.meteo2 = $filter('firstUpper')(data.weather[1].description) + ' ' + data.weather[1].temperature + '°';
 		});
 	}
 	function getWeatherIcon(code){
-		var nCode = $filter('limitTo')(code, code.length - 1);
-		switch(nCode){
-		case '01':
-			return 'images/weather/ng_weather_sun.png';
-		case '02':
-		case '03':
-		case '04':
-		case '11':
-			return 'images/weather/ng_weather_cloud.png';
-		case '09':
-		case '10':
-			return 'images/weather/ng_weather_heavy.png';
-		case '13':
-			return 'images/weather/ng_weather_snow.png';
-		case '50':
-			return 'images/weather/ng_weather_fog.png';
-		}
+		return 'images/weather/' + code + '.png';
 	}
 });
