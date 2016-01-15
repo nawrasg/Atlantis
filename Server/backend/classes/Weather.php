@@ -93,6 +93,28 @@ class Weather {
 		$weather = $w->{'weather'};
 		return $weather [0]->{'icon'};
 	}
+	function getWeatherIcon($day = 1) {
+		if ($day <= 7) {
+			$result = $this->data;
+		} else {
+			$result = $this->fetchURL ( $this->city, $day );
+		}
+		$data = $result->{'list'};
+		$w = $data [$day - 1];
+		$weather = $w->{'weather'};
+		return $weather [0]->{'icon'};
+	}
+	function getWeatherId($day = 1) {
+		if ($day <= 7) {
+			$result = $this->data;
+		} else {
+			$result = $this->fetchURL ( $this->city, $day );
+		}
+		$data = $result->{'list'};
+		$w = $data [$day - 1];
+		$weather = $w->{'weather'};
+		return $weather [0]->{'id'};
+	}
 	function getWindSpeed($day = 1) {
 		if ($day <= 7) {
 			$result = $this->data;
