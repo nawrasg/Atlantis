@@ -65,7 +65,9 @@ function update($arr) {
 			case Mode::AWAY :
 				$mode->setMode ( $mode_value );
 				http_response_code ( 202 );
-				return array('mode' => $mode_value);
+				return array (
+						'mode' => $mode_value 
+				);
 		}
 	}
 }
@@ -78,8 +80,12 @@ function setWeather() {
 	$temp2 = $weather->getTemperature ( 2 );
 	$code = $weather->getWeatherCode ();
 	$code2 = $weather->getWeatherCode ( 2 );
+	$icon = $weather->getWeatherIcon ();
+	$icon2 = $weather->getWeatherIcon ( 2 );
 	$description = $weather->getDescription ();
 	$description2 = $weather->getDescription ( 2 );
+	$id = $weather->getWeatherId ();
+	$id2 = $weather->getWeatherId ( 2 );
 	$date = date ( 'Y-m-d H:i:s' );
 	
 	$result = array ();
@@ -87,19 +93,22 @@ function setWeather() {
 			'code' => $code,
 			'temperature' => $temp,
 			'description' => $description,
+			'icon' => $icon,
+			'id' => $id,
 			'update' => $date 
 	);
 	$result [] = array (
 			'code' => $code2,
 			'temperature' => $temp2,
 			'description' => $description2,
+			'icon' => $icon2,
+			'id' => $id2,
 			'update' => $date 
 	);
 	
 	$weather->setCachedWeather ( $result );
 }
 function getWeather() {
-	$settings = new Settings ();
 	$vigilance = new VigilanceMeteo ();
 	$weather = new Weather ();
 	return $weather->getCachedWeather ();
