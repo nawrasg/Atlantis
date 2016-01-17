@@ -23,7 +23,6 @@ $scenarios = loadScenarios ( $arrMvt );
 while ( true ) {
 	$settings = new Settings ();
 	$zwave = new Zwave ();
-	$alarm = $settings->getSettings ( 'Alarm', 'status' );
 	foreach ( $arrMvt as $i => $sensor ) {
 		if ($sensor ['type'] == 'Door/Window') {
 			switch ($sensor ['protocol']) {
@@ -32,7 +31,7 @@ while ( true ) {
 						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						execScenario ( $i, $scenarios );
 						if ($mode->getMode () == Mode::NIGHT || $mode->getMode () == Mode::AWAY) {
-							$alarm->execAlarm();
+							$alarm->execAlarm ();
 						}
 					}
 					break;
@@ -44,7 +43,7 @@ while ( true ) {
 						$arrMvt2 [$i] = $zwave->GetTimestamp ( $sensor ['sensor'] );
 						execScenario ( $i, $scenarios );
 						if ($mode->getMode () == Mode::AWAY) {
-							$alarm->execAlarm();
+							$alarm->execAlarm ();
 						}
 					}
 					break;
@@ -57,6 +56,15 @@ while ( true ) {
 						$txt = "Le capteur " . $sensor ['alias'] . " dans " . $sensor ['room_label'] . " a ete trafique !";
 						$push->sendMessageAll ( "Atlantis - Alarme", $txt );
 					}
+					break;
+			}
+		} else if ($sensor ['type'] == 'Temperature') {
+			switch($sensor['protocol']){
+				case 'zwave':
+					if($settings->getSettings('Security', 'temperature')){
+						//TODO
+					}
+					break;
 			}
 		}
 		checkModeHours ();
