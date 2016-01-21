@@ -9,7 +9,7 @@
  */
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
 		'chart.js', 'ab-base64', 'ngStorage', 'ngMaterial', 'ngSanitize',
-		'ngFileUpload' ]);
+		'ngFileUpload', 'ui.ace' ]);
 
 var toastPosition = {
 	bottom : false,
@@ -64,6 +64,10 @@ nApp.config(function($routeProvider) {
 	}).when('/cameras', {
 		templateUrl : 'views/cameras.html',
 		controller : 'CamerasCtrl'
+	}).when('/scenario2', {
+		templateUrl : 'views/scenario_advanced.html',
+		controller : 'ScenarioAdvancedCtrl',
+		controllerAs : 'scenarioAdvanced'
 	}).otherwise({
 		redirectTo : '/home'
 	});
