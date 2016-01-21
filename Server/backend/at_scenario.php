@@ -45,18 +45,26 @@ function delete($arr) {
 	}
 }
 function add($arr) {
-	if (isset ( $arr->name, $arr->code, $arr->xml )) {
+	if (isset ( $arr->name, $arr->code )) {
 		$filename = __DIR__ . '/scenarios/' . $arr->name . '.php';
-		$filename2 = __DIR__ . '/scenarios/xml/' . $arr->name . '.xml';
-		$xml = $arr->xml;
-		$data = "<?php\n";
-		$data .= 'function __autoload($class_name){' . "\n";
-		$data .= "\t" . 'require_once __DIR__.\'/../classes/\'.$class_name.\'.php\';' . "\n";
-		$data .= "}\n";
-		$data .= $arr->code;
+		if (isset ( $arr->xml )) {
+			$filename2 = __DIR__ . '/scenarios/xml/' . $arr->name . '.xml';
+			$xml = $arr->xml;
+			$result_xml = file_put_contents ( $filename2, $xml );
+			$data = "<?php\n";
+			$data .= 'function __autoload($class_name){' . "\n";
+			$data .= "\t" . 'require_once __DIR__.\'/../classes/\'.$class_name.\'.php\';' . "\n";
+			$data .= "}\n";
+			$data .= $arr->code;
+		} else {
+			$data = $arr->code;
+			$data .= "<?php\n";
+			$data .= 'function __autoload($class_name){' . "\n";
+			$data .= "\t" . 'require_once __DIR__.\'/../classes/\'.$class_name.\'.php\';' . "\n";
+			$data .= "}\n";
+		}
 		$result = file_put_contents ( $filename, $data );
-		$result_xml = file_put_contents ( $filename2, $xml );
-		if (! $result && ! $result_xml) {
+		if (! $result) { // && ! $result_xml
 			http_response_code ( 400 );
 		} else {
 			http_response_code ( 202 );
@@ -79,9 +87,11 @@ function get($arr) {
 			if (pathinfo ( $file, PATHINFO_EXTENSION ) == 'php') {
 				$file = pathinfo ( $file, PATHINFO_FILENAME );
 				$xml = file_get_contents ( __DIR__ . '/scenarios/xml/' . $file . '.xml' );
+				$php = file_get_contents ( __DIR__ . '/scenarios/' . $file . '.php' );
 				$result [] = array (
 						'file' => $file,
-						'xml' => (! $xml ? '' : $xml) 
+						'xml' => (! $xml ? ' ' : $xml),
+						'php' => (! $php ? ' ' : $php) 
 				);
 			}
 		}
