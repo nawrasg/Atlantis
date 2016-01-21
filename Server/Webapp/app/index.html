@@ -58,6 +58,7 @@
 		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Scénarios<span class="caret"></span></a>
 		          <ul class="dropdown-menu">
 		            <li><a href="#scenario">Créer un scénario</a></li>
+		            <li><a href="#scenario2">Créer un scénario (avancé)</a></li>
 		            <li ng-repeat="scenario in scenarios"><a href="" ng-click="launch(scenario.file)">{{scenario.file}}</a></li>
 		          </ul>
 		      </li>
@@ -142,6 +143,8 @@
     <script src="bower_components/Chart.js/Chart.js"></script>
     <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+    <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -192,6 +195,7 @@
     <script src="scripts/controllers/camera_add.js"></script>
     <script src="scripts/controllers/mode.js"></script>
     <script src="scripts/services/atlantisroot.js"></script>
+    <script src="scripts/controllers/scenario_advanced.js"></script>
     <!-- endbuild -->
 </body>
 </html>
