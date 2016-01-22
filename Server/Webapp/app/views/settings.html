@@ -1,3 +1,11 @@
+<style>
+.item{
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  height: 40px;
+  padding-top: 10px;
+}
+</style>
 <div>
   <md-content class="md-padding">
   	<div layout=row layout-align="end center">
@@ -305,7 +313,6 @@
 	        						<input ng-model="security.temperatureLow" >
 	        					</md-input-container>
 	       					</div>
-	       					<md-checkbox ng-model="test" aria-label="light" ng-change="test">Eteindre les appareils &eacute;lectriques en cas d'orage</md-checkbox>
 	       					<div layout=row layout-align="end center">
        							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveTemperature()">
 								  <md-icon md-svg-src="images/svg/ic_check_black_36px.svg"></md-icon>
