@@ -8,16 +8,6 @@
 
 nApp.controller('SecuritySettingsCtrl', function($scope, $http, $sessionStorage, $filter, $mdToast, AtlantisUri) {
 	get();
-	getSensors();
-	$scope.querySwitchBinarySearch = function(searchText){
-		var result = [];
-		angular.forEach($scope.switchBinary, function(current){
-			if($filter('lowercase')(current.sensor).indexOf($filter('lowercase')(searchText)) > -1){
-				result.push(current);
-			}
-		})
-		return result;
-	};
 	$scope.saveTemperature = function(){
 		var temperature = $scope.security.temperature;
 		var high = $scope.security.temperatureHigh;
@@ -53,14 +43,6 @@ nApp.controller('SecuritySettingsCtrl', function($scope, $http, $sessionStorage,
 				$scope.security = data;
 			}else{
 				showToast($mdToast, 'Impossible de récupérer les paramètres de sécurité (erreur ' + status + ') !');
-			}
-		});
-	}
-	function getSensors(){
-		var nURL = AtlantisUri.Sensors() + '?api=' + $sessionStorage.api + '&type=switchBinary';
-		$http.get(nURL).success(function(data, status){
-			if(status == 202){
-				$scope.switchBinary = data;
 			}
 		});
 	}
