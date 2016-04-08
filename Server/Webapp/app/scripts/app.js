@@ -54,6 +54,8 @@ var TRANSLATION_FR = {
 		'VIEW_MUSIC_SHOW_ALL': 'Tout afficher',
 		'VIEW_MUSIC_TRACKS': 'Morceaux',
 		'VIEW_MUSIC_REFRESH': 'Actualiser',
+		'VIEW_DEVICES_SEARCH': 'Rechercher',
+		'VIEW_DEVICES_CONNECTED_DEVICES': 'Appareils Connectés',
 };
 
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',

@@ -1,7 +1,7 @@
 <md-content>
 	<div layout=row layout-padding>
 		<md-input-container flex>
-			<label>Rechercher</label>
+			<label>{{ 'VIEW_DEVICES_SEARCH' | translate }}</label>
 			<input ng-model=item ng-enter="" flex ng-change="filter(item)">
 		</md-input-container>
 		<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="add(e)">
@@ -10,7 +10,7 @@
 	</div>
 </md-content>
 <div class="panel panel-info">
-	<div class="panel-heading">Appareils Connect&eacute;s</div>
+	<div class="panel-heading">{{ 'VIEW_DEVICES_CONNECTED_DEVICES' | translate }}</div>
 	<div class="panel-body">
 		<md-content ng-repeat="device in devices track by device.id">
 			<div layout=row layout-align="start center">
