@@ -7,9 +7,36 @@
  * 
  * Main module of the application.
  */
+
+var TRANSLATION_EN = {
+		'NAVIGATION_MENU_HOME': 'Home'
+};
+var TRANSLATION_FR = {
+		'NAVIGATION_MENU_HOME': 'Accueil',
+		'NAVIGATION_MENU_HOUSE': 'Domicile',
+		'NAVIGATION_MENU_HOUSE_LIGHTS_SENSORS': 'Lumières et Capteurs',
+		'NAVIGATION_MENU_HOUSE_PLANTS': 'Plantes',
+		'NAVIGATION_MENU_HOUSE_CAMERAS': 'Caméras',
+		'NAVIGATION_MENU_HOUSE_HISTORY': 'Historique',
+		'NAVIGATION_MENU_SCENARIO': 'Scénarios',
+		'NAVIGATION_MENU_SCENARIO_BLOCKLY': 'Créer un scénario',
+		'NAVIGATION_MENU_SCENARIO_PHP': 'Créer un scénario (avancé)',
+		'NAVIGATION_MENU_CONTENT': 'Contenu',
+		'NAVIGATION_MENU_CONTENT_KITCHEN': 'Cuisine',
+		'NAVIGATION_MENU_CONTENT_PHARMACY': 'Pharmacie',
+		'NAVIGATION_MENU_CONTENT_CLEANING': 'Hygiène et Entretien',
+		'NAVIGATION_MENU_SERVICES': 'Services',
+		'NAVIGATION_MENU_SERVICES_MUSIC': 'Musique',
+		'NAVIGATION_MENU_SERVICES_GEO': 'Géolocalisation',
+		'NAVIGATION_MENU_SERVICES_CONNECTED_DEVICES': 'Appareils Connectés',
+		'NAVIGATION_MENU_SERVICES_CLOUD': 'Cloud',
+		'NAVIGATION_MENU_SETTINGS': 'Paramètres',
+		'NAVIGATION_MENU_LOGOUT': 'Déconnexion',
+};
+
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
 		'chart.js', 'ab-base64', 'ngStorage', 'ngMaterial', 'ngSanitize',
-		'ngFileUpload', 'ui.ace' ]);
+		'ngFileUpload', 'ui.ace', 'pascalprecht.translate' ]);
 
 var toastPosition = {
 	bottom : false,
@@ -73,6 +100,12 @@ nApp.config(function($routeProvider) {
 	});
 });
 
+nApp.config(function($translateProvider){
+	$translateProvider.translations('en', TRANSLATION_EN);
+	$translateProvider.translations('fr', TRANSLATION_FR);
+	$translateProvider.preferredLanguage('fr');
+});
+
 nApp.run(function($rootScope, $location, $sessionStorage) {
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		if ($sessionStorage.api == null) {
@@ -122,3 +155,4 @@ function showToast($mdToast, message) {
 	$mdToast.show($mdToast.simple().content(message).position(
 			getToastPosition()).hideDelay(3000));
 }
+

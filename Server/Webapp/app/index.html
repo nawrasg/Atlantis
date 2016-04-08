@@ -44,46 +44,46 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav" >
-              <li><a ng-href="#home">Accueil</a></li>
+              <li><a ng-href="#home">{{ 'NAVIGATION_MENU_HOME' | translate }}</a></li>
               <li class="dropdown">
-		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Domicile<span class="caret"></span></a>
+		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'NAVIGATION_MENU_HOUSE' | translate }}<span class="caret"></span></a>
 		          <ul class="dropdown-menu">
-		            <li><a href="#sensors">Lumières et Capteurs</a></li>
-		            <li><a href="#plantes">Plantes</a></li>
-		            <li><a href="#cameras">Caméras</a></li>
-		            <li><a href="#history">Historique</a></li>
+		            <li><a href="#sensors">{{ 'NAVIGATION_MENU_HOUSE_LIGHTS_SENSORS' | translate }}</a></li>
+		            <li><a href="#plantes">{{ 'NAVIGATION_MENU_HOUSE_PLANTS' | translate }}</a></li>
+		            <li><a href="#cameras">{{ 'NAVIGATION_MENU_HOUSE_CAMERAS' | translate }}</a></li>
+		            <li><a href="#history">{{ 'NAVIGATION_MENU_HOUSE_HISTORY' | translate }}</a></li>
 		          </ul>
 		      </li>
               <li class="dropdown">
-		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Scénarios<span class="caret"></span></a>
+		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'NAVIGATION_MENU_SCENARIO' | translate }}<span class="caret"></span></a>
 		          <ul class="dropdown-menu">
-		            <li><a href="#scenario">Créer un scénario</a></li>
-		            <li><a href="#scenario2">Créer un scénario (avancé)</a></li>
+		            <li><a href="#scenario">{{ 'NAVIGATION_MENU_SCENARIO_BLOCKLY' | translate }}</a></li>
+		            <li><a href="#scenario2">{{ 'NAVIGATION_MENU_SCENARIO_PHP' | translate }}</a></li>
 		            <li ng-repeat="scenario in scenarios"><a href="" ng-click="launch(scenario.file)">{{scenario.file}}</a></li>
 		          </ul>
 		      </li>
               <li class="dropdown">
-		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contenu <span class="caret"></span></a>
+		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'NAVIGATION_MENU_CONTENT' | translate }}<span class="caret"></span></a>
 		          <ul class="dropdown-menu">
-		            <li><a href="#contenu">Cuisine</a></li>
-		            <li><a href="#pharmacie">Pharmacie</a></li>
-		            <li><a href="#entretien">Hygiène et Entretien</a></li>
+		            <li><a href="#contenu">{{ 'NAVIGATION_MENU_CONTENT_KITCHEN' | translate }}</a></li>
+		            <li><a href="#pharmacie">{{ 'NAVIGATION_MENU_CONTENT_PHARMACY' | translate }}</a></li>
+		            <li><a href="#entretien">{{ 'NAVIGATION_MENU_CONTENT_CLEANING' | translate }}</a></li>
 		          </ul>
 		      </li>
 		      <li class="dropdown">
-		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
+		          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'NAVIGATION_MENU_SERVICES' | translate }}<span class="caret"></span></a>
 		          <ul class="dropdown-menu">
-		            <li><a href="#music">Musique</a></li>
-		            <li><a href="#geo">Géolocalisation</a></li>
-		            <li><a href="#devices">Appareils Connectés</a></li>
+		            <li><a href="#music">{{ 'NAVIGATION_MENU_SERVICES_MUSIC' | translate }}</a></li>
+		            <li><a href="#geo">{{ 'NAVIGATION_MENU_SERVICES_GEO' | translate }}</a></li>
+		            <li><a href="#devices">{{ 'NAVIGATION_MENU_SERVICES_CONNECTED_DEVICES' | translate }}</a></li>
 		            <li role="separator" class="divider"></li>
-		            <li><a href="/owncloud">Cloud</a></li>
+		            <li><a href="/owncloud">{{ 'NAVIGATION_MENU_SERVICES_CLOUD' | translate }}</a></li>
 		          </ul>
 		      </li>
-              <li><a ng-href="#settings">Paramètres</a></li>
+              <li><a ng-href="#settings">{{ 'NAVIGATION_MENU_SETTINGS' | translate }}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            	<li><a ng-href="#deconnexion">Déconnexion</a></li>
+            	<li><a ng-href="#deconnexion">{{ 'NAVIGATION_MENU_LOGOUT' | translate }}</a></li>
             </ul>
           </div>
         </div>
@@ -143,7 +143,6 @@
     <script src="bower_components/Chart.js/Chart.js"></script>
     <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <script src="bower_components/angular-translate/angular-translate.js"></script>
-    <script src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
