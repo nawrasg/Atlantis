@@ -42,7 +42,9 @@ var TRANSLATION_FR = {
 		'VIEW_KITCHEN_SHOW_ALL': 'Tout afficher',
 		'VIEW_KITCHEN_CLOSET': 'Placard',
 		'VIEW_KITCHEN_FRIDGE': 'Fridge',
-		'VIEW_KITCHEN_FREEZER': 'Congélateur'
+		'VIEW_KITCHEN_FREEZER': 'Congélateur',
+		'VIEW_PHARMACY_SEARCH': 'Rechercher',
+		'VIEW_PHARMACY_PHARMACY': 'Pharmacie',
 };
 
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
