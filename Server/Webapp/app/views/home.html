@@ -1,11 +1,11 @@
 <div class=left50>
 	<div class="panel panel-info">
-		<div class="panel-heading">Bienvenue !</div>
+		<div class="panel-heading">{{ 'VIEW_HOME_WELCOME' | translate }}</div>
 		<div class="panel-body" style="padding:25px">
 			<table width='100%' style='margin-bottom:30px'>
 				<tr>
-					<td width='50%' style='text-align:center'><b>Aujourd'hui</b><br><img alt="" ng-src="{{day1}}"><br>{{meteo1}}</td>
-					<td width='50%' style='text-align:center'><b>Demain</b><br><img alt="" ng-src="{{day2}}"><br>{{meteo2}}</td>
+					<td width='50%' style='text-align:center'><b>{{ 'VIEW_HOME_TODAY' | translate }}</b><br><img alt="" ng-src="{{day1}}"><br>{{meteo1}}</td>
+					<td width='50%' style='text-align:center'><b>{{ 'VIEW_HOME_TOMORROW' | translate }}</b><br><img alt="" ng-src="{{day2}}"><br>{{meteo2}}</td>
 				</tr>
 			</table>
 			<label>Mode : {{getMode(atlantis.mode)}}</label>
@@ -14,7 +14,7 @@
 	<div class="panel panel-info">
 		<div class=panel-heading>
 			<div layout=row>
-				<span flex>Liste des courses</span>
+				<span flex>{{ 'VIEW_HOME_SHOPPING_LIST' | translate }}</span>
 				<md-icon md-svg-src="images/svg/ic_send_white_24px.svg" ng-click="notifyCourses()"></md-icon>			
 			</div>
 		</div>
@@ -22,7 +22,7 @@
 			<md-content>
 				<div layout=row >
 					<md-input-container flex>
-						<label>Ajouter (Nom, Quantit&eacute;)</label>
+						<label>{{ 'VIEW_HOME_SHOPPING_LIST_ADD' | translate }}</label>
 						<input ng-model=item ng-enter="addCourse(item)">
 					</md-input-container>
 					<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="addCourse(item)">
@@ -45,7 +45,7 @@
 <div class="panel panel-info right50">
 	<div class="panel-heading">
 		<div layout=row>
-			<span flex>Domicile</span>
+			<span flex>{{ 'VIEW_HOME_HOUSE' | translate }}</span>
 			<md-icon md-svg-src="images/svg/ic_launch_white_36px.svg" ng-click="editHome()"></md-icon>
 			<md-icon md-svg-src="images/svg/ic_home_white_36px.svg" ng-click="planHome()"></md-icon>
 		</div>

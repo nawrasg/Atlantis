@@ -32,6 +32,12 @@ var TRANSLATION_FR = {
 		'NAVIGATION_MENU_SERVICES_CLOUD': 'Cloud',
 		'NAVIGATION_MENU_SETTINGS': 'Paramètres',
 		'NAVIGATION_MENU_LOGOUT': 'Déconnexion',
+		'VIEW_HOME_WELCOME': 'Bienvenue !',
+		'VIEW_HOME_TODAY': 'Aujourd\'hui',
+		'VIEW_HOME_TOMORROW': 'Demain',
+		'VIEW_HOME_SHOPPING_LIST': 'Liste des courses',
+		'VIEW_HOME_SHOPPING_LIST_ADD': 'Ajouter (Nom, Quantité)',
+		'VIEW_HOME_HOUSE': 'Domicile'
 };
 
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
