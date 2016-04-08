@@ -7,7 +7,7 @@
 <md-content>
 	<div layout=row layout-padding>
 		<md-input-container flex>
-			<label>Rechercher</label>
+			<label>{{ 'VIEW_KITCHEN_SEARCH' | translate }}</label>
 			<input ng-model=item ng-enter="" flex ng-change="filter(item)">
 		</md-input-container>
 		<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="add(e)">
@@ -15,10 +15,10 @@
 		</md-button>
 	</div>
 </md-content>
-<md-checkbox ng-model="avoid" aria-label="tout afficher">Tout afficher</md-checkbox>
+<md-checkbox ng-model="avoid" aria-label="tout afficher">{{ 'VIEW_KITCHEN_SHOW_ALL' | translate }}</md-checkbox>
 <div style="clear:both"></div>
 <div class="panel panel-default left50">
-	<div class=panel-heading>Placard</div>
+	<div class=panel-heading>{{ 'VIEW_KITCHEN_CLOSET' | translate }}</div>
 	<div class=panel-body>
 		<md-content ng-repeat="placard in placards" ng-show="placard.ignore == 0 || (placard.ignore == 1 && avoid)">
 			<div layout=row layout-align="start center" >
@@ -39,7 +39,7 @@
 </div>
 <div class=right50>
 	<div class="panel panel-success">
-		<div class="panel-heading">Frigidaire</div>
+		<div class="panel-heading">{{ 'VIEW_KITCHEN_FRIDGE' | translate }}</div>
 		<div class="panel-body">
 			<md-content ng-repeat="frigo in frigos" ng-show="frigo.ignore == 0 || (frigo.ignore == 1 && avoid)">
 				<div layout=row layout-align="start center">
@@ -59,7 +59,7 @@
 		</div>
 	</div>
 	<div class="panel panel-info">
-		<div class=panel-heading>Cong&eacute;lateur</div>
+		<div class=panel-heading>{{ 'VIEW_KITCHEN_FREEZER' | translate }}</div>
 		<div class=panel-body>
 			<md-content ng-repeat="congelo in congelos" ng-show="congelo.ignore == 0 || (congelo.ignore == 1 && avoid)">
 				<div layout=row layout-align="start center">

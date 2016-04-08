@@ -37,7 +37,12 @@ var TRANSLATION_FR = {
 		'VIEW_HOME_TOMORROW': 'Demain',
 		'VIEW_HOME_SHOPPING_LIST': 'Liste des courses',
 		'VIEW_HOME_SHOPPING_LIST_ADD': 'Ajouter (Nom, Quantité)',
-		'VIEW_HOME_HOUSE': 'Domicile'
+		'VIEW_HOME_HOUSE': 'Domicile',
+		'VIEW_KITCHEN_SEARCH': 'Rechercher',
+		'VIEW_KITCHEN_SHOW_ALL': 'Tout afficher',
+		'VIEW_KITCHEN_CLOSET': 'Placard',
+		'VIEW_KITCHEN_FRIDGE': 'Fridge',
+		'VIEW_KITCHEN_FREEZER': 'Congélateur'
 };
 
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
