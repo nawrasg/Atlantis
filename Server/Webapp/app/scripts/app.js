@@ -47,6 +47,13 @@ var TRANSLATION_FR = {
 		'VIEW_PHARMACY_PHARMACY': 'Pharmacie',
 		'VIEW_CLEANING_SEARCH': 'Rechercher',
 		'VIEW_CLEANING_CLEANING': 'Hygiène et Entretien',
+		'VIEW_MUSIC_CONTROLS': 'Contrôles',
+		'VIEW_MUSIC_LIBRARY': 'Musicothèque',
+		'VIEW_MUSIC_SEARCH': 'Rechercher',
+		'VIEW_MUSIC_PLAYLISTS': 'Listes de lecture',
+		'VIEW_MUSIC_SHOW_ALL': 'Tout afficher',
+		'VIEW_MUSIC_TRACKS': 'Morceaux',
+		'VIEW_MUSIC_REFRESH': 'Actualiser',
 };
 
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
