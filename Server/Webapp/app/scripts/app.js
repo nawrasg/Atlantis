@@ -45,6 +45,8 @@ var TRANSLATION_FR = {
 		'VIEW_KITCHEN_FREEZER': 'Congélateur',
 		'VIEW_PHARMACY_SEARCH': 'Rechercher',
 		'VIEW_PHARMACY_PHARMACY': 'Pharmacie',
+		'VIEW_CLEANING_SEARCH': 'Rechercher',
+		'VIEW_CLEANING_CLEANING': 'Hygiène et Entretien',
 };
 
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
