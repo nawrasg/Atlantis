@@ -93,6 +93,23 @@ var TRANSLATION_FR = {
 		'VIEW_MUSIC_REFRESH': 'Actualiser',
 		'VIEW_DEVICES_SEARCH': 'Rechercher',
 		'VIEW_DEVICES_CONNECTED_DEVICES': 'Appareils Connectés',
+		'VIEW_SETTINGS_TAB_SYSTEM': 'Etat Système',
+		'VIEW_SETTINGS_TAB_ATLANTIS': 'Paramètres Atlantis',
+		'VIEW_SETTINGS_TAB_SECURITY': 'Sécurité',
+		'VIEW_SETTINGS_TAB_USERS': 'Utilisateurs',
+		'VIEW_SETTINGS_DAEMON': 'Daemon',
+		'VIEW_SETTINGS_DAEMON_START': 'Démarrage',
+		'VIEW_SETTINGS_DAEMON_STOP': 'Arrêt',
+		'VIEW_SETTINGS_DAEMON_STATUS': 'Etat',
+		'VIEW_SETTINGS_MODE': 'Mode',
+		'VIEW_SETTINGS_MODE_NIGHT': 'Activer le mode nuit',
+		'VIEW_SETTINGS_MODE_FROM': 'De',
+		'VIEW_SETTINGS_MODE_TO': 'À',
+		'VIEW_SETTINGS_SERVER': 'Serveur',
+		'VIEW_SETTINGS_SERVER_FREE_SPACE': 'Espace libre',
+		'VIEW_SETTINGS_CALL_LIGHT': 'Signalisation avec la lumière',
+		'VIEW_SETTINGS_CALL_VOICE': 'Signalisation avec la voix',
+		
 };
 
 var nApp = angular.module('atlantisWebAppApp', [ 'ngRoute', 'ngMap',
