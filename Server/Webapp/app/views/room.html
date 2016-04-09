@@ -1,5 +1,5 @@
 <md-dialog style=padding:20px>
-	<h3>Pi&egrave;ces</h3>
+	<h3>{{ 'VIEW_ROOM_ROOMS' | translate }}</h3>
 	<md-content>
 		<div layout=row  layout-align="start center" ng-repeat="room in rooms">
 			<label flex>{{room.room}}</label>
@@ -7,7 +7,7 @@
 		</div>
 		<div layout=row style="padding-top:25px">
 			<md-input-container flex>
-				<label>Ajoutez une pi&egrave;ce...</label>
+				<label>{{ 'VIEW_ROOM_ADD' | translate }}</label>
 				<input ng-model=item ng-enter="addRoom(item)">
 			</md-input-container>
 			<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="addRoom(item)">
@@ -16,6 +16,6 @@
 		</div>
 	</md-content>
 	<div class=md-actions>
-		<md-button ng-click=cancel()>Fermer</md-button>
+		<md-button ng-click=cancel()>{{ 'CLOSE' | translate }}</md-button>
 	</div>
 </md-dialog>

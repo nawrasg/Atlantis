@@ -6,7 +6,7 @@
 <md-content>
 	<div layout=row layout-align="start center" layout-padding>
 		<md-input-container flex>
-			<label>Rechercher</label>
+			<label>{{ 'SEARCH' | translate }}</label>
 			<input ng-model=item ng-enter="" flex ng-change="filter(item)">
 		</md-input-container>
 		<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="add()">
@@ -22,31 +22,31 @@
 				<h3 ng-click="editPlant(plant)">{{plant.title}} {{getRoomLabel(plant)}}</h3>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_battery.png">
-					Autonomie : {{plant.battery}}%
+					{{ 'VIEW_PLANTS_BATTERY' | translate }} : {{plant.battery}}%
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_humidity.png">
-					Humidit&eacute; : {{plant.moisture}}
+					{{ 'VIEW_PLANTS_HUMIDITY' | translate }} : {{plant.moisture}}
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_lightning.png">
-					Conductivit&eacute; : {{plant.conductivity}}
+					{{ 'VIEW_PLANTS_CONDUCTIVITY' | translate }} : {{plant.conductivity}}
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_sun.png">
-					Luminosit&eacute; : {{plant.light}}
+					{{ 'VIEW_PLANTS_LUMINOSITY' | translate }} : {{plant.light}}
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_thermostat.png">
-					Temp&eacute;rature Terreau : {{plant.stemperature}} &deg;C
+					{{ 'VIEW_PLANTS_TEMPERATURE_SOIL' | translate }} : {{plant.stemperature}} &deg;C
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_thermostat.png">
-					Temp&eacute;rature Air : {{plant.atemperature}} &deg;C
+					{{ 'VIEW_PLANTS_TEMPERATURE_AIR' | translate }} : {{plant.atemperature}} &deg;C
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_time.png">
-					Derni&egrave;re mise &agrave; jour : {{plant.date}} &agrave; {{plant.time}}
+					{{ 'VIEW_PLANTS_LAST_UPDATE' | translate }} : {{plant.date}} {{ 'AT' | translate }} {{plant.time}}
 				</div>
 			</div>
 		</md-card-content>

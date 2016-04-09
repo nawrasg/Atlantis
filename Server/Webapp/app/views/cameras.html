@@ -6,7 +6,7 @@
 <md-content>
 	<div layout=row layout-align="start center" layout-padding>
 		<md-input-container flex>
-			<label>Rechercher</label>
+			<label>{{ 'SEARCH' | translate }}</label>
 			<input ng-model=item ng-enter="" flex ng-change="filter(item)">
 		</md-input-container>
 		<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="add()">
@@ -22,19 +22,19 @@
 				<h3 ng-click="editCamera(camera)">{{getTitle(camera)}} {{getRoomLabel(camera)}}</h3>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_camera.png">
-					Type : {{camera.type}}
+					{{ 'VIEW_CAMERAS_TYPE' | translate }} : {{camera.type}}
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_ip.png">
-					Adresse IP : {{camera.ip}}
+					{{ 'VIEW_CAMERAS_IP_ADDRESS' | translate }} : {{camera.ip}}
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_image.png">
-					Image : http://{{camera.ip}}/{{camera.image}}
+					{{ 'VIEW_CAMERAS_IMAGE' | translate }} : http://{{camera.ip}}/{{camera.image}}
 				</div>
 				<div layout=row layout-align="start center">
 					<img src="images/ng_video.png">
-					Vid&eacute;o : http://{{camera.ip}}/{{camera.video}}
+					{{ 'VIEW_CAMERAS_VIDEO' | translate }} : http://{{camera.ip}}/{{camera.video}}
 				</div>
 			</div>
 		</md-card-content>

@@ -1,9 +1,9 @@
-<md-checkbox class=md-primary ng-model="sensors.showall" aria-label="history">Tout afficher</md-checkbox>
+<md-checkbox class=md-primary ng-model="sensors.showall" aria-label="history">{{ 'SHOW_ALL' | translate }}</md-checkbox>
 <div style="clear:both"></div>
 <div class="panel panel-info left50">
 	<div class="panel-heading">
 		<div layout=row>
-			<span flex>Lumi&egrave;res</span>
+			<span flex>{{ 'VIEW_SENSORS_LIGHTS' | translate }}</span>
 			<md-icon md-svg-src="images/svg/ic_launch_white_36px.svg" ng-click="editLights()"></md-icon>
 		</div>
 	</div>
@@ -19,7 +19,7 @@
 <div class="panel panel-info right50">
 	<div class="panel-heading">
 		<div layout=row>
-			<span flex>Capteurs</span>
+			<span flex>{{ 'VIEW_SENSORS_SENSORS' | translate }}</span>
 			<md-icon md-svg-src="images/svg/ic_launch_white_36px.svg" ng-click="editSensors()"></md-icon>
 		</div>
 	</div>

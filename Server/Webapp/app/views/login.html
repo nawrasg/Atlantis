@@ -2,7 +2,7 @@
 	<md-toolbar>
       <div class="md-toolbar-tools">
           <img alt="" src="images/atlantis.png" style="margin-right:20px">
-        <h2><span>Authentification</span></h2>
+        <h2><span>{{ 'VIEW_LOGIN_AUTHENTICATION' | translate }}</span></h2>
         <span flex=""></span>
         <md-button class="md-icon-button" aria-label="More" ng-click="auth()">
           <img alt="go" src="images/svg/ic_send_white_24px.svg">
@@ -12,12 +12,12 @@
     <div style="padding:20px" layout=column>
 	<md-input-container class="md-icon-float">
       <!-- Use floating label instead of placeholder -->
-      <label>Nom d'utilisateur</label>
+      <label>{{ 'VIEW_LOGIN_USERNAME' | translate}}</label>
       <input ng-model="user.username" type="text">
     </md-input-container>
     <md-input-container class="md-icon-float">
       <!-- Use floating label instead of placeholder -->
-      <label>Mot de passe</label>
+      <label>{{ 'VIEW_LOGIN_PASSWORD' | translate }}</label>
       <input ng-model="user.password" type="password" ng-enter="auth()">
     </md-input-container>
     </div> 

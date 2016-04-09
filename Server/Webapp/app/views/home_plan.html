@@ -1,8 +1,8 @@
 <md-dialog layout-padding>
 	<div ngf-drop ngf-select ng-model="files" class="drop-box" 
         ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
-        accept="image/png">D&eacute;posez le plan de votre domicile ici.</div>
+        accept="image/png">{{ 'VIEW_HOME_PLAN_UPLOAD' | translate }}</div>
     <div class=md-actions>
-		<md-button ng-click=cancel()>Fermer</md-button>
+		<md-button ng-click=cancel()>{{ 'CLOSE' | translate }}</md-button>
 	</div>
 </md-dialog>
