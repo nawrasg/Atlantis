@@ -59,7 +59,7 @@ public class App {
 			}
 		} else {
 			nURL = prefs.getString("urlExterne", "");
-			if (nURL == "") {
+			if (nURL.equals("")) {
 				nURL = prefs.getString("urlInterne", "");
 			}
 		}
