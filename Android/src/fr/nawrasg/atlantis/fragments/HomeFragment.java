@@ -16,7 +16,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
@@ -39,7 +38,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
 
 public class HomeFragment extends Fragment implements OnTouchListener {
 	private Context mContext;
@@ -47,6 +45,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	private FloatingActionMenu mActionMenu;
 	private SubActionButton mDayButton, mNightButton, mAwayButton;
 	private Handler mHandler;
+	private OkHttpClient mClient;
 	@Bind(R.id.imgPlanPlan)
 	ImageView imgPlan;
 	@Bind(R.id.txtHomeWeatherToday)
@@ -62,6 +61,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		ButterKnife.bind(this, nView);
 		mContext = getActivity();
 		mHandler = new Handler();
+		mClient = new OkHttpClient();
 		return nView;
 	}
 
@@ -69,8 +69,45 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		createFAB();
-		new HomeGET(mContext).execute(App.HOME);
+		get();
 		loadPlan();
+	}
+
+	private void get(){
+		String nURL = App.getFullUrl(mContext) + App.HOME + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+				//TODO
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					try {
+						JSONObject nJson = new JSONObject(response.body().string());
+						JSONArray nArr = nJson.getJSONArray("weather");
+						final JSONObject nJsonW1 = nArr.getJSONObject(0);
+						final JSONObject nJsonW2 = nArr.getJSONObject(1);
+						final String nMode = nJson.getString("mode");
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								setWeather(txtWeatherToday, nJsonW1);
+								setWeather(txtWeatherTomorrow, nJsonW2);
+								setModeLabel(nMode);
+							}
+						});
+					} catch (JSONException e) {
+						//TODO
+					}
+
+				}
+			}
+		});
 	}
 
 	private Drawable getDraw(int resource){
@@ -172,14 +209,13 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 
 	private void setMode(String mode) {
 		String nURL = App.getFullUrl(mContext) + App.HOME + "?api=" + App.getAPI(mContext) + "&mode=" + mode;
-		OkHttpClient client = new OkHttpClient();
 		FormEncodingBuilder nBody = new FormEncodingBuilder();
 		Request request = new Request.Builder()
 				.url(nURL)
 				.put(nBody.build())
 				.build();
 
-		client.newCall(request).enqueue(new Callback() {
+		mClient.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 				//TODO
@@ -270,33 +306,6 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 				view.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 				break;
 		}
-	}
-
-	private class HomeGET extends DataGET {
-
-		public HomeGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if (getResultCode() == 202) {
-				try {
-					JSONObject nJson = new JSONObject(result);
-					JSONArray nArr = nJson.getJSONArray("weather");
-					JSONObject nJsonC = nArr.getJSONObject(0);
-					setWeather(txtWeatherToday, nJsonC);
-					nJsonC = nArr.getJSONObject(1);
-					setWeather(txtWeatherTomorrow, nJsonC);
-					String nMode = nJson.getString("mode");
-					setModeLabel(nMode);
-				} catch (JSONException e) {
-					Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
-				}
-			}
-			super.onPostExecute(result);
-		}
-
 	}
 
 }
