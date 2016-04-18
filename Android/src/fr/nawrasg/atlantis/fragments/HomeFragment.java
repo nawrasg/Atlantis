@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	private FloatingActionButton mFAB;
 	private FloatingActionMenu mActionMenu;
 	private SubActionButton mDayButton, mNightButton, mAwayButton;
+	private Handler mHandler;
 	@Bind(R.id.imgPlanPlan)
 	ImageView imgPlan;
 	@Bind(R.id.txtHomeWeatherToday)
@@ -59,6 +61,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		View nView = inflater.inflate(R.layout.fragment_plan, container, false);
 		ButterKnife.bind(this, nView);
 		mContext = getActivity();
+		mHandler = new Handler();
 		return nView;
 	}
 
@@ -184,24 +187,21 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 
 			@Override
 			public void onResponse(final Response response) throws IOException {
-				//TODO
-				getActivity().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (response.code() == 202) {
-							try {
-								JSONObject nResponse = new JSONObject(response.body().string());
-								String nMode = nResponse.getString("mode");
+				if(response.code() == 202){
+					JSONObject nResponse = null;
+					try {
+						nResponse = new JSONObject(response.body().string());
+						final String nMode = nResponse.getString("mode");
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
 								setModeLabel(nMode);
-							} catch (JSONException e) {
-								e.printStackTrace();
-							} catch (IOException e) {
-								e.printStackTrace();
 							}
-
-						}
+						});
+					} catch (JSONException e) {
+						//TODO
 					}
-				});
+				}
 			}
 		});
 	}
@@ -241,10 +241,10 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		return true;
 	}
 
-	private void setWeather(TextView view, JSONObject json) throws JSONException {
-		String nCode = json.getString("code");
-		double nTemp = json.getDouble("temperature");
-		String nDescription = json.getString("description");
+	private void setWeather(TextView view, JSONObject json) {
+		String nCode = json.optString("code");
+		double nTemp = json.optDouble("temperature");
+		String nDescription = json.optString("description");
 		view.setText(nDescription.substring(0, 1).toUpperCase(Locale.FRANCE) + nDescription.substring(1) + " " + nTemp + "°C");
 		switch (nCode) {
 			case "01d":
