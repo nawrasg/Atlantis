@@ -50,6 +50,21 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage,
 			}
 		});
 	};
+	$scope.saveDDNS = function(){
+		var on = $scope.atlantis.DDNS.on;
+		var host = encodeURI($scope.atlantis.DDNS.host);
+		var username = encodeURI($scope.atlantis.DDNS.username);
+		var password = encodeURI($scope.atlantis.DDNS.password);
+		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
+		nURL += '&section=DDNS&host=' + host + '&on=' + on + '&username=' + username + '&password=' + password;
+		$http.put(nURL).success(function(data, status){
+			if(status == 202){
+				showToast($mdToast, 'Paramètres modifiés avec succès !');
+			}else{
+				showToast($mdToast, 'Impossible de modifier les paramètres (erreur ' + status + ') !');
+			}
+		});
+	};
 	$scope.saveSensors = function() {
 		var hue_ip = $scope.atlantis.Hue.ip;
 		var hue_user = $scope.atlantis.Hue.user;
