@@ -142,6 +142,33 @@
         			</div>
         		</div>
         		<div class="panel panel-info">
+        			<div class="panel-heading">DDNS OVH</div>
+        			<div class="panel-body">
+        				<md-content layout="column">
+        					<md-checkbox ng-model="atlantis.DDNS.on">Activ&eacute;</md-checkbox>
+        					<md-input-container>
+        						<label>Host</label>
+        						<input ng-model="atlantis.DDNS.host" >
+        					</md-input-container>
+        					<div layout="row">
+        						<md-input-container flex>
+	        						<label>Nom d'utilisateur</label>
+	        						<input ng-model="atlantis.DDNS.username" >
+	        					</md-input-container>
+	        					<md-input-container flex>
+	        						<label>Mot de passe</label>
+	        						<input ng-model="atlantis.DDNS.password" type="password">
+	        					</md-input-container>
+        					</div>
+        					<div layout=row layout-align="end center">
+       							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveDDNS()">
+								  <md-icon md-svg-src="images/svg/ic_check_black_36px.svg"></md-icon>
+								</md-button>
+       						</div>
+        				</md-content>
+        			</div>
+        		</div>
+        		<div class="panel panel-info">
         			<div class="panel-heading">Audio</div>
         			<div class="panel-body">
         				<md-content layout=column>
@@ -256,7 +283,7 @@
 	        					</md-input-container>
 	        					<md-input-container flex>
 	        						<label>Mot de passe</label>
-	        						<input ng-model=atlantis.SMTP.password >
+	        						<input ng-model=atlantis.SMTP.password type="password">
 	        					</md-input-container>
         					</div>
         					<div layout=row layout-align="end center">
