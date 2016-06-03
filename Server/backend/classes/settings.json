@@ -69,5 +69,11 @@
     "Audio":{
     	"source":1,
     	"welcome":6
+    },
+    "DDNS":{
+    	"on":false,
+    	"host":"",
+    	"username":"",
+    	"password":""
     }
 }
