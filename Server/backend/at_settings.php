@@ -70,6 +70,16 @@ function update($arr) {
 				}
 				http_response_code ( 202 );
 				return;
+			case 'DDNS':
+				if(isset($arr['on'], $arr['host'], $arr['username'], $arr['password'])){
+					$on = filter_var ( $arr ['on'], FILTER_VALIDATE_BOOLEAN );
+					$settings->setSettings('DDNS', 'on', $on);
+					$settings->setSettings('DDNS', 'host', $arr['host']);
+					$settings->setSettings('DDNS', 'username', $arr['username']);
+					$settings->setSettings('DDNS', 'password', $arr['password']);
+				}
+				http_response_code ( 202 );
+				return;
 			case 'Audio' :
 				if (isset ( $arr ['source'] )) {
 					$settings->setSettings ( 'Audio', 'source', intval ( $arr ['source'] ) );
