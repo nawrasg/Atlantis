@@ -32,13 +32,16 @@ function broadcast($arr) {
 	}
 	http_response_code ( 202 );
 }
+
 function update($arr) {
-	if (isset ( $arr ['lat'], $arr ['long'] )) {
+	if (isset ( $arr ['lat'], $arr ['long'], $arr['speed'], $arr['bearing'] )) {
 		$mac = $arr ['api'];
 		$lat = $arr ['lat'];
 		$long = $arr ['long'];
+		$speed = $arr['speed'];
+		$bearing = $arr['bearing'];
 		$bdd = getBDD ();
-		$req = $bdd->exec ( "INSERT INTO at_geo VALUES('$mac', '$lat', '$long', NOW(), NOW(), NOW())" );
+		$req = $bdd->exec ( "INSERT INTO at_geo VALUES('$mac', '$lat', '$long', '$speed', '$bearing', NOW(), NOW(), NOW())" );
 		if ($req == 1) {
 			http_response_code ( 202 );
 		} else {
@@ -48,6 +51,7 @@ function update($arr) {
 		http_response_code ( 404 );
 	}
 }
+
 function get() {
 	$settings = new Settings ();
 	$atlantis = array (
