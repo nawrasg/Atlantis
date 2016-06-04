@@ -75,6 +75,11 @@ function setWeather() {
 	$weather = new Weather ();
 	
 	$temp = $weather->getTemperature ();
+	
+	$check = filter_var($temp, FILTER_VALIDATE_FLOAT);
+	if(!$check){
+		return;
+	}
 	$temp2 = $weather->getTemperature ( 2 );
 	$code = $weather->getWeatherCode ();
 	$code2 = $weather->getWeatherCode ( 2 );
