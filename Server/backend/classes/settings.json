@@ -80,5 +80,8 @@
     	"path":"",
     	"username":"",
     	"password":""
+    },
+    "Log":{
+    	"level":0
     }
 }
