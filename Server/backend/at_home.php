@@ -72,9 +72,7 @@ function update($arr) {
 	}
 }
 function setWeather() {
-	$settings = new Settings ();
 	$weather = new Weather ();
-	$city = $settings->getSettings ( 'Atlantis', 'city' );
 	
 	$temp = $weather->getTemperature ();
 	$temp2 = $weather->getTemperature ( 2 );
