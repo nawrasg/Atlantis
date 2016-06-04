@@ -1,6 +1,5 @@
 <?php 
 
-require_once __DIR__ . '/../classes/connexion.php';
 require_once __DIR__ . '/../classes/Settings.php';
 
 $settings = new Settings();
@@ -19,5 +18,5 @@ if($settings->getSettings('DDNS', 'on')){
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 	$response = curl_exec ( $ch );
 	curl_close($ch);
-	echo $response;
+	echo $response; //TODO: check response
 }
