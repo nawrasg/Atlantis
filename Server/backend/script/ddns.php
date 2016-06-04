@@ -1,6 +1,7 @@
 <?php 
 
 require_once __DIR__ . '/../classes/Settings.php';
+require_once __DIR__ . '/../classes/Log.php';
 
 $settings = new Settings();
 
@@ -18,5 +19,5 @@ if($settings->getSettings('DDNS', 'on')){
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 	$response = curl_exec ( $ch );
 	curl_close($ch);
-	echo $response; //TODO: check response
+	(new Log())->log(Log::INFO, __FILE__, $response);
 }
