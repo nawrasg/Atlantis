@@ -75,5 +75,10 @@
     	"host":"",
     	"username":"",
     	"password":""
+    },
+    "ownCloud":{
+    	"path":"",
+    	"username":"",
+    	"password":""
     }
 }
