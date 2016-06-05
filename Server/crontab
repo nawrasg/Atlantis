@@ -1,2 +1,2 @@
 @hourly php ngWebPath/backend/at_home.php weather
-*/7 * * * * php ngWebPath/backend/script/ddns.php
+*/5 * * * * php ngWebPath/backend/script/ddns.php
