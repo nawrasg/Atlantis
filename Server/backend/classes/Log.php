@@ -27,4 +27,8 @@ class Log{
 		$this->level = $level;
 		(new Settings())->setSettings('Log', 'level', $level);
 	}
+	
+	function clear(){
+		file_put_contents($this->filename, '', FILE_USE_INCLUDE_PATH | LOCK_EX);
+	}
 }
