@@ -1,0 +1,18 @@
+<md-dialog style=padding:20px>
+	<md-subheader>Log</md-subheader>
+	<md-content layout=column>
+		<md-input-container>
+			<md-select ng-model=log.id placeholder="Niveau de log" ng-change="changeLog()">
+				<md-option ng-value=level.id ng-repeat="level in levels">{{level.label}}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container>
+    		<label>Log</label>
+			<textarea rows="20" cols="100">{{log.log}}</textarea>
+		</md-input-container>
+	</md-content>
+	<div class=md-actions>
+		<md-button ng-click=clear() class="md-warn md-raised">Effacer</md-button>
+		<md-button class=md-primary ng-click=close()>Fermer</md-button>
+	</div>
+</md-dialog>
