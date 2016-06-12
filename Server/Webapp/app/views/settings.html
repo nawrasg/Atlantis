@@ -82,7 +82,22 @@
         <md-content class="md-padding" ng-controller="AtlantisSettingsCtrl">
         	<div class="left50">
         		<div class="panel panel-info">
-        			<div class="panel-heading">G&eacute;n&eacute;ral</div>
+        			<div class="panel-heading">
+        				<div layout=row layout-align="start center">
+							<span flex>G&eacute;n&eacute;ral</span>
+							<md-menu>
+			   					<md-icon ng-click="$mdOpenMenu($event)" md-svg-icon="images/svg/ic_more_vert_white_24px.svg"></md-icon>
+			 					<md-menu-content>
+			   						<md-menu-item>
+			   							<md-button  ng-click="log()">
+											<md-icon md-svg-src="images/svg/ic_assignment_black_24px.svg"></md-icon>	
+			   								Log
+			 							</md-button>
+			  						</md-menu-item>
+			 					</md-menu-content>
+							</md-menu>		
+						</div>
+        			</div>
         			<div class="panel-body">
         				<md-content layout=column>
         					<md-input-container>
