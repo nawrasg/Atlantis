@@ -18,8 +18,8 @@ class Log{
 	function log($level, $owner, $data){
 		if($level >= $this->level){
 			$date = date('Y-m-d H:i:s');
-			$output = $date . "\t". $owner . "\t" . $level . "\t" . $data;
-			file_put_contents($this->filename, $output, FILE_USE_INCLUDE_PATH | FILE_APPEND | LOCK_EX);
+			$output = $date . "\t". $owner . "\t" . $level . "\t" . $data . "\n";
+			file_put_contents(dirname(__FILE__) . "/" . $this->filename, $output, FILE_USE_INCLUDE_PATH | FILE_APPEND | LOCK_EX);
 		}		
 	}
 	
@@ -30,5 +30,9 @@ class Log{
 	
 	function clear(){
 		file_put_contents($this->filename, '', FILE_USE_INCLUDE_PATH | LOCK_EX);
+	}
+	
+	function read(){
+		return file_get_contents($this->filename, true);
 	}
 }
