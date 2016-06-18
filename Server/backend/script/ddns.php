@@ -13,7 +13,7 @@ if($settings->getSettings('DDNS', 'on')){
 	$last_ip = $settings->getSettings('DDNS', 'last_ip');
 	
 	if($ip == $last_ip){
-		(new Log())->log(Log::INFO, __FILE__, "No IP Change $ip");
+		(new Log())->log(Log::DEBUG, __FILE__, "No IP Change $ip");
 	}else{
 		$url = "http://www.ovh.com/nic/update?system=dyndns&hostname=$host&myip=$ip";
 		$ch = curl_init ( $url );
