@@ -6,6 +6,7 @@ header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
 
 require_once __DIR__ .'/classes/connexion.php';
 require_once __DIR__ .'/classes/checkAPI.php';
+require_once __DIR__. '/classes/Owncloud.php';
 
 $page_level = 0;
 
@@ -55,6 +56,7 @@ function get() {
 function add($arr){
 	$name = $arr['name'];
 	$type = $arr['type'];
+	$owncloud = filter_var ( $arr ['owncloud'], FILTER_VALIDATE_BOOLEAN );
 	$pwd = 	cryptPassword($arr['pwd']);
 	$api = generatePassword();
 	$bdd = getBDD();
@@ -63,6 +65,9 @@ function add($arr){
 		$newId = $bdd->lastInsertId();
 		$req2 = $bdd->query ( "SELECT id, type, cle, nom, mail, phone FROM at_users WHERE id = '$newId'" );
 		echo json_encode($req2->fetch());
+		if($owncloud){
+			//$oc = (new Owncloud())->addUser($name, $arr['pwd']);
+		}
 		http_response_code(202);
 	}else{
 		http_response_code(400);
