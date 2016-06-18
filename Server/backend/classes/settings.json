@@ -74,7 +74,8 @@
     	"on":false,
     	"host":"",
     	"username":"",
-    	"password":""
+    	"password":"",
+    	"last_ip":""
     },
     "ownCloud":{
     	"path":"",
