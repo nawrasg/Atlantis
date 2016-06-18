@@ -6,7 +6,7 @@
  * @description # AtlantisSettingsCtrl Controller of the atlantisWebAppApp
  */
 
-nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage, $mdToast, AtlantisUri) {
+nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage, $mdToast, $mdDialog, AtlantisUri) {
 	
 	var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
 	$http.get(nURL).success(function(data, status) {
@@ -14,6 +14,16 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage,
 			$scope.atlantis = data;
 		}
 	});
+	$scope.log = function(e){
+		$mdDialog.show({
+			templateUrl: 'views/log.html',
+			targetEvent: e,
+			controller: 'LogCtrl',
+			locals:{
+				log: $scope.atlantis.Log
+			}
+		});	
+	};
 	$scope.saveGeneral = function() {
 		var url = $scope.atlantis.Atlantis.url;
 		var dep = $scope.atlantis.Atlantis.dep;
