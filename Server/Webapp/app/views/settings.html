@@ -242,7 +242,22 @@
         		
         		<!-- Files Settings -->
         		<div class="panel panel-info">
-        			<div class="panel-heading">Fichiers</div>
+        			<div class="panel-heading">
+						<div layout=row layout-align="start center">
+							<span flex>Fichiers</span>
+							<md-menu>
+			   					<md-icon ng-click="$mdOpenMenu($event)" md-svg-icon="images/svg/ic_more_vert_white_24px.svg"></md-icon>
+			 					<md-menu-content>
+			   						<md-menu-item>
+			   							<md-button  ng-click="owncloud()">
+											<md-icon md-svg-src="images/svg/ic_cloud_queue_black_24px.svg"></md-icon>	
+			   								ownCloud
+			 							</md-button>
+			  						</md-menu-item>
+			 					</md-menu-content>
+							</md-menu>		
+						</div>
+					</div>
         			<div class="panel-body">
         				<md-content>
         					<div layout=row>
