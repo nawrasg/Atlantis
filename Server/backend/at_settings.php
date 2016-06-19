@@ -46,6 +46,14 @@ function update($arr) {
 	$settings = new Settings ();
 	if (isset ( $arr ['section'] )) {
 		switch ($arr ['section']) {
+			case 'owncloud':
+				if (isset ( $arr ['path'], $arr ['username'], $arr ['password'] )) {
+					$settings->setSettings('ownCloud', 'path', $arr['path']);
+					$settings->setSettings('ownCloud', 'username', $arr['username']);
+					$settings->setSettings('ownCloud', 'password', $arr['password']);
+					http_response_code(202);
+				}
+				return;
 			case 'Atlantis' :
 				if (isset ( $arr ['url'] ))
 					$settings->setSettings ( 'Atlantis', 'url', $arr ['url'] );

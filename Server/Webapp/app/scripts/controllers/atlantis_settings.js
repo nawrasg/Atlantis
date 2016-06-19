@@ -14,6 +14,16 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage,
 			$scope.atlantis = data;
 		}
 	});
+	$scope.owncloud = function(e){
+		$mdDialog.show({
+			templateUrl: 'views/owncloud.html',
+			targetEvent: e,
+			controller: 'OwncloudCtrl',
+			locals:{
+				owncloud: $scope.atlantis.ownCloud
+			}
+		});
+	};
 	$scope.log = function(e){
 		$mdDialog.show({
 			templateUrl: 'views/log.html',
