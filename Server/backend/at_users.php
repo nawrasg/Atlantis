@@ -66,7 +66,7 @@ function add($arr){
 		$req2 = $bdd->query ( "SELECT id, type, cle, nom, mail, phone FROM at_users WHERE id = '$newId'" );
 		echo json_encode($req2->fetch());
 		if($owncloud){
-			//$oc = (new Owncloud())->addUser($name, $arr['pwd']);
+			$oc = (new Owncloud())->addUser($name, $arr['pwd']);
 		}
 		http_response_code(202);
 	}else{
@@ -110,6 +110,9 @@ function delete($arr){
 	if(isset($arr['id'])){
 		$id = $arr['id'];
 		$bdd = getBDD();
+		$user_req = $bdd->query("SELECT nom FROM at_users WHERE id = '$id'");
+		$user = $user_req->fetch(PDO::FETCH_ASSOC);
+		(new Owncloud())->removeUser($user['nom']);
 		$request = $bdd->exec("DELETE FROM at_users WHERE id = '$id'");
 		if($request == 1){
 			http_response_code(202);
