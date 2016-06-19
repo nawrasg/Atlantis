@@ -15,6 +15,9 @@ class Owncloud{
 	}
 	
 	function addUser($username, $password){
+		if($this->oc == ''){
+			return false;
+		}
 		$url = $this->oc . "/ocs/v1.php/cloud/users";
 		$data = ['userid' => $username, 'password' => $password];
 		
@@ -38,6 +41,9 @@ class Owncloud{
 	}
 	
 	function removeUser($username){
+		if($this->oc == ''){
+			return false;
+		}
 		$url = $this->oc . "/ocs/v1.php/cloud/users/$username";
 		
 		$ch = curl_init ( $url );
