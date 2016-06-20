@@ -15,11 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
@@ -33,9 +34,6 @@ import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.CuisineAdapter;
-import fr.nawrasg.atlantis.async.DataDELETE;
-import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Produit;
 
 public class CuisineFragment extends ListFragment {
@@ -125,19 +123,19 @@ public class CuisineFragment extends ListFragment {
 		Produit nProduit = mAdapter.getItem(position);
 		switch (item.getItemId()) {
 			case R.id.itemCuisineOpen:
-				new CuisinePUT(mContext, nProduit, ',').execute(App.CUISINE, "open=" + nProduit.getID());
+				modifyItem(nProduit, ',');
 				return true;
 			case R.id.itemCuisinePlus:
-				new CuisinePUT(mContext, nProduit, '+').execute(App.CUISINE, "id=" + nProduit.getID() + "&quantite=" + (nProduit.getQuantite() + 1));
+				modifyItem(nProduit, '+');
 				return true;
 			case R.id.itemCuisineMinus:
-				new CuisinePUT(mContext, nProduit, '-').execute(App.CUISINE, "id=" + nProduit.getID() + "&quantite=" + (nProduit.getQuantite() - 1));
+				modifyItem(nProduit, '-');
 				return true;
 			case R.id.itemCuisineDel:
-				new CuisineDELETE(mContext, nProduit).execute(App.CUISINE, "id=" + nProduit.getID());
+				deleteItem(nProduit);
 				return true;
 			case R.id.itemCuisineAvoid:
-				new CuisinePUT(mContext, nProduit, '.').execute(App.CUISINE, "ignore=" + nProduit.getID());
+				modifyItem(nProduit, '.');
 				return true;
 		}
 		return super.onContextItemSelected(item);
@@ -180,56 +178,84 @@ public class CuisineFragment extends ListFragment {
 		});
 	}
 
-	private class CuisinePUT extends DataPUT{
-		private Produit mProduit;
-		private char mMode;
-
-		public CuisinePUT(Context context, Produit produit, char mode){
-			super(context);
-			mProduit = produit;
-			mMode = mode;
+	private void modifyItem(final Produit produit, final char mode){
+		String nURL = App.getFullUrl(mContext) + App.CUISINE + "?api=" + App.getAPI(mContext);
+		switch(mode){
+			case ',':
+				nURL += "&open=" + produit.getID();
+				break;
+			case '+':
+				nURL += "&id=" + produit.getID() + "&quantite=" + (produit.getQuantite() + 1);
+				break;
+			case '-':
+				nURL += "&id=" + produit.getID() + "&quantite=" + (produit.getQuantite() - 1);
+				break;
+			case '.':
+				nURL += "&ignore=" + produit.getID();
+				break;
 		}
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				switch(mMode){
-					case '+':
-						mProduit.increment();
-						mAdapter.notifyDataSetChanged();
-						break;
-					case '-':
-						mProduit.decrement();
-						mAdapter.notifyDataSetChanged();
-						break;
-					case '.':
-						mProduit.ignore();
-						mAdapter.notifyDataSetChanged();
-						break;
-					case ',':
-						mProduit.open();
-						mAdapter.notifyDataSetChanged();
-						break;
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					switch(mode){
+						case ',':
+							produit.open();
+							break;
+						case '+':
+							produit.increment();
+							break;
+						case '-':
+							produit.decrement();
+							break;
+						case '.':
+							produit.ignore();
+							break;
+					}
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.notifyDataSetChanged();
+						}
+					});
 				}
 			}
-			super.onPostExecute(result);
-		}
+		});
 	}
 
-	private class CuisineDELETE extends DataDELETE{
-		private Produit mProduit;
+	private void deleteItem(final Produit produit){
+		String nURL = App.getFullUrl(mContext) + App.CUISINE + "?api=" + App.getAPI(mContext) + "&id=" + produit.getID();
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.delete()
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-		public CuisineDELETE(Context context, Produit produit){
-			super(context);
-			mProduit = produit;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				mAdapter.remove(mProduit);
 			}
-			super.onPostExecute(result);
-		}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				Log.d("Nawras", response.code() + "");
+				if(response.code() == 202){
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.remove(produit);
+						}
+					});
+				}
+			}
+		});
 	}
 }
