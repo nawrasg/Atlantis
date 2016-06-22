@@ -42,7 +42,10 @@ public class DevicesAddFragment extends Fragment {
 	EditText txtIP;
 	@Bind(R.id.txtDevicesAddMac)
 	EditText txtMAC;
-	private Spinner spType, spConnection;
+	@Bind(R.id.spDevicesAddType)
+	Spinner spType;
+	@Bind(R.id.spDevicesAddConnection)
+	Spinner spConnection;
 	private WifiManager mWM;
 	private OkHttpClient mClient;
 
@@ -59,8 +62,6 @@ public class DevicesAddFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		spType = (Spinner) view.findViewById(R.id.spDevicesAddType);
-		spConnection = (Spinner) view.findViewById(R.id.spDevicesAddConnection);
 		String[] nList = { "ethernet", "wifi" };
 		spConnection.setAdapter(new ConnectionAdapter(mContext, nList));
 		String[] nList2 = { "windows", "linux", "imprimante", "smartphone", "autre" };
