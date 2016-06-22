@@ -95,12 +95,21 @@
 
         <receiver android:name=".other.RingingReceiver"/>
 
-        <service android:name=".other.BasicDreamService"
-                 android:exported="true">
+        <service
+            android:name=".other.BasicDreamService"
+            android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <action android:name="android.service.dreams.DreamService"/>
             </intent-filter>
+        </service>
+        <service android:name=".other.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator"/>
         </service>
 
         <provider
