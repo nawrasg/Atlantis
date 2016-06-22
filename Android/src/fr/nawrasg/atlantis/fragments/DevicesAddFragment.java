@@ -15,17 +15,23 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.spinner.ConnectionAdapter;
 import fr.nawrasg.atlantis.adapters.spinner.DeviceTypeAdapter;
-import fr.nawrasg.atlantis.async.DataPOST;
 import fr.nawrasg.atlantis.other.CheckConnection;
 
 public class DevicesAddFragment extends Fragment {
@@ -38,12 +44,14 @@ public class DevicesAddFragment extends Fragment {
 	EditText txtMAC;
 	private Spinner spType, spConnection;
 	private WifiManager mWM;
+	private OkHttpClient mClient;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_devices_add, container, false);
 		ButterKnife.bind(this, nView);
 		mContext = getActivity();
+		mClient = new OkHttpClient();
 		setHasOptionsMenu(true);
 		return nView;
 	}
@@ -92,10 +100,29 @@ public class DevicesAddFragment extends Fragment {
 			String nDeviceConnection = (String) spConnection.getItemAtPosition(spConnection.getSelectedItemPosition());
 			String nParams = "title=" + nDeviceTitle + "&ip=" + nDeviceIp + "&mac=" + nDeviceMac + "&type=" + nDeviceType
 					+ "&connection=" + nDeviceConnection;
-			new DevicePOST(mContext).execute(App.DEVICES, nParams);
+			postItem(nParams);
 		} catch (UnsupportedEncodingException e) {
 			Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 		}
+	}
+
+	private void postItem(String data){
+		String nURL = App.getFullUrl(mContext) + App.DEVICES + "?api=" + App.getAPI(mContext) + "&" + data;
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
 	}
 
 	private String getMacAddress() {
@@ -112,19 +139,5 @@ public class DevicesAddFragment extends Fragment {
 					(ipAddress >> 24 & 0xff));
 		}
 		return "";
-	}
-
-	private class DevicePOST extends DataPOST {
-
-		public DevicePOST(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			((MainFragmentActivity)getActivity()).loadFragment(new ConnectedDevicesFragment(), true);
-		}
-
 	}
 }
