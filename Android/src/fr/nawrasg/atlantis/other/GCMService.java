@@ -50,7 +50,7 @@ public class GCMService extends IntentService {
 
 					@Override
 					public void onLocationChanged(Location location) {
-						new DataPUT(nContext, false).execute(App.GEO, "lat=" + location.getLatitude() + "&long=" + location.getLongitude());
+						new DataPUT(nContext, false).execute(App.GEO, "lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&speed=" + location.getSpeed() + "&bearing=" + location.getBearing());
 					}
 
 					@Override
@@ -125,7 +125,8 @@ public class GCMService extends IntentService {
 		nIntent.putExtra("id", NOTIFICATION_ID);
 		PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0, nIntent, 0);
 
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.home)
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+				.setSmallIcon(R.drawable.home)
 				.setContentTitle(nContext.getString(R.string.app_name))
 				.setContentText(nContext.getString(R.string.service_gcm_ring_description))
 				.addAction(R.drawable.ic_notifications_off_black_24dp, nContext.getString(R.string.service_gcm_ring_found), contentIntent);
