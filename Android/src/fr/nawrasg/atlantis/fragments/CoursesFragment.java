@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -22,10 +23,18 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -37,10 +46,6 @@ import java.util.Set;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.CoursesAdapter;
-import fr.nawrasg.atlantis.async.DataDELETE;
-import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPOST;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Element;
 
 public class CoursesFragment extends ListFragment {
@@ -49,12 +54,16 @@ public class CoursesFragment extends ListFragment {
 	private ArrayList<Element> nList;
 	private boolean mIsOffline;
 	private CoursesAdapter mAdapter;
+	private Handler mHandler;
+	private OkHttpClient mClient;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_courses, container, false);
 		mContext = getActivity();
-		new EanGET(mContext, false).execute(App.EAN);
+		mClient = new OkHttpClient();
+		mHandler = new Handler();
+		getEan();
 		setHasOptionsMenu(true);
 		return nView;
 	}
@@ -129,16 +138,85 @@ public class CoursesFragment extends ListFragment {
 		Element nElement = mAdapter.getItem(position);
 		switch (item.getItemId()) {
 			case R.id.itemCoursesPlus:
-				new CoursesPUT(mContext, nElement, '+').execute(App.COURSES, "quantity=" + (nElement.getQuantity() + 1) + "&id=" + nElement.getID());
+				modifyCourses(nElement, '+');
 				return true;
 			case R.id.itemCoursesMinus:
-				new CoursesPUT(mContext, nElement, '-').execute(App.COURSES, "quantity=" + (nElement.getQuantity() - 1) + "&id=" +  nElement.getID());
+				modifyCourses(nElement, '-');
 				return true;
 			case R.id.itemCoursesDel:
-				new CoursesDELETE(mContext, nElement).execute(App.COURSES, "id=" +  nElement.getID());
+				deleteCourses(nElement);
 				return true;
 		}
 		return super.onContextItemSelected(item);
+	}
+
+	private void getEan(){
+		String nURL = App.getFullUrl(mContext) + App.EAN + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					try {
+						JSONArray arr = new JSONArray(response.body().string());
+						for (int i = 0; i < arr.length(); i++) {
+							JSONObject jdata = arr.getJSONObject(i);
+							list.add(jdata.getString("nom"));
+						}
+					} catch (JSONException e) {
+						Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+					}
+				}
+			}
+		});
+	}
+
+	private void modifyCourses(final Element element, final char mode){
+		String nURL = App.getFullUrl(mContext) + App.EAN + "?api=" + App.getAPI(mContext) + "&id=" + element.getID();
+		switch(mode){
+			case '+':
+				nURL += "&quantity=" + (element.getQuantity() + 1);
+				break;
+			case '-':
+				nURL += "&quantity=" + (element.getQuantity() - 1);
+				break;
+		}
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					switch(mode){
+						case '+':
+							element.increment();
+							break;
+						case '-':
+							element.decrement();
+							break;
+					}
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.notifyDataSetChanged();
+						}
+					});
+				}
+			}
+		});
 	}
 
 	private void makeOnline() {
@@ -170,7 +248,7 @@ public class CoursesFragment extends ListFragment {
 		Set<String> nSet = nPrefs.getStringSet("CoursesSet", null);
 		if (nSet == null || nSet.size() == 0) {
 			mIsOffline = false;
-			new CoursesGET(mContext).execute(App.COURSES);
+			getCourses();
 		} else {
 			mIsOffline = true;
 			Iterator<String> nIterator = nSet.iterator();
@@ -186,16 +264,65 @@ public class CoursesFragment extends ListFragment {
 		}
 	}
 
-	public void clear() {
-		new CoursesDELETE(mContext).execute(App.COURSES);
-		makeOnline();
+	private void getCourses(){
+		String nURL = App.getFullUrl(mContext) + App.COURSES + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				nList = new ArrayList<Element>();
+				try {
+					JSONArray arr = new JSONArray(response.body().string());
+					for (int i = 0; i < arr.length(); i++) {
+						JSONObject jdata = arr.getJSONObject(i);
+						Element nElement = new Element(jdata);
+						nList.add(nElement);
+					}
+					mAdapter = new CoursesAdapter(mContext, nList);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							setListAdapter(mAdapter);
+						}
+					});
+				} catch (JSONException e) {
+					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+				}
+			}
+		});
 	}
 
+	public void clear() {
+		deleteCourses(null);
+		makeOnline();
+	}
 
 	public void sendNotification() {
 		try {
 			String nMsg = URLEncoder.encode(getResources().getString(R.string.fragment_courses_notification), "UTF-8");
-			new DataPOST(mContext).execute(App.NOTIFY, "msg=" + nMsg);
+			String nURL = App.getFullUrl(mContext) + App.NOTIFY + "?api=" + App.getAPI(mContext) + "&msg=" + nMsg;
+			Request nRequest = new Request.Builder()
+					.url(nURL)
+					.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+					.build();
+			mClient.newCall(nRequest).enqueue(new Callback() {
+				@Override
+				public void onFailure(Request request, IOException e) {
+
+				}
+
+				@Override
+				public void onResponse(Response response) throws IOException {
+
+				}
+			});
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -224,14 +351,14 @@ public class CoursesFragment extends ListFragment {
 							name += result[i];
 						}
 						name = URLEncoder.encode(name, "UTF-8");
-						new CoursesPOST(mContext).execute(App.COURSES, "name=" + name + "&quantity=" + l);
+						postCourses(name, l);
 					} catch (Exception e) {
 						Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
 					}
 				} else {
 					try {
 						res = URLEncoder.encode(res, "UTF-8");
-						new CoursesPOST(mContext).execute(App.COURSES, "name=" + res + "&quantity=1");
+						postCourses(res, 1);
 					} catch (Exception f) {
 						Toast.makeText(mContext, f.getMessage(), Toast.LENGTH_LONG).show();
 					}
@@ -249,124 +376,73 @@ public class CoursesFragment extends ListFragment {
 		inputBox.show();
 	}
 
-	private class CoursesGET extends DataGET {
+	private void postCourses(String name, long quantity){
+		String nURL = App.getFullUrl(mContext) + App.COURSES + "?api=" + App.getAPI(mContext) + "&name=" + name + "&quantity=" + quantity;
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-		public CoursesGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			nList = new ArrayList<Element>();
-			try {
-				JSONArray arr = new JSONArray(result);
-				for (int i = 0; i < arr.length(); i++) {
-					JSONObject jdata = arr.getJSONObject(i);
-					Element nElement = new Element(jdata);
-					nList.add(nElement);
-				}
-				mAdapter = new CoursesAdapter(mContext, nList);
-				setListAdapter(mAdapter);
-			} catch (JSONException e) {
-				Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 			}
-			super.onPostExecute(result);
-		}
-	}
 
-	private class CoursesPOST extends DataPOST {
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					try{
+						JSONObject nItem = new JSONObject(response.body().string());
+						final Element nElement = new Element(nItem);
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								mAdapter.add(nElement);
+							}
+						});
+					}catch(JSONException e){
 
-		public CoursesPOST(Context context){ super(context);}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				try{
-					JSONObject nItem = new JSONObject(result);
-					Element nElement = new Element(nItem);
-					mAdapter.add(nElement);
-				}catch(JSONException e){
-
-				}
-			}
-			super.onPostExecute(result);
-		}
-	}
-
-	private class CoursesPUT extends DataPUT {
-		private Element mElement;
-		private char mMode;
-
-		public CoursesPUT(Context context){super(context);}
-		public CoursesPUT(Context context, Element element, char mode){
-			super(context);
-			mElement = element;
-			mMode = mode;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				switch(mMode){
-					case '+':
-						mElement.increment();
-						mAdapter.notifyDataSetChanged();
-						break;
-					case '-':
-						mElement.decrement();
-						mAdapter.notifyDataSetChanged();
-						break;
-				}
-			}
-			super.onPostExecute(result);
-		}
-	}
-
-	private class CoursesDELETE extends DataDELETE{
-		private Element mElement;
-
-		public CoursesDELETE(Context context){
-			super(context);
-		}
-		public CoursesDELETE(Context context, Element element){
-			super(context);
-			mElement = element;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				if(mElement != null){
-					mAdapter.remove(mElement);
-				}else{
-					mAdapter.clear();
-				}
-			}
-			super.onPostExecute(result);
-		}
-	}
-	
-	private class EanGET extends DataGET{
-
-		public EanGET(Context context, boolean progressbar) {
-			super(context, progressbar);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				try {
-					JSONArray arr = new JSONArray(result);
-					for (int i = 0; i < arr.length(); i++) {
-						JSONObject jdata = arr.getJSONObject(i);
-						list.add(jdata.getString("nom"));
 					}
-				} catch (JSONException e) {
-					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 				}
 			}
-			super.onPostExecute(result);
+		});
+	}
+
+	private void deleteCourses(final Element element){
+		String nURL = App.getFullUrl(mContext) + App.COURSES + "?api=" + App.getAPI(mContext);
+		if(element != null){
+			nURL += "&id=" + element.getID();
 		}
-		
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.delete()
+				.build();
+		mClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					if(element != null){
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								mAdapter.remove(element);
+							}
+						});
+					}else{
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								mAdapter.clear();
+							}
+						});
+					}
+				}
+			}
+		});
 	}
 }
