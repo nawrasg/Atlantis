@@ -2,8 +2,11 @@ package fr.nawrasg.atlantis.other;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,31 +17,64 @@ import fr.nawrasg.atlantis.App;
  * Created by Nawras GEORGI on 07/12/2015.
  */
 public class AtlantisContentProvider extends ContentProvider {
+
+	private static final int EAN_LIST = 1;
+	private static final int EAN_ITEM = 2;
+	private static final UriMatcher URI_MATCHER;
+	private AtlantisOpenHelper mHelper;
+
+	static{
+		URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "ean", EAN_LIST);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "ean/*", EAN_ITEM);
+	}
+
 	@Override
 	public boolean onCreate() {
-		return false;
+		mHelper = new AtlantisOpenHelper(getContext());
+		return true;
 	}
 
 	@Nullable
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		switch(selection){
+		SQLiteDatabase nDB = mHelper.getReadableDatabase();
+		SQLiteQueryBuilder nBuilder = new SQLiteQueryBuilder();
+		switch(URI_MATCHER.match(uri)){
+			case EAN_LIST:
+				nBuilder.setTables("at_ean");
+				break;
+			case EAN_ITEM:
+				nBuilder.setTables("at_ean");
+				nBuilder.appendWhere("ean = " + uri.getLastPathSegment());
+				break;
+		}
+		Cursor nCursor = nBuilder.query(nDB, projection, selection, selectionArgs, null, null, sortOrder);
+		return nCursor;
+		/*switch(selection){
 			case "call_notifier":
 				return getCallNotifierCursor();
 			default:
 				return null;
-		}
+		}*/
 	}
 
 	@Nullable
 	@Override
 	public String getType(Uri uri) {
+		switch(URI_MATCHER.match(uri)){
+			case EAN_LIST:
+				return AtlantisContract.Ean.CONTENT_TYPE;
+			case EAN_ITEM:
+				return AtlantisContract.Ean.CONTENT_TYPE_ITEM;
+		}
 		return null;
 	}
 
 	@Nullable
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
+
 		return null;
 	}
 
