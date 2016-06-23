@@ -114,7 +114,7 @@
 
         <provider
             android:name="fr.nawrasg.atlantis.other.AtlantisContentProvider"
-            android:authorities="fr.nawrasg.atlantis.provider"
+            android:authorities="fr.nawrasg.atlantis"
             android:exported="true"/>
     </application>
 
