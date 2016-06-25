@@ -1,7 +1,10 @@
 package fr.nawrasg.atlantis;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -39,6 +42,7 @@ import fr.nawrasg.atlantis.fragments.PlantFragment;
 import fr.nawrasg.atlantis.fragments.ScenarioFragment;
 import fr.nawrasg.atlantis.fragments.SensorsFragment;
 import fr.nawrasg.atlantis.interfaces.DrawerItemInterface;
+import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.preferences.MainPreferenceFragment;
 import fr.nawrasg.atlantis.type.DrawerItem;
 import fr.nawrasg.atlantis.type.DrawerSection;
@@ -56,6 +60,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_main);
 		nContext = this;
+		createSyncAccount();
 		nDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		nDrawerList = (ListView) findViewById(R.id.left_drawer);
 		DrawerItemInterface[] nSections = createNavigationMenu();
@@ -78,6 +83,15 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 		loadFragment(new HomeFragment(), true);
 		loadFragment(new PlantFragment(), false);
 		handleIntent(getIntent());
+	}
+
+	private void createSyncAccount(){
+		Account nAccount = new Account("Atlantis", "fr.nawrasg.atlantis");
+		AccountManager nManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+		boolean nResult = nManager.addAccountExplicitly(nAccount, null, null);
+		if(nResult){
+			ContentResolver.addPeriodicSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY, 21600L);
+		}
 	}
 
 	private DrawerItemInterface[] createNavigationMenu() {
