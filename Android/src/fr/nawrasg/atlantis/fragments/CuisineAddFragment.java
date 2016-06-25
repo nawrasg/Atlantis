@@ -2,7 +2,10 @@ package fr.nawrasg.atlantis.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -53,6 +56,7 @@ public class CuisineAddFragment extends Fragment{
 	private boolean eanFound = false;
 	private Spinner nSpinner;
 	private OkHttpClient mClient;
+	ContentResolver mResolver;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +64,7 @@ public class CuisineAddFragment extends Fragment{
 		ButterKnife.bind(this, nView);
 		mContext = getActivity();
 		mClient = new OkHttpClient();
+		mResolver = mContext.getContentResolver();
 		setHasOptionsMenu(true);
 		return nView;
 	}
@@ -107,26 +112,20 @@ public class CuisineAddFragment extends Fragment{
 	}
 
 	private void getEan(String ean){
-		String nURL = App.getFullUrl(mContext) + App.EAN + "?api=" + App.getAPI(mContext) + "&ean=" + ean;
-		Request nRequest = new Request.Builder()
-				.url(nURL)
-				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
-			@Override
-			public void onFailure(Request request, IOException e) {
-
-			}
-
-			@Override
-			public void onResponse(Response response) throws IOException {
-				if(response.code() == 404){
+				/*if(response.code() == 404){
 					eanFound = false;
 				}else{
 					txtNom.setText(response.body().string());
 					eanFound = true;
-				}
-			}
-		});
+				}*/
+		Cursor nCursor = mResolver.query(Uri.parse("content://fr.nawrasg.atlantis/ean/" + ean), null, null, null, null);
+		if(nCursor.getCount() > 0){
+			nCursor.moveToFirst();
+			txtNom.setText(nCursor.getString(1));
+			eanFound = true;
+		}else{
+			eanFound = false;
+		}
 	}
 
 	@OnClick(R.id.btnCuisineAddScan)
