@@ -1,6 +1,7 @@
 package fr.nawrasg.atlantis.other;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -9,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import fr.nawrasg.atlantis.App;
 
@@ -51,12 +51,6 @@ public class AtlantisContentProvider extends ContentProvider {
 		}
 		Cursor nCursor = nBuilder.query(nDB, projection, selection, selectionArgs, null, null, sortOrder);
 		return nCursor;
-		/*switch(selection){
-			case "call_notifier":
-				return getCallNotifierCursor();
-			default:
-				return null;
-		}*/
 	}
 
 	@Nullable
@@ -74,7 +68,15 @@ public class AtlantisContentProvider extends ContentProvider {
 	@Nullable
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-
+		SQLiteDatabase nDB = mHelper.getWritableDatabase();
+		switch(URI_MATCHER.match(uri)){
+			case EAN_LIST:
+			case EAN_ITEM:
+				long nID = nDB.insert("at_ean", null, values);
+				if(nID > 0){
+					return ContentUris.withAppendedId(uri, nID);
+				}
+		}
 		return null;
 	}
 
