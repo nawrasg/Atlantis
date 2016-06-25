@@ -63,7 +63,6 @@ public class CoursesFragment extends ListFragment {
 		mContext = getActivity();
 		mClient = new OkHttpClient();
 		mHandler = new Handler();
-		getEan();
 		setHasOptionsMenu(true);
 		return nView;
 	}
@@ -148,34 +147,6 @@ public class CoursesFragment extends ListFragment {
 				return true;
 		}
 		return super.onContextItemSelected(item);
-	}
-
-	private void getEan(){
-		String nURL = App.getFullUrl(mContext) + App.EAN + "?api=" + App.getAPI(mContext);
-		Request nRequest = new Request.Builder()
-				.url(nURL)
-				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
-			@Override
-			public void onFailure(Request request, IOException e) {
-
-			}
-
-			@Override
-			public void onResponse(Response response) throws IOException {
-				if(response.code() == 202){
-					try {
-						JSONArray arr = new JSONArray(response.body().string());
-						for (int i = 0; i < arr.length(); i++) {
-							JSONObject jdata = arr.getJSONObject(i);
-							list.add(jdata.getString("nom"));
-						}
-					} catch (JSONException e) {
-						Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
-					}
-				}
-			}
-		});
 	}
 
 	private void modifyCourses(final Element element, final char mode){
