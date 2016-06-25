@@ -30,7 +30,6 @@ import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.async.DataPOST;
 
 public class EntretienAddFragment extends Fragment {
@@ -44,8 +43,6 @@ public class EntretienAddFragment extends Fragment {
 	private DateFormat fmtDate = DateFormat.getDateInstance();
 	private SimpleDateFormat nDate = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
 	private Context mContext;
-	private String mEAN;
-	private boolean mEANFound = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,39 +113,10 @@ public class EntretienAddFragment extends Fragment {
 				nCalendar.get(Calendar.DAY_OF_MONTH)).show();
 	}
 
-	public void setEAN(String ean) {
-		mEAN = ean;
-		new EanGET(mContext).execute(App.ENTRETIEN, "ean=" + ean);
-	}
-
 	private void setNew() {
 		txtNom.setText("");
 		txtQte.setText("");
 		txtDate.setText("");
-		mEAN = "";
 		((MainFragmentActivity) getActivity()).refreshFragment();
 	}
-
-	private class EanGET extends DataGET {
-
-		public EanGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			try {
-				if (result.equals("404")) {
-					mEANFound = false;
-				} else {
-					txtNom.setText(result);
-					mEANFound = true;
-				}
-			} catch (Exception e) {
-
-			}
-		}
-	}
-
 }
