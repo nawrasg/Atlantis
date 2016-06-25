@@ -40,6 +40,7 @@ import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.spinner.CuisinePlaceAdapter;
+import fr.nawrasg.atlantis.other.AtlantisContract;
 
 public class CuisineAddFragment extends Fragment{
 	private Calendar mCalendar = Calendar.getInstance();
@@ -112,13 +113,7 @@ public class CuisineAddFragment extends Fragment{
 	}
 
 	private void getEan(String ean){
-				/*if(response.code() == 404){
-					eanFound = false;
-				}else{
-					txtNom.setText(response.body().string());
-					eanFound = true;
-				}*/
-		Cursor nCursor = mResolver.query(Uri.parse("content://fr.nawrasg.atlantis/ean/" + ean), null, null, null, null);
+		Cursor nCursor = mResolver.query(Uri.withAppendedPath(AtlantisContract.Ean.CONTENT_URI, ean), null, null, null, null);
 		if(nCursor.getCount() > 0){
 			nCursor.moveToFirst();
 			txtNom.setText(nCursor.getString(1));
