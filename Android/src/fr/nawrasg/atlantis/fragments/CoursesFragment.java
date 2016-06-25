@@ -150,7 +150,7 @@ public class CoursesFragment extends ListFragment {
 	}
 
 	private void modifyCourses(final Element element, final char mode){
-		String nURL = App.getFullUrl(mContext) + App.EAN + "?api=" + App.getAPI(mContext) + "&id=" + element.getID();
+		String nURL = App.getFullUrl(mContext) + App.COURSES + "?api=" + App.getAPI(mContext) + "&id=" + element.getID();
 		switch(mode){
 			case '+':
 				nURL += "&quantity=" + (element.getQuantity() + 1);
