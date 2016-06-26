@@ -39,6 +39,7 @@ public class App {
 	public static final String SENSORS = "backend/at_sensors.php";
 	public static final String SETTINGS = "backend/at_settings.php";
 	public static final String SPEECH = "backend/at_speech.php";
+	public static final String SYNC = "backend/at_sync.php";
 	public static final String WELCOME = "backend/at_welcome.php";
 
 	public static String getURL(Context c) {
