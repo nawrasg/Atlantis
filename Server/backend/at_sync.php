@@ -20,7 +20,8 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 
 function get() {
 	return array (
-			'ean' => getEan () 
+			'ean' => getEan (),
+			'scenarios' => getScenarios()
 	);
 }
 
@@ -29,5 +30,23 @@ function getEan() {
 	$req = $bdd->query ( 'SELECT * FROM at_ean ORDER BY nom' );
 	$result = $req->fetchAll(PDO::FETCH_ASSOC);
 	$req->closeCursor ();
+	return $result;
+}
+
+function getScenarios(){
+	$files = scandir ( __DIR__ . '/scenarios' );
+	$result = array ();
+	foreach ( $files as $file ) {
+		if (pathinfo ( $file, PATHINFO_EXTENSION ) == 'php') {
+			$file = pathinfo ( $file, PATHINFO_FILENAME );
+			$xml = file_get_contents ( __DIR__ . '/scenarios/xml/' . $file . '.xml' );
+			$php = file_get_contents ( __DIR__ . '/scenarios/' . $file . '.php' );
+			$result [] = array (
+					'file' => $file
+					//'xml' => (! $xml ? ' ' : $xml),
+					//'php' => (! $php ? ' ' : $php)
+			);
+		}
+	}
 	return $result;
 }
