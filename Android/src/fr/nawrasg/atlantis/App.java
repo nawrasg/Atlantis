@@ -47,12 +47,6 @@ public class App extends Application{
 
 	public static OkHttpClient httpClient;
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		httpClient = new OkHttpClient();
-	}
-
 	public static String getURL(Context c) {
 		WifiManager nWM = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
