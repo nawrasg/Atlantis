@@ -20,6 +20,7 @@ import android.widget.ListView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.squareup.okhttp.OkHttpClient;
 
 import fr.nawrasg.atlantis.adapters.DrawerAdapter;
 import fr.nawrasg.atlantis.fragments.CameraFragment;
@@ -60,6 +61,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_main);
 		nContext = this;
+		App.httpClient = new OkHttpClient();
 		createSyncAccount();
 		nDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		nDrawerList = (ListView) findViewById(R.id.left_drawer);
