@@ -18,7 +18,6 @@ import android.widget.SearchView;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
@@ -41,12 +40,10 @@ public class CuisineFragment extends ListFragment {
 	private ArrayList<Produit> nList;
 	private CuisineAdapter mAdapter;
 	private Handler mHandler;
-	private OkHttpClient mClient;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mContext = getActivity();
-		mClient = new OkHttpClient();
 		mHandler = new Handler();
 		View nView = inflater.inflate(R.layout.fragment_cuisine, container, false);
 		getActivity().getActionBar().setIcon(R.drawable.ng_kittle);
@@ -146,7 +143,7 @@ public class CuisineFragment extends ListFragment {
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 				//TODO
@@ -198,7 +195,7 @@ public class CuisineFragment extends ListFragment {
 				.url(nURL)
 				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 
@@ -238,7 +235,7 @@ public class CuisineFragment extends ListFragment {
 				.url(nURL)
 				.delete()
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 

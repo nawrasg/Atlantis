@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
@@ -55,13 +54,11 @@ public class CoursesFragment extends ListFragment {
 	private boolean mIsOffline;
 	private CoursesAdapter mAdapter;
 	private Handler mHandler;
-	private OkHttpClient mClient;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_courses, container, false);
 		mContext = getActivity();
-		mClient = new OkHttpClient();
 		mHandler = new Handler();
 		setHasOptionsMenu(true);
 		return nView;
@@ -162,7 +159,7 @@ public class CoursesFragment extends ListFragment {
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 
@@ -240,7 +237,7 @@ public class CoursesFragment extends ListFragment {
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 
@@ -283,7 +280,7 @@ public class CoursesFragment extends ListFragment {
 					.url(nURL)
 					.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
 					.build();
-			mClient.newCall(nRequest).enqueue(new Callback() {
+			App.httpClient.newCall(nRequest).enqueue(new Callback() {
 				@Override
 				public void onFailure(Request request, IOException e) {
 
@@ -353,7 +350,7 @@ public class CoursesFragment extends ListFragment {
 				.url(nURL)
 				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 
@@ -388,7 +385,7 @@ public class CoursesFragment extends ListFragment {
 				.url(nURL)
 				.delete()
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 

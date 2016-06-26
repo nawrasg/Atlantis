@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
@@ -49,14 +48,12 @@ public class EntretienAddFragment extends Fragment {
 	private DateFormat fmtDate = DateFormat.getDateInstance();
 	private SimpleDateFormat nDate = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
 	private Context mContext;
-	private OkHttpClient mClient;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_entretien_add, container, false);
 		ButterKnife.bind(this, nView);
 		mContext = getActivity();
-		mClient = new OkHttpClient();
 		setHasOptionsMenu(true);
 		return nView;
 	}
@@ -116,7 +113,7 @@ public class EntretienAddFragment extends Fragment {
 				.url(nURL)
 				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 
