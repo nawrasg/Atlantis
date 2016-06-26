@@ -170,7 +170,7 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
 			if (nFragment instanceof CuisineAddFragment) {
 				((CuisineAddFragment) nFragment).setEAN(nEAN);
 			} else if (nFragment instanceof EntretienAddFragment) {
-				((EntretienAddFragment) nFragment).setEAN(nEAN);
+				//((EntretienAddFragment) nFragment).setEAN(nEAN);
 			}
 		} else {
 			nEAN = null;
