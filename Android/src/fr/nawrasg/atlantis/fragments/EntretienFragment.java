@@ -3,6 +3,8 @@ package fr.nawrasg.atlantis.fragments;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -12,30 +14,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Toast;
+
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.EntretienAdapter;
-import fr.nawrasg.atlantis.async.DataDELETE;
-import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Entretien;
 
 public class EntretienFragment extends ListFragment {
 	private Context mContext;
 	private EntretienAdapter mAdapter;
+	private Handler mHandler;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mContext = getActivity();
+		mHandler = new Handler();
 		getActivity().getActionBar().setIcon(R.drawable.ng_soap);
 		View nV = inflater.inflate(R.layout.layout_entretien, container, false);
 		if (getActivity().findViewById(R.id.main_fragment2) == null) {
@@ -73,7 +80,38 @@ public class EntretienFragment extends ListFragment {
 	}
 
 	public void getItems() {
-		new EntretienGET(mContext).execute(App.ENTRETIEN);
+		String nURL = App.getFullUrl(mContext) + App.ENTRETIEN + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				ArrayList<Entretien> nList = new ArrayList<Entretien>();
+				try {
+					JSONArray arr = new JSONArray(response.body().string());
+					for (int i = 0; i < arr.length(); i++) {
+						JSONObject jdata = arr.getJSONObject(i);
+						Entretien nMed = new Entretien(jdata);
+						nList.add(nMed);
+					}
+					mAdapter = new EntretienAdapter(mContext, nList);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							setListAdapter(mAdapter);
+						}
+					});
+				} catch (JSONException e) {
+					Log.e("Atlantis", e.toString());
+				}
+			}
+		});
 	}
 
 	@Override
@@ -89,88 +127,81 @@ public class EntretienFragment extends ListFragment {
 		Entretien nEntretien = mAdapter.getItem(position);
 		switch (item.getItemId()) {
 			case R.id.itemEntretienPlus:
-				new EntretienPUT(mContext, nEntretien, '+').execute(App.ENTRETIEN, "id=" + nEntretien.getID() + "&qte=" + (nEntretien.getQuantity() + 1));
+				modifyItem(nEntretien, '+');
 				break;
 			case R.id.itemEntretienMinus:
-				new EntretienPUT(mContext, nEntretien, '-').execute(App.ENTRETIEN, "id=" + nEntretien.getID() + "&qte=" + (nEntretien.getQuantity() - 1));
+				modifyItem(nEntretien, '-');
 				break;
 			case R.id.itemEntretienDel:
-				new EntretienDELETE(mContext, nEntretien).execute(App.ENTRETIEN, "id=" + nEntretien.getID());
+				deleteItem(nEntretien);
 				break;
 		}
 		return super.onContextItemSelected(item);
 	}
 
-	private class EntretienGET extends DataGET {
-
-		public EntretienGET(Context context) {
-			super(context);
+	private void modifyItem(final Entretien entretien, final char mode){
+		String nURL = App.getFullUrl(mContext) + App.ENTRETIEN + "?api=" + App.getAPI(mContext);
+		switch(mode){
+			case '+':
+				nURL += "&id=" + entretien.getID() + "&qte=" + (entretien.getQuantity() + 1);
+				break;
+			case '-':
+				nURL += "&id=" + entretien.getID() + "&qte=" + (entretien.getQuantity() - 1);
+				break;
 		}
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-		@Override
-		protected void onPostExecute(String result) {
-			ArrayList<Entretien> nList = new ArrayList<Entretien>();
-			try {
-				JSONArray arr = new JSONArray(result);
-				for (int i = 0; i < arr.length(); i++) {
-					JSONObject jdata = arr.getJSONObject(i);
-					Entretien nMed = new Entretien(jdata);
-					nList.add(nMed);
-				}
-				mAdapter = new EntretienAdapter(mContext, nList);
-				setListAdapter(mAdapter);
-			} catch (JSONException e) {
-				Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 			}
-			super.onPostExecute(result);
-		}
 
-	}
-
-	private class EntretienPUT extends DataPUT {
-		private Entretien mEntretien;
-		private char mMode;
-
-		public EntretienPUT(Context context, Entretien entretien, char mode) {
-			super(context);
-			mEntretien = entretien;
-			mMode = mode;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				switch(mMode){
+			@Override
+			public void onResponse(Response response) throws IOException {
+				switch(mode){
 					case '+':
-						mEntretien.increment();
-						mAdapter.notifyDataSetChanged();
+						entretien.increment();
 						break;
 					case '-':
-						mEntretien.decrement();
-						mAdapter.notifyDataSetChanged();
+						entretien.decrement();
 						break;
 				}
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						mAdapter.notifyDataSetChanged();
+					}
+				});
 			}
-			super.onPostExecute(result);
-		}
-
+		});
 	}
 
-	private class EntretienDELETE extends DataDELETE{
-		private Entretien mEntretien;
+	private void deleteItem(final Entretien entretien){
+		String nURL = App.getFullUrl(mContext) + App.ENTRETIEN + "?api=" + App.getAPI(mContext) + "&id=" + entretien.getID();
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.delete()
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-		public EntretienDELETE(Context context, Entretien entretien) {
-			super(context);
-			mEntretien = entretien;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				mAdapter.remove(mEntretien);
 			}
-			super.onPostExecute(result);
-		}
-	}
 
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.remove(entretien);
+						}
+					});
+				}
+			}
+		});
+	}
 }
