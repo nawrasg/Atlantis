@@ -1,5 +1,6 @@
 package fr.nawrasg.atlantis;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -9,13 +10,15 @@ import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import fr.nawrasg.atlantis.other.CheckConnection;
 
-public class App {
+public class App extends Application{
 	public static final int CODE_PLAN = 5;
 	public static final int VOICE_RECOGNITION_REQUEST = 0x10101;
 	public static final String CALL_NOTIFIER = "backend/at_call_notifier.php";
@@ -41,6 +44,14 @@ public class App {
 	public static final String SPEECH = "backend/at_speech.php";
 	public static final String SYNC = "backend/at_sync.php";
 	public static final String WELCOME = "backend/at_welcome.php";
+
+	public static OkHttpClient httpClient;
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		httpClient = new OkHttpClient();
+	}
 
 	public static String getURL(Context c) {
 		WifiManager nWM = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
