@@ -14,13 +14,18 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPOST;
 
 public class DiversPreferenceFragment extends PreferenceFragment implements OnPreferenceClickListener {
 	private Context mContext;
@@ -52,13 +57,38 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 	public boolean onPreferenceClick(Preference preference) {
 		switch (preference.getKey()) {
 			case "import":
-				new SettingsGET(mContext).execute(App.SETTINGS, "type=Atlantis");
+				importSettings();
 				return true;
 			case "gcm":
 				GcmSubscription();
 				return true;
 		}
 		return false;
+	}
+
+	private void importSettings(){
+		String nURL = App.getFullUrl(mContext) + App.SETTINGS + "?api=" + App.getAPI(mContext) + "&type=Atlantis";
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				try {
+					JSONObject nJson = new JSONObject(response.body().string());
+					if (nJson.getString("name").equals("Atlantis")) {
+						importSettings(nJson);
+					} else {
+						Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_settings_import_fail), Toast.LENGTH_LONG).show();
+					}
+				} catch (Exception e) {
+					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -120,29 +150,6 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 			Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
 	}
-
-	private class SettingsGET extends DataGET {
-
-		public SettingsGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			try {
-				JSONObject nJson = new JSONObject(result);
-				if (nJson.getString("name").equals("Atlantis")) {
-					importSettings(nJson);
-				} else {
-					Toast.makeText(mContext, getResources().getString(R.string.fragment_preference_divers_settings_import_fail), Toast.LENGTH_LONG).show();
-				}
-			} catch (Exception e) {
-				Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
-			}
-		}
-
-	}
 	
 	private void registerGCM() {
 		new AsyncTask<Void, Void, String>() {
@@ -156,7 +163,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 					nRegId = mGCM.register(SENDER_ID);
 					App.setString(mContext, PROPERTY_REG_ID, nRegId);
 					Looper.prepare();
-					new DataPOST(mContext, false).execute(App.GCM, "gcm=" + nRegId);
+					regGCM(nRegId);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -164,6 +171,22 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 			}
 
 		}.execute(null, null, null);
+	}
+
+	private void regGCM(String data){
+		String nURL = App.getFullUrl(mContext) + App.GCM + "?api=" + App.getAPI(mContext) + "&gcm=" + data;
+		Request nRequest = new Request.Builder().url(nURL).post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), "")).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
 	}
 
 }

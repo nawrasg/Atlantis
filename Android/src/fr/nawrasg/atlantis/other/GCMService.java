@@ -20,11 +20,17 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataPUT;
 
 public class GCMService extends IntentService {
 	public static Ringtone RINGTONE;
@@ -33,7 +39,7 @@ public class GCMService extends IntentService {
 	private NotificationManager mNotificationManager;
 	private Vibrator nVibrate;
 	private LocationManager nLM;
-	private Context nContext;
+	private Context mContext;
 	NotificationCompat.Builder builder;
 
 	public GCMService() {
@@ -50,7 +56,22 @@ public class GCMService extends IntentService {
 
 					@Override
 					public void onLocationChanged(Location location) {
-						new DataPUT(nContext, false).execute(App.GEO, "lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&speed=" + location.getSpeed() + "&bearing=" + location.getBearing());
+						String nURL = App.getFullUrl(mContext) + App.GEO + App.getAPI(mContext) + "&lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&speed=" + location.getSpeed() + "&bearing=" + location.getBearing();
+						Request nRequest = new Request.Builder()
+								.url(nURL)
+								.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+								.build();
+						App.httpClient.newCall(nRequest).enqueue(new Callback() {
+							@Override
+							public void onFailure(Request request, IOException e) {
+
+							}
+
+							@Override
+							public void onResponse(Response response) throws IOException {
+
+							}
+						});
 					}
 
 					@Override
@@ -77,7 +98,7 @@ public class GCMService extends IntentService {
 		nLM = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 		String messageType = gcm.getMessageType(intent);
-		nContext = this;
+		mContext = this;
 
 		if (!extras.isEmpty()) {
 			if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
@@ -101,7 +122,7 @@ public class GCMService extends IntentService {
 		switch (command) {
 			case "geo":
 				sendPosition();
-				sendNotification(nContext.getString(R.string.app_name), nContext.getString(R.string.service_gcm_position_send));
+				sendNotification(mContext.getString(R.string.app_name), mContext.getString(R.string.service_gcm_position_send));
 				break;
 			case "geoi":
 				sendPosition();
@@ -127,9 +148,9 @@ public class GCMService extends IntentService {
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 				.setSmallIcon(R.drawable.home)
-				.setContentTitle(nContext.getString(R.string.app_name))
-				.setContentText(nContext.getString(R.string.service_gcm_ring_description))
-				.addAction(R.drawable.ic_notifications_off_black_24dp, nContext.getString(R.string.service_gcm_ring_found), contentIntent);
+				.setContentTitle(mContext.getString(R.string.app_name))
+				.setContentText(mContext.getString(R.string.service_gcm_ring_description))
+				.addAction(R.drawable.ic_notifications_off_black_24dp, mContext.getString(R.string.service_gcm_ring_found), contentIntent);
 		nNM.notify(NOTIFICATION_ID, mBuilder.build());
 		try {
 			Thread.sleep(1000 * 30);

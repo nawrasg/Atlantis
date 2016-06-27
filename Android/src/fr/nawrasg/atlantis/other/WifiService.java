@@ -5,9 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.widget.Toast;
+
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
 
 public class WifiService extends IntentService {
 
@@ -29,7 +35,19 @@ public class WifiService extends IntentService {
 			@Override
 			public void run() {
 				Toast.makeText(nContext, nContext.getString(R.string.service_wifi_atlantis_connected), Toast.LENGTH_SHORT).show();
-				new DataGET(nContext, false).execute(App.WELCOME);
+				String nURL = App.getFullUrl(nContext) + App.WELCOME + "?api=" + App.getAPI(nContext);
+				Request nRequest = new Request.Builder().url(nURL).build();
+				App.httpClient.newCall(nRequest).enqueue(new Callback() {
+					@Override
+					public void onFailure(Request request, IOException e) {
+
+					}
+
+					@Override
+					public void onResponse(Response response) throws IOException {
+
+					}
+				});
 			}
 
 		});
