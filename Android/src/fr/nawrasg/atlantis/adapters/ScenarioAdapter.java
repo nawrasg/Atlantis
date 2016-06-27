@@ -9,6 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -17,7 +22,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.type.Scenario;
 
 /**
@@ -64,7 +68,19 @@ public class ScenarioAdapter extends ArrayAdapter<Scenario> {
 				Scenario nScenario = (Scenario) nHolder.action.getTag();
 				try {
 					String nLabel = URLEncoder.encode(nScenario.getLabel(), "UTF-8");
-					new DataGET(mContext).execute(App.SCENARIOS, "scenario=" + nLabel);
+					String nURL = App.getFullUrl(mContext) + App.SCENARIOS + "?api=" + App.getAPI(mContext) + "&scenario=" + nLabel;
+					Request nRequest = new Request.Builder().url(nURL).build();
+					App.httpClient.newCall(nRequest).enqueue(new Callback() {
+						@Override
+						public void onFailure(Request request, IOException e) {
+
+						}
+
+						@Override
+						public void onResponse(Response response) throws IOException {
+
+						}
+					});
 				} catch (UnsupportedEncodingException e) {
 					Log.e("Atlantis", e.toString());
 				}
