@@ -12,12 +12,17 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -30,7 +35,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Plant;
 
 public class PlantInfoDialogFragment extends DialogFragment{
@@ -56,7 +60,22 @@ public class PlantInfoDialogFragment extends DialogFragment{
 				try {
 					nTitle = URLEncoder.encode(txtTitle.getText().toString(), "UTF-8");
 					String nURL = "id=" + nPlant.getId() + "&title=" + nTitle;
-					new DataPUT(mContext).execute(App.PLANTE, nURL);
+					String nURLf = App.getFullUrl(mContext) + App.PLANTE + App.getAPI(mContext) + "&" + nURL;
+					Request nRequest = new Request.Builder()
+							.url(nURLf)
+							.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+							.build();
+					App.httpClient.newCall(nRequest).enqueue(new Callback() {
+						@Override
+						public void onFailure(Request request, IOException e) {
+
+						}
+
+						@Override
+						public void onResponse(Response response) throws IOException {
+
+						}
+					});
 					dismiss();
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();

@@ -15,6 +15,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -25,7 +32,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
 import fr.nawrasg.atlantis.type.Room;
@@ -60,7 +66,22 @@ public class LightDialogFragment extends DialogFragment implements OnClickListen
 				}
 				nVal += "&name=" + nName; 
 				nVal += "&uid=" + ((Hue)mLight).getUID();
-				new DataPUT(mContext).execute(App.LIGHTS, nVal);
+				String nURL = App.getFullUrl(mContext) + App.LIGHTS + App.getAPI(mContext) + "&" + nVal;
+				Request nRequest = new Request.Builder()
+						.url(nURL)
+						.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+						.build();
+				App.httpClient.newCall(nRequest).enqueue(new Callback() {
+					@Override
+					public void onFailure(Request request, IOException e) {
+
+					}
+
+					@Override
+					public void onResponse(Response response) throws IOException {
+
+					}
+				});
 				dismiss();
 			}
 		}).setNegativeButton(mContext.getString(R.string.fragment_dialog_button_cancel), new DialogInterface.OnClickListener() {
@@ -140,7 +161,22 @@ public class LightDialogFragment extends DialogFragment implements OnClickListen
 				return;
 		}
 		if (nColor != null) {
-			new DataPUT(mContext).execute(App.LIGHTS, "color=" + ((Hue) mLight).getUID() + "&value=" + nColor);
+			String nURL = App.getFullUrl(mContext) + App.LIGHTS + App.getAPI(mContext) + "&color=" + ((Hue) mLight).getUID() + "&value=" + nColor;
+			Request nRequest = new Request.Builder()
+					.url(nURL)
+					.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+					.build();
+			App.httpClient.newCall(nRequest).enqueue(new Callback() {
+				@Override
+				public void onFailure(Request request, IOException e) {
+
+				}
+
+				@Override
+				public void onResponse(Response response) throws IOException {
+
+				}
+			});
 		}
 	}
 }

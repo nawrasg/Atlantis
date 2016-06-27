@@ -5,6 +5,7 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -19,10 +20,15 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +36,6 @@ import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.DeviceAdapter;
-import fr.nawrasg.atlantis.async.DataDELETE;
-import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceDialogFragment;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceInfoDialogFragment;
 import fr.nawrasg.atlantis.listener.ShakeListener;
@@ -48,11 +52,13 @@ public class ConnectedDevicesFragment extends ListFragment {
 	private DeviceAdapter mAdapter;
 	private Device mDevice;
 	private ArrayList<User> mUserList;
+	private Handler mHandler;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_devices, container, false);
 		c = getActivity();
+		mHandler = new Handler();
 		getActivity().getActionBar().setIcon(R.drawable.ng_connected);
 		nSensorManager = (SensorManager) c.getSystemService(Context.SENSOR_SERVICE);
 		nAccelerometer = nSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -71,7 +77,39 @@ public class ConnectedDevicesFragment extends ListFragment {
 	}
 	
 	private void getItems(){
-		new DevicesGET(c).execute(App.DEVICES);
+		String nURL = App.getFullUrl(c) + App.DEVICES + "?api=" + App.getAPI(c);
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				nList = new ArrayList<Device>();
+				mUserList = new ArrayList<User>();
+				try {
+					JSONObject nJson = new JSONObject(response.body().string());
+					JSONArray nDeviceArr = nJson.getJSONArray("devices");
+					for (int i = 0; i < nDeviceArr.length(); i++) {
+						JSONObject json = nDeviceArr.getJSONObject(i);
+						Device nDevice = new Device(json);
+						nList.add(nDevice);
+					}
+					mAdapter = new DeviceAdapter(c, nList);
+					setListAdapter(mAdapter);
+					setListListeners();
+					JSONArray nUserArr = nJson.getJSONArray("users");
+					mUserList.add(new User());
+					for(int i = 0; i < nUserArr.length(); i++){
+						mUserList.add(new User(nUserArr.getJSONObject(i)));
+					}
+				} catch (JSONException e) {
+					Toast.makeText(c, e.getMessage(), Toast.LENGTH_LONG).show();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -136,7 +174,7 @@ public class ConnectedDevicesFragment extends ListFragment {
 				openDeviceInfo(mDevice);
 				return true;
 			case R.id.menuDeviceDelete:
-				new DeviceDELETE(c).execute(App.DEVICES, "id=" + mDevice.getID());
+				deleteItem(mDevice);
 				return true;
 		}
 		return super.onContextItemSelected(item);
@@ -174,56 +212,28 @@ public class ConnectedDevicesFragment extends ListFragment {
 		nBundle.putParcelableArrayList("users", mUserList);
 		return nBundle;
 	}
-	
-	private class DevicesGET extends DataGET{
 
-		public DevicesGET(Context context) {
-			super(context);
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			nList = new ArrayList<Device>();
-			mUserList = new ArrayList<User>();
-			try {
-				JSONObject nJson = new JSONObject(result);
-				JSONArray nDeviceArr = nJson.getJSONArray("devices");
-				for (int i = 0; i < nDeviceArr.length(); i++) {
-					JSONObject json = nDeviceArr.getJSONObject(i);
-					Device nDevice = new Device(json);
-					nList.add(nDevice);
-				}
-				mAdapter = new DeviceAdapter(c, nList);
-				setListAdapter(mAdapter);
-				setListListeners();
-				JSONArray nUserArr = nJson.getJSONArray("users");
-				mUserList.add(new User());
-				for(int i = 0; i < nUserArr.length(); i++){
-					mUserList.add(new User(nUserArr.getJSONObject(i)));
-				}
-			} catch (JSONException e) {
-				Toast.makeText(c, e.getMessage() + " : " + result, Toast.LENGTH_LONG).show();
+	private void deleteItem(Device device){
+		String nURL = App.getFullUrl(c) + App.DEVICES + "?api=" + App.getAPI(c) + "&id=" + device.getID();
+		Request nRequest = new Request.Builder().url(nURL).delete().build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
 			}
-			super.onPostExecute(result);
-		}
-		
-	}
 
-
-	
-	private class DeviceDELETE extends DataDELETE{
-
-		public DeviceDELETE(Context context) {
-			super(context);
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			if(result.equals("200")){
-				mAdapter.remove(mDevice);
-				mAdapter.notifyDataSetChanged();
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.body().string().equals("200")){
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.remove(mDevice);
+							mAdapter.notifyDataSetChanged();
+						}
+					});
+				}
 			}
-			super.onPostExecute(result);
-		}
+		});
 	}
 }

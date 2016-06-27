@@ -1,9 +1,5 @@
 package fr.nawrasg.atlantis.fragments.dialogs;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -16,12 +12,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.UserAdapter;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Device;
 import fr.nawrasg.atlantis.type.User;
 
@@ -51,7 +57,22 @@ public class DeviceInfoDialogFragment extends DialogFragment {
 					int nPosition = spUser.getSelectedItemPosition();
 					String nDeviceOwner = URLEncoder.encode(mUserList.get(nPosition).getName(), "UTF-8");
 					String nURL = "title=" + nDeviceTitle + "&ip=" + nDeviceIp + "&mac=" + nDeviceMac + "&user=" + nDeviceOwner;
-					new DevicePUT(mContext).execute(App.DEVICES, nURL);
+					String nURLf = App.getFullUrl(mContext) + App.DEVICES + App.getAPI(mContext) + "&" + nURL;
+					Request nRequest = new Request.Builder()
+							.url(nURLf)
+							.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+							.build();
+					App.httpClient.newCall(nRequest).enqueue(new Callback() {
+						@Override
+						public void onFailure(Request request, IOException e) {
+
+						}
+
+						@Override
+						public void onResponse(Response response) throws IOException {
+							dismiss();
+						}
+					});
 				} catch (UnsupportedEncodingException e) {
 					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 				}
@@ -87,19 +108,5 @@ public class DeviceInfoDialogFragment extends DialogFragment {
 				break;
 			}
 		}
-	}
-
-	private class DevicePUT extends DataPUT {
-
-		public DevicePUT(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			dismiss();
-		}
-
 	}
 }
