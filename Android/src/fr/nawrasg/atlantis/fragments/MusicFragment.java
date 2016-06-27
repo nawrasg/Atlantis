@@ -177,10 +177,20 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 					nVal = nJson.getInt("play");
 					if (nVal == 1) {
 						isPlay = true;
-						btnPlay.setImageResource(R.drawable.ic_action_stop);
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								btnPlay.setImageResource(R.drawable.ic_action_stop);
+							}
+						});
 					} else {
 						isPlay = false;
-						btnPlay.setImageResource(R.drawable.ic_action_play);
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								btnPlay.setImageResource(R.drawable.ic_action_play);
+							}
+						});
 					}
 					mVolume = nJson.getInt("vol");
 					changeVolume(mVolume);

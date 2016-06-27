@@ -3,6 +3,7 @@ package fr.nawrasg.atlantis.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,12 +30,14 @@ public class PlantFragment extends Fragment {
 	private Context mContext;
 	private ArrayList<Plant> mList;
 	private RecyclerView mRecyclerView;
+	private Handler mHandler;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_plant, container, false);
 		getActivity().getActionBar().setIcon(R.drawable.ng_plant);
 		mContext = super.getActivity();
+		mHandler = new Handler();
 		return nView;
 	}
 
@@ -66,7 +69,12 @@ public class PlantFragment extends Fragment {
 							Plant nPlant = new Plant(nArr.getJSONObject(i));
 							mList.add(nPlant);
 						}
-						mRecyclerView.setAdapter(new PlantAdapter(mContext, mList));
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								mRecyclerView.setAdapter(new PlantAdapter(mContext, mList));
+							}
+						});
 					} catch (JSONException e) {
 						Log.e("Atlantis", e.toString());
 					}

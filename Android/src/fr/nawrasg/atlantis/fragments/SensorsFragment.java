@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -55,13 +54,8 @@ public class SensorsFragment extends ListFragment {
 		return nView;
 	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
 	public void getItems() {
-		String nURL = App.getFullUrl(mContext) + App.SENSORS + App.getAPI(mContext) + "&get";
+		String nURL = App.getFullUrl(mContext) + App.SENSORS + "?api=" + App.getAPI(mContext) + "&get";
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
@@ -93,7 +87,7 @@ public class SensorsFragment extends ListFragment {
 						mRoomList.add(nRoom);
 					}
 				} catch (JSONException e) {
-					Toast.makeText(mContext, "Erreur : " + e.getMessage(), Toast.LENGTH_LONG).show();
+					Log.e("Atlantis", e.toString());
 				}
 				mHandler.post(new Runnable() {
 					@Override
