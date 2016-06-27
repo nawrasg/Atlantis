@@ -2,10 +2,9 @@ package fr.nawrasg.atlantis.fragments;
 
 import android.app.ListFragment;
 import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -14,11 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -38,16 +34,11 @@ import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.DeviceAdapter;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceDialogFragment;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceInfoDialogFragment;
-import fr.nawrasg.atlantis.listener.ShakeListener;
-import fr.nawrasg.atlantis.listener.ShakeListener.OnShakeListener;
 import fr.nawrasg.atlantis.type.Device;
 import fr.nawrasg.atlantis.type.User;
 
 public class ConnectedDevicesFragment extends ListFragment {
-	private Context c;
-	private SensorManager nSensorManager;
-	private Sensor nAccelerometer;
-	private ShakeListener nShakeListener;
+	private Context mContext;
 	private List<Device> nList;
 	private DeviceAdapter mAdapter;
 	private Device mDevice;
@@ -57,27 +48,16 @@ public class ConnectedDevicesFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_devices, container, false);
-		c = getActivity();
+		mContext = getActivity();
 		mHandler = new Handler();
 		getActivity().getActionBar().setIcon(R.drawable.ng_connected);
-		nSensorManager = (SensorManager) c.getSystemService(Context.SENSOR_SERVICE);
-		nAccelerometer = nSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		nShakeListener = new ShakeListener();
-		nShakeListener.setOnShakeListener(new OnShakeListener() {
-
-			@Override
-			public void onShake(int count) {
-				if (count == 1) {
-					getItems();
-				}
-			}
-		});
 		setHasOptionsMenu(true);
+		getItems();
 		return nView;
 	}
 	
 	private void getItems(){
-		String nURL = App.getFullUrl(c) + App.DEVICES + "?api=" + App.getAPI(c);
+		String nURL = App.getFullUrl(mContext) + App.DEVICES + "?api=" + App.getAPI(mContext);
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
@@ -87,6 +67,7 @@ public class ConnectedDevicesFragment extends ListFragment {
 
 			@Override
 			public void onResponse(Response response) throws IOException {
+				Log.d("Nawras", response.body().string());
 				nList = new ArrayList<Device>();
 				mUserList = new ArrayList<User>();
 				try {
@@ -97,40 +78,16 @@ public class ConnectedDevicesFragment extends ListFragment {
 						Device nDevice = new Device(json);
 						nList.add(nDevice);
 					}
-					mAdapter = new DeviceAdapter(c, nList);
+					mAdapter = new DeviceAdapter(mContext, nList);
 					setListAdapter(mAdapter);
-					setListListeners();
 					JSONArray nUserArr = nJson.getJSONArray("users");
 					mUserList.add(new User());
 					for(int i = 0; i < nUserArr.length(); i++){
 						mUserList.add(new User(nUserArr.getJSONObject(i)));
 					}
 				} catch (JSONException e) {
-					Toast.makeText(c, e.getMessage(), Toast.LENGTH_LONG).show();
+					Log.e("Atlantis", e.toString());
 				}
-			}
-		});
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		nSensorManager.registerListener(nShakeListener, nAccelerometer, SensorManager.SENSOR_DELAY_UI);
-		getItems();
-	}
-
-	@Override
-	public void onPause() {
-		nSensorManager.unregisterListener(nShakeListener);
-		super.onPause();
-	}
-
-	private void setListListeners(){
-		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				return false;
 			}
 		});
 	}
@@ -214,7 +171,7 @@ public class ConnectedDevicesFragment extends ListFragment {
 	}
 
 	private void deleteItem(Device device){
-		String nURL = App.getFullUrl(c) + App.DEVICES + "?api=" + App.getAPI(c) + "&id=" + device.getID();
+		String nURL = App.getFullUrl(mContext) + App.DEVICES + "?api=" + App.getAPI(mContext) + "&id=" + device.getID();
 		Request nRequest = new Request.Builder().url(nURL).delete().build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
