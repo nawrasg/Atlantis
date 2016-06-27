@@ -10,6 +10,13 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +24,6 @@ import java.util.List;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Room;
 import fr.nawrasg.atlantis.type.Sensor;
 
@@ -86,7 +92,22 @@ public class SensorAdapter extends ArrayAdapter<Sensor> {
 					public void onClick(View v) {
 						String nSensor = (String) v.getTag();
 						String nCmd = ((Switch) v).isChecked() ? "on" : "off";
-						new DataPUT(mContext).execute(App.SENSORS, "toggle=" + nSensor + "&value=" + nCmd);
+						String nURL = App.getFullUrl(mContext) + App.SENSORS + App.getAPI(mContext) + "&toggle=" + nSensor + "&value=" + nCmd;
+						Request nRequest = new Request.Builder()
+								.url(nURL)
+								.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+								.build();
+						App.httpClient.newCall(nRequest).enqueue(new Callback() {
+							@Override
+							public void onFailure(Request request, IOException e) {
+
+							}
+
+							@Override
+							public void onResponse(Response response) throws IOException {
+
+							}
+						});
 					}
 				});
 				break;
