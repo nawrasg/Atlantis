@@ -158,6 +158,7 @@ public class CoursesFragment extends ListFragment {
 		}
 		Request nRequest = new Request.Builder()
 				.url(nURL)
+				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
 				.build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
