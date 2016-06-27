@@ -11,6 +11,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.provider.MediaStore.Images;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Toast;
@@ -18,12 +19,16 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.other.CheckConnection;
 
 public class PrefFragment extends PreferenceFragment {
@@ -72,7 +77,7 @@ public class PrefFragment extends PreferenceFragment {
 
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
-				new SettingsGET(mContext).execute(App.HOME, "setup");
+				getSettings();
 				return false;
 			}
 		});
@@ -186,7 +191,7 @@ public class PrefFragment extends PreferenceFragment {
 					}
 					nRegId = mGCM.register(SENDER_ID);
 					App.setString(mContext, PROPERTY_REG_ID, nRegId);
-					new DataGET(mContext).execute(App.GCM, nRegId);
+					regGCM(nRegId);
 				} catch (Exception e) {
 					Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
 				}
@@ -196,27 +201,44 @@ public class PrefFragment extends PreferenceFragment {
 		}.execute(null, null, null);
 	}
 
-	private class SettingsGET extends DataGET {
-
-		public SettingsGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			try {
-				JSONObject nJson = new JSONObject(result);
-				if (nJson.getString("name").equals("Atlantis")) {
-					importSettings(nJson);
-				} else {
-					Toast.makeText(mContext, "Impossible de récupérer les paramètres !", Toast.LENGTH_LONG).show();
-				}
-			} catch (Exception e) {
+	private void regGCM(String data){
+		String nURL = App.getFullUrl(mContext) + App.GCM + "?api=" + App.getAPI(mContext) + "&" + data;
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
 			}
-		}
 
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
 	}
 
+	private void getSettings(){
+		String nURL = App.getFullUrl(mContext) + App.HOME + "?api=" + App.getAPI(mContext) + "&setup";
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				try {
+					JSONObject nJson = new JSONObject(response.body().string());
+					if (nJson.getString("name").equals("Atlantis")) {
+						importSettings(nJson);
+					} else {
+						Toast.makeText(mContext, "Impossible de récupérer les paramètres !", Toast.LENGTH_LONG).show();
+					}
+				} catch (Exception e) {
+					Log.e("Atlantis", e.toString());
+				}
+			}
+		});
+	}
 }
