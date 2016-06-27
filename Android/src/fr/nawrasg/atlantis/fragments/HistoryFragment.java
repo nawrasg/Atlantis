@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +59,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 	private HistoryAdapter mAdapter;
 	private ArrayList<PDevice> mList;
 	private Calendar mCalendar;
+	private Handler mHandler;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 		ButterKnife.bind(this, nView);
 		getActivity().getActionBar().setIcon(R.drawable.ng_graph);
 		mContext = getActivity();
+		mHandler = new Handler();
 		mCalendar = Calendar.getInstance();
 		DisplayMetrics nMetrics = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(nMetrics);
@@ -189,7 +192,12 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 						mList.add(nSensor);
 					}
 					mAdapter = new HistoryAdapter(mContext, mList);
-					spHistory.setAdapter(mAdapter);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							spHistory.setAdapter(mAdapter);
+						}
+					});
 				} catch (JSONException e) {
 					Log.e("Atlantis", e.toString());
 				}
@@ -279,7 +287,12 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 					l.setForm(Legend.LegendForm.LINE);
 					l.setTextColor(Color.BLACK);
 					mLineChart.setDescription("Plante");
-					mLineChart.animateX(2500);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mLineChart.animateX(2500);
+						}
+					});
 				} catch (JSONException e) {
 					Log.e("Atlantis", e.toString());
 				}
