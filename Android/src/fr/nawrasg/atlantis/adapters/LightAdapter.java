@@ -1,5 +1,6 @@
 package fr.nawrasg.atlantis.adapters;
 
+import java.io.IOException;
 import java.util.List;
 
 import android.content.Context;
@@ -13,9 +14,15 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
 import fr.nawrasg.atlantis.type.Room;
@@ -69,7 +76,22 @@ public class LightAdapter extends ArrayAdapter<Light> {
 	}
 
 	private void setPowerStatus(Light light, boolean status) {
-		new DataPUT(mContext).execute(App.LIGHTS, "on=" + ((Hue)light).getUID() + "&protocol=" + light.getProtocol() + "&value=" + status);
+		String nURL = App.getFullUrl(mContext) + App.LIGHTS + "?api=" + App.getAPI(mContext) + "&on=" + ((Hue)light).getUID() + "&protocol=" + light.getProtocol() + "&value=" + status;
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
 	}
 
 	private int getLightIntensity(Light light) {
@@ -81,7 +103,22 @@ public class LightAdapter extends ArrayAdapter<Light> {
 	}
 
 	private void setLightIntensity(Light light, int value) {
-		new DataPUT(mContext).execute(App.LIGHTS, "bri=" + ((Hue)light).getUID() + "&protocol=" + light.getProtocol() + "&value=" + value);
+		String nURL = App.getFullUrl(mContext) + App.LIGHTS + "?api=" + App.getAPI(mContext) + "&bri=" + ((Hue)light).getUID() + "&protocol=" + light.getProtocol() + "&value=" + value;
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
 	}
 
 	@Override
