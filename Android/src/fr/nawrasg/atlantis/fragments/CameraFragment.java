@@ -3,6 +3,7 @@ package fr.nawrasg.atlantis.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,12 +34,14 @@ public class CameraFragment extends Fragment {
 	private Context mContext;
 	private RecyclerView mRecyclerView;
 	private ArrayList<Camera> mList;
+	private Handler mHandler;
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_camera, container, false);
 		mContext = getActivity();
+		mHandler = new Handler();
 		return nView;
 	}
 
@@ -69,7 +72,12 @@ public class CameraFragment extends Fragment {
 							Camera nCamera = new Camera(nArr.getJSONObject(i));
 							mList.add(nCamera);
 						}
-						mRecyclerView.setAdapter(new CameraAdapter(mContext, mList));
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								mRecyclerView.setAdapter(new CameraAdapter(mContext, mList));
+							}
+						});
 					} catch (JSONException e) {
 						Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 					}
