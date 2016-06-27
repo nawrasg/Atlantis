@@ -3,6 +3,8 @@ package fr.nawrasg.atlantis.fragments;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -12,31 +14,36 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Toast;
+
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.PharmacieAdapter;
-import fr.nawrasg.atlantis.async.DataDELETE;
-import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.type.Medicament;
 
 public class PharmacieFragment extends ListFragment {
 	private Context mContext;
 	private ArrayList<Medicament> nList;
 	private PharmacieAdapter mAdapter;
+	private Handler mHandler;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mContext = getActivity();
+		mHandler = new Handler();
 		getActivity().getActionBar().setIcon(R.drawable.ng_medicine);
 		View nV = inflater.inflate(R.layout.layout_pharmacie, container, false);
 		if (getActivity().findViewById(R.id.main_fragment2) == null) {
@@ -80,7 +87,38 @@ public class PharmacieFragment extends ListFragment {
 	}
 
 	public void getItems() {
-		new PharmacieGET(mContext).execute(App.PHARMACIE);
+		String nURL = App.getFullUrl(mContext) + App.PHARMACIE + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					nList = new ArrayList<Medicament>();
+					try {
+						JSONArray arr = new JSONArray(response.body().string());
+						for (int i = 0; i < arr.length(); i++) {
+							JSONObject jdata = arr.getJSONObject(i);
+							Medicament nMed = new Medicament(jdata);
+							nList.add(nMed);
+						}
+						mAdapter = new PharmacieAdapter(mContext, nList);
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								setListAdapter(mAdapter);
+							}
+						});
+					} catch (JSONException e) {
+						Log.e("Atlantis", e.toString());
+					}
+				}
+			}
+		});
 	}
 
 	@Override
@@ -90,89 +128,81 @@ public class PharmacieFragment extends ListFragment {
 		Medicament nMedicament = nList.get(position);
 		switch (item.getItemId()) {
 			case R.id.itemPharmaciePlus:
-				new PharmaciePUT(mContext, nMedicament, '+').execute(App.PHARMACIE, "id=" + nMedicament.getID() + "&qte=" + (nMedicament.getQuantity() + 1));
+				modifyItem(nMedicament, '+');
 				return true;
 			case R.id.itemPharmacieMinus:
-				new PharmaciePUT(mContext, nMedicament, '-').execute(App.PHARMACIE, "id=" + nMedicament.getID() + "&qte=" + (nMedicament.getQuantity() - 1));
+				modifyItem(nMedicament, '-');
 				return true;
 			case R.id.itemPharmacieDel:
-				new PharmacieDELETE(mContext, nMedicament).execute(App.PHARMACIE, "id=" + nMedicament.getID());
+				deleteItem(nMedicament);
 				return true;
 		}
 		return super.onContextItemSelected(item);
 	}
-	
-	private class PharmacieGET extends DataGET{
 
-		public PharmacieGET(Context context) {
-			super(context);
+	private void modifyItem(final Medicament medicament, final char mode){
+		String nURL = App.getFullUrl(mContext) + App.PHARMACIE + "?api=" + App.getAPI(mContext);
+		switch(mode){
+			case '+':
+				nURL += "&id=" + medicament.getID() + "&qte=" + (medicament.getQuantity() + 1);
+				break;
+			case '-':
+				nURL += "&id=" + medicament.getID() + "&qte=" + (medicament.getQuantity() - 1);
+				break;
 		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				nList = new ArrayList<Medicament>();
-				try {
-					JSONArray arr = new JSONArray(result);
-					for (int i = 0; i < arr.length(); i++) {
-						JSONObject jdata = arr.getJSONObject(i);
-						Medicament nMed = new Medicament(jdata);
-						nList.add(nMed);
-					}
-					mAdapter = new PharmacieAdapter(mContext, nList);
-					setListAdapter(mAdapter);
-				} catch (JSONException e) {
-					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
-				}
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
 			}
-			super.onPostExecute(result);
-		}
-		
-	}
 
-	private class PharmaciePUT extends DataPUT {
-		private Medicament mMedicament;
-		private char mMode;
-
-		public PharmaciePUT(Context context, Medicament medicament, char mode) {
-			super(context);
-			mMedicament = medicament;
-			mMode = mode;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				switch(mMode){
+			@Override
+			public void onResponse(Response response) throws IOException {
+				switch(mode){
 					case '+':
-						mMedicament.increment();
-						mAdapter.notifyDataSetChanged();
+						medicament.increment();
 						break;
 					case '-':
-						mMedicament.decrement();
-						mAdapter.notifyDataSetChanged();
+						medicament.decrement();
 						break;
 				}
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						mAdapter.notifyDataSetChanged();
+					}
+				});
 			}
-			super.onPostExecute(result);
-		}
+		});
 	}
 
-	private class PharmacieDELETE extends DataDELETE{
-		private Medicament mMedicament;
+	private void deleteItem(final Medicament medicament){
+		String nURL = App.getFullUrl(mContext) + App.PHARMACIE + "?api=" + App.getAPI(mContext) + "&id=" + medicament.getID();
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.delete()
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-		public PharmacieDELETE(Context context, Medicament medicament) {
-			super(context);
-			mMedicament = medicament;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				mAdapter.remove(mMedicament);
 			}
-			super.onPostExecute(result);
-		}
-	}
 
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.remove(medicament);
+						}
+					});
+				}
+			}
+		});
+	}
 }

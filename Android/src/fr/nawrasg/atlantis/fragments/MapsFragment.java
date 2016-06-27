@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,14 +20,19 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPOST;
 import fr.nawrasg.atlantis.type.GPS;
 
 public class MapsFragment extends Fragment {
@@ -60,13 +66,32 @@ public class MapsFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.itemMapsRefresh:
-				new UsersGET(mContext).execute(App.GEO);
+				getUsers();
 				return true;
 			case R.id.itemMapsRequest:
-				new DataPOST(mContext).execute(App.GEO);
+				post();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void post(){
+		String nURL = App.getFullUrl(mContext) + App.GEO + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
 	}
 
 	private void setHome(boolean zoom) {
@@ -95,34 +120,37 @@ public class MapsFragment extends Fragment {
 		return (MapFragment) fm.findFragmentById(R.id.map);
 	}
 
-	private class UsersGET extends DataGET {
+	private void getUsers(){
+		String nURL = App.getFullUrl(mContext) + App.GEO + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-		public UsersGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			try {
-				JSONObject nJson = new JSONObject(result);
-				JSONArray nArr = nJson.getJSONArray("positions");
-				mMap.clear();
-				setHome(false);
-				for (int i = 0; i < nArr.length(); i++) {
-					GPS nGPS = new GPS(nArr.getJSONObject(i));
-					LatLng nCoords = new LatLng(nGPS.getLatitude(), nGPS.getLongitude());
-					mMap.moveCamera(CameraUpdateFactory.newLatLng(nCoords));
-					mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-					MarkerOptions nMarker = new MarkerOptions().position(nCoords).title(
-							/*nGPS.getUser() + */" (" + nGPS.getTimestamp() + ")");
-					mMap.addMarker(nMarker);
-				}
-			} catch (Exception e) {
-				Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 			}
-		}
 
+			@Override
+			public void onResponse(Response response) throws IOException {
+				try {
+					JSONObject nJson = new JSONObject(response.body().string());
+					JSONArray nArr = nJson.getJSONArray("positions");
+					mMap.clear();
+					setHome(false);
+					for (int i = 0; i < nArr.length(); i++) {
+						GPS nGPS = new GPS(nArr.getJSONObject(i));
+						LatLng nCoords = new LatLng(nGPS.getLatitude(), nGPS.getLongitude());
+						mMap.moveCamera(CameraUpdateFactory.newLatLng(nCoords));
+						mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+						MarkerOptions nMarker = new MarkerOptions().position(nCoords).title(
+							/*nGPS.getUser() + */" (" + nGPS.getTimestamp() + ")");
+						mMap.addMarker(nMarker);
+					}
+				} catch (Exception e) {
+					Log.e("Atlantis", e.toString());
+				}
+			}
+		});
 	}
-
 }

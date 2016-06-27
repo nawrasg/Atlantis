@@ -14,6 +14,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DateFormat;
@@ -28,7 +35,6 @@ import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataPOST;
 
 public class PharmacieAddFragment extends Fragment{
 	@Bind(R.id.txtPharmacieNom)
@@ -91,7 +97,7 @@ public class PharmacieAddFragment extends Fragment{
 			String nom = URLEncoder.encode(txtNom.getText().toString(), "UTF-8");
 			String qte = txtQte.getText().toString();
 			String date = mDate.format(mCalendar.getTime());
-			new DataPOST(mContext).execute(App.PHARMACIE, "nom=" + nom + "&peremption=" + date + "&qte=" + qte);
+			post("nom=" + nom + "&peremption=" + date + "&qte=" + qte);
 			setNew();
 		} catch (UnsupportedEncodingException e) {
 			Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -111,4 +117,22 @@ public class PharmacieAddFragment extends Fragment{
 				mCalendar.get(Calendar.DAY_OF_MONTH)).show();
 	}
 
+	private void post(String data){
+		String nURL = App.getFullUrl(mContext) + App.PHARMACIE + "?api=" + App.getAPI(mContext) + "&" + data;
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
+	}
 }

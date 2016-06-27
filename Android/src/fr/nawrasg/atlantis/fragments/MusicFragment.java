@@ -3,6 +3,8 @@ package fr.nawrasg.atlantis.fragments;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -19,10 +21,17 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -30,10 +39,6 @@ import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.MusicAdapter;
-import fr.nawrasg.atlantis.async.DataDELETE;
-import fr.nawrasg.atlantis.async.DataGET;
-import fr.nawrasg.atlantis.async.DataPOST;
-import fr.nawrasg.atlantis.async.DataPUT;
 import fr.nawrasg.atlantis.fragments.dialogs.SpeechDialogFragment;
 import fr.nawrasg.atlantis.type.Song;
 
@@ -57,6 +62,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	ImageButton btnShuffle;
 	private int mWelcomeMusic, mVolume;
 	private MusicAdapter mAdapter;
+	private Handler mHandler;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +70,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 		ButterKnife.bind(this, nView);
 		getActivity().getActionBar().setIcon(R.drawable.ng_player);
 		mContext = getActivity();
+		mHandler = new Handler();
 		mWelcomeMusic = -1;
 		setHasOptionsMenu(true);
 		return nView;
@@ -126,7 +133,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 				int nPosition = nInfo.position;
 				Song nSong = mAdapter.getItem(nPosition);
 				if (nSong.getType().equals("song")) {
-					new RefreshPUT(mContext).execute(App.MUSIC, "welcome=" + nSong.getID());
+					modify("welcome=" + nSong.getID());
 				} else {
 					Toast.makeText(mContext, getResources().getString(R.string.fragment_music_welcome_no_playlist),
 							Toast.LENGTH_SHORT).show();
@@ -145,7 +152,57 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	}
 
 	private void getItems() {
-		new MusicGET(mContext).execute(App.MUSIC);
+		String nURL = App.getFullUrl(mContext) + App.MUSIC + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				nList = new ArrayList<Song>();
+				mWelcomeMusic = -1;
+				try {
+					JSONObject nJson = new JSONObject(response.body().string());
+					int nVal = nJson.getInt("on");
+					if (nVal == 1) {
+						isOn = true;
+					} else {
+						isOn = false;
+					}
+					nVal = nJson.getInt("play");
+					if (nVal == 1) {
+						isPlay = true;
+						btnPlay.setImageResource(R.drawable.ic_action_stop);
+					} else {
+						isPlay = false;
+						btnPlay.setImageResource(R.drawable.ic_action_play);
+					}
+					mVolume = nJson.getInt("vol");
+					changeVolume(mVolume);
+					mWelcomeMusic = nJson.getJSONObject("welcome").getInt("music");
+					JSONArray nArr = nJson.getJSONArray("songs");
+					Song nSong;
+					for (int i = 0; i < nArr.length(); i++) {
+						nSong = new Song(nArr.getJSONObject(i));
+						nList.add(nSong);
+					}
+					mAdapter = new MusicAdapter(mContext, mWelcomeMusic, nList);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							setListAdapter(mAdapter);
+						}
+					});
+				} catch (JSONException e) {
+					Log.e("Atlantis", e.toString());
+				}
+			}
+		});
 	}
 
 	@Override
@@ -160,10 +217,10 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 					isOn = true;
 					nStatus = "on";
 				}
-				new RefreshPUT(mContext).execute(App.MUSIC, "action=" + nStatus);
+				modify("action=" + nStatus);
 				return true;
 			case R.id.itemMusicRefresh:
-				new DataPOST(mContext).execute(App.MUSIC);
+				refresh();
 				return true;
 			case R.id.itemMusicSpeech:
 				SpeechDialogFragment nDialog = new SpeechDialogFragment();
@@ -175,54 +232,106 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 							Toast.LENGTH_LONG).show();
 					return true;
 				}
-				new DataDELETE(mContext).execute(App.MUSIC, "welcome=1");
+				delete("welcome=1");
 				mWelcomeMusic = -1;
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	private void refresh(){
+		String nURL = App.getFullUrl(mContext) + App.MUSIC + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
+	}
+
+	private void delete(String data){
+		String nURL = App.getFullUrl(mContext) + App.MUSIC + "?api=" + App.getAPI(mContext) + "&" + data;
+		Request nRequest = new Request.Builder().url(nURL).delete().build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
+	}
+
+	private void modify(String data){
+		String nURL = App.getFullUrl(mContext) + App.MUSIC + "?api=" + App.getAPI(mContext) + "&" + data;
+		Request nRequest = new Request.Builder()
+				.url(nURL)
+				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+				.build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
+	}
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		RefreshPUT nCmd = new RefreshPUT(mContext);
 		Song nSong = nList.get(position);
 		if (nSong.getType().equals("song")) {
-			nCmd.execute(App.MUSIC, "action=play&id=" + nSong.getID());
+			modify("action=play&id=" + nSong.getID());
 		} else {
-			nCmd.execute(App.MUSIC, "action=playlistplay&playlist=" + nSong.getID());
+			modify("action=playlistplay&playlist=" + nSong.getID());
 		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		RefreshPUT nCmd = new RefreshPUT(mContext);
 		switch (v.getId()) {
 			case R.id.btnMusicPlay:
 				if (isPlay) {
-					nCmd.execute(App.MUSIC, "action=stop");
+					modify("action=stop");
 					isPlay = false;
 					btnPlay.setImageResource(R.drawable.ic_action_play);
 				} else {
-					nCmd.execute(App.MUSIC, "action=start");
+					modify("action=start");
 					isPlay = true;
 					btnPlay.setImageResource(R.drawable.ic_action_stop);
 				}
 				break;
 			case R.id.btnMusicPause:
-				nCmd.execute(App.MUSIC, "action=pause");
+				modify("action=pause");
 				break;
 			case R.id.btnMusicRepeat:
-				nCmd.execute(App.MUSIC, "action=repeat");
+				modify("action=repeat");
 				break;
 			case R.id.btnMusicPrevious:
-				nCmd.execute(App.MUSIC, "action=previous");
+				modify("action=previous");
 				break;
 			case R.id.btnMusicNext:
-				nCmd.execute(App.MUSIC, "action=next");
+				modify("action=next");
 				break;
 			case R.id.btnMusicShuffle:
-				nCmd.execute(App.MUSIC, "action=shuffle");
+				modify("action=shuffle");
 				break;
 		}
 	}
@@ -230,7 +339,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		if (!fromUser) {
-			new DataPUT(mContext).execute(App.MUSIC, "action=vol&level=" + seekBar.getProgress() + "&source=1");
+			modify("action=vol&level=" + seekBar.getProgress() + "&source=1");
 		}
 	}
 
@@ -240,7 +349,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
-		new DataPUT(mContext).execute(App.MUSIC, "action=vol&level=" + seekBar.getProgress() + "&source=1");
+		modify("action=vol&level=" + seekBar.getProgress() + "&source=1");
 	}
 
 	private void changeVolume(int vol) {
@@ -248,64 +357,4 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 		nSB.setProgress(vol);
 		nSB.setOnSeekBarChangeListener(this);
 	}
-
-	private class RefreshPUT extends DataPUT {
-
-		public RefreshPUT(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			getItems();
-		}
-
-	}
-
-	private class MusicGET extends DataGET {
-
-		public MusicGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			nList = new ArrayList<Song>();
-			mWelcomeMusic = -1;
-			try {
-				JSONObject nJson = new JSONObject(result);
-				int nVal = nJson.getInt("on");
-				if (nVal == 1) {
-					isOn = true;
-				} else {
-					isOn = false;
-				}
-				nVal = nJson.getInt("play");
-				if (nVal == 1) {
-					isPlay = true;
-					btnPlay.setImageResource(R.drawable.ic_action_stop);
-				} else {
-					isPlay = false;
-					btnPlay.setImageResource(R.drawable.ic_action_play);
-				}
-				mVolume = nJson.getInt("vol");
-				changeVolume(mVolume);
-				mWelcomeMusic = nJson.getJSONObject("welcome").getInt("music");
-				JSONArray nArr = nJson.getJSONArray("songs");
-				Song nSong;
-				for (int i = 0; i < nArr.length(); i++) {
-					nSong = new Song(nArr.getJSONObject(i));
-					nList.add(nSong);
-				}
-				mAdapter = new MusicAdapter(mContext, mWelcomeMusic, nList);
-				setListAdapter(mAdapter);
-			} catch (JSONException e) {
-				Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
-			}
-			super.onPostExecute(result);
-		}
-
-	}
-
 }

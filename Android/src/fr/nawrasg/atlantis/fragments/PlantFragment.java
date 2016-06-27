@@ -5,20 +5,24 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.PlantAdapter;
-import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.type.Plant;
 
 public class PlantFragment extends Fragment {
@@ -44,34 +48,30 @@ public class PlantFragment extends Fragment {
 
 	private void getItems() {
 		mList = new ArrayList<Plant>();
-		new PlantGET(mContext).execute(App.PLANTE, "get");
-	}
-	
-	
+		String nURL = App.getFullUrl(mContext) + App.PLANTE + "?api=" + App.getAPI(mContext) + "&get";
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-	private class PlantGET extends DataGET {
+			}
 
-		public PlantGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(getResultCode() == 202){
-				mList = new ArrayList<Plant>();
-				try {
-					JSONArray nArr = new JSONArray(result);
-					for (int i = 0; i < nArr.length(); i++) {
-						Plant nPlant = new Plant(nArr.getJSONObject(i));
-						mList.add(nPlant);
+			@Override
+			public void onResponse(Response response) throws IOException {
+				if(response.code() == 202){
+					mList = new ArrayList<Plant>();
+					try {
+						JSONArray nArr = new JSONArray(response.body().string());
+						for (int i = 0; i < nArr.length(); i++) {
+							Plant nPlant = new Plant(nArr.getJSONObject(i));
+							mList.add(nPlant);
+						}
+						mRecyclerView.setAdapter(new PlantAdapter(mContext, mList));
+					} catch (JSONException e) {
+						Log.e("Atlantis", e.toString());
 					}
-					mRecyclerView.setAdapter(new PlantAdapter(mContext, mList));
-				} catch (JSONException e) {
-					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 				}
 			}
-			super.onPostExecute(result);
-		}
-
+		});
 	}
 }

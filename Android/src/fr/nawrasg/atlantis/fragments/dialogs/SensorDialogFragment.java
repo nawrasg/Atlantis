@@ -15,6 +15,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -25,7 +30,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.type.Room;
 import fr.nawrasg.atlantis.type.Sensor;
 
@@ -67,13 +71,13 @@ public class SensorDialogFragment extends DialogFragment{
 									} catch (UnsupportedEncodingException e) {
 										Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
 									}
-                    	   new SensorPOST(mContext).execute(App.SENSORS, "set&" + nVal);
+                    	   post("set&" + nVal);
                        }else{
                     	   String nVal = "type=sensor";
                     	   nVal += "&sensor=" + mSensor.getSensor();
                     	   nVal += "&history=" + (cbHistory.isChecked() ? 1 : 0);
                     	   nVal += "&ignore=" + (cbIgnore.isChecked() ? 1 : 0);
-                    	   new SensorPOST(mContext).execute(App.SENSORS, "set&" + nVal);
+                    	   post("set&" + nVal);
                        }
                        dismiss();
                    }
@@ -151,19 +155,20 @@ public class SensorDialogFragment extends DialogFragment{
 			cbIgnore.setChecked(mSensor.getIgnore());
 		}
 	}
-	
-	private class SensorPOST extends DataGET{
 
-		public SensorPOST(Context context) {
-			super(context);
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-//			Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
-		}
-		
+	private void post(String data){
+		String nURL = App.getFullUrl(mContext) + App.SENSORS + "?api=" + App.getAPI(mContext) + "&" + data;
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+
+			}
+		});
 	}
-	
 }

@@ -23,11 +23,15 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -37,7 +41,6 @@ import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.spinner.HistoryAdapter;
-import fr.nawrasg.atlantis.async.DataGET;
 import fr.nawrasg.atlantis.type.PDevice;
 import fr.nawrasg.atlantis.type.Plant;
 import fr.nawrasg.atlantis.type.Sensor;
@@ -76,7 +79,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 		mLineChart.setDrawGridBackground(false);
 		setHasOptionsMenu(true);
 		spHistory.setOnItemSelectedListener(this);
-		new SensorsGET(mContext).execute(App.HISTORY);
+		getSensors();
 		return nView;
 	}
 
@@ -120,7 +123,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 		if (!btnTo.getText().equals("Jusqu'à")) {
 			nURL += "&to=" + btnTo.getText();
 		}
-		new PlantGET(mContext).execute(App.HISTORY, nURL);
+		getPlant(nURL);
 	}
 
 	private void loadSensor(Sensor sensor) {
@@ -131,7 +134,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 		if (!btnTo.getText().equals("Jusqu'à")) {
 			nURL += "&to=" + btnTo.getText();
 		}
-		new SensorGET(mContext).execute(App.HISTORY, nURL);
+		getSensor(nURL);
 	}
 
 	@Override
@@ -161,119 +164,126 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 		}
 	}
 
-	private class SensorsGET extends DataGET {
+	private void getSensors(){
+		String nURL = App.getFullUrl(mContext) + App.HISTORY + "?api=" + App.getAPI(mContext);
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
 
-		public SensorsGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			mList = new ArrayList<>();
-			try {
-				JSONObject nJson = new JSONObject(result);
-				JSONArray nPlantArr = nJson.getJSONArray("plants");
-				for (int i = 0; i < nPlantArr.length(); i++) {
-					Plant nPlant = new Plant(nPlantArr.getJSONObject(i));
-					mList.add(nPlant);
-				}
-				JSONArray nSensorArr = nJson.getJSONArray("sensors");
-				for (int i = 0; i < nSensorArr.length(); i++) {
-					Sensor nSensor = new Sensor(nSensorArr.getJSONObject(i));
-					mList.add(nSensor);
-				}
-				mAdapter = new HistoryAdapter(mContext, mList);
-				spHistory.setAdapter(mAdapter);
-			} catch (JSONException e) {
-				Log.e("Atlantis", e.toString());
-			}
-			super.onPostExecute(result);
-		}
-	}
-
-	private class SensorGET extends DataGET {
-		ArrayList<Entry> valsComp = new ArrayList<Entry>();
-		ArrayList<String> xVals = new ArrayList<String>();
-
-		public SensorGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			try {
-				JSONArray nArr = new JSONArray(result);
-				for (int i = 0; i < nArr.length(); i++) {
-					JSONObject nTemp = nArr.getJSONObject(i);
-					Entry nEntrey = new Entry(Float.parseFloat(nTemp.getString("value")), i);
-					valsComp.add(nEntrey);
-					xVals.add(nTemp.getString("date"));
-				}
-				LineDataSet set1 = new LineDataSet(valsComp, "");
-				set1.setColor(ColorTemplate.getHoloBlue());
-				set1.setCircleColor(ColorTemplate.getHoloBlue());
-				set1.setLineWidth(2f);
-				set1.setCircleSize(4f);
-				set1.setFillAlpha(65);
-				set1.setFillColor(ColorTemplate.getHoloBlue());
-				set1.setHighLightColor(Color.rgb(244, 117, 117));
-				ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-				dataSets.add(set1);
-				LineData data = new LineData(xVals, dataSets);
-				mLineChart.setData(data);
-				Legend l = mLineChart.getLegend();
-				l.setForm(Legend.LegendForm.LINE);
-				l.setTextColor(Color.BLACK);
-				mLineChart.setDescription("Capteur");
-				mLineChart.animateX(2500);
-			} catch (JSONException e) {
-				Log.e("Atlantis", e.toString());
-			}
-		}
-	}
-
-	private class PlantGET extends DataGET {
-		ArrayList<Entry> valsComp = new ArrayList<Entry>();
-		ArrayList<String> xVals = new ArrayList<String>();
-
-		public PlantGET(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			try {
-				JSONArray nArr = new JSONArray(result);
-				for (int i = 0; i < nArr.length(); i++) {
-					JSONObject nTemp = nArr.getJSONObject(i);
-					Entry nEntrey = new Entry(Float.parseFloat(nTemp.getString("moisture_m")), i);
-					valsComp.add(nEntrey);
-					xVals.add(nTemp.getString("date"));
-				}
-				LineDataSet set1 = new LineDataSet(valsComp, "");
-				set1.setColor(ColorTemplate.getHoloBlue());
-				set1.setCircleColor(ColorTemplate.getHoloBlue());
-				set1.setLineWidth(2f);
-				set1.setCircleSize(4f);
-				set1.setFillAlpha(65);
-				set1.setFillColor(ColorTemplate.getHoloBlue());
-				set1.setHighLightColor(Color.rgb(244, 117, 117));
-				ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-				dataSets.add(set1);
-				LineData data = new LineData(xVals, dataSets);
-				mLineChart.setData(data);
-				Legend l = mLineChart.getLegend();
-				l.setForm(Legend.LegendForm.LINE);
-				l.setTextColor(Color.BLACK);
-				mLineChart.setDescription("Plante");
-				mLineChart.animateX(2500);
-			} catch (JSONException e) {
-				Log.e("Atlantis", e.toString());
 			}
 
-		}
+			@Override
+			public void onResponse(Response response) throws IOException {
+				mList = new ArrayList<>();
+				try {
+					JSONObject nJson = new JSONObject(response.body().string());
+					JSONArray nPlantArr = nJson.getJSONArray("plants");
+					for (int i = 0; i < nPlantArr.length(); i++) {
+						Plant nPlant = new Plant(nPlantArr.getJSONObject(i));
+						mList.add(nPlant);
+					}
+					JSONArray nSensorArr = nJson.getJSONArray("sensors");
+					for (int i = 0; i < nSensorArr.length(); i++) {
+						Sensor nSensor = new Sensor(nSensorArr.getJSONObject(i));
+						mList.add(nSensor);
+					}
+					mAdapter = new HistoryAdapter(mContext, mList);
+					spHistory.setAdapter(mAdapter);
+				} catch (JSONException e) {
+					Log.e("Atlantis", e.toString());
+				}
+			}
+		});
 	}
 
+	private void getSensor(String data){
+		String nURL = App.getFullUrl(mContext) + App.HISTORY + "?api=" + App.getAPI(mContext) + "&" + data;
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				ArrayList<Entry> valsComp = new ArrayList<Entry>();
+				ArrayList<String> xVals = new ArrayList<String>();
+				try {
+					JSONArray nArr = new JSONArray(response.body().string());
+					for (int i = 0; i < nArr.length(); i++) {
+						JSONObject nTemp = nArr.getJSONObject(i);
+						Entry nEntrey = new Entry(Float.parseFloat(nTemp.getString("value")), i);
+						valsComp.add(nEntrey);
+						xVals.add(nTemp.getString("date"));
+					}
+					LineDataSet set1 = new LineDataSet(valsComp, "");
+					set1.setColor(ColorTemplate.getHoloBlue());
+					set1.setCircleColor(ColorTemplate.getHoloBlue());
+					set1.setLineWidth(2f);
+					set1.setCircleSize(4f);
+					set1.setFillAlpha(65);
+					set1.setFillColor(ColorTemplate.getHoloBlue());
+					set1.setHighLightColor(Color.rgb(244, 117, 117));
+					ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+					dataSets.add(set1);
+					LineData data = new LineData(xVals, dataSets);
+					mLineChart.setData(data);
+					Legend l = mLineChart.getLegend();
+					l.setForm(Legend.LegendForm.LINE);
+					l.setTextColor(Color.BLACK);
+					mLineChart.setDescription("Capteur");
+					mLineChart.animateX(2500);
+				} catch (JSONException e) {
+					Log.e("Atlantis", e.toString());
+				}
+			}
+		});
+	}
+
+	private void getPlant(String data){
+		String nURL = App.getFullUrl(mContext) + App.HISTORY + "?api=" + App.getAPI(mContext) + "&" + data;
+		Request nRequest = new Request.Builder().url(nURL).build();
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(Request request, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Response response) throws IOException {
+				ArrayList<Entry> valsComp = new ArrayList<Entry>();
+				ArrayList<String> xVals = new ArrayList<String>();
+				try {
+					JSONArray nArr = new JSONArray(response.body().string());
+					for (int i = 0; i < nArr.length(); i++) {
+						JSONObject nTemp = nArr.getJSONObject(i);
+						Entry nEntrey = new Entry(Float.parseFloat(nTemp.getString("moisture_m")), i);
+						valsComp.add(nEntrey);
+						xVals.add(nTemp.getString("date"));
+					}
+					LineDataSet set1 = new LineDataSet(valsComp, "");
+					set1.setColor(ColorTemplate.getHoloBlue());
+					set1.setCircleColor(ColorTemplate.getHoloBlue());
+					set1.setLineWidth(2f);
+					set1.setCircleSize(4f);
+					set1.setFillAlpha(65);
+					set1.setFillColor(ColorTemplate.getHoloBlue());
+					set1.setHighLightColor(Color.rgb(244, 117, 117));
+					ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+					dataSets.add(set1);
+					LineData data = new LineData(xVals, dataSets);
+					mLineChart.setData(data);
+					Legend l = mLineChart.getLegend();
+					l.setForm(Legend.LegendForm.LINE);
+					l.setTextColor(Color.BLACK);
+					mLineChart.setDescription("Plante");
+					mLineChart.animateX(2500);
+				} catch (JSONException e) {
+					Log.e("Atlantis", e.toString());
+				}
+			}
+		});
+	}
 }

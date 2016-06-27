@@ -10,12 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.async.DataGET;
 
 public class SpeechDialogFragment extends DialogFragment {
 	private Context mContext;
@@ -31,7 +35,19 @@ public class SpeechDialogFragment extends DialogFragment {
 			public void onClick(DialogInterface dialog, int id) {
 				try {
 					String nText = URLEncoder.encode(txtText.getText().toString(), "UTF-8");
-					new DataGET(mContext).execute(App.SPEECH, "speaker&text=" + nText);
+					String nURL = App.getFullUrl(mContext) + App.SPEECH + "?api=" + App.getAPI(mContext) + "&speaker&text=" + nText;
+					Request nRequest = new Request.Builder().url(nURL).build();
+					App.httpClient.newCall(nRequest).enqueue(new Callback() {
+						@Override
+						public void onFailure(Request request, IOException e) {
+
+						}
+
+						@Override
+						public void onResponse(Response response) throws IOException {
+
+						}
+					});
 				} catch (UnsupportedEncodingException e) {
 
 				}
