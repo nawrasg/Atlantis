@@ -1,7 +1,9 @@
 package fr.nawrasg.atlantis.fragments;
 
 import android.app.ListFragment;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.ScenarioAdapter;
+import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Scenario;
 
 /**
@@ -50,6 +53,20 @@ public class ScenarioFragment extends ListFragment {
 	}
 
 	private void getItems(){
+		ContentResolver nResolver = mContext.getContentResolver();
+		Cursor nCursor = nResolver.query(AtlantisContract.Scenarios.CONTENT_URI, null, null, null, null, null);
+		mList = new ArrayList<>();
+		if(nCursor.moveToFirst()){
+			do{
+				Scenario nScenario = new Scenario(nCursor);
+				mList.add(nScenario);
+			}while(nCursor.moveToNext());
+		}
+		mAdapter = new ScenarioAdapter(mContext, mList);
+		setListAdapter(mAdapter);
+	}
+
+	private void getItemsLegacy(){
 		String nURL = App.getFullUrl(mContext) + App.SCENARIOS + "?api=" + App.getAPI(mContext);
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
