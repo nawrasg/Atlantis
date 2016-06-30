@@ -3,26 +3,32 @@ header ( "Access-Control-Allow-Origin: *" );
 
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
+require_once __DIR__ . '/classes/Sync.php';
 
 $page_level = 1;
-
+$sync = new Sync();
 
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
 		case 'GET' :
-			http_response_code(202);
-			echo json_encode(get());			
+			if(isset($_GET['lastmodified'])){
+				http_response_code(202);
+				echo json_encode(get($_GET['lastmodified'], $sync));
+			}else{
+				http_response_code(400);
+			}						
 			break;
 	}
 } else {
 	http_response_code ( 403 );
 }
 
-function get() {
-	return array (
-			'ean' => getEan (),
-			'scenarios' => getScenarios()
-	);
+function get($lastmodified, $sync) {
+	$output = array();
+	if($lastmodified < $sync->get(Sync::SCENARIOS)){
+		$output[Sync::SCENARIOS] = getScenarios();
+	}
+	return $output;
 }
 
 function getEan() {
@@ -33,7 +39,16 @@ function getEan() {
 	return $result;
 }
 
+function getCourses($lastmodified){
+	$bdd = getBDD ();
+	$req = $bdd->query ( "SELECT * FROM at_courses WHERE lastmodified > '$lastmodified' ORDER BY name" );
+	$result = $req->fetchAll(PDO::FETCH_ASSOC);
+	$req->closeCursor ();
+	return $result;
+}
+
 function getScenarios(){
+	
 	$files = scandir ( __DIR__ . '/scenarios' );
 	$result = array ();
 	foreach ( $files as $file ) {
@@ -43,8 +58,6 @@ function getScenarios(){
 			$php = file_get_contents ( __DIR__ . '/scenarios/' . $file . '.php' );
 			$result [] = array (
 					'file' => $file
-					//'xml' => (! $xml ? ' ' : $xml),
-					//'php' => (! $php ? ' ' : $php)
 			);
 		}
 	}
