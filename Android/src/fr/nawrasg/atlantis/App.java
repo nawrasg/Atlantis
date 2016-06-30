@@ -169,6 +169,13 @@ public class App extends Application{
 		nEdit.commit();
 	}
 
+	public static void setLong(Context context, String key, long value){
+		SharedPreferences nPref = PreferenceManager.getDefaultSharedPreferences(context);
+		Editor nEdit = nPref.edit();
+		nEdit.putLong(key, value);
+		nEdit.commit();
+	}
+
 	public static float getFloat(Context c, String x){
 		SharedPreferences nPref = PreferenceManager.getDefaultSharedPreferences(c);
 		return nPref.getFloat(x, 0);
