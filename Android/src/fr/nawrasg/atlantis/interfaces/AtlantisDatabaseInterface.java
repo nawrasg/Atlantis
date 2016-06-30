@@ -9,4 +9,15 @@ public interface AtlantisDatabaseInterface {
             "ean TEXT UNIQUE, \n" +
             "nom TEXT" +
             ")";
+
+    String COURSES_TABLE_CREATE = "CREATE TABLE at_courses (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+            "name TEXT NOT NULL, \n" +
+            "quantity INTEGER, \n" +
+            "lastmodified INTEGER" +
+            ")";
+
+    String SCENARIOS_TABLE_CREATE = "CREATE TABLE at_scenarios (" +
+            "file TEXT NOT NULL" +
+            ")";
 }

@@ -2,6 +2,7 @@ package fr.nawrasg.atlantis.other;
 
 import android.content.ContentResolver;
 import android.net.Uri;
+import android.preference.Preference;
 import android.provider.BaseColumns;
 
 /**
@@ -20,5 +21,17 @@ public final class AtlantisContract {
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.ean";
         public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.ean";
         public static final String[] PROJECTION_ALL = {"ean", "nom"};
+    }
+
+    public static final class Courses implements BaseColumns{
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AtlantisContract.CONTENT_URI, "courses");
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.courses";
+        public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.courses";
+    }
+
+    public static final class Scenarios implements BaseColumns{
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AtlantisContract.CONTENT_URI, "scenarios");
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.scenarios";
+        public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.scenarios";
     }
 }
