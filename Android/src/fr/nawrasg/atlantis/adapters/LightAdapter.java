@@ -1,8 +1,5 @@
 package fr.nawrasg.atlantis.adapters;
 
-import java.io.IOException;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +18,11 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import java.io.IOException;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.Hue;
@@ -34,10 +36,18 @@ public class LightAdapter extends ArrayAdapter<Light> {
 	private Light mLight;
 
 	static class LightViewHolder {
-		public ImageView imgLightIcon;
-		public TextView lblLightName;
-		public Switch swtLightToggle;
-		public SeekBar sbLightIntensity;
+		@Bind(R.id.imgLightIcon)
+		ImageView imgLightIcon;
+		@Bind(R.id.lblLightName)
+		TextView lblLightName;
+		@Bind(R.id.swtLightToggle)
+		Switch swtLightToggle;
+		@Bind(R.id.sbLightIntensity)
+		SeekBar sbLightIntensity;
+
+		public LightViewHolder(View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public LightAdapter(Context context, List<Light> objects) {
@@ -128,10 +138,7 @@ public class LightAdapter extends ArrayAdapter<Light> {
 		if (nView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_light, parent, false);
-			final LightViewHolder nHolder = new LightViewHolder();
-			nHolder.lblLightName = (TextView) nView.findViewById(R.id.lblLightName);
-			nHolder.imgLightIcon = (ImageView) nView.findViewById(R.id.imgLightIcon);
-			nHolder.sbLightIntensity = (SeekBar) nView.findViewById(R.id.sbLightIntensity);
+			final LightViewHolder nHolder = new LightViewHolder(nView);
 			nHolder.sbLightIntensity.setTag(mLight);
 			nHolder.sbLightIntensity.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
@@ -149,7 +156,6 @@ public class LightAdapter extends ArrayAdapter<Light> {
 				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				}
 			});
-			nHolder.swtLightToggle = (Switch) nView.findViewById(R.id.swtLightToggle);
 			nHolder.swtLightToggle.setTag(mLight);
 			nHolder.swtLightToggle.setOnClickListener(new OnClickListener() {
 

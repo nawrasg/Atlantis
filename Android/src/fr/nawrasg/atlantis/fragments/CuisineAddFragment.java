@@ -54,7 +54,8 @@ public class CuisineAddFragment extends Fragment{
 	private String mEAN;
 	private Context mContext;
 	private boolean eanFound = false;
-	private Spinner nSpinner;
+	@Bind(R.id.spinnerEndroit)
+	Spinner nSpinner;
 	ContentResolver mResolver;
 
 	@Override
@@ -70,7 +71,6 @@ public class CuisineAddFragment extends Fragment{
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		nSpinner = (Spinner) view.findViewById(R.id.spinnerEndroit);
 		nSpinner.setAdapter(new CuisinePlaceAdapter(mContext));
 	}
 

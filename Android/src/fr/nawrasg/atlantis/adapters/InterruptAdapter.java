@@ -1,7 +1,5 @@
 package fr.nawrasg.atlantis.adapters;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.Light;
 import fr.nawrasg.atlantis.type.PDevice;
@@ -20,8 +23,14 @@ public class InterruptAdapter extends ArrayAdapter<PDevice> {
 	private PDevice mDevice;
 
 	static class InterruptViewHolder {
-		public ImageView imgInterruptIcon;
-		public TextView lblInterruptName;
+		@Bind(R.id.imgInterruptIcon)
+		ImageView imgInterruptIcon;
+		@Bind(R.id.lblInterruptName)
+		TextView lblInterruptName;
+
+		public InterruptViewHolder(View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public InterruptAdapter(Context context, List<PDevice> objects) {
@@ -37,9 +46,7 @@ public class InterruptAdapter extends ArrayAdapter<PDevice> {
 		if (nView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_actionner, parent, false);
-			final InterruptViewHolder nHolder = new InterruptViewHolder();
-			nHolder.lblInterruptName = (TextView) nView.findViewById(R.id.lblInterruptName);
-			nHolder.imgInterruptIcon = (ImageView) nView.findViewById(R.id.imgInterruptIcon);
+			final InterruptViewHolder nHolder = new InterruptViewHolder(nView);
 			nView.setTag(nHolder);
 		}
 		InterruptViewHolder nHolder = (InterruptViewHolder) nView.getTag();

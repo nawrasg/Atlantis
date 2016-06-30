@@ -1,13 +1,16 @@
 package fr.nawrasg.atlantis.adapters.spinner;
 
-import java.util.Locale;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 
 public class ConnectionAdapter extends ArrayAdapter<String> {
@@ -15,7 +18,12 @@ public class ConnectionAdapter extends ArrayAdapter<String> {
 	private String[] mList;
 
 	static class ConnectionViewHolder {
-		public TextView title;
+		@Bind(R.id.lblConnectionTitle)
+		TextView title;
+
+		public ConnectionViewHolder(View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public ConnectionAdapter(Context context, String[] objects) {
@@ -40,8 +48,7 @@ public class ConnectionAdapter extends ArrayAdapter<String> {
 		if (nView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_connection, parent, false);
-			ConnectionViewHolder nHolder = new ConnectionViewHolder();
-			nHolder.title = (TextView) nView.findViewById(R.id.lblConnectionTitle);
+			ConnectionViewHolder nHolder = new ConnectionViewHolder(nView);
 			nView.setTag(nHolder);
 		}
 		ConnectionViewHolder nHolder = (ConnectionViewHolder) nView.getTag();

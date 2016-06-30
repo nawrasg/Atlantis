@@ -38,10 +38,20 @@ import fr.nawrasg.atlantis.type.Room;
 
 public class LightDialogFragment extends DialogFragment implements OnClickListener {
 	private Context mContext;
-	private Spinner spRoom;
+	@Bind(R.id.spinnerLightDialogRoom)
+	Spinner spRoom;
 	private ArrayList<Room> mRoomList;
 	private Light mLight;
-	private ImageView imgRed, imgGreen, imgBlue, imgYellow, imgWhite;
+	@Bind(R.id.imgLightDialogRed)
+	ImageView imgRed;
+	@Bind(R.id.imgLightDialogGreen)
+	ImageView imgGreen;
+	@Bind(R.id.imgLightDialogBlue)
+	ImageView imgBlue;
+	@Bind(R.id.imgLightDialogYellow)
+	ImageView imgYellow;
+	@Bind(R.id.imgLightDialogWhite)
+	ImageView imgWhite;
 	@Bind(R.id.txtLightDialogName)
 	EditText txtName;
 
@@ -96,16 +106,10 @@ public class LightDialogFragment extends DialogFragment implements OnClickListen
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		spRoom = (Spinner) view.findViewById(R.id.spinnerLightDialogRoom);
-		imgRed = (ImageView) view.findViewById(R.id.imgLightDialogRed);
 		imgRed.setOnClickListener(this);
-		imgGreen = (ImageView) view.findViewById(R.id.imgLightDialogGreen);
 		imgGreen.setOnClickListener(this);
-		imgBlue = (ImageView) view.findViewById(R.id.imgLightDialogBlue);
 		imgBlue.setOnClickListener(this);
-		imgYellow = (ImageView) view.findViewById(R.id.imgLightDialogYellow);
 		imgYellow.setOnClickListener(this);
-		imgWhite = (ImageView) view.findViewById(R.id.imgLightDialogWhite);
 		imgWhite.setOnClickListener(this);
 		getSettings();
 	}

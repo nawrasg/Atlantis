@@ -1,7 +1,5 @@
 package fr.nawrasg.atlantis.adapters;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.Device;
 
@@ -18,8 +21,22 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 	private Device mDevice;
 
 	static class DeviceViewHolder {
-		public ImageView icon, status, connection;
-		public TextView title, ip, mac;
+		@Bind(R.id.imgDeviceIcon)
+		ImageView icon;
+		@Bind(R.id.imgDeviceStatus)
+		ImageView status;
+		@Bind(R.id.imgDeviceConnectionType)
+		ImageView connection;
+		@Bind(R.id.lblDeviceTitle)
+		TextView title;
+		@Bind(R.id.lblDeviceIp)
+		TextView ip;
+		@Bind(R.id.lblDeviceMac)
+		TextView mac;
+
+		public DeviceViewHolder(View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public DeviceAdapter(Context context, List<Device> objects) {
@@ -36,13 +53,7 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		if (nView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_device, parent, false);
-			DeviceViewHolder nHolder = new DeviceViewHolder();
-			nHolder.icon = (ImageView) nView.findViewById(R.id.imgDeviceIcon);
-			nHolder.status = (ImageView) nView.findViewById(R.id.imgDeviceStatus);
-			nHolder.connection = (ImageView) nView.findViewById(R.id.imgDeviceConnectionType);
-			nHolder.title = (TextView) nView.findViewById(R.id.lblDeviceTitle);
-			nHolder.ip = (TextView) nView.findViewById(R.id.lblDeviceIp);
-			nHolder.mac = (TextView) nView.findViewById(R.id.lblDeviceMac);
+			DeviceViewHolder nHolder = new DeviceViewHolder(nView);
 			nView.setTag(nHolder);
 		}
 		DeviceViewHolder nHolder = (DeviceViewHolder) nView.getTag();

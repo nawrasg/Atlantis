@@ -34,7 +34,8 @@ public class GPSFragment extends Fragment {
 	@Bind(R.id.txtGPSradius)
 	EditText txtRadius;
 	private LocationManager nLM;
-	private CheckBox cbGeo;
+	@Bind(R.id.cbGPSon)
+	CheckBox cbGeo;
 
 	private static final String ATLANTIS_GEO_ALERT = "fr.nawrasg.atlantis.geo";
 
@@ -45,7 +46,6 @@ public class GPSFragment extends Fragment {
 		View nView = inflater.inflate(R.layout.fragment_gps, container, false);
 		ButterKnife.bind(this, nView);
 		nLM = (LocationManager) nContext.getSystemService(Context.LOCATION_SERVICE);
-		cbGeo = (CheckBox) nView.findViewById(R.id.cbGPSon);
 		Intent nIntent = new Intent(ATLANTIS_GEO_ALERT);
 		boolean nActivate = (PendingIntent.getBroadcast(nContext, 0, nIntent, PendingIntent.FLAG_NO_CREATE) != null);
 		if (nActivate)

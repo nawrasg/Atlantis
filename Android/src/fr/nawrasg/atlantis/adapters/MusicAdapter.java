@@ -1,7 +1,5 @@
 package fr.nawrasg.atlantis.adapters;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.Song;
 
@@ -19,9 +22,16 @@ public class MusicAdapter extends ArrayAdapter<Song>{
 	private Song mSong;
 	
 	static class MusicViewHolder {
-		public ImageView imgMusicIcon;
-		public TextView lblMusicName;
-		public TextView lblMusicLength;		
+		@Bind(R.id.imgSongIcon)
+		ImageView imgMusicIcon;
+		@Bind(R.id.lblSongTitle)
+		TextView lblMusicName;
+		@Bind(R.id.lblSongLength)
+		TextView lblMusicLength;
+
+		public MusicViewHolder(View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 	
 	public MusicAdapter(Context context, int welcome, ArrayList<Song> list){
@@ -38,13 +48,9 @@ public class MusicAdapter extends ArrayAdapter<Song>{
 		if (nView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_music, parent, false);
-			final MusicViewHolder nHolder = new MusicViewHolder();
-			nHolder.lblMusicName = (TextView) nView.findViewById(R.id.lblSongTitle);
-			nHolder.imgMusicIcon = (ImageView) nView.findViewById(R.id.imgSongIcon);
-			nHolder.lblMusicLength = (TextView) nView.findViewById(R.id.lblSongLength);
+			final MusicViewHolder nHolder = new MusicViewHolder(nView);
 			nView.setTag(nHolder);
 		}
-
 		MusicViewHolder nHolder = (MusicViewHolder) nView.getTag();
 		String nName = mSong.getTitle();
 		nHolder.lblMusicName.setText(nName);

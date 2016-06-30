@@ -1,13 +1,16 @@
 package fr.nawrasg.atlantis.adapters.spinner;
 
-import java.util.Locale;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 
 public class DeviceTypeAdapter extends ArrayAdapter<String> {
@@ -15,7 +18,12 @@ public class DeviceTypeAdapter extends ArrayAdapter<String> {
 	private String[] mList;
 
 	static class DeviceTypeViewHolder {
-		public TextView title;
+		@Bind(R.id.lblDeviceTypeTitle)
+		TextView title;
+
+		public DeviceTypeViewHolder(View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public DeviceTypeAdapter(Context context, String[] objects) {
@@ -40,8 +48,7 @@ public class DeviceTypeAdapter extends ArrayAdapter<String> {
 		if (nView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_device_type, parent, false);
-			DeviceTypeViewHolder nHolder = new DeviceTypeViewHolder();
-			nHolder.title = (TextView) nView.findViewById(R.id.lblDeviceTypeTitle);
+			DeviceTypeViewHolder nHolder = new DeviceTypeViewHolder(nView);
 			nView.setTag(nHolder);
 		}
 		DeviceTypeViewHolder nHolder = (DeviceTypeViewHolder) nView.getTag();

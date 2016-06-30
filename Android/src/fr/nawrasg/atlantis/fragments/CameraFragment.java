@@ -22,6 +22,8 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.CameraAdapter;
@@ -32,7 +34,8 @@ import fr.nawrasg.atlantis.type.Camera;
  */
 public class CameraFragment extends Fragment {
 	private Context mContext;
-	private RecyclerView mRecyclerView;
+	@Bind(R.id.rvCamera)
+	RecyclerView mRecyclerView;
 	private ArrayList<Camera> mList;
 	private Handler mHandler;
 
@@ -40,6 +43,7 @@ public class CameraFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_camera, container, false);
+		ButterKnife.bind(this, nView);
 		mContext = getActivity();
 		mHandler = new Handler();
 		return nView;
@@ -48,7 +52,6 @@ public class CameraFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		mRecyclerView = (RecyclerView) view.findViewById(R.id.rvCamera);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 		getItems();
 	}

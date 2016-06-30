@@ -21,6 +21,8 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.PlantAdapter;
@@ -29,12 +31,14 @@ import fr.nawrasg.atlantis.type.Plant;
 public class PlantFragment extends Fragment {
 	private Context mContext;
 	private ArrayList<Plant> mList;
+	@Bind(R.id.rvPlant)
 	private RecyclerView mRecyclerView;
 	private Handler mHandler;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_plant, container, false);
+		ButterKnife.bind(this, nView);
 		getActivity().getActionBar().setIcon(R.drawable.ng_plant);
 		mContext = super.getActivity();
 		mHandler = new Handler();

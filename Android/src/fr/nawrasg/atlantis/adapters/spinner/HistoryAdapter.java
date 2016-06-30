@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.PDevice;
 import fr.nawrasg.atlantis.type.Plant;
@@ -23,7 +25,12 @@ public class HistoryAdapter extends ArrayAdapter<PDevice> {
 	private PDevice mDevice;
 
 	static class HistoryViewHolder {
+		@Bind(R.id.lblHistoryRowTitle)
 		TextView lblTitle;
+
+		public HistoryViewHolder(View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public HistoryAdapter(Context context, List<PDevice> objects) {
@@ -48,8 +55,7 @@ public class HistoryAdapter extends ArrayAdapter<PDevice> {
 		if (nView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_history, parent, false);
-			HistoryViewHolder nHolder = new HistoryViewHolder();
-			nHolder.lblTitle = (TextView) nView.findViewById(R.id.lblHistoryRowTitle);
+			HistoryViewHolder nHolder = new HistoryViewHolder(nView);
 			nView.setTag(nHolder);
 		}
 		HistoryViewHolder nHolder = (HistoryViewHolder) nView.getTag();

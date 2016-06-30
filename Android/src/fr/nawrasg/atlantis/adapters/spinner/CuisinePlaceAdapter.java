@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 
 public class CuisinePlaceAdapter extends ArrayAdapter<String>{
@@ -13,7 +16,12 @@ public class CuisinePlaceAdapter extends ArrayAdapter<String>{
 	private static String[] mList = {"Frigidaire", "Placard", "Congelateur"};
 	
 	static class CuisinePlaceViewHolder {
-		public TextView title;
+		@Bind(R.id.lblCuisinePlaceTitle)
+		TextView title;
+
+		public CuisinePlaceViewHolder (View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public CuisinePlaceAdapter(Context context) {
@@ -36,8 +44,7 @@ public class CuisinePlaceAdapter extends ArrayAdapter<String>{
 		if(nView == null){
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_cuisine_place, parent, false);
-			CuisinePlaceViewHolder nHolder = new CuisinePlaceViewHolder();
-			nHolder.title = (TextView) nView.findViewById(R.id.lblCuisinePlaceTitle);
+			CuisinePlaceViewHolder nHolder = new CuisinePlaceViewHolder(nView);
 			nView.setTag(nHolder);
 		}
 		CuisinePlaceViewHolder nHolder = (CuisinePlaceViewHolder) nView.getTag();

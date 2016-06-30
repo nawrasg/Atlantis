@@ -1,7 +1,5 @@
 package fr.nawrasg.atlantis.adapters;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.Medicament;
 
@@ -18,11 +21,20 @@ public class PharmacieAdapter extends ArrayAdapter<Medicament> {
 	private Medicament mMedicament;
 
 	static class PharmacieViewHolder {
-		public ImageView icon;
-		public ImageView icon2;
-		public TextView title;
-		public TextView description;
-		public TextView quantity;
+		@Bind(R.id.imgPharmacieIcon)
+		ImageView icon;
+		@Bind(R.id.imgPharmacieIcon2)
+		ImageView icon2;
+		@Bind(R.id.lblPharmacieTitle)
+		TextView title;
+		@Bind(R.id.lblPharmacieDescription)
+		TextView description;
+		@Bind(R.id.lblPharmacieQuantity)
+		TextView quantity;
+
+		public PharmacieViewHolder(View view){
+			ButterKnife.bind(this, view);
+		}
 	}
 
 	public PharmacieAdapter(Context context, ArrayList<Medicament> list) {
@@ -38,12 +50,7 @@ public class PharmacieAdapter extends ArrayAdapter<Medicament> {
 		if(nView == null){
 			LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			nView = inflater.inflate(R.layout.row_pharmacie, parent, false);
-			final PharmacieViewHolder nHolder = new PharmacieViewHolder();
-			nHolder.title = (TextView)nView.findViewById(R.id.lblPharmacieTitle);
-			nHolder.description = (TextView)nView.findViewById(R.id.lblPharmacieDescription);
-			nHolder.quantity = (TextView)nView.findViewById(R.id.lblPharmacieQuantity);
-			nHolder.icon = (ImageView)nView.findViewById(R.id.imgPharmacieIcon);
-			nHolder.icon2 = (ImageView)nView.findViewById(R.id.imgPharmacieIcon2);
+			final PharmacieViewHolder nHolder = new PharmacieViewHolder(nView);
 			nView.setTag(nHolder);
 		}
 		PharmacieViewHolder nHolder = (PharmacieViewHolder)nView.getTag();

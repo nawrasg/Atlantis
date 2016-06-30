@@ -37,7 +37,8 @@ public class DeviceInfoDialogFragment extends DialogFragment {
 	EditText txtTitle;
 	@Bind(R.id.txtDeviceDialogIp)
 	EditText txtIP;
-	private Spinner spUser;
+	@Bind(R.id.spDeviceDialogUser)
+	Spinner spUser;
 	private Device mDevice;
 	private ArrayList<User> mUserList;
 
@@ -90,7 +91,6 @@ public class DeviceInfoDialogFragment extends DialogFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		spUser = (Spinner) view.findViewById(R.id.spDeviceDialogUser);
 		getSettings();
 
 	}

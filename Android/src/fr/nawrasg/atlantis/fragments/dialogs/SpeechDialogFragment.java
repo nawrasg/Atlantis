@@ -18,18 +18,22 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 
 public class SpeechDialogFragment extends DialogFragment {
 	private Context mContext;
-	private EditText txtText;
+	@Bind(R.id.txtSpeechDialogText)
+	EditText txtText;
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		mContext = getActivity();
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View nView = inflater.inflate(R.layout.fragment_speech, null);
+		ButterKnife.bind(this, nView);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setPositiveButton("Envoyer", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
@@ -61,11 +65,4 @@ public class SpeechDialogFragment extends DialogFragment {
 		onViewCreated(nView, savedInstanceState);
 		return builder.create();
 	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		txtText = (EditText) view.findViewById(R.id.txtSpeechDialogText);
-	}
-
 }
