@@ -11,7 +11,7 @@ public interface AtlantisDatabaseInterface {
             ")";
 
     String COURSES_TABLE_CREATE = "CREATE TABLE at_courses (" +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+            "id INTEGER UNIQUE, \n" +
             "name TEXT NOT NULL, \n" +
             "quantity INTEGER, \n" +
             "lastmodified INTEGER" +
@@ -20,4 +20,16 @@ public interface AtlantisDatabaseInterface {
     String SCENARIOS_TABLE_CREATE = "CREATE TABLE at_scenarios (" +
             "file TEXT NOT NULL" +
             ")";
+
+    String LIGHTS_TABLE_CREATE = "CREATE TABLE at_lights ("+
+            "id TEXT UNIQUE, \n" +
+            "name TEXT, \n" +
+            "protocol TEXT, \n" +
+            "type TEXT, \n" +
+            "ip TEXT, \n" +
+            "room TEXT, \n" +
+            "uid TEXT" +
+            ")";
+
+    String LIGHTS_TABLE_NAME = "at_lights";
 }
