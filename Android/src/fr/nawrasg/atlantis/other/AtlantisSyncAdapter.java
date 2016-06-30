@@ -7,7 +7,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncResult;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -62,14 +61,9 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
             public void onResponse(Response response) throws IOException {
                 if(response.code() == 202){
                     try {
-                        JSONArray arr = new JSONArray(response.body().string());
-                        for (int i = 0; i < arr.length(); i++) {
-                            JSONObject nJson = arr.getJSONObject(i);
-                            Uri nUri = Uri.parse("content://fr.nawrasg.atlantis/ean");
-                            ContentValues nValues = new ContentValues();
-                            nValues.put("ean", nJson.getString("ean"));
-                            nValues.put("nom", nJson.getString("nom"));
-                            mResolver.insert(nUri, nValues);
+                        JSONObject nJSON = new JSONObject(response.body().string());
+                        if(!nJSON.isNull("scenarios")){
+                            insertScenarios(nJSON.getJSONArray("scenarios"));
                         }
                     } catch (JSONException e) {
                         Log.w("Atlantis", e.toString());
@@ -77,5 +71,15 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
                 }
             }
         });
+    }
+
+    private void insertScenarios(JSONArray nArr) throws JSONException {
+        mResolver.delete(AtlantisContract.Scenarios.CONTENT_URI, null, null);
+        for(int i = 0; i < nArr.length(); i++){
+            JSONObject nJson = nArr.getJSONObject(i);
+            ContentValues nValues = new ContentValues();
+            nValues.put("file", nJson.getString("file"));
+            mResolver.insert(AtlantisContract.Scenarios.CONTENT_URI, nValues);
+        }
     }
 }
