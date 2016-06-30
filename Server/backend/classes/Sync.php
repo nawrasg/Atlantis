@@ -1,6 +1,7 @@
 <?php
 class Sync{
 	const SCENARIOS = 'scenarios';
+	const EAN = 'ean';
 	
 	private $data;
 	private $file = 'sync.json';

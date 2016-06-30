@@ -98,19 +98,16 @@ public class AtlantisContentProvider extends ContentProvider {
 		long nID = 0;
 		switch(URI_MATCHER.match(uri)){
 			case EAN_LIST:
-			case EAN_ITEM:
 				nID = nDB.insert("at_ean", null, values);
 				if(nID > 0){
 					return ContentUris.withAppendedId(uri, nID);
 				}
 			case COURSES_LIST:
-			case COURSES_ITEM:
 				nID = nDB.insert("at_courses", null, values);
 				if(nID > 0){
 					return ContentUris.withAppendedId(uri, nID);
 				}
 			case SCENARIOS_LIST:
-			case SCENARIOS_ITEM:
 				nID = nDB.insert("at_scenarios", null, values);
 				if(nID > 0){
 					return uri;
@@ -125,6 +122,8 @@ public class AtlantisContentProvider extends ContentProvider {
 		int nCount = 0;
 		String nID = "", nWhere = "";
 		switch(URI_MATCHER.match(uri)){
+			case EAN_LIST:
+				return nDB.delete("at_ean", selection, selectionArgs);
 			case SCENARIOS_LIST:
 				return nDB.delete("at_scenarios", selection, selectionArgs);
 			case SCENARIOS_ITEM:

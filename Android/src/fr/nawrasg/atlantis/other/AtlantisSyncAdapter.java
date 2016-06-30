@@ -61,6 +61,9 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
                         if(!nJSON.isNull("scenarios")){
                             insertScenarios(nJSON.getJSONArray("scenarios"));
                         }
+                        if(!nJSON.isNull("ean")){
+                            insertEan(nJSON.getJSONArray("ean"));
+                        }
                         App.setLong(mContext, "lastmodified", (System.currentTimeMillis()/1000));
                     } catch (JSONException e) {
                         Log.w("Atlantis", e.toString());
@@ -77,6 +80,17 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
             ContentValues nValues = new ContentValues();
             nValues.put("file", nJson.getString("file"));
             mResolver.insert(AtlantisContract.Scenarios.CONTENT_URI, nValues);
+        }
+    }
+
+    private void insertEan(JSONArray nArr) throws JSONException {
+        mResolver.delete(AtlantisContract.Ean.CONTENT_URI, null, null);
+        for(int i = 0; i < nArr.length(); i++){
+            JSONObject nJson = nArr.getJSONObject(i);
+            ContentValues nValues = new ContentValues();
+            nValues.put("ean", nJson.getString("ean"));
+            nValues.put("nom", nJson.getString("nom"));
+            mResolver.insert(AtlantisContract.Ean.CONTENT_URI, nValues);
         }
     }
 }

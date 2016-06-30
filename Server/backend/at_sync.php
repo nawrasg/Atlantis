@@ -6,14 +6,13 @@ require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Sync.php';
 
 $page_level = 1;
-$sync = new Sync();
 
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
 	switch ($_SERVER ['REQUEST_METHOD']) {
 		case 'GET' :
 			if(isset($_GET['lastmodified'])){
 				http_response_code(202);
-				echo json_encode(get($_GET['lastmodified'], $sync));
+				echo json_encode(get($_GET['lastmodified']));
 			}else{
 				http_response_code(400);
 			}						
@@ -23,10 +22,14 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 	http_response_code ( 403 );
 }
 
-function get($lastmodified, $sync) {
+function get($lastmodified) {
+	$sync = new Sync();
 	$output = array();
 	if($lastmodified < $sync->get(Sync::SCENARIOS)){
 		$output[Sync::SCENARIOS] = getScenarios();
+	}
+	if($lastmodified < $sync->get(Sync::EAN)){
+		$output[Sync::EAN] = getEan();
 	}
 	return $output;
 }
