@@ -2,6 +2,8 @@
 class Sync{
 	const SCENARIOS = 'scenarios';
 	const EAN = 'ean';
+	const LIGHTS = 'lights';
+	const ROOMS = 'rooms';
 	
 	private $data;
 	private $file = 'sync.json';
