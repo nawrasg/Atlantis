@@ -5,6 +5,7 @@ header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
 
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
+require_once __DIR__ . '/classes/Sync.php';
 
 $page_level = 1;
 
@@ -36,6 +37,7 @@ function delete($arr) {
 		$result = unlink ( $filename );
 		$result_xml = unlink ( $xml );
 		if ($result && $result_xml) {
+			(new Sync())->update(Sync::SCENARIOS);
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
@@ -67,6 +69,7 @@ function add($arr) {
 		if (! $result) { // && ! $result_xml
 			http_response_code ( 400 );
 		} else {
+			(new Sync())->update(Sync::SCENARIOS);
 			http_response_code ( 202 );
 		}
 	} else {
