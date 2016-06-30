@@ -5,6 +5,8 @@ require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
 require_once __DIR__ . '/classes/Sync.php';
 
+require_once __DIR__ . '/classes/Hue.php';
+
 $page_level = 1;
 
 if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) {
@@ -31,6 +33,12 @@ function get($lastmodified) {
 	if($lastmodified < $sync->get(Sync::EAN)){
 		$output[Sync::EAN] = getEan();
 	}
+	if($lastmodified < $sync->get(Sync::LIGHTS)){
+		$output[Sync::LIGHTS] = getLights();
+	}
+	if($lastmodified < $sync->get(Sync::ROOMS)){
+		$output[Sync::ROOMS] = getRooms();
+	}
 	return $output;
 }
 
@@ -51,7 +59,6 @@ function getCourses($lastmodified){
 }
 
 function getScenarios(){
-	
 	$files = scandir ( __DIR__ . '/scenarios' );
 	$result = array ();
 	foreach ( $files as $file ) {
@@ -64,5 +71,21 @@ function getScenarios(){
 			);
 		}
 	}
+	return $result;
+}
+
+function getLights(){
+	$bdd = getBDD ();
+	$req = $bdd->query ( 'SELECT * FROM at_lights' );
+	$result = $req->fetchAll(PDO::FETCH_ASSOC);
+	$req->closeCursor();
+	return $result;
+}
+
+function getRooms(){
+	$bdd = getBDD ();
+	$req = $bdd->query ( 'SELECT * FROM at_room' );
+	$result = $req->fetchAll(PDO::FETCH_ASSOC);
+	$req->closeCursor();
 	return $result;
 }
