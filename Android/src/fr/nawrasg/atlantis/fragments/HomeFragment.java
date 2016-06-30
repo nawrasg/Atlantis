@@ -22,7 +22,6 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
@@ -45,7 +44,6 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	private FloatingActionMenu mActionMenu;
 	private SubActionButton mDayButton, mNightButton, mAwayButton;
 	private Handler mHandler;
-	private OkHttpClient mClient;
 	@Bind(R.id.imgPlanPlan)
 	ImageView imgPlan;
 	@Bind(R.id.txtHomeWeatherToday)
@@ -61,7 +59,6 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		ButterKnife.bind(this, nView);
 		mContext = getActivity();
 		mHandler = new Handler();
-		mClient = new OkHttpClient();
 		return nView;
 	}
 
@@ -78,7 +75,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
-		mClient.newCall(nRequest).enqueue(new Callback() {
+		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 				//TODO
@@ -215,7 +212,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 				.put(nBody.build())
 				.build();
 
-		mClient.newCall(request).enqueue(new Callback() {
+		App.httpClient.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
 				//TODO
