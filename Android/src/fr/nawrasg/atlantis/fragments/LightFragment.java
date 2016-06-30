@@ -1,7 +1,9 @@
 package fr.nawrasg.atlantis.fragments;
 
 import android.app.ListFragment;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -32,6 +34,7 @@ import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.LightAdapter;
 import fr.nawrasg.atlantis.fragments.dialogs.LightDialogFragment;
+import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
 import fr.nawrasg.atlantis.type.Room;
@@ -51,12 +54,6 @@ public class LightFragment extends ListFragment{
 		setHasOptionsMenu(true);
 		return nView;
 	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		getItems();
-	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -74,7 +71,27 @@ public class LightFragment extends ListFragment{
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void getItems() {
+	private void getItems(){
+		ContentResolver nResolver = mContext.getContentResolver();
+		Cursor nCursor = nResolver.query(AtlantisContract.Lights.CONTENT_URI, null, null, null, null);
+		if(nCursor.moveToFirst()){
+			mList = new ArrayList<>();
+			mRoomList = new ArrayList<>();
+			do{
+				Light nLight = new Hue(nCursor);
+				mList.add(nLight);
+			}while(nCursor.moveToNext());
+			setListAdapter(new LightAdapter(mContext, mList, mRoomList));
+		}
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		setItemListener();
+	}
+
+	private void getStatus() {
 		String nURL = App.getFullUrl(mContext) + App.LIGHTS + "?api=" + App.getAPI(mContext);
 		Request nRequest = new Request.Builder()
 				.url(nURL)
