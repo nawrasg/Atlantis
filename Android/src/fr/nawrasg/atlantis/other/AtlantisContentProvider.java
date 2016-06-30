@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import fr.nawrasg.atlantis.App;
+import fr.nawrasg.atlantis.interfaces.AtlantisDatabaseInterface;
 
 /**
  * Created by Nawras GEORGI on 07/12/2015.
@@ -26,6 +27,8 @@ public class AtlantisContentProvider extends ContentProvider {
 	private static final int COURSES_ITEM = 4;
 	private static final int SCENARIOS_LIST = 5;
 	private static final int SCENARIOS_ITEM = 6;
+	private static final int LIGHTS_LIST = 7;
+	private static final int LIGHTS_ITEM = 8;
 	private static final UriMatcher URI_MATCHER;
 	private AtlantisOpenHelper mHelper;
 
@@ -38,6 +41,8 @@ public class AtlantisContentProvider extends ContentProvider {
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "courses/#", COURSES_ITEM);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "scenarios", SCENARIOS_LIST);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "scenarios/*", SCENARIOS_ITEM);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "lights", LIGHTS_LIST);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "lights/*", LIGHTS_ITEM);
 	}
 
 	@Override
@@ -72,6 +77,13 @@ public class AtlantisContentProvider extends ContentProvider {
 			case SCENARIOS_LIST:
 				nBuilder.setTables("at_scenarios");
 				break;
+			case LIGHTS_LIST:
+				nBuilder.setTables(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME);
+				break;
+			case LIGHTS_ITEM:
+				nBuilder.setTables(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME);
+				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
+				break;
 		}
 		Cursor nCursor = nBuilder.query(nDB, projection, selection, selectionArgs, null, null, sortOrder);
 		return nCursor;
@@ -87,6 +99,10 @@ public class AtlantisContentProvider extends ContentProvider {
 				return AtlantisContract.Ean.CONTENT_TYPE_ITEM;
 			case SCENARIOS_LIST:
 				return AtlantisContract.Scenarios.CONTENT_TYPE;
+			case LIGHTS_LIST:
+				return AtlantisContract.Lights.CONTENT_TYPE;
+			case LIGHTS_ITEM:
+				return AtlantisContract.Lights.CONTENT_TYPE_ITEM;
 		}
 		return null;
 	}
@@ -112,6 +128,11 @@ public class AtlantisContentProvider extends ContentProvider {
 				if(nID > 0){
 					return uri;
 				}
+			case LIGHTS_LIST:
+				nID = nDB.insert(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME, null, values);
+				if(nID > 0){
+					return uri;
+				}
 		}
 		return null;
 	}
@@ -133,6 +154,8 @@ public class AtlantisContentProvider extends ContentProvider {
 					nWhere += " AND " + selection;
 				}
 				return nDB.delete("at_scenarios", nWhere, selectionArgs);
+			case LIGHTS_LIST:
+				return nDB.delete(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME, selection, selectionArgs);
 		}
 		return nCount;
 	}

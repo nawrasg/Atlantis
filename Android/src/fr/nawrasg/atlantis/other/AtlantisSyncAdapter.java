@@ -64,6 +64,9 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
                         if(!nJSON.isNull("ean")){
                             insertEan(nJSON.getJSONArray("ean"));
                         }
+                        if(!nJSON.isNull("lights")){
+                            insertLights(nJSON.getJSONArray("lights"));
+                        }
                         App.setLong(mContext, "lastmodified", (System.currentTimeMillis()/1000));
                     } catch (JSONException e) {
                         Log.w("Atlantis", e.toString());
@@ -91,6 +94,22 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
             nValues.put("ean", nJson.getString("ean"));
             nValues.put("nom", nJson.getString("nom"));
             mResolver.insert(AtlantisContract.Ean.CONTENT_URI, nValues);
+        }
+    }
+
+    private void insertLights(JSONArray array) throws JSONException {
+        mResolver.delete(AtlantisContract.Lights.CONTENT_URI, null, null);
+        for(int i = 0; i < array.length(); i++){
+            JSONObject nJson = array.getJSONObject(i);
+            ContentValues nValues = new ContentValues();
+            nValues.put("id", nJson.getInt("id"));
+            nValues.put("name", nJson.getString("name"));
+            nValues.put("protocol", nJson.getString("protocol"));
+            nValues.put("type", nJson.getString("type"));
+            nValues.put("ip", nJson.getString("ip"));
+            nValues.put("room", nJson.getInt("room"));
+            nValues.put("uid", nJson.getString("uid"));
+            mResolver.insert(AtlantisContract.Lights.CONTENT_URI, nValues);
         }
     }
 }
