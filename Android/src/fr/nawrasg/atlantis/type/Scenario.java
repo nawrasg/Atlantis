@@ -1,5 +1,7 @@
 package fr.nawrasg.atlantis.type;
 
+import android.database.Cursor;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +13,10 @@ public class Scenario {
 
 	public Scenario(JSONObject json) throws JSONException {
 		mLabel = json.getString("file");
+	}
+
+	public Scenario(Cursor cursor){
+		mLabel = cursor.getString(0);
 	}
 
 	public String getLabel(){
