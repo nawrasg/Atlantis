@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
@@ -30,29 +29,26 @@ import fr.nawrasg.atlantis.App;
 public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
     private Context mContext;
     private ContentResolver mResolver;
-    private OkHttpClient mClient;
 
     public AtlantisSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         mContext = context;
         mResolver = context.getContentResolver();
-        mClient = new OkHttpClient();
     }
 
     public AtlantisSyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs) {
         super(context, autoInitialize, allowParallelSyncs);
         mContext = context;
         mResolver = context.getContentResolver();
-        mClient = new OkHttpClient();
     }
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        String nURL = App.getFullUrl(mContext) + App.EAN + "?api=" + App.getAPI(mContext);
+        String nURL = App.getFullUrl(mContext) + App.SYNC + "?api=" + App.getAPI(mContext) + "&lastmodified=-1";
         final Request nRequest = new Request.Builder()
                 .url(nURL)
                 .build();
-        mClient.newCall(nRequest).enqueue(new Callback() {
+        App.httpClient.newCall(nRequest).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
             }
@@ -65,6 +61,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
                         if(!nJSON.isNull("scenarios")){
                             insertScenarios(nJSON.getJSONArray("scenarios"));
                         }
+                        App.setLong(mContext, "lastmodified", (System.currentTimeMillis()/1000));
                     } catch (JSONException e) {
                         Log.w("Atlantis", e.toString());
                     }
