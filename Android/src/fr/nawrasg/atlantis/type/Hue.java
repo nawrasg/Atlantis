@@ -3,8 +3,10 @@ package fr.nawrasg.atlantis.type;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Hue extends Light{
 	private String mUID, mBrightness, mReachable, mOn;
@@ -17,8 +19,16 @@ public class Hue extends Light{
 			mOn = json.getString("on");
 			mBrightness = json.getString("brightness");
 		}catch(JSONException e){
-
+			Log.w("Atlantis", e.toString());
 		}
+	}
+
+	public Hue(Cursor cursor){
+		super(cursor);
+		mUID = cursor.getString(cursor.getColumnIndex("uid"));
+		mBrightness = "0";
+		mReachable = "false";
+		mOn = "false";
 	}
 	
 	public Hue(Parcel in){

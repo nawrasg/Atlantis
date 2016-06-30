@@ -3,8 +3,10 @@ package fr.nawrasg.atlantis.type;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Light extends PDevice implements Parcelable {
 	protected String mID, mName, mProtocol, mIP, mRoom;
@@ -21,8 +23,16 @@ public class Light extends PDevice implements Parcelable {
 				mRoom = json.getString("room");				
 			}
 		}catch(JSONException e){
-			
+			Log.w("Atlantis", e.toString());
 		}
+	}
+
+	public Light(Cursor cursor){
+		mID = cursor.getString(cursor.getColumnIndex("id"));
+		mName = cursor.getString(cursor.getColumnIndex("name"));
+		mProtocol = cursor.getString(cursor.getColumnIndex("protocol"));
+		mIP = cursor.getString(cursor.getColumnIndex("ip"));
+		mRoom = cursor.getString(cursor.getColumnIndex("room"));
 	}
 	
 	public String getID(){
