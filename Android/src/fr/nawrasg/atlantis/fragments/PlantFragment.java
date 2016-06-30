@@ -32,7 +32,7 @@ public class PlantFragment extends Fragment {
 	private Context mContext;
 	private ArrayList<Plant> mList;
 	@Bind(R.id.rvPlant)
-	private RecyclerView mRecyclerView;
+	RecyclerView mRecyclerView;
 	private Handler mHandler;
 
 	@Override
