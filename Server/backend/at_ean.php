@@ -3,6 +3,7 @@ header ( "Access-Control-Allow-Origin: *" );
 
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
+require_once __DIR__ . '/classes/Sync.php';
 
 $page_level = 1;
 
@@ -32,6 +33,7 @@ function add($arr) {
 				'nom' => $nom 
 		) );
 		$req->closeCursor ();
+		(new Sync())->update(Sync::EAN);
 		http_response_code ( 202 );
 	} else {
 		http_response_code ( 404 );
