@@ -127,7 +127,9 @@
         <provider
             android:name="fr.nawrasg.atlantis.other.AtlantisContentProvider"
             android:authorities="fr.nawrasg.atlantis"
-            android:exported="true"/>
+            android:exported="true"
+            android:readPermission="fr.nawrasg.atlantis.permission.READ"
+            android:writePermission="fr.nawrasg.atlantis.permission.WRITE"/>
     </application>
 
 </manifest>
