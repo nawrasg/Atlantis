@@ -4,6 +4,7 @@ class Sync{
 	const EAN = 'ean';
 	const LIGHTS = 'lights';
 	const ROOMS = 'rooms';
+	const PLANTS = 'plants';
 	
 	private $data;
 	private $file = 'sync.json';

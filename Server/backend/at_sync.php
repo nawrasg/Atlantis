@@ -30,14 +30,17 @@ function get($lastmodified) {
 	if($lastmodified < $sync->get(Sync::SCENARIOS)){
 		$output[Sync::SCENARIOS] = getScenarios();
 	}
-	if($lastmodified < $sync->get(Sync::EAN)){
-		$output[Sync::EAN] = getEan();
-	}
 	if($lastmodified < $sync->get(Sync::LIGHTS)){
 		$output[Sync::LIGHTS] = getLights();
 	}
 	if($lastmodified < $sync->get(Sync::ROOMS)){
 		$output[Sync::ROOMS] = getRooms();
+	}
+	if($lastmodified < $sync->get(Sync::PLANTS)){
+		$output[Sync::PLANTS] = getPlants();
+	}
+	if($lastmodified < $sync->get(Sync::EAN)){
+		$output[Sync::EAN] = getEan();
 	}
 	return $output;
 }
@@ -77,6 +80,14 @@ function getScenarios(){
 function getLights(){
 	$bdd = getBDD ();
 	$req = $bdd->query ( 'SELECT * FROM at_lights' );
+	$result = $req->fetchAll(PDO::FETCH_ASSOC);
+	$req->closeCursor();
+	return $result;
+}
+
+function getPlants(){
+	$bdd = getBDD ();
+	$req = $bdd->query ( 'SELECT * FROM at_plants' );
 	$result = $req->fetchAll(PDO::FETCH_ASSOC);
 	$req->closeCursor();
 	return $result;
