@@ -43,6 +43,7 @@ public class LightFragment extends ListFragment{
 	private Context mContext;
 	private ArrayList<Light> mList;
 	private ArrayList<Room> mRoomList;
+	private LightAdapter mAdapter;
 	private Handler mHandler;
 
 	@Override
@@ -81,7 +82,8 @@ public class LightFragment extends ListFragment{
 				Light nLight = new Hue(nCursor);
 				mList.add(nLight);
 			}while(nCursor.moveToNext());
-			setListAdapter(new LightAdapter(mContext, mList, mRoomList));
+			mAdapter = new LightAdapter(mContext, mList, mRoomList);
+			setListAdapter(mAdapter);
 		}
 	}
 
@@ -89,6 +91,7 @@ public class LightFragment extends ListFragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setItemListener();
+		getStatus();
 	}
 
 	private void getStatus() {
@@ -104,32 +107,24 @@ public class LightFragment extends ListFragment{
 
 			@Override
 			public void onResponse(Response response) throws IOException {
-				mList = new ArrayList<>();
-				mRoomList = new ArrayList<>();
 				try {
 					JSONObject nJson = new JSONObject(response.body().string());
 					JSONArray arr = nJson.getJSONArray("lights");
 					for (int i = 0; i < arr.length(); i++) {
 						JSONObject json = arr.getJSONObject(i);
 						Light nLight = new Hue(json);
-						mList.add(nLight);
-
+						int nI = mList.indexOf(nLight);
+						((Hue)mList.get(nI)).update((Hue)nLight);
 					}
-					JSONArray nArr = nJson.getJSONArray("rooms");
-					for (int i = 0; i < nArr.length(); i++) {
-						Room nRoom = new Room(nArr.getJSONObject(i));
-						mRoomList.add(nRoom);
-					}
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.notifyDataSetChanged();
+						}
+					});
 				} catch (JSONException e) {
 					Log.e("Atlantis", e.toString());
 				}
-				mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						setListAdapter(new LightAdapter(mContext, mList, mRoomList));
-						setItemListener();
-					}
-				});
 			}
 		});
 	}
