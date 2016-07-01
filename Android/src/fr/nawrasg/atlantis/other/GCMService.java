@@ -40,7 +40,6 @@ public class GCMService extends IntentService {
 	private Vibrator nVibrate;
 	private LocationManager nLM;
 	private Context mContext;
-	NotificationCompat.Builder builder;
 
 	public GCMService() {
 		super("GCMService");
@@ -178,12 +177,6 @@ public class GCMService extends IntentService {
 		nNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 		mNotificationManager.notify(NOTIFICATION_ID, nNotification);
 
-
-		/*PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainFragmentActivity.class), 0);
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.home)
-				.setContentTitle(title).setStyle(new NotificationCompat.BigTextStyle().bigText(msg)).setContentText(msg);
-		mBuilder.setContentIntent(contentIntent);
-		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());*/
 		NOTIFICATION_ID++;
 
 		if (nAudio.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
