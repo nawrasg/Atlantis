@@ -24,6 +24,7 @@ public class AtlantisOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(AtlantisDatabaseInterface.COURSES_TABLE_CREATE);
 		db.execSQL(AtlantisDatabaseInterface.SCENARIOS_TABLE_CREATE);
 		db.execSQL(AtlantisDatabaseInterface.LIGHTS_TABLE_CREATE);
+		db.execSQL(AtlantisDatabaseInterface.ROOMS_TABLE_CREATE);
 	}
 
 	@Override

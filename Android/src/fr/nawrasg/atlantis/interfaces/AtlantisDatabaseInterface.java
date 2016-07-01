@@ -21,7 +21,7 @@ public interface AtlantisDatabaseInterface {
             "file TEXT NOT NULL" +
             ")";
 
-    String LIGHTS_TABLE_CREATE = "CREATE TABLE at_lights ("+
+    String LIGHTS_TABLE_CREATE = "CREATE TABLE at_lights (" +
             "id TEXT UNIQUE, \n" +
             "name TEXT, \n" +
             "protocol TEXT, \n" +
@@ -31,5 +31,13 @@ public interface AtlantisDatabaseInterface {
             "uid TEXT" +
             ")";
 
+    String ROOMS_TABLE_CREATE = "CREATE TABLE at_room (" +
+            "id INTEGER NOT NULL, \n" +
+            "room TEXT" +
+            ")";
+
     String LIGHTS_TABLE_NAME = "at_lights";
+    String ROOMS_TABLE_NAME = "at_room";
+    String EAN_TABLE_NAME = "at_ean";
+    String SCENARIOS_TABLE_NAME = "at_scenarios";
 }

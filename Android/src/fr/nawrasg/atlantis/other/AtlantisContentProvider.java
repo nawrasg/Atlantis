@@ -29,6 +29,8 @@ public class AtlantisContentProvider extends ContentProvider {
 	private static final int SCENARIOS_ITEM = 6;
 	private static final int LIGHTS_LIST = 7;
 	private static final int LIGHTS_ITEM = 8;
+	private static final int ROOMS_LIST = 9;
+	private static final int ROOMS_ITEM = 10;
 	private static final UriMatcher URI_MATCHER;
 	private AtlantisOpenHelper mHelper;
 
@@ -43,6 +45,8 @@ public class AtlantisContentProvider extends ContentProvider {
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "scenarios/*", SCENARIOS_ITEM);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "lights", LIGHTS_LIST);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "lights/*", LIGHTS_ITEM);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "rooms", LIGHTS_LIST);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "rooms/*", LIGHTS_ITEM);
 	}
 
 	@Override
@@ -60,10 +64,10 @@ public class AtlantisContentProvider extends ContentProvider {
 			case CALL_NOTIFIER:
 				return getCallNotifierCursor();
 			case EAN_LIST:
-				nBuilder.setTables("at_ean");
+				nBuilder.setTables(AtlantisDatabaseInterface.EAN_TABLE_NAME);
 				break;
 			case EAN_ITEM:
-				nBuilder.setTables("at_ean");
+				nBuilder.setTables(AtlantisDatabaseInterface.EAN_TABLE_NAME);
 				nBuilder.appendWhere("ean = " + uri.getLastPathSegment());
 				break;
 			case COURSES_LIST:
@@ -75,13 +79,20 @@ public class AtlantisContentProvider extends ContentProvider {
 				nBuilder.appendWhere("status = 0 AND id = " + uri.getLastPathSegment());
 				break;
 			case SCENARIOS_LIST:
-				nBuilder.setTables("at_scenarios");
+				nBuilder.setTables(AtlantisDatabaseInterface.SCENARIOS_TABLE_NAME);
 				break;
 			case LIGHTS_LIST:
 				nBuilder.setTables(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME);
 				break;
 			case LIGHTS_ITEM:
 				nBuilder.setTables(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME);
+				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
+				break;
+			case ROOMS_LIST:
+				nBuilder.setTables(AtlantisDatabaseInterface.ROOMS_TABLE_NAME);
+				break;
+			case ROOMS_ITEM:
+				nBuilder.setTables(AtlantisDatabaseInterface.ROOMS_TABLE_NAME);
 				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
 				break;
 		}
@@ -103,6 +114,10 @@ public class AtlantisContentProvider extends ContentProvider {
 				return AtlantisContract.Lights.CONTENT_TYPE;
 			case LIGHTS_ITEM:
 				return AtlantisContract.Lights.CONTENT_TYPE_ITEM;
+			case ROOMS_LIST:
+				return AtlantisContract.Rooms.CONTENT_TYPE;
+			case ROOMS_ITEM:
+				return AtlantisContract.Rooms.CONTENT_TYPE_ITEM;
 		}
 		return null;
 	}
@@ -114,7 +129,7 @@ public class AtlantisContentProvider extends ContentProvider {
 		long nID = 0;
 		switch(URI_MATCHER.match(uri)){
 			case EAN_LIST:
-				nID = nDB.insert("at_ean", null, values);
+				nID = nDB.insert(AtlantisDatabaseInterface.EAN_TABLE_NAME, null, values);
 				if(nID > 0){
 					return ContentUris.withAppendedId(uri, nID);
 				}
@@ -124,12 +139,17 @@ public class AtlantisContentProvider extends ContentProvider {
 					return ContentUris.withAppendedId(uri, nID);
 				}
 			case SCENARIOS_LIST:
-				nID = nDB.insert("at_scenarios", null, values);
+				nID = nDB.insert(AtlantisDatabaseInterface.SCENARIOS_TABLE_NAME, null, values);
 				if(nID > 0){
 					return uri;
 				}
 			case LIGHTS_LIST:
 				nID = nDB.insert(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME, null, values);
+				if(nID > 0){
+					return uri;
+				}
+			case ROOMS_LIST:
+				nID = nDB.insert(AtlantisDatabaseInterface.ROOMS_TABLE_NAME, null, values);
 				if(nID > 0){
 					return uri;
 				}
@@ -144,18 +164,20 @@ public class AtlantisContentProvider extends ContentProvider {
 		String nID = "", nWhere = "";
 		switch(URI_MATCHER.match(uri)){
 			case EAN_LIST:
-				return nDB.delete("at_ean", selection, selectionArgs);
+				return nDB.delete(AtlantisDatabaseInterface.EAN_TABLE_NAME, selection, selectionArgs);
 			case SCENARIOS_LIST:
-				return nDB.delete("at_scenarios", selection, selectionArgs);
+				return nDB.delete(AtlantisDatabaseInterface.SCENARIOS_TABLE_NAME, selection, selectionArgs);
 			case SCENARIOS_ITEM:
 				nID = uri.getLastPathSegment();
 				nWhere = "file = " + nID;
 				if(!TextUtils.isEmpty(selection)){
 					nWhere += " AND " + selection;
 				}
-				return nDB.delete("at_scenarios", nWhere, selectionArgs);
+				return nDB.delete(AtlantisDatabaseInterface.SCENARIOS_TABLE_NAME, nWhere, selectionArgs);
 			case LIGHTS_LIST:
 				return nDB.delete(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME, selection, selectionArgs);
+			case ROOMS_LIST:
+				return nDB.delete(AtlantisDatabaseInterface.ROOMS_TABLE_NAME, selection, selectionArgs);
 		}
 		return nCount;
 	}
