@@ -3,6 +3,7 @@ package fr.nawrasg.atlantis.type;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Parcel;
@@ -34,6 +35,15 @@ public class Plant extends PDevice implements Parcelable{
 		} catch (JSONException e) {
 			
 		}
+	}
+
+	public Plant(Cursor cursor){
+		mID = cursor.getInt(cursor.getColumnIndex("id"));
+		mSensor = cursor.getString(cursor.getColumnIndex("sensor"));
+		mTitle = cursor.getString(cursor.getColumnIndex("title"));
+		mPicture = cursor.getString(cursor.getColumnIndex("picture"));
+		mColor = cursor.getString(cursor.getColumnIndex("color"));
+		mRoom = cursor.getInt(cursor.getColumnIndex("room"));
 	}
 	
 	public Plant(Parcel source) {
