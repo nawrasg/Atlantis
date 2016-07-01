@@ -1,7 +1,9 @@
 package fr.nawrasg.atlantis.fragments;
 
 import android.app.Fragment;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +28,7 @@ import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.PlantAdapter;
+import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Plant;
 
 public class PlantFragment extends Fragment {
@@ -34,6 +37,7 @@ public class PlantFragment extends Fragment {
 	@Bind(R.id.rvPlant)
 	RecyclerView mRecyclerView;
 	private Handler mHandler;
+	private PlantAdapter mAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,13 +52,25 @@ public class PlantFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		mRecyclerView = (RecyclerView) view.findViewById(R.id.rvPlant);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 		getItems();
 	}
 
-	private void getItems() {
+	private void getItems(){
 		mList = new ArrayList<Plant>();
+		ContentResolver nResolver = mContext.getContentResolver();
+		Cursor nCursor = nResolver.query(AtlantisContract.Plants.CONTENT_URI, null, null, null, null);
+		if(nCursor.moveToFirst()){
+			do{
+				Plant nPlant = new Plant(nCursor);
+				mList.add(nPlant);
+			}while(nCursor.moveToNext());
+		}
+		mAdapter = new PlantAdapter(mContext, mList);
+		mRecyclerView.setAdapter(mAdapter);
+	}
+
+	private void getStatus() {
 		String nURL = App.getFullUrl(mContext) + App.PLANTE + "?api=" + App.getAPI(mContext) + "&get";
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
@@ -71,12 +87,12 @@ public class PlantFragment extends Fragment {
 						JSONArray nArr = new JSONArray(response.body().string());
 						for (int i = 0; i < nArr.length(); i++) {
 							Plant nPlant = new Plant(nArr.getJSONObject(i));
-							mList.add(nPlant);
+
 						}
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								mRecyclerView.setAdapter(new PlantAdapter(mContext, mList));
+								mAdapter.notifyDataSetChanged();
 							}
 						});
 					} catch (JSONException e) {
