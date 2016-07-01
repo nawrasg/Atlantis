@@ -36,8 +36,19 @@ public interface AtlantisDatabaseInterface {
             "room TEXT" +
             ")";
 
+    String PLANTS_TABLE_CREATE = "CREATE TABLE at_plants (" +
+            "id INTEGER UNIQUE NOT NULL, \n" +
+            "sensor TEXT, \n" +
+            "title TEXT, \n" +
+            "picture TEXT, \n" +
+            "color TEXT, \n" +
+            "room INTEGER, \n" +
+            "timestamp TEXT" +
+            ")";
+
     String LIGHTS_TABLE_NAME = "at_lights";
     String ROOMS_TABLE_NAME = "at_room";
     String EAN_TABLE_NAME = "at_ean";
     String SCENARIOS_TABLE_NAME = "at_scenarios";
+    String PLANTS_TABLE_NAME = "at_plants";
 }

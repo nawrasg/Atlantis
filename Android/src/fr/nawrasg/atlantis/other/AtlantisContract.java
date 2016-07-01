@@ -46,4 +46,10 @@ public final class AtlantisContract {
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.rooms";
         public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.rooms";
     }
+
+    public static final class Plants implements BaseColumns{
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AtlantisContract.CONTENT_URI, "plants");
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.plants";
+        public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.plants";
+    }
 }

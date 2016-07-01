@@ -31,6 +31,8 @@ public class AtlantisContentProvider extends ContentProvider {
 	private static final int LIGHTS_ITEM = 8;
 	private static final int ROOMS_LIST = 9;
 	private static final int ROOMS_ITEM = 10;
+	private static final int PLANTS_LIST = 11;
+	private static final int PLANTS_ITEM = 12;
 	private static final UriMatcher URI_MATCHER;
 	private AtlantisOpenHelper mHelper;
 
@@ -45,8 +47,10 @@ public class AtlantisContentProvider extends ContentProvider {
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "scenarios/*", SCENARIOS_ITEM);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "lights", LIGHTS_LIST);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "lights/*", LIGHTS_ITEM);
-		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "rooms", LIGHTS_LIST);
-		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "rooms/*", LIGHTS_ITEM);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "rooms", ROOMS_LIST);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "rooms/*", ROOMS_ITEM);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "plants", PLANTS_LIST);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "plants/*", PLANTS_ITEM);
 	}
 
 	@Override
@@ -95,6 +99,13 @@ public class AtlantisContentProvider extends ContentProvider {
 				nBuilder.setTables(AtlantisDatabaseInterface.ROOMS_TABLE_NAME);
 				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
 				break;
+			case PLANTS_LIST:
+				nBuilder.setTables(AtlantisDatabaseInterface.PLANTS_TABLE_NAME);
+				break;
+			case PLANTS_ITEM:
+				nBuilder.setTables(AtlantisDatabaseInterface.PLANTS_TABLE_NAME);
+				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
+				break;
 		}
 		Cursor nCursor = nBuilder.query(nDB, projection, selection, selectionArgs, null, null, sortOrder);
 		return nCursor;
@@ -118,6 +129,10 @@ public class AtlantisContentProvider extends ContentProvider {
 				return AtlantisContract.Rooms.CONTENT_TYPE;
 			case ROOMS_ITEM:
 				return AtlantisContract.Rooms.CONTENT_TYPE_ITEM;
+			case PLANTS_LIST:
+				return AtlantisContract.Plants.CONTENT_TYPE;
+			case PLANTS_ITEM:
+				return AtlantisContract.Plants.CONTENT_TYPE_ITEM;
 		}
 		return null;
 	}
@@ -153,6 +168,11 @@ public class AtlantisContentProvider extends ContentProvider {
 				if(nID > 0){
 					return uri;
 				}
+			case PLANTS_LIST:
+				nID = nDB.insert(AtlantisDatabaseInterface.PLANTS_TABLE_NAME, null, values);
+				if(nID > 0){
+					return uri;
+				}
 		}
 		return null;
 	}
@@ -178,6 +198,8 @@ public class AtlantisContentProvider extends ContentProvider {
 				return nDB.delete(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME, selection, selectionArgs);
 			case ROOMS_LIST:
 				return nDB.delete(AtlantisDatabaseInterface.ROOMS_TABLE_NAME, selection, selectionArgs);
+			case PLANTS_LIST:
+				return nDB.delete(AtlantisDatabaseInterface.PLANTS_TABLE_NAME, selection, selectionArgs);
 		}
 		return nCount;
 	}
