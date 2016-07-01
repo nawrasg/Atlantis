@@ -1,12 +1,12 @@
 package fr.nawrasg.atlantis.type;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Light extends PDevice implements Parcelable {
 	protected String mID, mName, mProtocol, mIP, mRoom;
@@ -94,4 +94,11 @@ public class Light extends PDevice implements Parcelable {
 		return "light";
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Light){
+			return (getID().equals(((Light)o).getID()));
+		}
+		return false;
+	}
 }
