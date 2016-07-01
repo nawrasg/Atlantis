@@ -51,13 +51,25 @@ public class Hue extends Light{
 	public int getBrightness(){
 		return Integer.parseInt(mBrightness);
 	}
+
+	public void setBrightness(int brightness){
+		mBrightness = brightness + "";
+	}
 	
 	public boolean isReachable(){
 		return Boolean.parseBoolean(mReachable);
 	}
+
+	public void setReachable(boolean reachable){
+		mReachable = reachable + "";
+	}
 	
 	public boolean isOn(){
 		return Boolean.parseBoolean(mOn);
+	}
+
+	public void setOn(boolean on){
+		mOn = on + "";
 	}
 	
 	public String getUID(){
@@ -76,4 +88,9 @@ public class Hue extends Light{
 		}
 	};
 
+	public void update(Hue hue){
+		setReachable(hue.isReachable());
+		setBrightness(hue.getBrightness());
+		setOn(hue.isOn());
+	}
 }
