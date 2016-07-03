@@ -2,9 +2,9 @@ package fr.nawrasg.atlantis.widgets.config;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 
 import butterknife.Bind;
@@ -31,26 +31,30 @@ public class DoorLockWidgetConfigActivity extends Activity {
         setResult(RESULT_CANCELED);
 
         Bundle nBundle = getIntent().getExtras();
-        if(nBundle != null){
+        if (nBundle != null) {
             mWidgetId = nBundle.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            if(mWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID){
+            if (mWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
                 finish();
             }
-        }else{
+        } else {
             finish();
         }
     }
 
     @OnClick(R.id.btnConfigWidgetDoorLockDone)
-    public void save(){
+    public void save() {
         String nLockName = txtLockName.getText().toString();
         App.setString(this, "Widget_DoorLock_" + mWidgetId, nLockName);
-        Log.d("Nawras", "Widget: " + mWidgetId);
-        Intent nIntent = new Intent(this, DoorLockWidgetProvider.class);
-        nIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        Intent nIntent = new Intent();
         nIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mWidgetId);
-        setResult(RESULT_OK);
-        sendBroadcast(nIntent);
+        setResult(RESULT_OK, nIntent);
+
+        Intent nUpdateIntent = new Intent(this, DoorLockWidgetProvider.class);
+        nUpdateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] nWidgetIds = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), DoorLockWidgetProvider.class));
+        nUpdateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, nWidgetIds);
+        sendBroadcast(nUpdateIntent);
+
         finish();
     }
 }
