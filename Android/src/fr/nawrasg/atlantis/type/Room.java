@@ -2,8 +2,10 @@ package fr.nawrasg.atlantis.type;
 
 import org.json.JSONObject;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Room implements Parcelable {
 	private String mRoom, mID;
@@ -13,8 +15,13 @@ public class Room implements Parcelable {
 			mID = json.getString("id");
 			mRoom = json.getString("room");
 		} catch (Exception e) {
-
+			Log.e("Atlantis", e.toString());
 		}
+	}
+
+	public Room(Cursor cursor){
+		mID = cursor.getString(cursor.getColumnIndex("id"));
+		mRoom = cursor.getString(cursor.getColumnIndex("room"));
 	}
 	
 	public String getID() {
