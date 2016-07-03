@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
@@ -48,6 +49,9 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
         final Request nRequest = new Request.Builder()
                 .url(nURL)
                 .build();
+        if(App.httpClient == null){
+            App.httpClient = new OkHttpClient();
+        }
         App.httpClient.newCall(nRequest).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -126,7 +130,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
             ContentValues nValues = new ContentValues();
             nValues.put("id", nJson.getInt("id"));
             nValues.put("room", nJson.getString("room"));
-            mResolver.insert(AtlantisContract.Lights.CONTENT_URI, nValues);
+            mResolver.insert(AtlantisContract.Rooms.CONTENT_URI, nValues);
         }
     }
 
