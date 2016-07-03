@@ -1,4 +1,4 @@
-package fr.nawrasg.atlantis.other;
+package fr.nawrasg.atlantis.services;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -22,6 +22,7 @@ import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
@@ -31,6 +32,8 @@ import java.io.IOException;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.receivers.GCMReceiver;
+import fr.nawrasg.atlantis.receivers.RingingReceiver;
 
 public class GCMService extends IntentService {
 	public static Ringtone RINGTONE;
@@ -40,9 +43,11 @@ public class GCMService extends IntentService {
 	private Vibrator nVibrate;
 	private LocationManager nLM;
 	private Context mContext;
+	private OkHttpClient mClient;
 
 	public GCMService() {
 		super("GCMService");
+		mClient = new OkHttpClient();
 	}
 
 	private void sendPosition() {
@@ -60,7 +65,7 @@ public class GCMService extends IntentService {
 								.url(nURL)
 								.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
 								.build();
-						App.httpClient.newCall(nRequest).enqueue(new Callback() {
+						mClient.newCall(nRequest).enqueue(new Callback() {
 							@Override
 							public void onFailure(Request request, IOException e) {
 

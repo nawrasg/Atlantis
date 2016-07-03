@@ -1,4 +1,4 @@
-package fr.nawrasg.atlantis.other;
+package fr.nawrasg.atlantis.services;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.receivers.WifiReceiver;
 
 public class WifiService extends IntentService {
 

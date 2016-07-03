@@ -1,4 +1,4 @@
-package fr.nawrasg.atlantis.other;
+package fr.nawrasg.atlantis.services;
 
 import android.service.dreams.DreamService;
 
