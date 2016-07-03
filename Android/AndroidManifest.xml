@@ -97,7 +97,21 @@
             </intent-filter>
         </activity>
 
+        <!-- Widget Config Activity -->
+        <activity android:name=".widgets.config.DoorLockWidgetConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
         <receiver android:name=".other.RingingReceiver"/>
+        <receiver android:name=".widgets.DoorLockWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_door_lock"/>
+        </receiver>
 
         <service
             android:name=".other.BasicDreamService"
