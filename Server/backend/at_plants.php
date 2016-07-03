@@ -5,6 +5,7 @@ header ( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE' );
 
 require_once __DIR__ . '/classes/connexion.php';
 require_once __DIR__ . '/classes/checkAPI.php';
+require_once __DIR__ . '/classes/Sync.php';
 require_once __DIR__ . '/classes/PushMessage.php';
 
 $page_level = 2;
@@ -54,6 +55,7 @@ function delete($arr) {
 		$bdd = getBDD ();
 		$req = $bdd->exec ( "DELETE FROM at_plants WHERE id = $id" );
 		if ($req > 0) {
+			(new Sync())->update(Sync::PLANTS);
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 403 );
@@ -69,6 +71,7 @@ function update($arr) {
 	isset ( $arr ['room'] ) ? $room = $arr ['room'] : $room = NULL;
 	$request = $bdd->exec ( "UPDATE at_plants SET `title` = '$title', `room` = '$room' WHERE id = '$id'" );
 	if ($request == 1) {
+		(new Sync())->update(Sync::PLANTS);
 		http_response_code ( 202 );
 	} else {
 		http_response_code ( 400 );
@@ -82,6 +85,7 @@ function upload($arr, $files) {
 	$result = move_uploaded_file ( $path, './home/plants/' . $id . '.' . $ext );
 	echo json_encode ( $result );
 	if ($result) {
+		(new Sync())->update(Sync::PLANTS);
 		http_response_code ( 202 );
 	} else {
 		http_response_code ( 400 );
@@ -108,6 +112,7 @@ function discover() {
 				}
 			}
 		}
+		(new Sync())->update(Sync::PLANTS);
 		return 200;
 	}
 	return 404;
