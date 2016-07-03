@@ -1,4 +1,4 @@
-package fr.nawrasg.atlantis.other;
+package fr.nawrasg.atlantis.receivers;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import java.util.Set;
 
 import fr.nawrasg.atlantis.App;
+import fr.nawrasg.atlantis.services.WifiService;
 
 public class WifiReceiver extends WakefulBroadcastReceiver {
 

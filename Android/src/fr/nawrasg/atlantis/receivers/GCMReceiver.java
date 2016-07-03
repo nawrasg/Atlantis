@@ -1,11 +1,12 @@
-package fr.nawrasg.atlantis.other;
+package fr.nawrasg.atlantis.receivers;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
-import android.util.Log;
+
+import fr.nawrasg.atlantis.services.GCMService;
 
 public class GCMReceiver extends WakefulBroadcastReceiver{
 

@@ -1,4 +1,4 @@
-package fr.nawrasg.atlantis.other;
+package fr.nawrasg.atlantis.receivers;
 
 import android.app.Notification;
 import android.app.NotificationManager;

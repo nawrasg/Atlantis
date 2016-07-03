@@ -1,9 +1,11 @@
-package fr.nawrasg.atlantis.other;
+package fr.nawrasg.atlantis.receivers;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import fr.nawrasg.atlantis.services.GCMService;
 
 public class RingingReceiver extends BroadcastReceiver {
 	public RingingReceiver() {
