@@ -39,6 +39,9 @@ function get($lastmodified) {
 	if($lastmodified < $sync->get(Sync::PLANTS)){
 		$output[Sync::PLANTS] = getPlants();
 	}
+	if($lastmodified < $sync->get(Sync::DEVICES)){
+		$output[Sync::DEVICES] = getDevices();
+	}
 	if($lastmodified < $sync->get(Sync::EAN)){
 		$output[Sync::EAN] = getEan();
 	}
@@ -88,6 +91,14 @@ function getLights(){
 function getPlants(){
 	$bdd = getBDD ();
 	$req = $bdd->query ( 'SELECT * FROM at_plants' );
+	$result = $req->fetchAll(PDO::FETCH_ASSOC);
+	$req->closeCursor();
+	return $result;
+}
+
+function getDevices(){
+	$bdd = getBDD ();
+	$req = $bdd->query ( 'SELECT * FROM at_devices' );
 	$result = $req->fetchAll(PDO::FETCH_ASSOC);
 	$req->closeCursor();
 	return $result;
