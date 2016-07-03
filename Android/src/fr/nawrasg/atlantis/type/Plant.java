@@ -63,6 +63,17 @@ public class Plant extends PDevice implements Parcelable{
 		mTime = source.readString();
 	}
 
+	public void update(Plant plant){
+		mBattery = plant.getBatteryLevel();
+		mLight = plant.getLight();
+		mConductivity = plant.getConductivity();
+		mMoisture = plant.getMoisture();
+		mAirTemperature = plant.getAirTemperature();
+		mSoilTemperature = plant.getSoilTemperature();
+		mDate = plant.getDate();
+		mTime = plant.getTime();
+	}
+
 	public double getConductivity(){
 		return mConductivity;
 	}
@@ -164,5 +175,13 @@ public class Plant extends PDevice implements Parcelable{
 	@Override
 	public String getType() {
 		return "plant";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Plant){
+			return (getID().equals(((Plant)o).getID()));
+		}
+		return false;
 	}
 }
