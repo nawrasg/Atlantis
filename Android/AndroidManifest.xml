@@ -80,15 +80,15 @@
         </activity>
 
         <!-- Receivers -->
-        <receiver android:name=".other.RingingReceiver"/>
-        <receiver android:name=".other.WifiReceiver">
+        <receiver android:name=".receivers.RingingReceiver"/>
+        <receiver android:name=".receivers.WifiReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".other.GCMReceiver"
+            android:name=".receivers.GCMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
@@ -96,7 +96,7 @@
                 <category android:name="fr.nawrasg.atlantis"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".other.GeoReceiver">
+        <receiver android:name=".receivers.GeoReceiver">
             <intent-filter>
                 <action android:name="fr.nawrasg.atlantis.geo"/>
             </intent-filter>
@@ -110,18 +110,18 @@
         </receiver>
 
         <!-- Services -->
-        <service android:name=".other.GCMService"/>
-        <service android:name=".other.WifiService"/>
-        <service android:name=".other.GeoService"/>
+        <service android:name=".services.GCMService"/>
+        <service android:name=".services.WifiService"/>
+        <service android:name=".services.GeoService"/>
         <service
-            android:name=".other.BasicDreamService"
+            android:name=".services.BasicDreamService"
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <action android:name="android.service.dreams.DreamService"/>
             </intent-filter>
         </service>
-        <service android:name=".other.AuthenticatorService">
+        <service android:name=".services.AuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
@@ -129,7 +129,7 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator"/>
         </service>
-        <service android:name=".other.SyncService"
+        <service android:name=".services.SyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
