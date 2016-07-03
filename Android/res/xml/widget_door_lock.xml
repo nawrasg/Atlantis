@@ -4,7 +4,6 @@
                     android:initialLayout="@layout/widget_door_lock"
                     android:minHeight="40dp"
                     android:minWidth="40dp"
-                    android:updatePeriodMillis="3600000"
                     android:previewImage="@drawable/ng_door"
                     android:resizeMode="none">
 </appwidget-provider>
