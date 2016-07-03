@@ -46,9 +46,23 @@ public interface AtlantisDatabaseInterface {
             "timestamp TEXT" +
             ")";
 
+    String DEVICES_TABLE_CREATE = "CREATE TABLE at_devices (" +
+            "id INTEGER UNIQUE NOT NULL, \n" +
+            "nom TEXT, \n" +
+            "ip TEXT, \n" +
+            "mac TEXT, \n" +
+            "dns TEXT, \n" +
+            "port INTEGER, \n" +
+            "type TEXT, \n" +
+            "connexion TEXT, \n" +
+            "note TEXT, \n" +
+            "username TEXT" +
+            ")";
+
     String LIGHTS_TABLE_NAME = "at_lights";
     String ROOMS_TABLE_NAME = "at_room";
     String EAN_TABLE_NAME = "at_ean";
     String SCENARIOS_TABLE_NAME = "at_scenarios";
     String PLANTS_TABLE_NAME = "at_plants";
+    String DEVICES_TABLE_NAME = "at_devices";
 }

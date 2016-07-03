@@ -33,6 +33,8 @@ public class AtlantisContentProvider extends ContentProvider {
 	private static final int ROOMS_ITEM = 10;
 	private static final int PLANTS_LIST = 11;
 	private static final int PLANTS_ITEM = 12;
+	private static final int DEVICES_LIST = 13;
+	private static final int DEVICES_ITEM = 14;
 	private static final UriMatcher URI_MATCHER;
 	private AtlantisOpenHelper mHelper;
 
@@ -51,6 +53,8 @@ public class AtlantisContentProvider extends ContentProvider {
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "rooms/*", ROOMS_ITEM);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "plants", PLANTS_LIST);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "plants/*", PLANTS_ITEM);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "devices", DEVICES_LIST);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "devices/*", DEVICES_ITEM);
 	}
 
 	@Override
@@ -106,6 +110,13 @@ public class AtlantisContentProvider extends ContentProvider {
 				nBuilder.setTables(AtlantisDatabaseInterface.PLANTS_TABLE_NAME);
 				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
 				break;
+			case DEVICES_LIST:
+				nBuilder.setTables(AtlantisDatabaseInterface.DEVICES_TABLE_NAME);
+				break;
+			case DEVICES_ITEM:
+				nBuilder.setTables(AtlantisDatabaseInterface.DEVICES_TABLE_NAME);
+				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
+				break;
 		}
 		Cursor nCursor = nBuilder.query(nDB, projection, selection, selectionArgs, null, null, sortOrder);
 		return nCursor;
@@ -133,6 +144,10 @@ public class AtlantisContentProvider extends ContentProvider {
 				return AtlantisContract.Plants.CONTENT_TYPE;
 			case PLANTS_ITEM:
 				return AtlantisContract.Plants.CONTENT_TYPE_ITEM;
+			case DEVICES_LIST:
+				return AtlantisContract.Devices.CONTENT_TYPE;
+			case DEVICES_ITEM:
+				return AtlantisContract.Devices.CONTENT_TYPE_ITEM;
 		}
 		return null;
 	}
@@ -173,6 +188,11 @@ public class AtlantisContentProvider extends ContentProvider {
 				if(nID > 0){
 					return uri;
 				}
+			case DEVICES_LIST:
+				nID = nDB.insert(AtlantisDatabaseInterface.DEVICES_TABLE_NAME, null, values);
+				if(nID > 0){
+					return uri;
+				}
 		}
 		return null;
 	}
@@ -200,6 +220,8 @@ public class AtlantisContentProvider extends ContentProvider {
 				return nDB.delete(AtlantisDatabaseInterface.ROOMS_TABLE_NAME, selection, selectionArgs);
 			case PLANTS_LIST:
 				return nDB.delete(AtlantisDatabaseInterface.PLANTS_TABLE_NAME, selection, selectionArgs);
+			case DEVICES_LIST:
+				return nDB.delete(AtlantisDatabaseInterface.DEVICES_TABLE_NAME, selection, selectionArgs);
 		}
 		return nCount;
 	}
