@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import fr.nawrasg.atlantis.App;
@@ -24,7 +23,6 @@ public class DoorLockWidgetProvider extends AppWidgetProvider {
             int nWidgetId = appWidgetIds[i];
 
             String nLockUri = "nuki://name/" + App.getString(context, "Widget_DoorLock_" + nWidgetId);
-            Log.d("Nawras", nLockUri + " : " + nWidgetId + " (provider)");
             Intent nIntent = new Intent();
             nIntent.setData(Uri.parse(nLockUri));
             PendingIntent nPendingIntent = PendingIntent.getActivity(context, 0, nIntent, 0);
