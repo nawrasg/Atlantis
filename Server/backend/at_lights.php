@@ -66,6 +66,7 @@ function put($arr) {
 		($arr ['room'] == - 1) ? $room = NULL : $room = $arr ['room'];
 		setRoom ( $light, $room );
 		$hue->setName ( $arr ['uid'], $arr ['name'] );
+		(new Sync())->update(Sync::LIGHTS);
 		http_response_code ( 202 );
 	}
 }
@@ -83,6 +84,7 @@ function get() {
 function create() {
 	$hue = new Hue ();
 	$hue->discover ();
+	(new Sync())->update(Sync::LIGHTS);
 	return 200;
 }
 function delete($arr) {
