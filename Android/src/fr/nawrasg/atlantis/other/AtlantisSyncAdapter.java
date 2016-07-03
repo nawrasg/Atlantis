@@ -49,7 +49,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
         final Request nRequest = new Request.Builder()
                 .url(nURL)
                 .build();
-        if(App.httpClient == null){
+        if (App.httpClient == null) {
             App.httpClient = new OkHttpClient();
         }
         App.httpClient.newCall(nRequest).enqueue(new Callback() {
@@ -59,25 +59,28 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if(response.code() == 202){
+                if (response.code() == 202) {
                     try {
                         JSONObject nJSON = new JSONObject(response.body().string());
-                        if(!nJSON.isNull("scenarios")){
+                        if (!nJSON.isNull("scenarios")) {
                             insertScenarios(nJSON.getJSONArray("scenarios"));
                         }
-                        if(!nJSON.isNull("ean")){
+                        if (!nJSON.isNull("ean")) {
                             insertEan(nJSON.getJSONArray("ean"));
                         }
-                        if(!nJSON.isNull("lights")){
+                        if (!nJSON.isNull("lights")) {
                             insertLights(nJSON.getJSONArray("lights"));
                         }
-                        if(!nJSON.isNull("rooms")){
+                        if (!nJSON.isNull("rooms")) {
                             insertRooms(nJSON.getJSONArray("rooms"));
                         }
-                        if(!nJSON.isNull("plants")){
+                        if (!nJSON.isNull("plants")) {
                             insertPlants(nJSON.getJSONArray("plants"));
                         }
-                        App.setLong(mContext, "lastmodified", (System.currentTimeMillis()/1000));
+                        if(!nJSON.isNull("devices")){
+                            insertDevices(nJSON.getJSONArray("devices"));
+                        }
+                        App.setLong(mContext, "lastmodified", (System.currentTimeMillis() / 1000));
                     } catch (JSONException e) {
                         Log.w("Atlantis", e.toString());
                     }
@@ -88,7 +91,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void insertScenarios(JSONArray array) throws JSONException {
         mResolver.delete(AtlantisContract.Scenarios.CONTENT_URI, null, null);
-        for(int i = 0; i < array.length(); i++){
+        for (int i = 0; i < array.length(); i++) {
             JSONObject nJson = array.getJSONObject(i);
             ContentValues nValues = new ContentValues();
             nValues.put("file", nJson.getString("file"));
@@ -98,7 +101,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void insertEan(JSONArray array) throws JSONException {
         mResolver.delete(AtlantisContract.Ean.CONTENT_URI, null, null);
-        for(int i = 0; i < array.length(); i++){
+        for (int i = 0; i < array.length(); i++) {
             JSONObject nJson = array.getJSONObject(i);
             ContentValues nValues = new ContentValues();
             nValues.put("ean", nJson.getString("ean"));
@@ -109,7 +112,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void insertLights(JSONArray array) throws JSONException {
         mResolver.delete(AtlantisContract.Lights.CONTENT_URI, null, null);
-        for(int i = 0; i < array.length(); i++){
+        for (int i = 0; i < array.length(); i++) {
             JSONObject nJson = array.getJSONObject(i);
             ContentValues nValues = new ContentValues();
             nValues.put("id", nJson.getInt("id"));
@@ -125,7 +128,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void insertRooms(JSONArray array) throws JSONException {
         mResolver.delete(AtlantisContract.Rooms.CONTENT_URI, null, null);
-        for(int i = 0; i < array.length(); i++){
+        for (int i = 0; i < array.length(); i++) {
             JSONObject nJson = array.getJSONObject(i);
             ContentValues nValues = new ContentValues();
             nValues.put("id", nJson.getInt("id"));
@@ -136,7 +139,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void insertPlants(JSONArray array) throws JSONException {
         mResolver.delete(AtlantisContract.Plants.CONTENT_URI, null, null);
-        for(int i = 0; i < array.length(); i++){
+        for (int i = 0; i < array.length(); i++) {
             JSONObject nJson = array.getJSONObject(i);
             ContentValues nValues = new ContentValues();
             nValues.put("id", nJson.getInt("id"));
@@ -147,6 +150,25 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
             nValues.put("room", nJson.getInt("room"));
             nValues.put("timestamp", nJson.getString("timestamp"));
             mResolver.insert(AtlantisContract.Plants.CONTENT_URI, nValues);
+        }
+    }
+
+    private void insertDevices(JSONArray array) throws JSONException {
+        mResolver.delete(AtlantisContract.Devices.CONTENT_URI, null, null);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject nJson = array.getJSONObject(i);
+            ContentValues nValues = new ContentValues();
+            nValues.put("id", nJson.getInt("id"));
+            nValues.put("nom", nJson.getString("nom"));
+            nValues.put("ip", nJson.getString("ip"));
+            nValues.put("mac", nJson.getString("mac"));
+            nValues.put("dns", nJson.getString("dns"));
+            nValues.put("port", -1);
+            nValues.put("type", nJson.getString("type"));
+            nValues.put("connexion", nJson.getString("connexion"));
+            nValues.put("note", nJson.getString("note"));
+            nValues.put("username", nJson.getString("username"));
+            mResolver.insert(AtlantisContract.Devices.CONTENT_URI, nValues);
         }
     }
 }
