@@ -57,6 +57,30 @@
             android:name="com.lge.support.SPLIT_WINDOW"
             android:value="true"/>
 
+        <!-- Activities -->
+        <activity
+            android:name=".MainFragmentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Widget Config Activities -->
+        <activity android:name=".widgets.config.DoorLockWidgetConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Receivers -->
+        <receiver android:name=".other.RingingReceiver"/>
         <receiver android:name=".other.WifiReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
@@ -72,39 +96,11 @@
                 <category android:name="fr.nawrasg.atlantis"/>
             </intent-filter>
         </receiver>
-
-        <service android:name=".other.GCMService"/>
-        <service android:name=".other.WifiService"/>
-        <service android:name=".other.GeoService"/>
-
         <receiver android:name=".other.GeoReceiver">
             <intent-filter>
                 <action android:name="fr.nawrasg.atlantis.geo"/>
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name=".MainFragmentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <category android:name="android.intent.category.HOME"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
-        <!-- Widget Config Activity -->
-        <activity android:name=".widgets.config.DoorLockWidgetConfigActivity">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
-            </intent-filter>
-        </activity>
-
-        <receiver android:name=".other.RingingReceiver"/>
         <receiver android:name=".widgets.DoorLockWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -113,6 +109,10 @@
                 android:resource="@xml/widget_door_lock"/>
         </receiver>
 
+        <!-- Services -->
+        <service android:name=".other.GCMService"/>
+        <service android:name=".other.WifiService"/>
+        <service android:name=".other.GeoService"/>
         <service
             android:name=".other.BasicDreamService"
             android:exported="true">
@@ -138,6 +138,7 @@
                 android:resource="@xml/syncadapter"/>
         </service>
 
+        <!-- Providers -->
         <provider
             android:name="fr.nawrasg.atlantis.other.AtlantisContentProvider"
             android:authorities="fr.nawrasg.atlantis"
