@@ -1,7 +1,9 @@
 package fr.nawrasg.atlantis.fragments;
 
 import android.app.ListFragment;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -34,6 +36,7 @@ import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.DeviceAdapter;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceDialogFragment;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceInfoDialogFragment;
+import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Device;
 import fr.nawrasg.atlantis.type.User;
 
@@ -52,11 +55,31 @@ public class ConnectedDevicesFragment extends ListFragment {
 		mHandler = new Handler();
 		getActivity().getActionBar().setIcon(R.drawable.ng_connected);
 		setHasOptionsMenu(true);
-		getItems();
 		return nView;
 	}
-	
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		getItems();
+		getStatus();
+	}
+
 	private void getItems(){
+		ContentResolver nResolver = mContext.getContentResolver();
+		Cursor nCursor = nResolver.query(AtlantisContract.Devices.CONTENT_URI, null, null, null, null);
+		if(nCursor.moveToFirst()){
+			nList = new ArrayList<Device>();
+			do{
+				Device nDevice = new Device(nCursor);
+				nList.add(nDevice);
+			}while(nCursor.moveToNext());
+			mAdapter = new DeviceAdapter(mContext, nList);
+			setListAdapter(mAdapter);
+		}
+	}
+	
+	private void getStatus(){
 		String nURL = App.getFullUrl(mContext) + App.DEVICES + "?api=" + App.getAPI(mContext);
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
@@ -67,8 +90,7 @@ public class ConnectedDevicesFragment extends ListFragment {
 
 			@Override
 			public void onResponse(Response response) throws IOException {
-				Log.d("Nawras", response.body().string());
-				nList = new ArrayList<Device>();
+
 				mUserList = new ArrayList<User>();
 				try {
 					JSONObject nJson = new JSONObject(response.body().string());
@@ -76,10 +98,15 @@ public class ConnectedDevicesFragment extends ListFragment {
 					for (int i = 0; i < nDeviceArr.length(); i++) {
 						JSONObject json = nDeviceArr.getJSONObject(i);
 						Device nDevice = new Device(json);
-						nList.add(nDevice);
+						int nIndex = nList.indexOf(nDevice);
+						nList.get(nIndex).update(nDevice);
 					}
-					mAdapter = new DeviceAdapter(mContext, nList);
-					setListAdapter(mAdapter);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.notifyDataSetChanged();
+						}
+					});
 					JSONArray nUserArr = nJson.getJSONArray("users");
 					mUserList.add(new User());
 					for(int i = 0; i < nUserArr.length(); i++){
