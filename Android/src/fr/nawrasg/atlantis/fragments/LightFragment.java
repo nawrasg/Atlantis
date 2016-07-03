@@ -74,17 +74,25 @@ public class LightFragment extends ListFragment{
 
 	private void getItems(){
 		ContentResolver nResolver = mContext.getContentResolver();
-		Cursor nCursor = nResolver.query(AtlantisContract.Lights.CONTENT_URI, null, null, null, null);
-		if(nCursor.moveToFirst()){
-			mList = new ArrayList<>();
+		Cursor nRoomsCursor = nResolver.query(AtlantisContract.Rooms.CONTENT_URI, null, null, null, null);
+		if(nRoomsCursor.moveToFirst()){
 			mRoomList = new ArrayList<>();
 			do{
-				Light nLight = new Hue(nCursor);
+				Room nRoom = new Room(nRoomsCursor);
+				mRoomList.add(nRoom);
+			}while(nRoomsCursor.moveToNext());
+		}
+		Cursor nLightsCursor = nResolver.query(AtlantisContract.Lights.CONTENT_URI, null, null, null, null);
+		if(nLightsCursor.moveToFirst()){
+			mList = new ArrayList<>();
+			do{
+				Light nLight = new Hue(nLightsCursor);
 				mList.add(nLight);
-			}while(nCursor.moveToNext());
+			}while(nLightsCursor.moveToNext());
 			mAdapter = new LightAdapter(mContext, mList, mRoomList);
 			setListAdapter(mAdapter);
 		}
+
 	}
 
 	@Override
