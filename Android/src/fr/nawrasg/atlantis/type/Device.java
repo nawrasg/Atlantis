@@ -3,6 +3,7 @@ package fr.nawrasg.atlantis.type;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -29,6 +30,18 @@ public class Device implements Parcelable{
 		} catch (JSONException e) {
 			
 		}
+	}
+
+	public Device (Cursor cursor){
+		mID = cursor.getInt(cursor.getColumnIndex("id"));
+		nNom = cursor.getString(cursor.getColumnIndex("nom"));
+		nIP = cursor.getString(cursor.getColumnIndex("ip"));
+		nMAC = cursor.getString(cursor.getColumnIndex("mac"));
+		nType = cursor.getString(cursor.getColumnIndex("type"));
+		nNote = cursor.getString(cursor.getColumnIndex("note"));
+		mOwner = cursor.getString(cursor.getColumnIndex("username"));
+		nConnexion = cursor.getString(cursor.getColumnIndex("connexion"));
+		nOnline = -1;
 	}
 	
 	public String getOwner(){
@@ -90,6 +103,14 @@ public class Device implements Parcelable{
 		nOnline = in.readInt();
 		mOwner = in.readString();
 	}
+
+	public void update(Device device){
+		if(device.isOnline()){
+			nOnline = 1;
+		}else{
+			nOnline = -1;
+		}
+	}
 	
 	public static final Parcelable.Creator<Device> CREATOR = new Parcelable.Creator<Device>() {
 		@Override
@@ -102,4 +123,12 @@ public class Device implements Parcelable{
 			return new Device[size];
 		}
 	};
+
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Device){
+			return (getID() == ((Device)o).getID());
+		}
+		return false;
+	}
 }
