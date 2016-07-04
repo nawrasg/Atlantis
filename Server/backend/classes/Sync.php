@@ -6,6 +6,7 @@ class Sync{
 	const ROOMS = 'rooms';
 	const PLANTS = 'plants';
 	const DEVICES = 'devices';
+	const SENSORS = 'sensors';
 	
 	private $data;
 	private $file = 'sync.json';

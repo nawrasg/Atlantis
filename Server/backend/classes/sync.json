@@ -4,5 +4,6 @@
 	"lights":0,
 	"rooms":0,
 	"plants":0,
-	"devices":0
+	"devices":0,
+	"sensors":0
 }
