@@ -125,6 +125,7 @@ function add($arr) {
 					'online' => $ping 
 			);
 			echo json_encode ( $newDevice );
+			(new Sync())->update(Sync::DEVICES);
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
@@ -149,6 +150,7 @@ function update($arr) {
 		$connection = $arr ['connection'];
 		$req = $bdd->exec ( "UPDATE at_devices SET nom = '$title', ip = '$ip', mac = '$mac', type = '$type', connexion = '$connection', username = '$user' WHERE id = '$id'" );
 		if ($req == 1) {
+			(new Sync())->update(Sync::DEVICES);
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
@@ -167,6 +169,7 @@ function delete($arr) {
 		$bdd->exec ( "DELETE FROM at_gcm WHERE mac = '$mac'" );
 		$req2 = $bdd->exec ( "DELETE FROM at_devices WHERE id = '$id'" );
 		if ($req2 == 1) {
+			(new Sync())->update(Sync::DEVICES);
 			http_response_code ( 202 );
 		} else {
 			http_response_code ( 400 );
