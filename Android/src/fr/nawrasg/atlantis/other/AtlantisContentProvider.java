@@ -35,6 +35,10 @@ public class AtlantisContentProvider extends ContentProvider {
 	private static final int PLANTS_ITEM = 12;
 	private static final int DEVICES_LIST = 13;
 	private static final int DEVICES_ITEM = 14;
+	private static final int SENSORS_LIST = 15;
+	private static final int SENSORS_ITEM = 16;
+	private static final int SENSORS_DEVICES_LIST = 17;
+	private static final int SENSORS_DEVICES_ITEM = 18;
 	private static final UriMatcher URI_MATCHER;
 	private AtlantisOpenHelper mHelper;
 
@@ -55,6 +59,10 @@ public class AtlantisContentProvider extends ContentProvider {
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "plants/*", PLANTS_ITEM);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "devices", DEVICES_LIST);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "devices/*", DEVICES_ITEM);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "sensors", SENSORS_LIST);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "sensors/*", SENSORS_ITEM);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "sensors_devices", SENSORS_DEVICES_LIST);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "sensors_devices/*", SENSORS_DEVICES_ITEM);
 	}
 
 	@Override
@@ -117,6 +125,20 @@ public class AtlantisContentProvider extends ContentProvider {
 				nBuilder.setTables(AtlantisDatabaseInterface.DEVICES_TABLE_NAME);
 				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
 				break;
+			case SENSORS_LIST:
+				nBuilder.setTables(AtlantisDatabaseInterface.SENSORS_TABLE_NAME);
+				break;
+			case SENSORS_ITEM:
+				nBuilder.setTables(AtlantisDatabaseInterface.SENSORS_TABLE_NAME);
+				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
+				break;
+			case SENSORS_DEVICES_LIST:
+				nBuilder.setTables(AtlantisDatabaseInterface.SENSORS_DEVICES_TABLE_NAME);
+				break;
+			case SENSORS_DEVICES_ITEM:
+				nBuilder.setTables(AtlantisDatabaseInterface.SENSORS_DEVICES_TABLE_NAME);
+				nBuilder.appendWhere("id = " + uri.getLastPathSegment());
+				break;
 		}
 		Cursor nCursor = nBuilder.query(nDB, projection, selection, selectionArgs, null, null, sortOrder);
 		return nCursor;
@@ -148,6 +170,14 @@ public class AtlantisContentProvider extends ContentProvider {
 				return AtlantisContract.Devices.CONTENT_TYPE;
 			case DEVICES_ITEM:
 				return AtlantisContract.Devices.CONTENT_TYPE_ITEM;
+			case SENSORS_LIST:
+				return AtlantisContract.Sensors.CONTENT_TYPE;
+			case SENSORS_ITEM:
+				return AtlantisContract.Sensors.CONTENT_TYPE_ITEM;
+			case SENSORS_DEVICES_LIST:
+				return AtlantisContract.SensorsDevices.CONTENT_TYPE;
+			case SENSORS_DEVICES_ITEM:
+				return AtlantisContract.SensorsDevices.CONTENT_TYPE_ITEM;
 		}
 		return null;
 	}
@@ -193,6 +223,16 @@ public class AtlantisContentProvider extends ContentProvider {
 				if(nID > 0){
 					return uri;
 				}
+			case SENSORS_LIST:
+				nID = nDB.insert(AtlantisDatabaseInterface.SENSORS_TABLE_NAME, null, values);
+				if(nID > 0){
+					return uri;
+				}
+			case SENSORS_DEVICES_LIST:
+				nID = nDB.insert(AtlantisDatabaseInterface.SENSORS_DEVICES_TABLE_NAME, null, values);
+				if(nID > 0){
+					return uri;
+				}
 		}
 		return null;
 	}
@@ -222,6 +262,10 @@ public class AtlantisContentProvider extends ContentProvider {
 				return nDB.delete(AtlantisDatabaseInterface.PLANTS_TABLE_NAME, selection, selectionArgs);
 			case DEVICES_LIST:
 				return nDB.delete(AtlantisDatabaseInterface.DEVICES_TABLE_NAME, selection, selectionArgs);
+			case SENSORS_LIST:
+				return nDB.delete(AtlantisDatabaseInterface.SENSORS_TABLE_NAME, selection, selectionArgs);
+			case SENSORS_DEVICES_LIST:
+				return nDB.delete(AtlantisDatabaseInterface.SENSORS_DEVICES_TABLE_NAME, selection, selectionArgs);
 		}
 		return nCount;
 	}

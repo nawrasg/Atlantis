@@ -77,8 +77,11 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
                         if (!nJSON.isNull("plants")) {
                             insertPlants(nJSON.getJSONArray("plants"));
                         }
-                        if(!nJSON.isNull("devices")){
+                        if (!nJSON.isNull("devices")) {
                             insertDevices(nJSON.getJSONArray("devices"));
+                        }
+                        if (!nJSON.isNull("sensors")) {
+                            insertSensors(nJSON.getJSONObject("sensors"));
                         }
                         App.setLong(mContext, "lastmodified", (System.currentTimeMillis() / 1000));
                     } catch (JSONException e) {
@@ -169,6 +172,37 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
             nValues.put("note", nJson.getString("note"));
             nValues.put("username", nJson.getString("username"));
             mResolver.insert(AtlantisContract.Devices.CONTENT_URI, nValues);
+        }
+    }
+
+    private void insertSensors(JSONObject json) throws JSONException {
+        JSONArray nDevicesArray = json.getJSONArray("devices");
+        mResolver.delete(AtlantisContract.SensorsDevices.CONTENT_URI, null, null);
+        for (int i = 0; i < nDevicesArray.length(); i++) {
+            JSONObject nJson = nDevicesArray.getJSONObject(i);
+            ContentValues nValues = new ContentValues();
+            nValues.put("id", nJson.getInt("id"));
+            nValues.put("device", nJson.getString("device"));
+            nValues.put("alias", nJson.getString("alias"));
+            nValues.put("room", nJson.getInt("room"));
+            mResolver.insert(AtlantisContract.SensorsDevices.CONTENT_URI, nValues);
+        }
+        JSONArray nSensorsArray = json.getJSONArray("sensors");
+        mResolver.delete(AtlantisContract.Sensors.CONTENT_URI, null, null);
+        for (int i = 0; i < nSensorsArray.length(); i++) {
+            JSONObject nJson = nSensorsArray.getJSONObject(i);
+            ContentValues nValues = new ContentValues();
+            nValues.put("id", nJson.getInt("id"));
+            nValues.put("sensor", nJson.getString("sensor"));
+            nValues.put("device", nJson.getString("device"));
+            nValues.put("protocol", nJson.getString("protocol"));
+            nValues.put("type", nJson.getString("type"));
+            nValues.put("unit", nJson.getString("unit"));
+            nValues.put("history", nJson.getInt("history"));
+            nValues.put("date", nJson.getString("date"));
+            nValues.put("time", nJson.getString("time"));
+            nValues.put("ignore", nJson.getInt("ignore"));
+            mResolver.insert(AtlantisContract.Sensors.CONTENT_URI, nValues);
         }
     }
 }

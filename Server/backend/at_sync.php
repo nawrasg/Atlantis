@@ -42,6 +42,9 @@ function get($lastmodified) {
 	if($lastmodified < $sync->get(Sync::DEVICES)){
 		$output[Sync::DEVICES] = getDevices();
 	}
+	if($lastmodified < $sync->get(Sync::SENSORS)){
+		$output[Sync::SENSORS] = getSensors();
+	}
 	if($lastmodified < $sync->get(Sync::EAN)){
 		$output[Sync::EAN] = getEan();
 	}
@@ -102,6 +105,23 @@ function getDevices(){
 	$result = $req->fetchAll(PDO::FETCH_ASSOC);
 	$req->closeCursor();
 	return $result;
+}
+
+function getSensors(){
+	$bdd = getBDD ();
+	
+	$req_sensors = $bdd->query ( 'SELECT * FROM at_sensors' );
+	$result_sensors = $req_sensors->fetchAll(PDO::FETCH_ASSOC);
+	$req_sensors->closeCursor();
+	
+	$req_sensors_devices = $bdd->query ( 'SELECT * FROM at_sensors_devices' );
+	$result_sensors_devices = $req_sensors_devices->fetchAll(PDO::FETCH_ASSOC);
+	$req_sensors_devices->closeCursor();
+	
+	return array (
+			'devices' => $result_sensors_devices,
+			'sensors' => $result_sensors 
+	);
 }
 
 function getRooms(){

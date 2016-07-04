@@ -59,10 +59,32 @@ public interface AtlantisDatabaseInterface {
             "username TEXT" +
             ")";
 
+    String SENSORS_TABLE_CREATE = "CREATE TABLE at_sensors (" +
+            "id INTEGER UNIQUE NOT NULL, \n" +
+            "sensor TEXT, \n" +
+            "device TEXT, \n" +
+            "protocol TEXT, \n" +
+            "type TEXT, \n" +
+            "unit TEXT, \n" +
+            "history INTEGER, \n" +
+            "date TEXT, \n" +
+            "time TEXT, \n" +
+            "ignore INTEGER" +
+            ")";
+
+    String SENSORS_DEVICES_TABLE_CREATE = "CREATE TABLE at_sensors_devices (" +
+            "id INTEGER UNIQUE NOT NULL, \n" +
+            "device TEXT, \n" +
+            "alias TEXT, \n" +
+            "room INTEGER" +
+            ")";
+
     String LIGHTS_TABLE_NAME = "at_lights";
     String ROOMS_TABLE_NAME = "at_room";
     String EAN_TABLE_NAME = "at_ean";
     String SCENARIOS_TABLE_NAME = "at_scenarios";
     String PLANTS_TABLE_NAME = "at_plants";
     String DEVICES_TABLE_NAME = "at_devices";
+    String SENSORS_TABLE_NAME = "at_sensors";
+    String SENSORS_DEVICES_TABLE_NAME = "at_sensors_devices";
 }
