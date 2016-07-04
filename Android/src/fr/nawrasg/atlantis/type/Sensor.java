@@ -1,12 +1,14 @@
 package fr.nawrasg.atlantis.type;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
 import org.json.JSONObject;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 import fr.nawrasg.atlantis.R;
@@ -14,6 +16,7 @@ import fr.nawrasg.atlantis.R;
 public class Sensor extends PDevice implements Parcelable {
 	private String mID, mSensor, mDevice, mRoom, mType, mUnit, mDate, mTime, mValue, mUpdate, mAlias;
 	private int mHistory, mIgnore;
+	private ArrayList<Sensor> mSensorsList;
 
 	public Sensor(JSONObject json) {
 		try {
@@ -37,6 +40,43 @@ public class Sensor extends PDevice implements Parcelable {
 		} catch (Exception e) {
 
 		}
+		mSensorsList = new ArrayList<>();
+	}
+
+	public Sensor(Cursor cursor, boolean section){
+		mID = cursor.getString(cursor.getColumnIndex("id"));
+		mDevice = cursor.getString(cursor.getColumnIndex("device"));
+		if(section){
+			mRoom = cursor.getString(cursor.getColumnIndex("room"));
+			mAlias = cursor.getString(cursor.getColumnIndex("alias"));
+		}else{
+			mSensor = cursor.getString(cursor.getColumnIndex("sensor"));
+			mType = cursor.getString(cursor.getColumnIndex("type"));
+			mUnit = cursor.getString(cursor.getColumnIndex("unit"));
+			mHistory = cursor.getInt(cursor.getColumnIndex("history"));
+			mIgnore = cursor.getInt(cursor.getColumnIndex("ignore"));
+			mDate = cursor.getString(cursor.getColumnIndex("date"));
+			mTime = cursor.getString(cursor.getColumnIndex("time"));
+			mValue = "0";
+		}
+		mSensorsList = new ArrayList<>();
+	}
+
+	public void addSensors(Cursor cursor){
+		if(cursor.moveToFirst()){
+			do{
+				Sensor nSensor = new Sensor(cursor, false);
+				mSensorsList.add(nSensor);
+			}while(cursor.moveToNext());
+		}
+	}
+
+	public int getSensorsCount(){
+		return mSensorsList.size();
+	}
+
+	public Sensor getSensor(int position){
+		return mSensorsList.get(position);
 	}
 
 	public String getRoom() {
