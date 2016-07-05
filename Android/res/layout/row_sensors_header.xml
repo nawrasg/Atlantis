@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:padding="10dp">
 
     <TextView
         android:id="@+id/lblSensorHeaderName"
-        style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="7dp"
-        android:paddingTop="7dp"
+        android:gravity="center_vertical"
         android:text="Section"
         android:textColor="#000000"
         android:textSize="18sp"/>
