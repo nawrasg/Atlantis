@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:descendantFocusability="blocksDescendants">
+                android:descendantFocusability="blocksDescendants"
+                android:paddingLeft="40dp">
 
     <ImageView
         android:id="@+id/imgSensorSwitchIcon"
@@ -11,7 +12,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:contentDescription="icon"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:src="@drawable/ng_switch"/>
 
     <TextView
         android:id="@+id/lblSensorSwitchName"
