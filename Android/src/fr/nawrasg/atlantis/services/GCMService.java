@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.squareup.okhttp.Callback;
@@ -60,7 +61,7 @@ public class GCMService extends IntentService {
 
 					@Override
 					public void onLocationChanged(Location location) {
-						String nURL = App.getFullUrl(mContext) + App.GEO + App.getAPI(mContext) + "&lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&speed=" + location.getSpeed() + "&bearing=" + location.getBearing();
+						String nURL = App.getFullUrl(mContext) + App.GEO + "?api=" + App.getAPI(mContext) + "&lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&speed=" + location.getSpeed() + "&bearing=" + location.getBearing();
 						Request nRequest = new Request.Builder()
 								.url(nURL)
 								.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
