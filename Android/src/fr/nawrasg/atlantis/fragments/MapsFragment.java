@@ -20,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
@@ -32,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
@@ -41,6 +43,7 @@ public class MapsFragment extends Fragment {
     private Context mContext;
     private GoogleMap mMap;
     private Handler mHandler;
+    private ArrayList<MarkerOptions> mList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,6 +113,13 @@ public class MapsFragment extends Fragment {
             if (zoom) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(nHomeCoords));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            }else{
+                LatLngBounds.Builder nBuilder = new LatLngBounds.Builder();
+                for(int i = 0; i < mList.size(); i++){
+                    nBuilder.include(mList.get(i).getPosition());
+                }
+                LatLngBounds nBounds = nBuilder.build();
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(nBounds, 0));
             }
         }
     }
@@ -126,6 +136,7 @@ public class MapsFragment extends Fragment {
 
     private void addMarkers(JSONObject positions) throws JSONException {
         mMap.clear();
+        mList = new ArrayList<>();
         JSONArray nArr = positions.getJSONArray("positions");
         for (int i = 0; i < nArr.length(); i++) {
             GPS nGPS = new GPS(nArr.getJSONObject(i));
@@ -133,9 +144,10 @@ public class MapsFragment extends Fragment {
             //mMap.moveCamera(CameraUpdateFactory.newLatLng(nCoords));
             //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
             MarkerOptions nMarker = new MarkerOptions().position(nCoords).title(nGPS.getUser() + " (" + nGPS.getTimestamp() + ")");
+            mList.add(nMarker);
             mMap.addMarker(nMarker);
         }
-        setHome(true);
+        setHome(false);
     }
 
     private void getUsers() {
