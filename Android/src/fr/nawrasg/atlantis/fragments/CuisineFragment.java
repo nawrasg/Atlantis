@@ -139,7 +139,7 @@ public class CuisineFragment extends ListFragment {
 	}
 
 	public void getItems() {
-		String nURL = App.getFullUrl(mContext) + App.CUISINE + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.CUISINE);
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
@@ -176,7 +176,7 @@ public class CuisineFragment extends ListFragment {
 	}
 
 	private void modifyItem(final Produit produit, final char mode){
-		String nURL = App.getFullUrl(mContext) + App.CUISINE + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.CUISINE);
 		switch(mode){
 			case ',':
 				nURL += "&open=" + produit.getID();
@@ -230,7 +230,7 @@ public class CuisineFragment extends ListFragment {
 	}
 
 	private void deleteItem(final Produit produit){
-		String nURL = App.getFullUrl(mContext) + App.CUISINE + "?api=" + App.getAPI(mContext) + "&id=" + produit.getID();
+		String nURL = App.getUri(mContext, App.CUISINE) + "&id=" + produit.getID();
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.delete()
