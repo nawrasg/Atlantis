@@ -92,6 +92,10 @@ public class App extends Application{
 		return nLink;
 	}
 
+	public static String getUri(Context context, String section){
+		return getFullUrl(context) + section + "?api=" + getAPI(context);
+	}
+
 	public static Set<String> getPrefSet(Context context, String key) {
 		SharedPreferences nPref = PreferenceManager.getDefaultSharedPreferences(context);
 		return nPref.getStringSet(key, new HashSet<String>());
