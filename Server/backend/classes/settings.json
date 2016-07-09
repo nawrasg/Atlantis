@@ -21,7 +21,9 @@
     },
     "Zwave":{
         "IP":"",
-        "Port":""
+        "Port":"",
+        "username":"",
+        "password":""
     },
     "Hue":{
     	"ip": "",
