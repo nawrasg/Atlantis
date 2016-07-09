@@ -2,12 +2,14 @@
 require_once __DIR__ . '/connexion.php';
 require_once __DIR__ . '/Settings.php';
 class Zwave {
-	var $url, $port;
+	var $url, $port, $username, $password;
 	var $rawData;
 	public function __construct($local = null) {
 		$settings = new Settings ();
 		$this->url = $settings->getSettings ( "Zwave", "IP" );
 		$this->port = $settings->getSettings ( "Zwave", "Port" );
+		$this->username = $settings->getSettings ( "Zwave", "username" );
+		$this->password = $settings->getSettings ( "Zwave", "password" );
 		if ($local == null) {
 			$this->rawData = null;
 		} else {
@@ -21,7 +23,12 @@ class Zwave {
 		} else {
 			$link = 'http://' . $this->url . ':' . $this->port . '/ZAutomation/api/v1/devices/' . $id;
 		}
-		$json = file_get_contents ( $link );
+		$auth = stream_context_create ( array (
+				'http' => array (
+						'header' => "Authorization: Basic " . base64_encode ( "$this->username:$this->password" ) 
+				) 
+		) );
+		$json = file_get_contents ( $link, false, $auth );
 		$arr = json_decode ( $json );
 		if ($arr->{'code'} == 200) {
 			return $arr;
