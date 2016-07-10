@@ -153,7 +153,7 @@ public class SensorAdapter extends BaseExpandableListAdapter {
                 public void onClick(View v) {
                     String nSensorLabel = (String) v.getTag();
                     String nCmd = ((Switch) v).isChecked() ? "on" : "off";
-                    String nURL = App.getFullUrl(mContext) + App.SENSORS + App.getAPI(mContext) + "&toggle=" + nSensorLabel + "&value=" + nCmd;
+                    String nURL = App.getUri(mContext, App.SENSORS) + "&toggle=" + nSensorLabel + "&value=" + nCmd;
                     Request nRequest = new Request.Builder()
                             .url(nURL)
                             .put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
@@ -178,7 +178,6 @@ public class SensorAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.row_sensors, parent, false);
             SensorViewHolder nHolder = new SensorViewHolder(convertView);
             nHolder.name.setText(nSensor.getSensor());
-            nHolder.description.setText(nSensor.getType());
             switch (nSensor.getType()) {
                 case "Electric ":
                 case "Electric":

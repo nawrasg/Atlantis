@@ -57,6 +57,7 @@ public class SensorsFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         getItems();
+        getStatus();
     }
 
     private void getItems() {
@@ -86,7 +87,7 @@ public class SensorsFragment extends ListFragment {
     }
 
     public void getStatus() {
-        String nURL = App.getFullUrl(mContext) + App.SENSORS + "?api=" + App.getAPI(mContext) + "&get";
+        String nURL = App.getUri(mContext, App.SENSORS);
         Request nRequest = new Request.Builder().url(nURL).build();
         App.httpClient.newCall(nRequest).enqueue(new Callback() {
             @Override
@@ -103,13 +104,15 @@ public class SensorsFragment extends ListFragment {
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject json = arr.getJSONObject(i);
                         Sensor nSensor = new Sensor(json.getJSONObject("device"));
-                        mList.add(nSensor);
+                        ArrayList<Sensor> nList = new ArrayList<Sensor>();
                         JSONArray array = json.getJSONArray("sensors");
                         for (int j = 0; j < array.length(); j++) {
                             json = array.getJSONObject(j);
-                            nSensor = new Sensor(json);
-                            mList.add(nSensor);
+                            Sensor nChildSensor = new Sensor(json);
+                            nList.add(nChildSensor);
                         }
+                        int nIndex = mList.indexOf(nSensor);
+                        mList.get(nIndex).update(nList);
                     }
                 } catch (JSONException e) {
                     Log.e("Atlantis", e.toString());
@@ -117,8 +120,8 @@ public class SensorsFragment extends ListFragment {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-
-                        setItemListener();
+                        mAdapter.notifyDataSetChanged();
+                        //setItemListener();
                     }
                 });
             }
