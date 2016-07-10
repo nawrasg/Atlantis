@@ -53,8 +53,13 @@ class Zwave {
 		}
 	}
 	public function command($id, $cmd) {
+		$auth = stream_context_create ( array (
+				'http' => array (
+						'header' => "Authorization: Basic " . base64_encode ( "$this->username:$this->password" )
+				)
+		) );
 		$link = 'http://' . $this->url . ':' . $this->port . '/ZAutomation/api/v1/devices/' . $id . '/command/' . $cmd;
-		$json = file_get_contents ( $link );
+		$json = file_get_contents ( $link, false, $auth );
 		$arr = json_decode ( $json );
 		return $arr->{'code'};
 	}
