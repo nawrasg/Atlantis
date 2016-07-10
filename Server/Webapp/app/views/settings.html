@@ -231,6 +231,16 @@
 	        						<input ng-model=atlantis.Zwave.Port >
 	        					</md-input-container>
         					</div>
+        					<div layout=row>
+	        					<md-input-container flex>
+	        						<label>Nom d'utilisateur</label>
+	        						<input ng-model=atlantis.Zwave.username >
+	        					</md-input-container>
+	        					<md-input-container flex>
+	        						<label>Mot de passe</label>
+	        						<input ng-model="atlantis.Zwave.password" type="password" >
+	        					</md-input-container>
+        					</div>
         					<div layout=row layout-align="end center">
        							<md-button class="md-icon-button" aria-label="FAB" ng-click="saveSensors()">
 								  <md-icon md-svg-src="images/svg/ic_check_black_36px.svg"></md-icon>

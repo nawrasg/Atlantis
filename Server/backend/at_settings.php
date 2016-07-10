@@ -102,6 +102,10 @@ function update($arr) {
 					$settings->setSettings ( 'Zwave', 'IP', $arr ['ip'] );
 				if (isset ( $arr ['port'] ))
 					$settings->setSettings ( 'Zwave', 'Port', $arr ['port'] );
+				if (isset ( $arr ['username'], $arr ['password'] )) {
+					$settings->setSettings ( 'Zwave', 'username', $arr ['username'] );
+					$settings->setSettings ( 'Zwave', 'password', $arr ['password'] );
+				}
 				http_response_code ( 202 );
 				return;
 			case 'Hue' :

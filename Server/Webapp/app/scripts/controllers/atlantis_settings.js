@@ -90,8 +90,10 @@ nApp.controller('AtlantisSettingsCtrl', function($scope, $http, $sessionStorage,
 		var hue_user = $scope.atlantis.Hue.user;
 		var zwave_ip = $scope.atlantis.Zwave.IP;
 		var zwave_port = $scope.atlantis.Zwave.Port;
+		var zwave_username = $scope.atlantis.Zwave.username;
+		var zwave_password = $scope.atlantis.Zwave.password;
 		var nURL = AtlantisUri.Settings() + '?api=' + $sessionStorage.api;
-		nURL += '&section=Zwave&ip=' + zwave_ip + '&port=' + zwave_port;
+		nURL += '&section=Zwave&ip=' + zwave_ip + '&port=' + zwave_port + '&username=' + zwave_username + '&password=' + zwave_password;
 		$http.put(nURL).success(function(data, status) {
 			showToast($mdToast, status, data);
 		});
