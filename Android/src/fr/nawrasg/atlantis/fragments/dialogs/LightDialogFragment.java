@@ -76,7 +76,7 @@ public class LightDialogFragment extends DialogFragment implements OnClickListen
 				}
 				nVal += "&name=" + nName; 
 				nVal += "&uid=" + ((Hue)mLight).getUID();
-				String nURL = App.getFullUrl(mContext) + App.LIGHTS + App.getAPI(mContext) + "&" + nVal;
+				String nURL = App.getUri(mContext, App.LIGHTS) + "&" + nVal;
 				Request nRequest = new Request.Builder()
 						.url(nURL)
 						.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
@@ -165,7 +165,7 @@ public class LightDialogFragment extends DialogFragment implements OnClickListen
 				return;
 		}
 		if (nColor != null) {
-			String nURL = App.getFullUrl(mContext) + App.LIGHTS + App.getAPI(mContext) + "&color=" + ((Hue) mLight).getUID() + "&value=" + nColor;
+			String nURL = App.getUri(mContext, App.LIGHTS) + "&color=" + ((Hue) mLight).getUID() + "&value=" + nColor;
 			Request nRequest = new Request.Builder()
 					.url(nURL)
 					.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))

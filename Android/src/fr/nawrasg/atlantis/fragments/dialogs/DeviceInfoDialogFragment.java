@@ -58,7 +58,7 @@ public class DeviceInfoDialogFragment extends DialogFragment {
 					int nPosition = spUser.getSelectedItemPosition();
 					String nDeviceOwner = URLEncoder.encode(mUserList.get(nPosition).getName(), "UTF-8");
 					String nURL = "title=" + nDeviceTitle + "&ip=" + nDeviceIp + "&mac=" + nDeviceMac + "&user=" + nDeviceOwner;
-					String nURLf = App.getFullUrl(mContext) + App.DEVICES + App.getAPI(mContext) + "&" + nURL;
+					String nURLf = App.getUri(mContext, App.DEVICES) + "&" + nURL;
 					Request nRequest = new Request.Builder()
 							.url(nURLf)
 							.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))

@@ -147,7 +147,7 @@ public class CoursesFragment extends ListFragment {
 	}
 
 	private void modifyCourses(final Element element, final char mode){
-		String nURL = App.getFullUrl(mContext) + App.COURSES + "?api=" + App.getAPI(mContext) + "&id=" + element.getID();
+		String nURL = App.getUri(mContext, App.COURSES) + "&id=" + element.getID();
 		switch(mode){
 			case '+':
 				nURL += "&quantity=" + (element.getQuantity() + 1);
@@ -234,7 +234,7 @@ public class CoursesFragment extends ListFragment {
 	}
 
 	private void getCourses(){
-		String nURL = App.getFullUrl(mContext) + App.COURSES + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.COURSES);
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
@@ -276,7 +276,7 @@ public class CoursesFragment extends ListFragment {
 	public void sendNotification() {
 		try {
 			String nMsg = URLEncoder.encode(getResources().getString(R.string.fragment_courses_notification), "UTF-8");
-			String nURL = App.getFullUrl(mContext) + App.NOTIFY + "?api=" + App.getAPI(mContext) + "&msg=" + nMsg;
+			String nURL = App.getUri(mContext, App.NOTIFY) + "&msg=" + nMsg;
 			Request nRequest = new Request.Builder()
 					.url(nURL)
 					.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
@@ -346,7 +346,7 @@ public class CoursesFragment extends ListFragment {
 	}
 
 	private void postCourses(String name, long quantity){
-		String nURL = App.getFullUrl(mContext) + App.COURSES + "?api=" + App.getAPI(mContext) + "&name=" + name + "&quantity=" + quantity;
+		String nURL = App.getUri(mContext, App.COURSES) + "&name=" + name + "&quantity=" + quantity;
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))

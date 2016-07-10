@@ -83,7 +83,7 @@ public class MapsFragment extends Fragment {
     }
 
     private void post() {
-        String nURL = App.getFullUrl(mContext) + App.GEO + "?api=" + App.getAPI(mContext);
+        String nURL = App.getUri(mContext, App.GEO);
         Request nRequest = new Request.Builder()
                 .url(nURL)
                 .post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
@@ -113,9 +113,9 @@ public class MapsFragment extends Fragment {
             if (zoom) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(nHomeCoords));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-            }else{
+            } else {
                 LatLngBounds.Builder nBuilder = new LatLngBounds.Builder();
-                for(int i = 0; i < mList.size(); i++){
+                for (int i = 0; i < mList.size(); i++) {
                     nBuilder.include(mList.get(i).getPosition());
                 }
                 LatLngBounds nBounds = nBuilder.build();
@@ -151,7 +151,7 @@ public class MapsFragment extends Fragment {
     }
 
     private void getUsers() {
-        String nURL = App.getFullUrl(mContext) + App.GEO + "?api=" + App.getAPI(mContext);
+        String nURL = App.getUri(mContext, App.GEO);
         Request nRequest = new Request.Builder()
                 .url(nURL)
                 .build();

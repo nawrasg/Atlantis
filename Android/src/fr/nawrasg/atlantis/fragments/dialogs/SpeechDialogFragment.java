@@ -39,7 +39,7 @@ public class SpeechDialogFragment extends DialogFragment {
 			public void onClick(DialogInterface dialog, int id) {
 				try {
 					String nText = URLEncoder.encode(txtText.getText().toString(), "UTF-8");
-					String nURL = App.getFullUrl(mContext) + App.SPEECH + "?api=" + App.getAPI(mContext) + "&speaker&text=" + nText;
+					String nURL = App.getUri(mContext, App.SPEECH) + "&speaker&text=" + nText;
 					Request nRequest = new Request.Builder().url(nURL).build();
 					App.httpClient.newCall(nRequest).enqueue(new Callback() {
 						@Override

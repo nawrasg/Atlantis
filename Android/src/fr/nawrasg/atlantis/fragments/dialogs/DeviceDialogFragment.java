@@ -61,7 +61,7 @@ public class DeviceDialogFragment extends DialogFragment{
 	public void wakeDevice(){
 		try {
 			String nDeviceMac = URLEncoder.encode(mDevice.getMac(), "UTF-8");
-			String nURL = App.getFullUrl(mContext) + App.DEVICES + App.getAPI(mContext) + "&wol=" + nDeviceMac;
+			String nURL = App.getUri(mContext, App.DEVICES) + "&wol=" + nDeviceMac;
 			Request nRequest = new Request.Builder()
 					.url(nURL)
 					.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))

@@ -157,7 +157,7 @@ public class SensorDialogFragment extends DialogFragment{
 	}
 
 	private void post(String data){
-		String nURL = App.getFullUrl(mContext) + App.SENSORS + "?api=" + App.getAPI(mContext) + "&" + data;
+		String nURL = App.getUri(mContext, App.SENSORS) + "&" + data;
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override

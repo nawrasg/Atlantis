@@ -60,7 +60,7 @@ public class PlantInfoDialogFragment extends DialogFragment{
 				try {
 					nTitle = URLEncoder.encode(txtTitle.getText().toString(), "UTF-8");
 					String nURL = "id=" + nPlant.getId() + "&title=" + nTitle;
-					String nURLf = App.getFullUrl(mContext) + App.PLANTE + App.getAPI(mContext) + "&" + nURL;
+					String nURLf = App.getUri(mContext, App.PLANTE) + "&" + nURL;
 					Request nRequest = new Request.Builder()
 							.url(nURLf)
 							.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
