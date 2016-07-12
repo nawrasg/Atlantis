@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="fr.nawrasg.atlantis"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    package="fr.nawrasg.atlantis"
     android:versionCode="10"
     android:versionName="0.3">
 
@@ -29,8 +29,8 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <uses-feature android:name="android.hardware.sensor.accelerometer"/>
     <uses-feature
@@ -79,6 +79,11 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
+        <activity android:name=".widgets.config.ScenarioWidgetConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
 
         <!-- Receivers -->
         <receiver android:name=".receivers.RingingReceiver"/>
@@ -102,12 +107,22 @@
                 <action android:name="fr.nawrasg.atlantis.geo"/>
             </intent-filter>
         </receiver>
+        <!-- Receivers : Widgets -->
         <receiver android:name=".widgets.DoorLockWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/widget_door_lock"/>
+        </receiver>
+        <receiver android:name=".widgets.ScenarioWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_scenario"/>
         </receiver>
 
         <!-- Services -->
@@ -130,15 +145,17 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator"/>
         </service>
-        <service android:name=".services.SyncService"
+        <service
+            android:name=".services.SyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter"
+            <meta-data
+                android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter"/>
         </service>
-        <service android:name="org.eclipse.paho.android.service.MqttService" />
+        <service android:name="org.eclipse.paho.android.service.MqttService"/>
 
         <!-- Providers -->
         <provider
