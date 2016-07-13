@@ -10,46 +10,52 @@
         android:orientation="vertical"
         android:padding="40dp">
 
-        <TextView
-            android:layout_width="fill_parent"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/layout_fragment_pharmacie_add_name"/>
+            android:layout_marginTop="20dp">
 
-        <EditText
-            android:id="@+id/txtPharmacieNom"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/txtPharmacieNom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/layout_fragment_pharmacie_add_name"/>
 
-        <TextView
-            android:layout_width="fill_parent"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/layout_fragment_pharmacie_add_quantity"/>
+            android:layout_marginTop="20dp">
 
-        <EditText
-            android:id="@+id/txtPharmacieQte"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
+            <EditText
+                android:id="@+id/txtPharmacieQte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/layout_fragment_pharmacie_add_quantity"
+                android:inputType="number"/>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/layout_fragment_pharmacie_add_date_peremption"/>
+        </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/txtPharmacieDate"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:enabled="false"/>
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/txtPharmacieDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="@string/layout_fragment_pharmacie_add_date_peremption"/>
+
+            </android.support.design.widget.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/btnPharmacieAddDate"

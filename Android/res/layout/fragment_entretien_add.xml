@@ -10,22 +10,23 @@
         android:orientation="vertical"
         android:padding="40dp">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/layout_fragment_entretien_add_label"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/txtEntretienNom"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/txtEntretienNom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/layout_fragment_entretien_add_label"/>
+
+            </android.support.design.widget.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/btnEntretienAddScan"
@@ -35,35 +36,39 @@
                 android:src="@drawable/ic_action_camera"/>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="fill_parent"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/layout_fragment_entretien_add_quantity"/>
+            android:layout_marginTop="20dp">
 
-        <EditText
-            android:id="@+id/txtEntretienQte"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
+            <EditText
+                android:id="@+id/txtEntretienQte"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/layout_fragment_entretien_add_quantity"
+                android:inputType="number"/>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/layout_fragment_entretien_add_date_peremption"/>
+        </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/txtEntretienDate"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:enabled="false"/>
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/txtEntretienDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="@string/layout_fragment_entretien_add_date_peremption"/>
+
+            </android.support.design.widget.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/btnEntretienAddDate"
