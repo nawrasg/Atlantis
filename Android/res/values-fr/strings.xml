@@ -290,4 +290,7 @@
     <string name="layout_row_sensor_switch_on">On</string>
     <string name="layout_row_sensor_switch_off">Off</string>
 
+    <!-- Widgets -->
+    <string name="widget_door_lock_label">Atlantis Serrure</string>
+    <string name="widget_scenario_label">Atlantis Scénario</string>
 </resources>
