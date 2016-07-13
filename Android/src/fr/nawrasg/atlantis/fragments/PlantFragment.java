@@ -43,7 +43,6 @@ public class PlantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View nView = inflater.inflate(R.layout.fragment_plant, container, false);
         ButterKnife.bind(this, nView);
-        getActivity().getActionBar().setIcon(R.drawable.ng_plant);
         mContext = super.getActivity();
         mHandler = new Handler();
         return nView;

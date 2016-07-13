@@ -42,7 +42,6 @@ public class GPSFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		nContext = getActivity();
-		getActivity().getActionBar().setIcon(R.drawable.ng_satellite);
 		View nView = inflater.inflate(R.layout.fragment_gps, container, false);
 		ButterKnife.bind(this, nView);
 		nLM = (LocationManager) nContext.getSystemService(Context.LOCATION_SERVICE);
