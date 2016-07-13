@@ -43,7 +43,6 @@ public class EntretienFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mContext = getActivity();
 		mHandler = new Handler();
-		getActivity().getActionBar().setIcon(R.drawable.ng_soap);
 		View nV = inflater.inflate(R.layout.layout_entretien, container, false);
 		if (getActivity().findViewById(R.id.main_fragment2) == null) {
 			setHasOptionsMenu(true);

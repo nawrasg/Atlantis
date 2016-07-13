@@ -2,7 +2,6 @@ package fr.nawrasg.atlantis;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -11,6 +10,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,7 +49,7 @@ import fr.nawrasg.atlantis.type.DrawerItem;
 import fr.nawrasg.atlantis.type.DrawerSection;
 
 
-public class MainFragmentActivity extends Activity implements OnItemClickListener {
+public class MainFragmentActivity extends AppCompatActivity implements OnItemClickListener {
     private DrawerLayout nDrawerLayout;
     private ListView nDrawerList;
     private ActionBarDrawerToggle nDrawerToggle;
@@ -68,17 +68,17 @@ public class MainFragmentActivity extends Activity implements OnItemClickListene
         DrawerItemInterface[] nSections = createNavigationMenu();
         nDrawerList.setAdapter(new DrawerAdapter(nContext, R.layout.layout_drawer_item, nSections));
         nDrawerList.setOnItemClickListener(this);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         nDrawerToggle = new ActionBarDrawerToggle(this, nDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle("Atlantis");
+                getSupportActionBar().setTitle("Atlantis");
             }
 
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle("Atlantis");
+                getSupportActionBar().setTitle("Atlantis");
             }
         };
         nDrawerLayout.setDrawerListener(nDrawerToggle);

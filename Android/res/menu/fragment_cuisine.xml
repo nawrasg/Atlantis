@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/itemSearch"
         android:actionViewClass="android.widget.SearchView"
-        android:showAsAction="always"
-        android:title="@string/menu_search"/>
+        android:title="@string/menu_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/itemCuisineAdd"
         android:icon="@drawable/ic_action_new"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_fragment_cuisine_add"/>
+        android:title="@string/menu_fragment_cuisine_add"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/itemCuisineAll"
         android:checkable="true"
         android:icon="@drawable/ic_action_view_as_list"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_fragment_cuisine_show_all"/>
+        android:title="@string/menu_fragment_cuisine_show_all"
+        app:showAsAction="ifRoom"/>
 
 </menu>

@@ -44,7 +44,6 @@ public class PharmacieFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mContext = getActivity();
 		mHandler = new Handler();
-		getActivity().getActionBar().setIcon(R.drawable.ng_medicine);
 		View nV = inflater.inflate(R.layout.layout_pharmacie, container, false);
 		if (getActivity().findViewById(R.id.main_fragment2) == null) {
 			setHasOptionsMenu(true);

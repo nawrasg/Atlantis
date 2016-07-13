@@ -4,6 +4,8 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -14,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.SearchView;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
@@ -46,7 +47,6 @@ public class CuisineFragment extends ListFragment {
 		mContext = getActivity();
 		mHandler = new Handler();
 		View nView = inflater.inflate(R.layout.fragment_cuisine, container, false);
-		getActivity().getActionBar().setIcon(R.drawable.ng_kittle);
 		setHasOptionsMenu(true);
 		return nView;
 	}
@@ -55,7 +55,7 @@ public class CuisineFragment extends ListFragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.fragment_cuisine, menu);
-		SearchView nSV = (SearchView) menu.findItem(R.id.itemSearch).getActionView();
+		SearchView nSV = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.itemSearch));
 		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
 			public boolean onQueryTextChange(String newText) {
 				if (mAdapter != null)

@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/itemCoursesAdd"
         android:icon="@drawable/ic_action_new"
-        android:showAsAction="always"
-        android:title="@string/menu_fragment_courses_add"/>
+        android:title="@string/menu_fragment_courses_add"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/itemCoursesNotify"
         android:icon="@drawable/ic_action_send_now"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_fragment_courses_notification"/>
+        android:title="@string/menu_fragment_courses_notification"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/itemCoursesOffline"
         android:icon="@drawable/ic_action_make_available_offline"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_fragment_courses_offline"/>
+        android:title="@string/menu_fragment_courses_offline"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/itemCoursesClear"
         android:icon="@drawable/ic_action_discard"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_fragment_courses_clear"/>
+        android:title="@string/menu_fragment_courses_clear"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/itemCoursesRefresh"
         android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_refresh"/>
+        android:title="@string/menu_refresh"
+        app:showAsAction="ifRoom"/>
 
 </menu>
