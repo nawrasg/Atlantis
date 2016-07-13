@@ -108,7 +108,9 @@
             </intent-filter>
         </receiver>
         <!-- Receivers : Widgets -->
-        <receiver android:name=".widgets.DoorLockWidgetProvider">
+        <receiver
+            android:name=".widgets.DoorLockWidgetProvider"
+            android:label="@string/widget_door_lock_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -116,7 +118,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_door_lock"/>
         </receiver>
-        <receiver android:name=".widgets.ScenarioWidgetProvider">
+        <receiver
+            android:name=".widgets.ScenarioWidgetProvider"
+            android:label="@string/widget_scenario_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
