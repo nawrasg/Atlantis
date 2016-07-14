@@ -156,9 +156,9 @@
     <string name="xml_pref_geo_outgoing_ring_profil_title">Ringtone profile</string>
 
     <!-- pref_main -->
-    <string name="xml_pref_main_connection_title">Connection settings</string>
-    <string name="xml_pref_main_security_title">Security settings</string>
-    <string name="xml_pref_main_divers_title">Other settings</string>
+    <string name="xml_pref_main_connection_title">Connection</string>
+    <string name="xml_pref_main_security_title">Security</string>
+    <string name="xml_pref_main_divers_title">Diverse</string>
 
     <!-- pref_security -->
     <string name="xml_pref_security_title">Security</string>
