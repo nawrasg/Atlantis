@@ -159,7 +159,7 @@ public class CuisineAddFragment extends Fragment{
 	}
 
 	private void postItem(String data){
-		String nURL = App.getFullUrl(mContext) + App.CUISINE + "?api=" + App.getAPI(mContext) + "&" + data;
+		String nURL = App.getUri(mContext, App.CUISINE) + "&" + data;
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
