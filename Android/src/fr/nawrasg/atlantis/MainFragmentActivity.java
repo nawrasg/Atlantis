@@ -44,7 +44,6 @@ import fr.nawrasg.atlantis.fragments.ScenarioFragment;
 import fr.nawrasg.atlantis.fragments.SensorsFragment;
 import fr.nawrasg.atlantis.interfaces.DrawerItemInterface;
 import fr.nawrasg.atlantis.other.AtlantisContract;
-import fr.nawrasg.atlantis.preferences.MainPreferenceFragment;
 import fr.nawrasg.atlantis.type.DrawerItem;
 import fr.nawrasg.atlantis.type.DrawerSection;
 
@@ -330,7 +329,8 @@ public class MainFragmentActivity extends AppCompatActivity implements OnItemCli
                 if (App.isPIN(nContext)) {
                     loadFragment(new PINFragment(), true);
                 } else {
-                    loadFragment(new MainPreferenceFragment(), true);
+                    //loadFragment(new MainPreferenceFragment(), true);
+                    startActivity(new Intent(this, SettingsActivity.class));
                 }
                 break;
             case 303:
