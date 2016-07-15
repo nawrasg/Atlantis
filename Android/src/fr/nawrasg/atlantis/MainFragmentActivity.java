@@ -8,21 +8,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.squareup.okhttp.OkHttpClient;
 
-import fr.nawrasg.atlantis.adapters.DrawerAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.fragments.CameraFragment;
 import fr.nawrasg.atlantis.fragments.ConnectedDevicesFragment;
 import fr.nawrasg.atlantis.fragments.CoursesFragment;
@@ -42,49 +39,35 @@ import fr.nawrasg.atlantis.fragments.PharmacieFragment;
 import fr.nawrasg.atlantis.fragments.PlantFragment;
 import fr.nawrasg.atlantis.fragments.ScenarioFragment;
 import fr.nawrasg.atlantis.fragments.SensorsFragment;
-import fr.nawrasg.atlantis.interfaces.DrawerItemInterface;
 import fr.nawrasg.atlantis.other.AtlantisContract;
-import fr.nawrasg.atlantis.type.DrawerItem;
-import fr.nawrasg.atlantis.type.DrawerSection;
 
 
-public class MainFragmentActivity extends AppCompatActivity implements OnItemClickListener {
-    private DrawerLayout nDrawerLayout;
-    private ListView nDrawerList;
-    private ActionBarDrawerToggle nDrawerToggle;
-    private Context nContext;
-    DrawerItemInterface[] nSections;
+public class MainFragmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private Context mContext;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout nDrawerLayout;
+    @Bind(R.id.navigation_view)
+    NavigationView mNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main);
-        nContext = this;
-        App.httpClient = new OkHttpClient();
+        ButterKnife.bind(this);
+        mContext = this;
+        if(App.httpClient == null){
+            App.httpClient = new OkHttpClient();
+        }
         createSyncAccount();
-        nDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        nDrawerList = (ListView) findViewById(R.id.left_drawer);
-        DrawerItemInterface[] nSections = createNavigationMenu();
-        nDrawerList.setAdapter(new DrawerAdapter(nContext, R.layout.layout_drawer_item, nSections));
-        nDrawerList.setOnItemClickListener(this);
+        mNavigation.setItemIconTintList(null);
+        mNavigation.setNavigationItemSelectedListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        nDrawerToggle = new ActionBarDrawerToggle(this, nDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle("Atlantis");
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Atlantis");
-            }
-        };
-        nDrawerLayout.setDrawerListener(nDrawerToggle);
         loadFragment(new HomeFragment(), true);
         loadFragment(new PlantFragment(), false);
         handleIntent(getIntent());
     }
+
 
     private void createSyncAccount() {
         Account nAccount = new Account("Atlantis", "fr.nawrasg.atlantis");
@@ -92,50 +75,6 @@ public class MainFragmentActivity extends AppCompatActivity implements OnItemCli
         boolean nResult = nManager.addAccountExplicitly(nAccount, null, null);
         if (nResult) {
             ContentResolver.addPeriodicSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY, 21600L);
-        }
-    }
-
-    private DrawerItemInterface[] createNavigationMenu() {
-        if (findViewById(R.id.main_fragment2) != null) {
-            DrawerItemInterface[] nSections = {DrawerItem.create(0, R.string.main_menu_home, "ng_screen", false, nContext),
-                    DrawerItem.create(2, R.string.main_menu_lights_sensors, "ng_bulb", false, nContext),
-                    DrawerItem.create(3, R.string.main_menu_cameras_scenarios, "ng_camera", false, nContext),
-                    DrawerSection.create(100, R.string.main_menu_db, nContext),
-                    DrawerItem.create(101, R.string.main_menu_shopping_list, "ng_todo", false, nContext),
-                    DrawerItem.create(102, R.string.main_menu_kitchen, "ng_kittle", false, nContext),
-                    DrawerItem.create(103, R.string.main_menu_drugstore, "ng_medicine", false, nContext),
-                    DrawerItem.create(104, R.string.main_menu_upkeep, "ng_soap", false, nContext),
-                    DrawerSection.create(200, R.string.main_menu_services, nContext),
-                    DrawerItem.create(204, R.string.main_menu_music, "ng_player", false, nContext),
-                    DrawerItem.create(201, R.string.main_menu_plants, "ng_plant", false, nContext),
-                    DrawerItem.create(202, R.string.main_menu_gps, "ng_satellite", false, nContext),
-                    DrawerItem.create(203, R.string.main_menu_devices, "ng_connected", false, nContext),
-                    DrawerSection.create(300, R.string.main_menu_general, nContext),
-                    DrawerItem.create(301, R.string.main_menu_history, "ng_graph", false, nContext),
-                    DrawerItem.create(302, R.string.main_menu_settings, "ng_settings", false, nContext),
-                    DrawerItem.create(303, R.string.main_menu_exit, "ng_exit", false, nContext)};
-            return nSections;
-        } else {
-            DrawerItemInterface[] nSections = {DrawerItem.create(0, R.string.main_menu_home, "ng_screen", false, nContext),
-                    DrawerItem.create(2, R.string.main_menu_lights, "ng_bulb", false, nContext),
-                    DrawerItem.create(1, R.string.main_menu_sensors, "ng_device", false, nContext),
-                    DrawerItem.create(3, R.string.main_menu_cameras, "ng_camera", false, nContext),
-                    DrawerItem.create(4, R.string.main_menu_scenarios, "ng_scenario", false, nContext),
-                    DrawerSection.create(100, R.string.main_menu_db, nContext),
-                    DrawerItem.create(101, R.string.main_menu_shopping_list, "ng_todo", false, nContext),
-                    DrawerItem.create(102, R.string.main_menu_kitchen, "ng_kittle", false, nContext),
-                    DrawerItem.create(103, R.string.main_menu_drugstore, "ng_medicine", false, nContext),
-                    DrawerItem.create(104, R.string.main_menu_upkeep, "ng_soap", false, nContext),
-                    DrawerSection.create(200, R.string.main_menu_services, nContext),
-                    DrawerItem.create(204, R.string.main_menu_music, "ng_player", false, nContext),
-                    DrawerItem.create(201, R.string.main_menu_plants, "ng_plant", false, nContext),
-                    DrawerItem.create(202, R.string.main_menu_gps, "ng_satellite", false, nContext),
-                    DrawerItem.create(203, R.string.main_menu_devices, "ng_connected", false, nContext),
-                    DrawerSection.create(300, R.string.main_menu_general, nContext),
-                    DrawerItem.create(301, R.string.main_menu_history, "ng_graph", false, nContext),
-                    DrawerItem.create(302, R.string.main_menu_settings, "ng_settings", false, nContext),
-                    DrawerItem.create(303, R.string.main_menu_exit, "ng_exit", false, nContext)};
-            return nSections;
         }
     }
 
@@ -224,20 +163,20 @@ public class MainFragmentActivity extends AppCompatActivity implements OnItemCli
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        nDrawerToggle.syncState();
+        //nDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        nDrawerToggle.onConfigurationChanged(newConfig);
+       // nDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (nDrawerToggle.onOptionsItemSelected(item)) {
+        /*if (nDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -268,76 +207,73 @@ public class MainFragmentActivity extends AppCompatActivity implements OnItemCli
                 getFragmentManager().beginTransaction().replace(R.id.main_fragment2, fragment, "f2").commit();
             }
         }
+        nDrawerLayout.closeDrawers();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        nDrawerLayout.closeDrawers();
-        removeFragments();
-        int nID = ((DrawerItem) nDrawerList.getItemAtPosition(position)).getId();
-        switch (nID) {
-            case 0:
+   @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        switch(menuItem.getItemId()){
+            case R.id.itemNavigationHome:
                 loadFragment(new HomeFragment(), true);
                 loadFragment(new PlantFragment(), false);
-                break;
-            case 1:
-                loadFragment(new SensorsFragment(), true);
-                break;
-            case 2:
+                return true;
+            case R.id.itemNavigationLights:
                 loadFragment(new LightFragment(), true);
                 loadFragment(new SensorsFragment(), false);
-                break;
-            case 3:
+                return true;
+            case R.id.itemNavigationSensors:
+                loadFragment(new SensorsFragment(), true);
+                return true;
+            case R.id.itemNavigationCameras:
                 loadFragment(new CameraFragment(), true);
                 loadFragment(new ScenarioFragment(), false);
-                break;
-            case 4:
+                return true;
+            case R.id.itemNavigationScenarios:
                 loadFragment(new ScenarioFragment(), true);
-                break;
-            case 101:
+                return true;
+            case R.id.itemNavigationCourses:
                 loadFragment(new CoursesFragment(), true);
-                break;
-            case 102:
+                return true;
+            case R.id.itemNavigationCuisine:
                 loadFragment(new CuisineFragment(), true);
                 loadFragment(new CuisineAddFragment(), false);
-                break;
-            case 103:
+                return true;
+            case R.id.itemNavigationPharmacie:
                 loadFragment(new PharmacieFragment(), true);
                 loadFragment(new PharmacieAddFragment(), false);
-                break;
-            case 104:
+                return true;
+            case  R.id.itemNavigationEntretien:
                 loadFragment(new EntretienFragment(), true);
                 loadFragment(new EntretienAddFragment(), false);
-                break;
-            case 201:
+                return true;
+            case R.id.itemNavigationMusic:
+                loadFragment(new MusicFragment(), true);
+                return true;
+            case R.id.itemNavigationPlants:
                 loadFragment(new PlantFragment(), true);
-                break;
-            case 202:
+                return true;
+            case R.id.itemNavigationGeo:
                 loadFragment(new GPSFragment(), true);
                 loadFragment(new MapsFragment(), false);
-                break;
-            case 203:
+                return true;
+            case R.id.itemNavigationDevices:
                 loadFragment(new ConnectedDevicesFragment(), true);
-                break;
-            case 204:
-                loadFragment(new MusicFragment(), true);
-                break;
-            case 301:
+                return true;
+            case R.id.itemNavigationHistory:
                 loadFragment(new HistoryFragment(), true);
-                break;
-            case 302:
-                if (App.isPIN(nContext)) {
+                return true;
+            case R.id.itemNavigationSettings:
+                if (App.isPIN(mContext)) {
                     loadFragment(new PINFragment(), true);
                 } else {
-                    //loadFragment(new MainPreferenceFragment(), true);
                     startActivity(new Intent(this, SettingsActivity.class));
                 }
-                break;
-            case 303:
+                return true;
+            case R.id.itemNavigationExit:
                 finish();
-                break;
+                return true;
         }
+        return false;
     }
-
 }
 

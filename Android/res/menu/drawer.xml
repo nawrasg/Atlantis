@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/itemNavigationHome"
+            android:icon="@drawable/ng_screen"
+            android:title="@string/main_menu_home"/>
+        <item
+            android:id="@+id/itemNavigationLights"
+            android:icon="@drawable/ng_bulb"
+            android:title="@string/main_menu_lights"/>
+        <item
+            android:id="@+id/itemNavigationSensors"
+            android:icon="@drawable/ng_device"
+            android:title="@string/main_menu_sensors"/>
+        <item
+            android:id="@+id/itemNavigationCameras"
+            android:icon="@drawable/ng_camera"
+            android:title="@string/main_menu_cameras"/>
+        <item
+            android:id="@+id/itemNavigationScenarios"
+            android:icon="@drawable/ng_scenario"
+            android:title="@string/main_menu_scenarios"/>
+    </group>
+
+    <item android:title="@string/main_menu_db">
+        <menu>
+            <item
+                android:id="@+id/itemNavigationCourses"
+                android:icon="@drawable/ng_todo"
+                android:title="@string/main_menu_shopping_list"/>
+            <item
+                android:id="@+id/itemNavigationCuisine"
+                android:icon="@drawable/ng_kittle"
+                android:title="@string/main_menu_kitchen"/>
+            <item
+                android:id="@+id/itemNavigationPharmacie"
+                android:icon="@drawable/ng_medicine"
+                android:title="@string/main_menu_drugstore"/>
+            <item
+                android:id="@+id/itemNavigationEntretien"
+                android:icon="@drawable/ng_soap"
+                android:title="@string/main_menu_upkeep"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/main_menu_services">
+        <menu>
+            <item
+                android:id="@+id/itemNavigationMusic"
+                android:icon="@drawable/ng_player"
+                android:title="@string/main_menu_music"/>
+            <item
+                android:id="@+id/itemNavigationPlants"
+                android:icon="@drawable/ng_plant"
+                android:title="@string/main_menu_plants"/>
+            <item
+                android:id="@+id/itemNavigationGeo"
+                android:icon="@drawable/ng_satellite"
+                android:title="@string/main_menu_gps"/>
+            <item
+                android:id="@+id/itemNavigationDevices"
+                android:icon="@drawable/ng_connected"
+                android:title="@string/main_menu_devices"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/main_menu_general">
+        <menu>
+            <item
+                android:id="@+id/itemNavigationHistory"
+                android:icon="@drawable/ng_graph"
+                android:title="@string/main_menu_history"/>
+            <item
+                android:id="@+id/itemNavigationSettings"
+                android:icon="@drawable/ng_settings"
+                android:title="@string/main_menu_settings"/>
+            <item
+                android:id="@+id/itemNavigationExit"
+                android:icon="@drawable/ng_exit"
+                android:title="@string/main_menu_exit"/>
+        </menu>
+    </item>
+</menu>
