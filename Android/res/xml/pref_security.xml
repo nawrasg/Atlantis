@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:summary="@string/xml_pref_security_summary"
-        android:title="@string/xml_pref_security_title">
+    <PreferenceCategory>
         <EditTextPreference
             android:icon="@drawable/ic_action_secure"
             android:key="api"
