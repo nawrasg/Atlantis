@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,7 +21,8 @@ import fr.nawrasg.atlantis.preferences.SecurityPreferenceFragment;
  */
 
 public class SettingsActivity extends AppCompatActivity {
-
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     @Bind(R.id.tabsSettingsTabs)
     TabLayout mTabs;
     @Bind(R.id.vpSettingsViewPager)
@@ -29,9 +33,18 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setupViewPager();
         mTabs.setupWithViewPager(mViewPager);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setupViewPager() {
