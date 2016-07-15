@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -48,6 +49,8 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
     DrawerLayout nDrawerLayout;
     @Bind(R.id.navigation_view)
     NavigationView mNavigation;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +58,16 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
         setContentView(R.layout.layout_main);
         ButterKnife.bind(this);
         mContext = this;
-        if(App.httpClient == null){
+        if (App.httpClient == null) {
             App.httpClient = new OkHttpClient();
         }
         createSyncAccount();
         mNavigation.setItemIconTintList(null);
         mNavigation.setNavigationItemSelectedListener(this);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        mToolbar.setNavigationIcon(R.drawable.drawer);
         loadFragment(new HomeFragment(), true);
         loadFragment(new PlantFragment(), false);
         handleIntent(getIntent());
@@ -159,27 +164,7 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
             ((EntretienFragment) nFragment).getItems();
         }
     }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        //nDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-       // nDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /*if (nDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }*/
-        return super.onOptionsItemSelected(item);
-    }
-
+    
     public void scanProduct() {
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
@@ -210,9 +195,9 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
         nDrawerLayout.closeDrawers();
     }
 
-   @Override
+    @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        switch(menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.itemNavigationHome:
                 loadFragment(new HomeFragment(), true);
                 loadFragment(new PlantFragment(), false);
@@ -242,7 +227,7 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
                 loadFragment(new PharmacieFragment(), true);
                 loadFragment(new PharmacieAddFragment(), false);
                 return true;
-            case  R.id.itemNavigationEntretien:
+            case R.id.itemNavigationEntretien:
                 loadFragment(new EntretienFragment(), true);
                 loadFragment(new EntretienAddFragment(), false);
                 return true;
