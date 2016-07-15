@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory>
+    <PreferenceCategory android:title="@string/xml_pref_connection_settings_title">
         <EditTextPreference
             android:icon="@drawable/ic_action_network_cell"
             android:key="urlExterne"
             android:summary="@string/xml_pref_connection_url_public_summary"
-            android:title="@string/xml_pref_connection_url_public_title" />
+            android:title="@string/xml_pref_connection_url_public_title"/>
         <EditTextPreference
             android:icon="@drawable/ic_action_network_wifi"
             android:key="urlInterne"
             android:summary="@string/xml_pref_connection_url_private_summary"
-            android:title="@string/xml_pref_connection_url_private_title" />
+            android:title="@string/xml_pref_connection_url_private_title"/>
 
         <CheckBoxPreference
             android:icon="@drawable/ic_action_network_wifi"
             android:key="wifi"
             android:summary="@string/xml_pref_connection_url_private_use_summary"
-            android:title="@string/xml_pref_connection_url_private_use_title" />
+            android:title="@string/xml_pref_connection_url_private_use_title"/>
 
         <Preference
             android:icon="@drawable/ic_action_make_available_offline"
             android:key="wifiHome"
             android:summary="@string/xml_pref_connection_wifi_home_summary"
-            android:title="@string/xml_pref_connection_wifi_home_title" />
+            android:title="@string/xml_pref_connection_wifi_home_title"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
