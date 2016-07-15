@@ -68,7 +68,6 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_music, container, false);
 		ButterKnife.bind(this, nView);
-		getActivity().getActionBar().setIcon(R.drawable.ng_player);
 		mContext = getActivity();
 		mHandler = new Handler();
 		mWelcomeMusic = -1;

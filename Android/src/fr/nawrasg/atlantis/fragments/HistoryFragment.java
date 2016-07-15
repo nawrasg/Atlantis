@@ -65,7 +65,6 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_history, container, false);
 		ButterKnife.bind(this, nView);
-		getActivity().getActionBar().setIcon(R.drawable.ng_graph);
 		mContext = getActivity();
 		mHandler = new Handler();
 		mCalendar = Calendar.getInstance();

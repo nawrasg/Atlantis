@@ -53,7 +53,6 @@ public class ConnectedDevicesFragment extends ListFragment {
         View nView = inflater.inflate(R.layout.fragment_devices, container, false);
         mContext = getActivity();
         mHandler = new Handler();
-        getActivity().getActionBar().setIcon(R.drawable.ng_connected);
         setHasOptionsMenu(true);
         return nView;
     }
