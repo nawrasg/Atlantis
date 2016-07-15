@@ -164,7 +164,7 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
             ((EntretienFragment) nFragment).getItems();
         }
     }
-    
+
     public void scanProduct() {
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
@@ -252,6 +252,7 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
                     loadFragment(new PINFragment(), true);
                 } else {
                     startActivity(new Intent(this, SettingsActivity.class));
+                    nDrawerLayout.closeDrawers();
                 }
                 return true;
             case R.id.itemNavigationExit:
