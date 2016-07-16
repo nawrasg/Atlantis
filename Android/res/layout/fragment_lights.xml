@@ -14,8 +14,6 @@
     <TextView
         android:id="@android:id/empty"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/ic_action_warning"
-        android:text="@string/layout_fragment_lights_hue_not_available"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
