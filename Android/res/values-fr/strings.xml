@@ -151,9 +151,9 @@
     <string name="xml_pref_geo_outgoing_ring_profil_title">Profil de sonnerie</string>
 
     <!-- pref_main -->
-    <string name="xml_pref_main_connection_title">Paramètres de Connexion</string>
-    <string name="xml_pref_main_security_title">Paramètres de Sécurité</string>
-    <string name="xml_pref_main_divers_title">Divers Paramètres</string>
+    <string name="xml_pref_main_connection_title">Connexion</string>
+    <string name="xml_pref_main_security_title">Sécurité</string>
+    <string name="xml_pref_main_divers_title">Divers</string>
 
     <!-- pref_security -->
     <string name="xml_pref_security_title">Sécurité</string>
