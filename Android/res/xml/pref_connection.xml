@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/xml_pref_connection_settings_title">
+    <PreferenceCategory android:title="@string/xml_pref_main_connection_title">
         <EditTextPreference
             android:icon="@drawable/ic_action_network_cell"
             android:key="urlExterne"
