@@ -123,12 +123,12 @@
     <!-- pref_connection -->
     <string name="xml_pref_connection_settings_title">Paramètres de Connexion</string>
     <string name="xml_pref_connection_settings_summary">Paramètres de Connexion</string>
-    <string name="xml_pref_connection_url_public_title">URL Public</string>
-    <string name="xml_pref_connection_url_public_summary">Entrer l\'adresse URL publique</string>
-    <string name="xml_pref_connection_url_private_title">URL Privée</string>
-    <string name="xml_pref_connection_url_private_summary">Entrer l\'adresse URL privée</string>
+    <string name="xml_pref_connection_url_public_title">Adresse Publique</string>
+    <string name="xml_pref_connection_url_public_summary">Entrer l\'adresse publique</string>
+    <string name="xml_pref_connection_url_private_title">Adresse Privée</string>
+    <string name="xml_pref_connection_url_private_summary">Entrer l\'adresse privée</string>
     <string name="xml_pref_connection_url_private_use_title">Connexion Locale</string>
-    <string name="xml_pref_connection_url_private_use_summary">Utiliser l\'URL privée chez soi</string>
+    <string name="xml_pref_connection_url_private_use_summary">Utiliser l\'adresse privée à domicile</string>
     <string name="xml_pref_connection_wifi_home_title">Aucun</string>
     <string name="xml_pref_connection_wifi_home_summary">Définir le WIFI domestique</string>
 
@@ -151,9 +151,9 @@
     <string name="xml_pref_geo_outgoing_ring_profil_title">Profil de sonnerie</string>
 
     <!-- pref_main -->
-    <string name="xml_pref_main_connection_title">Connexion</string>
-    <string name="xml_pref_main_security_title">Sécurité</string>
-    <string name="xml_pref_main_divers_title">Divers</string>
+    <string name="xml_pref_main_connection_title">Paramètres de Connexion</string>
+    <string name="xml_pref_main_security_title">Paramètres de Sécurité</string>
+    <string name="xml_pref_main_divers_title">Divers Paramètres</string>
 
     <!-- pref_security -->
     <string name="xml_pref_security_title">Sécurité</string>

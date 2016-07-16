@@ -128,12 +128,12 @@
     <!-- pref_connection -->
     <string name="xml_pref_connection_settings_title">Connection Settings</string>
     <string name="xml_pref_connection_settings_summary">Connection Settings</string>
-    <string name="xml_pref_connection_url_public_title">Public URL</string>
+    <string name="xml_pref_connection_url_public_title">Public Address</string>
     <string name="xml_pref_connection_url_public_summary">Entre the public address</string>
-    <string name="xml_pref_connection_url_private_title">Private URL</string>
-    <string name="xml_pref_connection_url_private_summary">Entre the private URL</string>
+    <string name="xml_pref_connection_url_private_title">Private Address</string>
+    <string name="xml_pref_connection_url_private_summary">Entre the private address</string>
     <string name="xml_pref_connection_url_private_use_title">Local Connection</string>
-    <string name="xml_pref_connection_url_private_use_summary">Use the private URL at home</string>
+    <string name="xml_pref_connection_url_private_use_summary">Use the private address at home</string>
     <string name="xml_pref_connection_wifi_home_title">None</string>
     <string name="xml_pref_connection_wifi_home_summary">Define the home wifi network</string>
 
@@ -156,9 +156,9 @@
     <string name="xml_pref_geo_outgoing_ring_profil_title">Ringtone profile</string>
 
     <!-- pref_main -->
-    <string name="xml_pref_main_connection_title">Connection</string>
-    <string name="xml_pref_main_security_title">Security</string>
-    <string name="xml_pref_main_divers_title">Diverse</string>
+    <string name="xml_pref_main_connection_title">Connection Settings</string>
+    <string name="xml_pref_main_security_title">Security Settings</string>
+    <string name="xml_pref_main_divers_title">Diverse Settings</string>
 
     <!-- pref_security -->
     <string name="xml_pref_security_title">Security</string>
