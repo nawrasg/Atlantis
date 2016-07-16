@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.PharmacieAdapter;
 import fr.nawrasg.atlantis.type.Medicament;

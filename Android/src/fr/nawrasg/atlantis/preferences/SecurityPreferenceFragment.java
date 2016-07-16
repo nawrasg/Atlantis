@@ -6,7 +6,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 
-import fr.nawrasg.atlantis.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.fragments.HomeFragment;
 

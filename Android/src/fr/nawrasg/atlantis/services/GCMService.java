@@ -18,7 +18,6 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.squareup.okhttp.Callback;
@@ -31,7 +30,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.receivers.GCMReceiver;
 import fr.nawrasg.atlantis.receivers.RingingReceiver;

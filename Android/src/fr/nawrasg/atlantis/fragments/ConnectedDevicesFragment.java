@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainFragmentActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.DeviceAdapter;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceDialogFragment;
