@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadFragment(new HomeFragment(), true);
         loadFragment(new PlantFragment(), false);
         handleIntent(getIntent());
+        if(App.getURL(mContext).equals("")){
+            startActivity(new Intent(this, SettingsActivity.class));
+        }
     }
 
 
