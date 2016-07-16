@@ -67,7 +67,6 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
         mNavigation.setItemIconTintList(null);
         mNavigation.setNavigationItemSelectedListener(this);
         setSupportActionBar(mToolbar);
-        //getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         loadFragment(new HomeFragment(), true);
