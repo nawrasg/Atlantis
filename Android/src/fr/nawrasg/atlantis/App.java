@@ -54,8 +54,8 @@ public class App extends Application{
 		Set<String> nWifiSet = getPrefSet(c, "wifiSet");
 		if (prefs.getBoolean("wifi", false)) {
 			if (new CheckConnection(c).checkConnection() == CheckConnection.TYPE_WIFI) {
-				String nBSSID = nWM.getConnectionInfo().getBSSID();
-				if (nWifiSet.contains(nBSSID)) {
+				String nSSID = nWM.getConnectionInfo().getSSID();
+				if (nWifiSet.contains(nSSID)) {
 					nURL = prefs.getString("urlInterne", "");
 				} else {
 					nURL = prefs.getString("urlExterne", "");
@@ -145,8 +145,8 @@ public class App extends Application{
 		CheckConnection nIC = new CheckConnection(c);
 		if (prefs.getBoolean("wifi", false)) {
 			if (nIC.checkConnection() == CheckConnection.TYPE_WIFI) {
-				String nBSSID = nWM.getConnectionInfo().getBSSID();
-				if (getPrefString(c, "wifiBSSID").equals(nBSSID)) {
+				String nSSID = nWM.getConnectionInfo().getSSID();
+				if (getPrefString(c, "wifiSSID").equals(nSSID)) {
 					return true;
 				}
 			}
