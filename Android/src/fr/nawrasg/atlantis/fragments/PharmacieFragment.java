@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.PharmacieAdapter;
 import fr.nawrasg.atlantis.type.Medicament;
@@ -67,7 +67,7 @@ public class PharmacieFragment extends ListFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.itemPharmacieAdd:
-				((MainFragmentActivity) getActivity()).loadFragment(new PharmacieAddFragment(), true);
+				((MainActivity) getActivity()).loadFragment(new PharmacieAddFragment(), true);
 				return true;
 		}
 		return false;

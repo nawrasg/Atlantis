@@ -34,7 +34,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 
 public class EntretienAddFragment extends Fragment {
@@ -142,6 +142,6 @@ public class EntretienAddFragment extends Fragment {
 		txtNom.setText("");
 		txtQte.setText("");
 		txtDate.setText("");
-		((MainFragmentActivity) getActivity()).refreshFragment();
+		((MainActivity) getActivity()).refreshFragment();
 	}
 }

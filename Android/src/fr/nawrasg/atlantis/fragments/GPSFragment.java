@@ -23,7 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.preferences.GeoPreferenceFragment;
 
@@ -90,10 +90,10 @@ public class GPSFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.itemGPSOptions:
-				((MainFragmentActivity) getActivity()).loadFragment(new GeoPreferenceFragment(), true);
+				((MainActivity) getActivity()).loadFragment(new GeoPreferenceFragment(), true);
 				return true;
 			case R.id.itemGPSMap:
-				((MainFragmentActivity) getActivity()).loadFragment(new MapsFragment(), true);
+				((MainActivity) getActivity()).loadFragment(new MapsFragment(), true);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

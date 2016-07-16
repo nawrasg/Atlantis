@@ -4,7 +4,7 @@
     <string name="app_date_format">yyyy-MM-dd</string>
     <string name="app_last_connection">Dernière connexion le</string>
 
-    <!-- MainFragmentActivity -->
+    <!-- MainActivity -->
     <string name="main_menu_home">Accueil</string>
     <string name="main_menu_lights">Lumières</string>
     <string name="main_menu_sensors">Capteurs</string>

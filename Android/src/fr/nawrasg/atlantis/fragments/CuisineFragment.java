@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.CuisineAdapter;
 import fr.nawrasg.atlantis.type.Produit;
@@ -85,7 +85,7 @@ public class CuisineFragment extends ListFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.itemCuisineAdd:
-				((MainFragmentActivity) getActivity()).loadFragment(new CuisineAddFragment(), true);
+				((MainActivity) getActivity()).loadFragment(new CuisineAddFragment(), true);
 				break;
 			case R.id.itemCuisineAll:
 				mAdapter.toggleShow();

@@ -36,7 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.spinner.CuisinePlaceAdapter;
 import fr.nawrasg.atlantis.other.AtlantisContract;
@@ -182,7 +182,7 @@ public class CuisineAddFragment extends Fragment{
 		txtQte.setText("");
 		txtDate.setText("");
 		mEAN = "";
-		((MainFragmentActivity) getActivity()).refreshFragment();
+		((MainActivity) getActivity()).refreshFragment();
 	}
 
 }

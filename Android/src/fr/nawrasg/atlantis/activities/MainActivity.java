@@ -44,7 +44,7 @@ import fr.nawrasg.atlantis.fragments.SensorsFragment;
 import fr.nawrasg.atlantis.other.AtlantisContract;
 
 
-public class MainFragmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Context mContext;
     @Bind(R.id.drawer_layout)
     DrawerLayout nDrawerLayout;

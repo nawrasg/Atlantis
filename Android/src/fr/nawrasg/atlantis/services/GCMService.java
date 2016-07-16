@@ -30,7 +30,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.receivers.GCMReceiver;
 import fr.nawrasg.atlantis.receivers.RingingReceiver;
@@ -170,7 +170,7 @@ public class GCMService extends IntentService {
 
 		int nIcon = R.drawable.home;
 		long nTime = System.currentTimeMillis();
-		Intent nIntent = new Intent(this, MainFragmentActivity.class);
+		Intent nIntent = new Intent(this, MainActivity.class);
 		nIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent nPI = PendingIntent.getActivity(this, 0, nIntent, 0);
 		Notification nNotification = new Notification.Builder(this)

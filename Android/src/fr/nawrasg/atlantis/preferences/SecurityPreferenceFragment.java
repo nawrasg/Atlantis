@@ -6,7 +6,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 
-import fr.nawrasg.atlantis.activities.MainFragmentActivity;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.fragments.HomeFragment;
 
@@ -25,7 +25,7 @@ public class SecurityPreferenceFragment extends PreferenceFragment implements On
 	public boolean onPreferenceClick(Preference preference) {
 		switch(preference.getKey()){
 			case "admin":
-				((MainFragmentActivity)getActivity()).loadFragment(new HomeFragment(), true);
+				((MainActivity)getActivity()).loadFragment(new HomeFragment(), true);
 
 				return true;
 		}
