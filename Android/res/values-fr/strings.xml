@@ -56,8 +56,7 @@
     <string name="fragment_music_welcome_no_playlist">Impossible de définir une playlist comme musique de bienvenue !</string>
     <string name="fragment_music_welcome_instructions">Pour définir un morceau de bienvenue, maintenez l\'appui sur le morceau désiré !</string>
 
-    <!-- PINFragment -->
-    <string name="fragment_pin_password_incorrect">Mot de passe incorrect !</string>
+    <string name="fragment_settings_pin_password_incorrect">Mot de passe incorrect !</string>
 
     <!-- ConnectionPreferenceFragment -->
     <string name="fragment_preference_connection_wifi_description_registered">réseaux enregistrés</string>
@@ -293,4 +292,7 @@
     <!-- Widgets -->
     <string name="widget_door_lock_label">Atlantis Serrure</string>
     <string name="widget_scenario_label">Atlantis Scénario</string>
+    <string name="fragment_settings_pin_hint">Code PIN</string>
+    <string name="fragment_settings_pin_cancel">Annuler</string>
+    <string name="fragment_settings_pin_login">Connexion</string>
 </resources>

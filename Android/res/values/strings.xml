@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Fix -->
-    <string name="app_name">Atlantis</string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
+    <string name="app_name" translatable="false">Atlantis</string>
 
     <string name="app_datetime_format">dd-MM-yyyy HH:mm:ss</string>
     <string name="app_date_format">yyyy-MM-dd</string>
@@ -61,8 +59,7 @@
     <string name="fragment_music_welcome_no_playlist">You cannot define a playlist as a welcome music!</string>
     <string name="fragment_music_welcome_instructions">To define the welcome music, long click on the desired title!</string>
 
-    <!-- PINFragment -->
-    <string name="fragment_pin_password_incorrect">Password incorrect!</string>
+    <string name="fragment_settings_pin_password_incorrect">Password incorrect!</string>
 
     <!-- ConnectionPreferenceFragment -->
     <string name="fragment_preference_connection_wifi_description_registered">registered networks</string>
@@ -298,4 +295,8 @@
     <!-- Widgets -->
     <string name="widget_door_lock_label">Atlantis Door Lock</string>
     <string name="widget_scenario_label">Atlantis Scenario</string>
+
+    <string name="fragment_settings_pin_hint">PIN Code</string>
+    <string name="fragment_settings_pin_login">Login</string>
+    <string name="fragment_settings_pin_cancel">Cancel</string>
 </resources>
