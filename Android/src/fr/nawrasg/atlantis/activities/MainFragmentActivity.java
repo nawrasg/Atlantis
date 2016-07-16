@@ -36,7 +36,6 @@ import fr.nawrasg.atlantis.fragments.HomeFragment;
 import fr.nawrasg.atlantis.fragments.LightFragment;
 import fr.nawrasg.atlantis.fragments.MapsFragment;
 import fr.nawrasg.atlantis.fragments.MusicFragment;
-import fr.nawrasg.atlantis.fragments.PINFragment;
 import fr.nawrasg.atlantis.fragments.PharmacieAddFragment;
 import fr.nawrasg.atlantis.fragments.PharmacieFragment;
 import fr.nawrasg.atlantis.fragments.PlantFragment;
@@ -98,7 +97,7 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 nDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
@@ -259,12 +258,8 @@ public class MainFragmentActivity extends AppCompatActivity implements Navigatio
                 loadFragment(new HistoryFragment(), true);
                 return true;
             case R.id.itemNavigationSettings:
-                if (App.isPIN(mContext)) {
-                    loadFragment(new PINFragment(), true);
-                } else {
-                    startActivity(new Intent(this, SettingsActivity.class));
-                    nDrawerLayout.closeDrawers();
-                }
+                startActivity(new Intent(this, SettingsActivity.class));
+                nDrawerLayout.closeDrawers();
                 return true;
             case R.id.itemNavigationExit:
                 finish();
