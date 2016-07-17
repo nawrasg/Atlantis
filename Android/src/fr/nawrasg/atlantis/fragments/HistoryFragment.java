@@ -88,7 +88,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_history, menu);
+		inflater.inflate(R.menu.fragment_history, menu);
 	}
 
 	@Override
