@@ -44,7 +44,8 @@ function add($arr) {
 		$bdd = getBDD ();
 		$name = $arr ['name'];
 		$quantity = (isset ( $arr ['quantity'] )) ? $arr ['quantity'] : 1;
-		$request = $bdd->exec ( "INSERT INTO at_courses VALUES('', '$name', '$quantity')" );
+		$time = time();
+		$request = $bdd->exec ( "INSERT INTO at_courses VALUES('', '$name', '$quantity', '$time')" );
 		if ($request == 1) {
 			http_response_code ( 202 );
 			$id = $bdd->lastInsertId ();
@@ -68,7 +69,8 @@ function update($arr) {
 		$id = $arr ['id'];
 		$quantity = $arr ['quantity'];
 		$bdd = getBDD ();
-		$request = $bdd->exec ( "UPDATE at_courses SET quantity = '$quantity' WHERE id = '$id'" );
+		$time = time();
+		$request = $bdd->exec ( "UPDATE at_courses SET quantity = '$quantity', lastmodified = '$time' WHERE id = '$id'" );
 		if ($request == 1) {
 			http_response_code ( 202 );
 		} else {
