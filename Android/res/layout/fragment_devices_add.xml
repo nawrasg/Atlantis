@@ -9,43 +9,46 @@
         android:orientation="vertical"
         android:padding="40dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@+id/txtDevicesAddName"
-            android:text="@string/layout_fragment_devices_add_device_label"/>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/txtDevicesAddName"
+            <EditText
+                android:id="@+id/txtDevicesAddName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/layout_fragment_devices_add_device_label"
+                android:inputType="text"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"/>
+            android:layout_marginTop="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:labelFor="@+id/txtDevicesAddIp"
-            android:text="@string/layout_fragment_devices_add_device_ip_address"/>
+            <EditText
+                android:id="@+id/txtDevicesAddIp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/layout_fragment_devices_add_device_ip_address"
+                android:inputType="phone"/>
 
-        <EditText
-            android:id="@+id/txtDevicesAddIp"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"/>
+            android:layout_marginTop="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:labelFor="@+id/txtDevicesAddMac"
-            android:text="@string/layout_fragment_devices_add_device_mac_address"/>
+            <EditText
+                android:id="@+id/txtDevicesAddMac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/layout_fragment_devices_add_device_mac_address"
+                android:inputType="text"/>
 
-        <EditText
-            android:id="@+id/txtDevicesAddMac"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"

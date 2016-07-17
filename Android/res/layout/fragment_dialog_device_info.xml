@@ -5,31 +5,33 @@
               android:orientation="vertical"
               android:padding="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:labelFor="@+id/txtDeviceDialogTitle"
-        android:text="@string/layout_fragment_devices_add_device_label"/>
-
-    <EditText
-        android:id="@+id/txtDeviceDialogTitle"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:inputType="text"/>
+        android:layout_marginBottom="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:labelFor="@+id/txtDeviceDialogIp"
-        android:text="@string/layout_fragment_devices_add_device_ip_address"/>
+        <EditText
+            android:id="@+id/txtDeviceDialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/layout_fragment_devices_add_device_label"
+            android:inputType="text"/>
 
-    <EditText
-        android:id="@+id/txtDeviceDialogIp"
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:inputType="text"/>
+        android:layout_marginBottom="20dp">
+
+        <EditText
+            android:id="@+id/txtDeviceDialogIp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/layout_fragment_devices_add_device_ip_address"
+            android:inputType="text"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:layout_width="wrap_content"

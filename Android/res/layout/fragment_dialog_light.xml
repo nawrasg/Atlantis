@@ -5,17 +5,18 @@
               android:orientation="vertical"
               android:padding="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:labelFor="@+id/txtLightDialogName"
-        android:text="@string/layout_fragment_dialog_light_name"/>
-
-    <EditText
-        android:id="@+id/txtLightDialogName"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"/>
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/txtLightDialogName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/layout_fragment_dialog_light_name"
+            android:inputType="text"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:layout_width="wrap_content"
