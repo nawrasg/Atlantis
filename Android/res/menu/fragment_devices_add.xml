@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/itemDevicesAddSave"
         android:icon="@drawable/ic_action_accept"
-        android:showAsAction="always"
-        android:title="@string/menu_fragment_devices_add_add"/>
+        android:title="@string/menu_fragment_devices_add_add"
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/itemDevicesAddThis"
         android:icon="@drawable/ic_action_phone"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_fragment_devices_add_this_device"/>
+        android:title="@string/menu_fragment_devices_add_this_device"
+        app:showAsAction="ifRoom"/>
 
 </menu>
