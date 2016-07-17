@@ -60,7 +60,7 @@ public class GCMService extends IntentService {
 
 					@Override
 					public void onLocationChanged(Location location) {
-						String nURL = App.getFullUrl(mContext) + App.GEO + "?api=" + App.getAPI(mContext) + "&lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&speed=" + location.getSpeed() + "&bearing=" + location.getBearing();
+						String nURL = App.getUri(mContext, App.GEO) + "&lat=" + location.getLatitude() + "&long=" + location.getLongitude();
 						Request nRequest = new Request.Builder()
 								.url(nURL)
 								.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
