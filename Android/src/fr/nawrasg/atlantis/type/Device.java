@@ -1,11 +1,11 @@
 package fr.nawrasg.atlantis.type;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Device implements Parcelable{
 	private String nNom, nIP, nMAC, nDNS, nPort, nType, nConnexion, nNote, mOwner;
@@ -46,6 +46,10 @@ public class Device implements Parcelable{
 	
 	public String getOwner(){
 		return mOwner;
+	}
+
+	public int getUser(){
+		return Integer.parseInt(mOwner);
 	}
 	
 	public int getID(){
