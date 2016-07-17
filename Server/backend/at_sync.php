@@ -14,7 +14,7 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 		case 'GET' :
 			if(isset($_GET['lastmodified'])){
 				http_response_code(202);
-				echo json_encode(get($_GET['lastmodified']));
+				echo json_encode(get($_GET['lastmodified'], $_GET['api']));
 			}else{
 				http_response_code(400);
 			}						
@@ -24,9 +24,12 @@ if (isset ( $_REQUEST ['api'] ) && checkAPI ( $_REQUEST ['api'], $page_level )) 
 	http_response_code ( 403 );
 }
 
-function get($lastmodified) {
+function get($lastmodified, $api) {
 	$sync = new Sync();
 	$output = array();
+	if($lastmodified < $sync->get(Sync::USER)){
+		$output[Sync::USER] = getUser($api);
+	}
 	if($lastmodified < $sync->get(Sync::SCENARIOS)){
 		$output[Sync::SCENARIOS] = getScenarios();
 	}
@@ -49,6 +52,14 @@ function get($lastmodified) {
 		$output[Sync::EAN] = getEan();
 	}
 	return $output;
+}
+
+function getUser($api){
+	$bdd = getBDD ();
+	$req = $bdd->query ( "SELECT at_users.nom, at_users.type FROM at_users JOIN at_devices ON at_users.id = at_devices.username WHERE at_users.cle = '$api' OR at_devices.mac = '$api' GROUP BY at_users.nom" );
+	$result = $req->fetch(PDO::FETCH_ASSOC);
+	$req->closeCursor ();
+	return $result;
 }
 
 function getEan() {

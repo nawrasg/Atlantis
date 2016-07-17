@@ -7,6 +7,7 @@ class Sync{
 	const PLANTS = 'plants';
 	const DEVICES = 'devices';
 	const SENSORS = 'sensors';
+	const USER = 'user';
 	
 	private $data;
 	private $file = 'sync.json';
