@@ -299,4 +299,8 @@
     <string name="fragment_settings_pin_hint">PIN Code</string>
     <string name="fragment_settings_pin_login">Login</string>
     <string name="fragment_settings_pin_cancel">Cancel</string>
+    <string name="user_account_type_admin">Administrator</string>
+    <string name="user_account_type_user">User</string>
+    <string name="user_account_type_visitor">Visitor</string>
+    <string name="user_account_type_blocked">Blocked</string>
 </resources>
