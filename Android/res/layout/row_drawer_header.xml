@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="150dp"
-              android:background="?attr/colorPrimaryDark"
-              android:gravity="bottom"
-              android:orientation="vertical"
-              android:padding="16dp"
-              android:theme="@style/ThemeOverlay.AppCompat.Dark">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="?attr/colorPrimaryDark"
+                android:padding="16dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/home"/>
 
     <TextView
+        android:id="@+id/txtNavigationUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/txtNavigationUserType"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="30sp"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/txtNavigationUserType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="15sp"/>
+
+</RelativeLayout>
