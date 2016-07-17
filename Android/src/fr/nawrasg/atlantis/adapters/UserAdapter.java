@@ -28,41 +28,15 @@ public class UserAdapter extends ArrayAdapter<User> {
 
 	@Override
 	public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		mUser = mItemsList.get(position);
-		View nView = convertView;
-		if (nView == null) {
-			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			nView = inflater.inflate(R.layout.row_user, parent, false);
-			final UserViewHolder nHolder = new UserViewHolder();
-			nHolder.name = (TextView) nView.findViewById(R.id.lblUserName);
-			nView.setTag(nHolder);
-		}
-		UserViewHolder nHolder = new UserViewHolder();
-		nHolder = (UserViewHolder) nView.getTag();
-		nHolder.name.setText(mUser.getName());
-		switch (mUser.getType()) {
-			case -1:
-				nHolder.name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ng_user_red, 0, 0, 0);
-				break;
-			case 0:
-				nHolder.name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ng_user_blue, 0, 0, 0);
-				break;
-			case 1:
-				nHolder.name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ng_user_green, 0, 0, 0);
-				break;
-			case 2:
-				nHolder.name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ng_user_orange, 0, 0, 0);
-				break;
-			default:
-				nHolder.name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-				break;
-
-		}
-		return nView;
+		return getCommonView(position, convertView, parent);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		return getCommonView(position, convertView, parent);
+	}
+
+	private View getCommonView(int position, View convertView, ViewGroup parent){
 		mUser = mItemsList.get(position);
 		View nView = convertView;
 		if (nView == null) {
