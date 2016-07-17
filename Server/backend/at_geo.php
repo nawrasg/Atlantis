@@ -34,12 +34,12 @@ function broadcast($arr) {
 }
 
 function update($arr) {
-	if (isset ( $arr ['lat'], $arr ['long'], $arr['speed'], $arr['bearing'] )) {
+	if (isset ( $arr ['lat'], $arr ['long'])) {
 		$mac = $arr ['api'];
 		$lat = $arr ['lat'];
 		$long = $arr ['long'];
-		$speed = $arr['speed'];
-		$bearing = $arr['bearing'];
+		$speed = 0;
+		$bearing = 0;
 		$bdd = getBDD ();
 		$req = $bdd->exec ( "INSERT INTO at_geo VALUES('$mac', '$lat', '$long', '$speed', '$bearing', NOW(), NOW(), NOW())" );
 		if ($req == 1) {
@@ -59,18 +59,9 @@ function get() {
 			'long' => doubleval ( $settings->getSettings ( 'Atlantis', 'long' ) ) 
 	);
 	$bdd = getBDD ();
-	$req = $bdd->query ( 'SELECT t1.* FROM at_geo t1 LEFT JOIN at_geo t2 ON (t1.mac = t2.mac AND t1.timestamp < t2.timestamp) WHERE t2.timestamp IS NULL AND t1.date = CURDATE()' );
-	$result = array ();
-	while ( $data = $req->fetch () ) {
-		$result [] = array (
-				'mac' => $data ['mac'],
-				'lat' => $data ['lat'],
-				'long' => $data ['long'],
-				'date' => $data ['date'],
-				'time' => $data ['time'],
-				'timestamp' => $data ['timestamp'] 
-		);
-	}
+	$req = $bdd->query ( 'SELECT arr.*, IFNULL(arr2.nom, at_users.nom) nom FROM (SELECT t1.* FROM at_geo t1 LEFT JOIN at_geo t2 ON (t1.mac = t2.mac AND t1.timestamp < t2.timestamp) WHERE t2.timestamp IS NULL AND t1.date = CURDATE()) AS arr LEFT JOIN (SELECT at_devices.mac, at_users.nom FROM at_devices INNER JOIN at_users ON at_devices.username = at_users.id) AS arr2 ON arr.mac = arr2.mac LEFT JOIN at_users ON arr.mac = at_users.cle' );
+	$result = $req->fetchAll(PDO::FETCH_ASSOC);
+	$req->closeCursor();
 	http_response_code ( 202 );
 	$output = array (
 			'atlantis' => $atlantis,
