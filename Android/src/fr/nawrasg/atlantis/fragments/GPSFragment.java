@@ -89,9 +89,9 @@ public class GPSFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.itemGPSOptions:
+			/*case R.id.itemGPSOptions:
 				((MainActivity) getActivity()).loadFragment(new GeoPreferenceFragment(), true);
-				return true;
+				return true;*/
 			case R.id.itemGPSMap:
 				((MainActivity) getActivity()).loadFragment(new MapsFragment(), true);
 				return true;

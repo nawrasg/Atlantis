@@ -147,7 +147,7 @@ public class MapsFragment extends Fragment {
             mList.add(nMarker);
             mMap.addMarker(nMarker);
         }
-        setHome(false);
+        setHome(true);
     }
 
     private void getUsers() {

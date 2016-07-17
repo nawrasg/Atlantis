@@ -231,10 +231,10 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 			case R.id.itemMusicRefresh:
 				refresh();
 				return true;
-			case R.id.itemMusicSpeech:
+			/*case R.id.itemMusicSpeech:
 				SpeechDialogFragment nDialog = new SpeechDialogFragment();
 				nDialog.show(getFragmentManager(), "speech");
-				return true;
+				return true;*/
 			case R.id.itemMusicWelcomeMusic:
 				if (mWelcomeMusic < 0) {
 					Toast.makeText(mContext, getResources().getString(R.string.fragment_music_welcome_instructions),
