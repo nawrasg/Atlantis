@@ -83,6 +83,9 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
                         if (!nJSON.isNull("sensors")) {
                             insertSensors(nJSON.getJSONObject("sensors"));
                         }
+                        if(!nJSON.isNull("user")){
+                            getUser(nJSON.getJSONObject("user"));
+                        }
                         App.setLong(mContext, "lastmodified", (System.currentTimeMillis() / 1000));
                     } catch (JSONException e) {
                         Log.w("Atlantis", e.toString());
@@ -204,5 +207,12 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
             nValues.put("ignore", nJson.getInt("ignore"));
             mResolver.insert(AtlantisContract.Sensors.CONTENT_URI, nValues);
         }
+    }
+
+    private void getUser(JSONObject json) throws JSONException {
+        String nName = json.getString("nom");
+        int nType = json.getInt("type");
+        App.setString(mContext, "username", nName);
+        App.setInt(mContext, "usertype", nType);
     }
 }
