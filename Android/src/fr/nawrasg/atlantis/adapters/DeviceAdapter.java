@@ -44,7 +44,11 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		mContext = context;
 		mDeviceList = objects;
 	}
-	
+
+	@Override
+	public Device getItem(int position) {
+		return mDeviceList.get(position);
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
