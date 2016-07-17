@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.DeviceAdapter;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceDialogFragment;
 import fr.nawrasg.atlantis.fragments.dialogs.DeviceInfoDialogFragment;
@@ -68,7 +68,7 @@ public class ConnectedDevicesFragment extends ListFragment {
         ContentResolver nResolver = mContext.getContentResolver();
         Cursor nCursor = nResolver.query(AtlantisContract.Devices.CONTENT_URI, null, null, null, null);
         if (nCursor.moveToFirst()) {
-            nList = new ArrayList<Device>();
+            nList = new ArrayList<>();
             do {
                 Device nDevice = new Device(nCursor);
                 nList.add(nDevice);
@@ -187,7 +187,6 @@ public class ConnectedDevicesFragment extends ListFragment {
             openDeviceCommands(nDevice);
         }
     }
-
 
     private Bundle setArgs(Device device) {
         Bundle nBundle = new Bundle();
