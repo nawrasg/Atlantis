@@ -237,12 +237,12 @@
     <string name="layout_fragment_dialog_device_user">User</string>
 
     <!-- fragment_dialog_light -->
-    <string name="layout_fragment_dialog_light_name">Label:</string>
-    <string name="layout_fragment_dialog_light_room">Room:</string>
+    <string name="layout_fragment_dialog_light_name">Label</string>
+    <string name="layout_fragment_dialog_light_room">Room</string>
 
     <!-- fragment_dialog_plant_info -->
-    <string name="layout_fragment_dialog_plant_info_name">Plant label:</string>
-    <string name="layout_fragment_dialog_plant_info_photo">Plant photo:</string>
+    <string name="layout_fragment_dialog_plant_info_name">Plant label</string>
+    <string name="layout_fragment_dialog_plant_info_photo">Plant photo</string>
 
     <!-- fragment_dialog_sensor -->
     <string name="layout_fragment_dialog_sensor_alias">Alias:</string>
@@ -275,9 +275,9 @@
 
     <!-- fragment_gps -->
     <string name="layout_fragment_gps_geo_turn_on">Turn on the geolocation</string>
-    <string name="layout_fragment_gps_define_home">Define your home:</string>
+    <string name="layout_fragment_gps_define_home">Define your home (Latitude / Longitude)</string>
     <string name="layout_fragment_gps_coords">Latitude / Longitude</string>
-    <string name="layout_fragment_gps_define_circle">Define the perimeter:</string>
+    <string name="layout_fragment_gps_define_circle">Define the perimeter</string>
     <string name="layout_fragment_gps_radius_hint">in meters</string>
     <string name="layout_fragment_gps_clear_data">Clear</string>
 
