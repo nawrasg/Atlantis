@@ -5,7 +5,7 @@ Icons License
 home.png:           by chrisbanks under CC-BY-NC-ND 4.0 
 ic_*.png:           by Google under CC-BY 4.0 
 ng_alert.png:       by DesignContest under CC-BY 4.0 
-ng_arrow_*.png:     by Oxygen Team under LGPL
+ng_arrow_*.png:     by Oxygen Team under LGPL 
 ng_ball_blue.png:   by Custom Icon Design under Free for non-commerical use
 ng_battery.png:     by Custom Icon Design under Free for non-commerical use
 ng_bulb.png:        by Kyo-Tux under CC-BY-NC-SA 4.0
