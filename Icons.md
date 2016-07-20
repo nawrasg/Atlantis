@@ -1,7 +1,6 @@
 #Atlantis
-Icons License
-***
 
+##Icons License
 *home.png:           by chrisbanks under CC-BY-NC-ND 4.0
 *ic_*.png:           by Google under CC-BY 4.0
 *ng_alert.png:       by DesignContest under CC-BY 4.0
