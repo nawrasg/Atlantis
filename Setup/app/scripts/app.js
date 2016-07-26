@@ -8,5 +8,4 @@
  *
  * Main module of the application.
  */
-angular
-  .module('atlantisSetupApp', []);
+var nApp = angular.module('atlantisSetupApp', ['ngMaterial']);
