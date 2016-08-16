@@ -66,7 +66,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (App.httpClient == null) {
             App.httpClient = new OkHttpClient();
         }
-        createSyncAccount();
+        if(!App.getPrefBoolean(mContext, "first_launch")){
+            createSyncAccount();
+            App.setPrefBoolean(mContext, "first_launch", false);
+        }
         mNavigation.setItemIconTintList(null);
         mNavigation.setNavigationItemSelectedListener(this);
         setNavigationHeader();
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         boolean nResult = nManager.addAccountExplicitly(nAccount, null, null);
         if (nResult) {
             ContentResolver.addPeriodicSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY, 21600L);
+            ContentResolver.setSyncAutomatically(nAccount, AtlantisContract.AUTHORITY, true);
         }
     }
 
