@@ -20,7 +20,6 @@ import fr.nawrasg.atlantis.other.CheckConnection;
 
 public class App extends Application{
 	public static final int CODE_PLAN = 5;
-	public static final int VOICE_RECOGNITION_REQUEST = 0x10101;
 	public static final String CALL_NOTIFIER = "backend/at_call_notifier.php";
 	public static final String CAMERAS = "backend/at_cameras.php";
 	public static final String COURSES = "backend/at_courses.php";
@@ -123,6 +122,11 @@ public class App extends Application{
 	public static String getPrefString(Context c, String x) {
 		SharedPreferences nPref = PreferenceManager.getDefaultSharedPreferences(c);
 		return nPref.getString(x, "");
+	}
+
+	public static boolean getPrefBoolean(Context context, String key){
+		SharedPreferences nPref = PreferenceManager.getDefaultSharedPreferences(context);
+		return nPref.getBoolean(key, false);
 	}
 
 	public static int getPrefsInt(Context c, String x) {
