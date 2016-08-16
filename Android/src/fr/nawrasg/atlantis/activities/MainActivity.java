@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void createSyncAccount() {
-        Account nAccount = new Account("Atlantis", "fr.nawrasg.atlantis");
+        Account nAccount = new Account(getString(R.string.app_name), AtlantisContract.AUTHORITY);
         AccountManager nManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
         boolean nResult = nManager.addAccountExplicitly(nAccount, null, null);
         if (nResult) {
