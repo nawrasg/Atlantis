@@ -9,6 +9,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -262,7 +263,7 @@ public class CoursesFragment extends ListFragment {
 						}
 					});
 				} catch (JSONException e) {
-					Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+					Log.e("Atlantis", e.toString());
 				}
 			}
 		});
