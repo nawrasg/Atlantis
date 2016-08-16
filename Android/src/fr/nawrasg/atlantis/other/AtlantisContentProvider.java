@@ -20,7 +20,7 @@ import fr.nawrasg.atlantis.interfaces.AtlantisDatabaseInterface;
  */
 public class AtlantisContentProvider extends ContentProvider {
 
-	private static final int CALL_NOTIFIER = 0;
+	private static final int CONNECTION = 0;
 	private static final int EAN_LIST = 1;
 	private static final int EAN_ITEM = 2;
 	private static final int COURSES_LIST = 3;
@@ -44,7 +44,7 @@ public class AtlantisContentProvider extends ContentProvider {
 
 	static{
 		URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "callnotifier", CALL_NOTIFIER);
+		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "connection", CONNECTION);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "ean", EAN_LIST);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "ean/*", EAN_ITEM);
 		URI_MATCHER.addURI(AtlantisContract.AUTHORITY, "courses", COURSES_LIST);
@@ -77,8 +77,8 @@ public class AtlantisContentProvider extends ContentProvider {
 		SQLiteDatabase nDB = mHelper.getReadableDatabase();
 		SQLiteQueryBuilder nBuilder = new SQLiteQueryBuilder();
 		switch(URI_MATCHER.match(uri)){
-			case CALL_NOTIFIER:
-				return getCallNotifierCursor();
+			case CONNECTION:
+				return getConnection();
 			case EAN_LIST:
 				nBuilder.setTables(AtlantisDatabaseInterface.EAN_TABLE_NAME);
 				break;
@@ -291,6 +291,15 @@ public class AtlantisContentProvider extends ContentProvider {
 		String[] columnNames = {"url", "api"};
 		MatrixCursor matrixCursor = new MatrixCursor(columnNames);
 		String nURL = App.getFullUrl(getContext()) + App.CALL_NOTIFIER;
+		String nAPI = App.getAPI(getContext());
+		matrixCursor.addRow(new String[]{nURL, nAPI});
+		return matrixCursor;
+	}
+
+	private Cursor getConnection(){
+		String[] columnNames = {"url", "api"};
+		MatrixCursor matrixCursor = new MatrixCursor(columnNames);
+		String nURL = App.getFullUrl(getContext());
 		String nAPI = App.getAPI(getContext());
 		matrixCursor.addRow(new String[]{nURL, nAPI});
 		return matrixCursor;
