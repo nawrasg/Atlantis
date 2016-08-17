@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/xml_pref_main_divers_title">
+        <EditTextPreference
+            android:icon="@drawable/ic_cached_black_24dp"
+            android:inputType="number"
+            android:key="sync_frequency"
+            android:summary="@string/sync_unit"
+            android:title="@string/sync_frequency"/>
         <Preference
             android:icon="@drawable/ic_action_import_export"
             android:key="import"
             android:summary="@string/xml_pref_divers_settings_import_summary"
-            android:title="@string/xml_pref_divers_settings_import_title" />
+            android:title="@string/xml_pref_divers_settings_import_title"/>
         <Preference
             android:icon="@drawable/ic_action_send_now"
             android:key="gcm"
             android:summary="@string/xml_pref_divers_gcm_summary"
-            android:title="@string/xml_pref_divers_gcm_title" />
-        
+            android:title="@string/xml_pref_divers_gcm_title"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

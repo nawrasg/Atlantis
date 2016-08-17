@@ -303,4 +303,6 @@
     <string name="user_account_type_user">User</string>
     <string name="user_account_type_visitor">Visitor</string>
     <string name="user_account_type_blocked">Blocked</string>
+    <string name="sync_frequency">Synchronization Frequency</string>
+    <string name="sync_unit">In hours</string>
 </resources>

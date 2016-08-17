@@ -1,6 +1,8 @@
 package fr.nawrasg.atlantis.activities;
 
+import android.accounts.Account;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,26 +12,19 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.net.URLEncoder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.TabsAdapter;
-import fr.nawrasg.atlantis.preferences.ConnectionPreferenceFragment;
-import fr.nawrasg.atlantis.preferences.DiversPreferenceFragment;
-import fr.nawrasg.atlantis.preferences.SecurityPreferenceFragment;
+import fr.nawrasg.atlantis.other.AtlantisContract;
+import fr.nawrasg.atlantis.fragments.preferences.ConnectionPreferenceFragment;
+import fr.nawrasg.atlantis.fragments.preferences.DiversPreferenceFragment;
+import fr.nawrasg.atlantis.fragments.preferences.SecurityPreferenceFragment;
 
 /**
  * Created by Nawras on 14/07/2016.
@@ -65,6 +60,13 @@ public class SettingsActivity extends AppCompatActivity {
         if (App.isPIN(mContext)) {
             enterPIN();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Account nAccount = new Account(getString(R.string.app_name), AtlantisContract.AUTHORITY);
+        ContentResolver.requestSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY);
+        super.onDestroy();
     }
 
     private void setupViewPager() {

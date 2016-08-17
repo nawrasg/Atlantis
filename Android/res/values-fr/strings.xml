@@ -299,4 +299,6 @@
     <string name="user_account_type_blocked">Bloqué</string>
     <string name="user_account_type_user">Utilisateur</string>
     <string name="user_account_type_visitor">Visiteur</string>
+    <string name="sync_frequency">Fréquence de synchronisation</string>
+    <string name="sync_unit">En heures</string>
 </resources>
