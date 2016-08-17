@@ -1,4 +1,4 @@
-package fr.nawrasg.atlantis.preferences;
+package fr.nawrasg.atlantis.fragments.preferences;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
