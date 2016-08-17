@@ -161,7 +161,6 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter"/>
         </service>
-        <service android:name="org.eclipse.paho.android.service.MqttService"/>
 
         <!-- Providers -->
         <provider
