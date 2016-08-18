@@ -22,7 +22,6 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.fragments.preferences.GeoPreferenceFragment;
@@ -37,6 +36,8 @@ public class GPSFragment extends Fragment {
     @Bind(R.id.cbGPSon)
     CheckBox cbGeo;
 
+    private fr.nawrasg.atlantis.type.Location mLocation;
+
     private static final String ATLANTIS_GEO_ALERT = "fr.nawrasg.atlantis.geo";
 
     @Override
@@ -44,6 +45,7 @@ public class GPSFragment extends Fragment {
         nContext = getActivity();
         View nView = inflater.inflate(R.layout.fragment_gps, container, false);
         ButterKnife.bind(this, nView);
+        mLocation = new fr.nawrasg.atlantis.type.Location(nContext);
         nLM = (LocationManager) nContext.getSystemService(Context.LOCATION_SERVICE);
         Intent nIntent = new Intent(ATLANTIS_GEO_ALERT);
         boolean nActivate = (PendingIntent.getBroadcast(nContext, 0, nIntent, PendingIntent.FLAG_NO_CREATE) != null);
@@ -67,9 +69,8 @@ public class GPSFragment extends Fragment {
     public void clear() {
         txtCoord.getText().clear();
         txtRadius.getText().clear();
-        App.setFloat(nContext, "homeLong", 0);
-        App.setFloat(nContext, "homeLat", 0);
-        App.setFloat(nContext, "homeRadius", 0);
+        mLocation.setHomeCoordinates(0, 0);
+        mLocation.setHomeRadius(0);
         if (cbGeo.isChecked()) {
             cbGeo.setChecked(false);
         }
@@ -77,7 +78,7 @@ public class GPSFragment extends Fragment {
 
     @OnClick(R.id.btnGPSRadius)
     public void setRadius() {
-        App.setFloat(nContext, "homeRadius", Float.parseFloat(txtRadius.getText().toString()));
+        mLocation.setHomeRadius(Float.parseFloat(txtRadius.getText().toString()));
     }
 
     @Override
@@ -100,12 +101,12 @@ public class GPSFragment extends Fragment {
     }
 
     private void getSettings() {
-        float nLong = App.getFloat(nContext, "homeLong");
-        float nLat = App.getFloat(nContext, "homeLat");
+        float nLong = mLocation.getHomeLongitude();
+        float nLat = mLocation.getHomeLatitude();
         if (nLong != 0 && nLat != 0) {
             txtCoord.setText(nLat + " / " + nLong);
         }
-        int nRadius = (int) App.getFloat(nContext, "homeRadius");
+        int nRadius = (int) mLocation.getHomeRadius();
         if (nRadius != 0)
             txtRadius.setText(nRadius + "");
     }
@@ -131,17 +132,16 @@ public class GPSFragment extends Fragment {
                 float nLong = (float) location.getLongitude();
                 float nLat = (float) location.getLatitude();
                 txtCoord.setText(nLat + " / " + nLong);
-                App.setFloat(nContext, "homeLong", nLong);
-                App.setFloat(nContext, "homeLat", nLat);
+                mLocation.setHomeCoordinates(nLat, nLong);
             }
         }, null);
 
     }
 
     private void setProximityAlert(boolean x) {
-        double nLong = App.getFloat(nContext, "homeLong");
-        double nLat = App.getFloat(nContext, "homeLat");
-        float nRadius = App.getFloat(nContext, "homeRadius");
+        double nLong = mLocation.getHomeLongitude();
+        double nLat = mLocation.getHomeLatitude();
+        float nRadius = mLocation.getHomeRadius();
         // check if zero or not
         Intent nIntent = new Intent(ATLANTIS_GEO_ALERT);
         PendingIntent nPI = PendingIntent.getBroadcast(nContext, 0, nIntent, 0);
