@@ -43,6 +43,7 @@ public class GCMService extends IntentService {
 	private Vibrator nVibrate;
 	private LocationManager nLM;
 	private Context mContext;
+	private fr.nawrasg.atlantis.type.Location mLocation;
 	private OkHttpClient mClient;
 
 	public GCMService() {
@@ -56,7 +57,7 @@ public class GCMService extends IntentService {
 
 			@Override
 			public void run() {
-				nLM.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, new LocationListener() {
+				nLM.requestSingleUpdate(mLocation.getProvider(), new LocationListener() {
 
 					@Override
 					public void onLocationChanged(Location location) {
@@ -103,6 +104,7 @@ public class GCMService extends IntentService {
 		GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 		String messageType = gcm.getMessageType(intent);
 		mContext = this;
+		mLocation = new fr.nawrasg.atlantis.type.Location(mContext);
 
 		if (!extras.isEmpty()) {
 			if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
@@ -151,7 +153,7 @@ public class GCMService extends IntentService {
 		PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0, nIntent, 0);
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-				.setSmallIcon(R.drawable.home)
+				.setSmallIcon(R.drawable.ng_home_notifications)
 				.setContentTitle(mContext.getString(R.string.app_name))
 				.setContentText(mContext.getString(R.string.service_gcm_ring_description))
 				.addAction(R.drawable.ic_notifications_off_black_24dp, mContext.getString(R.string.service_gcm_ring_found), contentIntent);

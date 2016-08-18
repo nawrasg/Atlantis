@@ -1,6 +1,7 @@
 package fr.nawrasg.atlantis.type;
 
 import android.content.Context;
+import android.location.LocationManager;
 
 import fr.nawrasg.atlantis.App;
 
@@ -43,5 +44,12 @@ public class Location {
 
     public float getHomeRadius(){
         return App.getFloat(mContext, HOME_RADIUS);
+    }
+
+    public String getProvider(){
+        if(isGPSProvider()){
+            return LocationManager.GPS_PROVIDER;
+        }
+        return LocationManager.NETWORK_PROVIDER;
     }
 }

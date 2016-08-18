@@ -113,7 +113,7 @@ public class GPSFragment extends Fragment {
 
     @OnClick(R.id.btnGPSPosition)
     public void getCoord() {
-        nLM.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, new LocationListener() {
+        nLM.requestSingleUpdate(mLocation.getProvider(), new LocationListener() {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {

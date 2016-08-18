@@ -2,6 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/xml_pref_main_divers_title">
+        <SwitchPreference
+            android:icon="@drawable/ic_gps_fixed_black_24dp"
+            android:key="gps"
+            android:summary="@string/pref_gps_provider_summary"
+            android:title="@string/pref_gps_provider_title"/>
         <EditTextPreference
             android:icon="@drawable/ic_cached_black_24dp"
             android:inputType="number"
