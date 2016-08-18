@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
-import fr.nawrasg.atlantis.type.GPS;
+import fr.nawrasg.atlantis.type.Tracking;
 
 public class MapsFragment extends Fragment {
     private Context mContext;
@@ -139,11 +139,11 @@ public class MapsFragment extends Fragment {
         mList = new ArrayList<>();
         JSONArray nArr = positions.getJSONArray("positions");
         for (int i = 0; i < nArr.length(); i++) {
-            GPS nGPS = new GPS(nArr.getJSONObject(i));
-            LatLng nCoords = new LatLng(nGPS.getLatitude(), nGPS.getLongitude());
+            Tracking nTracking = new Tracking(nArr.getJSONObject(i));
+            LatLng nCoords = new LatLng(nTracking.getLatitude(), nTracking.getLongitude());
             //mMap.moveCamera(CameraUpdateFactory.newLatLng(nCoords));
             //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-            MarkerOptions nMarker = new MarkerOptions().position(nCoords).title(nGPS.getUser() + " (" + nGPS.getTimestamp() + ")");
+            MarkerOptions nMarker = new MarkerOptions().position(nCoords).title(nTracking.getUser() + " (" + nTracking.getTimestamp() + ")");
             mList.add(nMarker);
             mMap.addMarker(nMarker);
         }

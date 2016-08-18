@@ -4,11 +4,11 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-public class GPS {
+public class Tracking {
     private String mUser, mMAC, mDate;
     private double mLat, mLong;
 
-    public GPS(JSONObject json) {
+    public Tracking(JSONObject json) {
         try {
             mUser = json.getString("nom");
             mMAC = json.getString("mac");
