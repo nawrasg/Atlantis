@@ -168,7 +168,7 @@ public class GCMService extends IntentService {
 		AudioManager nAudio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-		int nIcon = R.drawable.home;
+		int nIcon = R.drawable.ng_home_notifications;
 		long nTime = System.currentTimeMillis();
 		Intent nIntent = new Intent(this, MainActivity.class);
 		nIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

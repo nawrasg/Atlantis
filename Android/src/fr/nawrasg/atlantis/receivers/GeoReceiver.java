@@ -29,7 +29,7 @@ public class GeoReceiver extends WakefulBroadcastReceiver {
         	result = "Sortie";
         }
 		nN = new Notification.Builder(context)
-		.setContentTitle("Atlantis").setContentText(result).setSmallIcon(R.drawable.home)
+		.setContentTitle("Atlantis").setContentText(result).setSmallIcon(R.drawable.ng_home_notifications)
 		.setWhen(System.currentTimeMillis()).setAutoCancel(true).build();
 		nNM.notify(0, nN);
 		nVibrate.vibrate(500);
