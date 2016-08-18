@@ -21,8 +21,8 @@ public class GeoService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		boolean result = intent.getBooleanExtra("entering", false);
 		if(result){
-			boolean enter_wifi = App.getBoolean(this, "geo_enter_wifi");
-			boolean enter_alarm = App.getBoolean(this, "geo_enter_alarm");
+			boolean enter_wifi = App.getPrefBoolean(this, "geo_enter_wifi");
+			boolean enter_alarm = App.getPrefBoolean(this, "geo_enter_alarm");
 			if(enter_wifi){
 				WifiManager nWifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 				nWifi.setWifiEnabled(true);
@@ -31,8 +31,8 @@ public class GeoService extends IntentService {
 
 			}
 		}else{
-			boolean exit_wifi = App.getBoolean(this, "geo_exit_wifi");
-			boolean exit_alarm = App.getBoolean(this, "geo_exit_alarm");
+			boolean exit_wifi = App.getPrefBoolean(this, "geo_exit_wifi");
+			boolean exit_alarm = App.getPrefBoolean(this, "geo_exit_alarm");
 			if(exit_wifi){
 				WifiManager nWifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 				nWifi.setWifiEnabled(false);

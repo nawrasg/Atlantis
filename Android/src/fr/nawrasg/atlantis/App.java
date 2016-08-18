@@ -141,13 +141,9 @@ public class App extends Application{
 		return nPref.getInt(x, -999);
 	}
 
-	public static boolean getBoolean(Context c, String x) {
-		SharedPreferences nPref = PreferenceManager.getDefaultSharedPreferences(c);
-		return nPref.getBoolean(x, false);
-	}
 
 	public static boolean isSSL(Context context) {
-		return getBoolean(context, "ssl") && !isHome(context);
+		return getPrefBoolean(context, "ssl") && !isHome(context);
 	}
 
 	public static boolean isHome(Context c) {
