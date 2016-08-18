@@ -129,6 +129,11 @@ public class App extends Application{
 		return nPref.getBoolean(key, false);
 	}
 
+	public static long getPrefLong(Context context, String key){
+		SharedPreferences nPref = PreferenceManager.getDefaultSharedPreferences(context);
+		return nPref.getLong(key, -1);
+	}
+
 	public static boolean setPrefBoolean(Context context, String key, Boolean value){
 		SharedPreferences nPref = PreferenceManager.getDefaultSharedPreferences(context);
 		Editor nEdit = nPref.edit();

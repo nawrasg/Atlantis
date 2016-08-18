@@ -45,7 +45,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        String nURL = App.getUri(mContext, App.SYNC) + "&lastmodified=" + App.getInt(mContext, "lastmodified");
+        String nURL = App.getUri(mContext, App.SYNC) + "&lastmodified=" + App.getPrefLong(mContext, "lastmodified");
         final Request nRequest = new Request.Builder()
                 .url(nURL)
                 .build();
