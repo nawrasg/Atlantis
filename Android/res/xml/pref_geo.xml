@@ -5,12 +5,12 @@
         android:title="@string/xml_pref_geo_incoming_title">
 
         <CheckBoxPreference
-            android:icon="@drawable/ic_action_network_wifi"
+            android:icon="@drawable/ic_signal_wifi_4_bar_black_24dp"
             android:key="geo_enter_wifi"
             android:title="@string/xml_pref_geo_incoming_wifi_title"/>
 
         <CheckBoxPreference
-            android:icon="@drawable/ic_action_secure"
+            android:icon="@drawable/ic_lock_black_24dp"
             android:key="geo_enter_alarm"
             android:title="@string/xml_pref_geo_incoming_alarm_title"/>
 
@@ -18,7 +18,7 @@
             android:defaultValue="1"
             android:entries="@array/geo_ring_profil_entries"
             android:entryValues="@array/geo_ring_profil_values"
-            android:icon="@drawable/ic_action_ring_volume"
+            android:icon="@drawable/ic_call_black_24dp"
             android:key="geo_enter_ring"
             android:title="@string/xml_pref_geo_incoming_ring_profil_title"/>
     </PreferenceCategory>
@@ -28,12 +28,12 @@
         android:title="@string/xml_pref_geo_outgoing_title">
 
         <CheckBoxPreference
-            android:icon="@drawable/ic_action_network_wifi"
+            android:icon="@drawable/ic_signal_wifi_4_bar_black_24dp"
             android:key="geo_exit_wifi"
             android:title="@string/xml_pref_geo_outgoing_wifi_title"/>
 
         <CheckBoxPreference
-            android:icon="@drawable/ic_action_secure"
+            android:icon="@drawable/ic_lock_black_24dp"
             android:key="geo_exit_alarm"
             android:title="@string/xml_pref_geo_outgoing_alarm_title"/>
 
@@ -41,7 +41,7 @@
             android:defaultValue="1"
             android:entries="@array/geo_ring_profil_entries"
             android:entryValues="@array/geo_ring_profil_values"
-            android:icon="@drawable/ic_action_ring_volume"
+            android:icon="@drawable/ic_call_black_24dp"
             android:key="geo_exit_ring"
             android:title="@string/xml_pref_geo_outgoing_ring_profil_title"/>
     </PreferenceCategory>

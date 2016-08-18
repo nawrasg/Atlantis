@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="add"
-            android:src="@drawable/ic_action_new" />
+            android:src="@drawable/ic_add_white_24dp" />
     </LinearLayout>
 
     <ListView

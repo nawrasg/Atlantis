@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/itemPharmacieAddSave"
-        android:icon="@drawable/ic_action_accept"
+        android:icon="@drawable/ic_check_white_24dp"
         android:title="@string/menu_save"
         app:showAsAction="always"/>
 

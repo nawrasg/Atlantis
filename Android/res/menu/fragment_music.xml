@@ -15,12 +15,13 @@
     <item
         android:id="@+id/itemMusicOn"
         android:checkable="true"
+        android:icon="@drawable/ic_power_settings_new_white_24dp"
         android:title="@string/menu_music_on"
         app:showAsAction="never"/>
     <item
         android:id="@+id/itemMusicWelcomeMusic"
         android:checkable="true"
-        android:icon="@drawable/ic_action_headphones"
+        android:icon="@drawable/ic_music_note_white_24dp"
         android:title="@string/menu_music_welcome_music"
         app:showAsAction="never"/>
 

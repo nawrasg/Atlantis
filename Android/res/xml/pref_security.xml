@@ -3,26 +3,26 @@
 
     <PreferenceCategory android:title="@string/xml_pref_main_security_title">
         <EditTextPreference
-            android:icon="@drawable/ic_action_secure"
+            android:icon="@drawable/ic_perm_identity_black_24dp"
             android:key="api"
             android:summary="@string/xml_pref_security_api_summary"
             android:title="@string/xml_pref_security_api_title"/>
 
         <CheckBoxPreference
-            android:icon="@drawable/ic_action_secure"
+            android:icon="@drawable/ic_lock_black_24dp"
             android:key="pin"
             android:summary="@string/xml_pref_security_pin_summary"
             android:title="@string/xml_pref_security_pin_title"/>
 
         <EditTextPreference
-            android:icon="@drawable/ic_action_accounts"
+            android:icon="@drawable/ic_fiber_pin_black_24dp"
             android:inputType="numberPassword"
             android:key="pinCode"
             android:summary="@string/xml_pref_security_pin_code_summary"
             android:title="@string/xml_pref_security_pin_code_title"/>
 
         <CheckBoxPreference
-            android:icon="@drawable/ic_action_screen_locked_to_landscape"
+            android:icon="@drawable/ic_vpn_lock_black_24dp"
             android:key="ssl"
             android:summary="@string/xml_pref_security_ssl_summary"
             android:title="@string/xml_pref_security_ssl_title"/>

@@ -132,9 +132,9 @@ public class SensorAdapter extends BaseExpandableListAdapter {
         if (nSensor.getSensorsCount() > 0) {
             nHolder.header.setCompoundDrawablePadding(20);
             if (isExpanded) {
-                nHolder.header.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ng_arrow_down, 0, 0, 0);
+                nHolder.header.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_keyboard_arrow_down_black_24dp, 0, 0, 0);
             } else {
-                nHolder.header.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ng_arrow_right, 0, 0, 0);
+                nHolder.header.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_keyboard_arrow_right_black_24dp, 0, 0, 0);
             }
         }
         return convertView;

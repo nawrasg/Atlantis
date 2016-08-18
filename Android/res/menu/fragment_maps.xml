@@ -9,7 +9,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/itemMapsRequest"
-        android:icon="@drawable/ic_action_send_now"
+        android:icon="@drawable/ic_send_white_24dp"
         android:title="@string/menu_fragment_maps_request"
         app:showAsAction="ifRoom"/>
 

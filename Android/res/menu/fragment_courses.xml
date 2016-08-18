@@ -4,22 +4,21 @@
 
     <item
         android:id="@+id/itemCoursesAdd"
-        android:icon="@drawable/ic_action_new"
+        android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/menu_fragment_courses_add"
         app:showAsAction="always"/>
     <item
         android:id="@+id/itemCoursesNotify"
-        android:icon="@drawable/ic_action_send_now"
+        android:icon="@drawable/ic_send_white_24dp"
         android:title="@string/menu_fragment_courses_notification"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/itemCoursesOffline"
-        android:icon="@drawable/ic_action_make_available_offline"
         android:title="@string/menu_fragment_courses_offline"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/itemCoursesClear"
-        android:icon="@drawable/ic_action_discard"
+        android:icon="@drawable/ic_delete_white_24dp"
         android:title="@string/menu_fragment_courses_clear"
         app:showAsAction="ifRoom"/>
     <item

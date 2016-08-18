@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/itemGPSOptions"
-        android:icon="@drawable/ic_action_storage"
+        android:icon="@drawable/ic_storage_white_24dp"
         android:title="@string/menu_fragment_gps_options"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/itemGPSMap"
-        android:icon="@drawable/ic_action_map"
+        android:icon="@drawable/ic_map_white_24dp"
         android:title="@string/menu_fragment_gps_map"
         app:showAsAction="ifRoom"/>
 
