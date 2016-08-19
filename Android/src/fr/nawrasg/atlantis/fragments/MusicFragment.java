@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -42,7 +43,7 @@ import fr.nawrasg.atlantis.adapters.MusicAdapter;
 import fr.nawrasg.atlantis.fragments.dialogs.SpeechDialogFragment;
 import fr.nawrasg.atlantis.type.Song;
 
-public class MusicFragment extends ListFragment implements OnClickListener, OnSeekBarChangeListener{
+public class MusicFragment extends ListFragment implements OnClickListener, OnSeekBarChangeListener, SwipeRefreshLayout.OnRefreshListener {
 	private Context mContext;
 	private ArrayList<Song> nList;
 	private boolean isPlay, isOn;
@@ -60,6 +61,8 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	ImageButton btnNext;
 	@Bind(R.id.btnMusicShuffle)
 	ImageButton btnShuffle;
+	@Bind(R.id.swipeMusic)
+	SwipeRefreshLayout mSwipeLayout;
 	private int mWelcomeMusic, mVolume;
 	private MusicAdapter mAdapter;
 	private Handler mHandler;
@@ -72,6 +75,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 		mHandler = new Handler();
 		mWelcomeMusic = -1;
 		setHasOptionsMenu(true);
+		mSwipeLayout.setOnRefreshListener(this);
 		return nView;
 	}
 
@@ -179,7 +183,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								btnPlay.setImageResource(R.drawable.ic_action_stop);
+								btnPlay.setImageResource(R.drawable.ic_stop_black_36dp);
 							}
 						});
 					} else {
@@ -187,7 +191,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								btnPlay.setImageResource(R.drawable.ic_action_play);
+								btnPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
 							}
 						});
 					}
@@ -205,6 +209,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 						@Override
 						public void run() {
 							setListAdapter(mAdapter);
+							mSwipeLayout.setRefreshing(false);
 						}
 					});
 				} catch (JSONException e) {
@@ -227,9 +232,6 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 					nStatus = "on";
 				}
 				modify("action=" + nStatus);
-				return true;
-			case R.id.itemMusicRefresh:
-				refresh();
 				return true;
 			/*case R.id.itemMusicSpeech:
 				SpeechDialogFragment nDialog = new SpeechDialogFragment();
@@ -262,7 +264,8 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 
 			@Override
 			public void onResponse(Response response) throws IOException {
-
+				mSwipeLayout.setRefreshing(false);
+				Log.d("Nawras", "Refresh done");
 			}
 		});
 	}
@@ -320,11 +323,11 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 				if (isPlay) {
 					modify("action=stop");
 					isPlay = false;
-					btnPlay.setImageResource(R.drawable.ic_action_play);
+					btnPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
 				} else {
 					modify("action=start");
 					isPlay = true;
-					btnPlay.setImageResource(R.drawable.ic_action_stop);
+					btnPlay.setImageResource(R.drawable.ic_stop_black_36dp);
 				}
 				break;
 			case R.id.btnMusicPause:
@@ -365,5 +368,10 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 		nSB.setOnSeekBarChangeListener(null);
 		nSB.setProgress(vol);
 		nSB.setOnSeekBarChangeListener(this);
+	}
+
+	@Override
+	public void onRefresh() {
+		getItems();
 	}
 }

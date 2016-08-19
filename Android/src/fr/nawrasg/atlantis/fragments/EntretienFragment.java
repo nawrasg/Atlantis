@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -28,13 +29,17 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.EntretienAdapter;
 import fr.nawrasg.atlantis.type.Entretien;
 
-public class EntretienFragment extends ListFragment {
+public class EntretienFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+	@Bind(R.id.swipeEntretien)
+	SwipeRefreshLayout mSwipeLayout;
 	private Context mContext;
 	private EntretienAdapter mAdapter;
 	private Handler mHandler;
@@ -44,9 +49,11 @@ public class EntretienFragment extends ListFragment {
 		mContext = getActivity();
 		mHandler = new Handler();
 		View nV = inflater.inflate(R.layout.layout_entretien, container, false);
+		ButterKnife.bind(this, nV);
 		if (getActivity().findViewById(R.id.main_fragment2) == null) {
 			setHasOptionsMenu(true);
 		}
+		mSwipeLayout.setOnRefreshListener(this);
 		return nV;
 	}
 
@@ -73,9 +80,8 @@ public class EntretienFragment extends ListFragment {
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		getItems();			
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		getItems();
 	}
 
 	public void getItems() {
@@ -104,6 +110,7 @@ public class EntretienFragment extends ListFragment {
 						@Override
 						public void run() {
 							setListAdapter(mAdapter);
+							mSwipeLayout.setRefreshing(false);
 						}
 					});
 				} catch (JSONException e) {
@@ -202,5 +209,10 @@ public class EntretienFragment extends ListFragment {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void onRefresh() {
+		getItems();
 	}
 }

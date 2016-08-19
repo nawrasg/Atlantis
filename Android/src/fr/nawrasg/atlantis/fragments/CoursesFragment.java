@@ -9,6 +9,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -43,12 +44,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.CoursesAdapter;
 import fr.nawrasg.atlantis.type.Element;
 
-public class CoursesFragment extends ListFragment {
+public class CoursesFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+	@Bind(R.id.swipeCourses)
+	SwipeRefreshLayout mSwipeLayout;
 	private Context mContext;
 	private List<String> list = new ArrayList<String>();
 	private ArrayList<Element> nList;
@@ -59,9 +64,11 @@ public class CoursesFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_courses, container, false);
+		ButterKnife.bind(this, nView);
 		mContext = getActivity();
 		mHandler = new Handler();
 		setHasOptionsMenu(true);
+		mSwipeLayout.setOnRefreshListener(this);
 		return nView;
 	}
 
@@ -96,23 +103,20 @@ public class CoursesFragment extends ListFragment {
 		switch (item.getItemId()) {
 			case R.id.itemCoursesAdd:
 				addItem();
-				break;
+				return true;
 			case R.id.itemCoursesNotify:
 				sendNotification();
-				break;
+				return true;
 			case R.id.itemCoursesOffline:
 				if (mIsOffline) {
 					makeOnline();
 				} else {
 					makeOffline();
 				}
-				break;
+				return true;
 			case R.id.itemCoursesClear:
 				clear();
-				break;
-			case R.id.itemCoursesRefresh:
-				makeOnline();
-				break;
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -260,6 +264,7 @@ public class CoursesFragment extends ListFragment {
 						@Override
 						public void run() {
 							setListAdapter(mAdapter);
+							mSwipeLayout.setRefreshing(false);
 						}
 					});
 				} catch (JSONException e) {
@@ -414,5 +419,10 @@ public class CoursesFragment extends ListFragment {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void onRefresh() {
+		makeOnline();
 	}
 }

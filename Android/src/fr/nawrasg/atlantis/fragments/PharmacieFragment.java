@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -28,13 +29,17 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.PharmacieAdapter;
 import fr.nawrasg.atlantis.type.Medicament;
 
-public class PharmacieFragment extends ListFragment {
+public class PharmacieFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+	@Bind(R.id.swipePharmacie)
+	SwipeRefreshLayout mSwipeLayout;
 	private Context mContext;
 	private ArrayList<Medicament> nList;
 	private PharmacieAdapter mAdapter;
@@ -45,10 +50,17 @@ public class PharmacieFragment extends ListFragment {
 		mContext = getActivity();
 		mHandler = new Handler();
 		View nV = inflater.inflate(R.layout.layout_pharmacie, container, false);
+		ButterKnife.bind(this, nV);
 		if (getActivity().findViewById(R.id.main_fragment2) == null) {
 			setHasOptionsMenu(true);
 		}
+		mSwipeLayout.setOnRefreshListener(this);
 		return nV;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		getItems();
 	}
 
 	@Override
@@ -71,12 +83,6 @@ public class PharmacieFragment extends ListFragment {
 				return true;
 		}
 		return false;
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		getItems();
 	}
 
 	@Override
@@ -110,6 +116,7 @@ public class PharmacieFragment extends ListFragment {
 							@Override
 							public void run() {
 								setListAdapter(mAdapter);
+								mSwipeLayout.setRefreshing(false);
 							}
 						});
 					} catch (JSONException e) {
@@ -203,5 +210,10 @@ public class PharmacieFragment extends ListFragment {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void onRefresh() {
+		getItems();
 	}
 }

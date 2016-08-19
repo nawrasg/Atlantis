@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -30,13 +31,17 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.CuisineAdapter;
 import fr.nawrasg.atlantis.type.Produit;
 
-public class CuisineFragment extends ListFragment {
+public class CuisineFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+	@Bind(R.id.swipeCuisine)
+	SwipeRefreshLayout mSwipeLayout;
 	private Context mContext;
 	private ArrayList<Produit> nList;
 	private CuisineAdapter mAdapter;
@@ -47,10 +52,17 @@ public class CuisineFragment extends ListFragment {
 		mContext = getActivity();
 		mHandler = new Handler();
 		View nView = inflater.inflate(R.layout.fragment_cuisine, container, false);
+		ButterKnife.bind(this, nView);
 		setHasOptionsMenu(true);
+		mSwipeLayout.setOnRefreshListener(this);
 		return nView;
 	}
-		
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		getItems();
+	}
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
@@ -86,10 +98,10 @@ public class CuisineFragment extends ListFragment {
 		switch (item.getItemId()) {
 			case R.id.itemCuisineAdd:
 				((MainActivity) getActivity()).loadFragment(new CuisineAddFragment(), true);
-				break;
+				return true;
 			case R.id.itemCuisineAll:
 				mAdapter.toggleShow();
-				break;
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -98,12 +110,6 @@ public class CuisineFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		registerForContextMenu(getListView());
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		getItems();
 	}
 
 	@Override
@@ -165,6 +171,7 @@ public class CuisineFragment extends ListFragment {
 							@Override
 							public void run() {
 								setListAdapter(mAdapter);
+								mSwipeLayout.setRefreshing(false);
 							}
 						});
 					}catch(JSONException e){
@@ -254,5 +261,10 @@ public class CuisineFragment extends ListFragment {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void onRefresh() {
+		getItems();
 	}
 }

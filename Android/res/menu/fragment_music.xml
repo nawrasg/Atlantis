@@ -7,11 +7,7 @@
         android:icon="@drawable/ic_action_volume_on"
         android:title="@string/menu_music_vocal_message"
         app:showAsAction="always"/>-->
-    <item
-        android:id="@+id/itemMusicRefresh"
-        android:icon="@drawable/ic_action_refresh"
-        android:title="@string/menu_refresh"
-        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/itemMusicOn"
         android:checkable="true"

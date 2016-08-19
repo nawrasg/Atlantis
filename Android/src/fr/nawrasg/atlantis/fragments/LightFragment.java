@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.LightAdapter;
@@ -36,7 +39,9 @@ import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
 import fr.nawrasg.atlantis.type.Room;
 
-public class LightFragment extends ListFragment{
+public class LightFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+	@Bind(R.id.swipeLights)
+	SwipeRefreshLayout mSwipeLayout;
 	private Context mContext;
 	private ArrayList<Light> mList;
 	private ArrayList<Room> mRoomList;
@@ -46,9 +51,11 @@ public class LightFragment extends ListFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View nView = inflater.inflate(R.layout.fragment_lights, container, false);
+		ButterKnife.bind(this, nView);
 		mContext = getActivity();
 		mHandler = new Handler();
 		getItems();
+		mSwipeLayout.setOnRefreshListener(this);
 		return nView;
 	}
 
@@ -108,6 +115,7 @@ public class LightFragment extends ListFragment{
 						@Override
 						public void run() {
 							mAdapter.notifyDataSetChanged();
+							mSwipeLayout.setRefreshing(false);
 						}
 					});
 				} catch (JSONException e) {
@@ -165,5 +173,10 @@ public class LightFragment extends ListFragment{
 		nBundle.putParcelableArrayList("rooms", mRoomList);
 		nBundle.putParcelable("light", light);
 		return nBundle;
+	}
+
+	@Override
+	public void onRefresh() {
+		getStatus();
 	}
 }

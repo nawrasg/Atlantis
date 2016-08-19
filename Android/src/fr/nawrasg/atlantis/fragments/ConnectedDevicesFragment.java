@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -30,6 +31,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.activities.MainActivity;
@@ -40,7 +43,9 @@ import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Device;
 import fr.nawrasg.atlantis.type.User;
 
-public class ConnectedDevicesFragment extends ListFragment {
+public class ConnectedDevicesFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+    @Bind(R.id.swipeDevices)
+    SwipeRefreshLayout mSwipeLayout;
     private Context mContext;
     private List<Device> nList;
     private DeviceAdapter mAdapter;
@@ -51,15 +56,16 @@ public class ConnectedDevicesFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View nView = inflater.inflate(R.layout.fragment_devices, container, false);
+        ButterKnife.bind(this, nView);
         mContext = getActivity();
         mHandler = new Handler();
         setHasOptionsMenu(true);
+        mSwipeLayout.setOnRefreshListener(this);
         return nView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         getItems();
         getStatus();
     }
@@ -104,6 +110,7 @@ public class ConnectedDevicesFragment extends ListFragment {
                         @Override
                         public void run() {
                             mAdapter.notifyDataSetChanged();
+                            mSwipeLayout.setRefreshing(false);
                         }
                     });
                     JSONArray nUserArr = nJson.getJSONArray("users");
@@ -217,5 +224,10 @@ public class ConnectedDevicesFragment extends ListFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        getStatus();
     }
 }
