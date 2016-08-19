@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,9 @@ import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Room;
 import fr.nawrasg.atlantis.type.Sensor;
 
-public class SensorsFragment extends ListFragment {
+public class SensorsFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+    @Bind(R.id.swipeSensors)
+    SwipeRefreshLayout mSwipeLayout;
     private Context mContext;
     private ArrayList<Sensor> mList;
     private ArrayList<Room> mRoomList;
@@ -51,6 +54,7 @@ public class SensorsFragment extends ListFragment {
         mHandler = new Handler();
         View nView = inflater.inflate(R.layout.fragment_sensors, container, false);
         ButterKnife.bind(this, nView);
+        mSwipeLayout.setOnRefreshListener(this);
         return nView;
     }
 
@@ -121,6 +125,7 @@ public class SensorsFragment extends ListFragment {
                     @Override
                     public void run() {
                         mAdapter.notifyDataSetChanged();
+                        mSwipeLayout.setRefreshing(false);
                         //setItemListener();
                     }
                 });
@@ -150,5 +155,10 @@ public class SensorsFragment extends ListFragment {
         nBundle.putParcelableArrayList("rooms", mRoomList);
         nBundle.putParcelable("sensor", sensor);
         return nBundle;
+    }
+
+    @Override
+    public void onRefresh() {
+        getStatus();
     }
 }
