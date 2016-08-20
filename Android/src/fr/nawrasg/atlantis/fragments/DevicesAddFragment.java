@@ -105,7 +105,7 @@ public class DevicesAddFragment extends Fragment {
 	}
 
 	private void postItem(String data){
-		String nURL = App.getFullUrl(mContext) + App.DEVICES + "?api=" + App.getAPI(mContext) + "&" + data;
+		String nURL = App.getUri(mContext, App.DEVICES) + "&" + data;
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))

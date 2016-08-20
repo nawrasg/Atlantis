@@ -384,7 +384,7 @@ public class CoursesFragment extends ListFragment implements SwipeRefreshLayout.
 	}
 
 	private void deleteCourses(final Element element){
-		String nURL = App.getFullUrl(mContext) + App.COURSES + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.COURSES);
 		if(element != null){
 			nURL += "&id=" + element.getID();
 		}

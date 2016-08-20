@@ -68,7 +68,7 @@ public class ScenarioAdapter extends ArrayAdapter<Scenario> {
 				Scenario nScenario = (Scenario) nHolder.action.getTag();
 				try {
 					String nLabel = URLEncoder.encode(nScenario.getLabel(), "UTF-8");
-					String nURL = App.getFullUrl(mContext) + App.SCENARIOS + "?api=" + App.getAPI(mContext) + "&scenario=" + nLabel;
+					String nURL = App.getUri(mContext, App.SCENARIOS) + "&scenario=" + nLabel;
 					Request nRequest = new Request.Builder().url(nURL).build();
 					App.httpClient.newCall(nRequest).enqueue(new Callback() {
 						@Override

@@ -86,7 +86,7 @@ public class LightAdapter extends ArrayAdapter<Light> {
 	}
 
 	private void setPowerStatus(Light light, boolean status) {
-		String nURL = App.getFullUrl(mContext) + App.LIGHTS + "?api=" + App.getAPI(mContext) + "&on=" + ((Hue)light).getUID() + "&protocol=" + light.getProtocol() + "&value=" + status;
+		String nURL = App.getUri(mContext, App.LIGHTS) + "&on=" + ((Hue)light).getUID() + "&protocol=" + light.getProtocol() + "&value=" + status;
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
@@ -113,7 +113,7 @@ public class LightAdapter extends ArrayAdapter<Light> {
 	}
 
 	private void setLightIntensity(Light light, int value) {
-		String nURL = App.getFullUrl(mContext) + App.LIGHTS + "?api=" + App.getAPI(mContext) + "&bri=" + ((Hue)light).getUID() + "&protocol=" + light.getProtocol() + "&value=" + value;
+		String nURL = App.getUri(mContext, App.LIGHTS) + "&bri=" + ((Hue)light).getUID() + "&protocol=" + light.getProtocol() + "&value=" + value;
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
