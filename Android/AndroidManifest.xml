@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.nawrasg.atlantis"
-    android:versionCode="11"
+    android:versionCode="12"
     android:versionName="0.4">
 
     <uses-sdk
