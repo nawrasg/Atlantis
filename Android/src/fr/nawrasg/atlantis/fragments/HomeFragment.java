@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -37,6 +38,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.type.Alarm;
 
 public class HomeFragment extends Fragment implements OnTouchListener {
 	private Context mContext;
@@ -44,6 +46,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	private FloatingActionMenu mActionMenu;
 	private SubActionButton mDayButton, mNightButton, mAwayButton;
 	private Handler mHandler;
+	private Alarm mAlarm;
 	@Bind(R.id.imgPlanPlan)
 	ImageView imgPlan;
 	@Bind(R.id.txtHomeWeatherToday)
@@ -58,7 +61,13 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		View nView = inflater.inflate(R.layout.fragment_plan, container, false);
 		ButterKnife.bind(this, nView);
 		mContext = getActivity();
-		mHandler = new Handler();
+		mHandler = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				setModeLabel(msg.getData().getString("mode"));
+			}
+		};
+		mAlarm = new Alarm(mContext, mHandler);
 		return nView;
 	}
 
@@ -71,7 +80,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	}
 
 	private void get(){
-		String nURL = App.getFullUrl(mContext) + App.HOME + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.HOME);
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
@@ -135,7 +144,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		mDayButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setMode("day");
+				mAlarm.setMode(Alarm.MODE_DAY);
 				mActionMenu.close(true);
 			}
 		});
@@ -150,7 +159,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		mNightButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setMode("night");
+				mAlarm.setMode(Alarm.MODE_NIGHT);
 				mActionMenu.close(true);
 			}
 		});
@@ -165,7 +174,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 		mAwayButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setMode("away");
+				mAlarm.setMode(Alarm.MODE_AWAY);
 				mActionMenu.close(true);
 			}
 		});
@@ -202,41 +211,6 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 				break;
 		}
 		txtMode.setText(nModePrefix + " " + nModePost);
-	}
-
-	private void setMode(String mode) {
-		String nURL = App.getFullUrl(mContext) + App.HOME + "?api=" + App.getAPI(mContext) + "&mode=" + mode;
-		FormEncodingBuilder nBody = new FormEncodingBuilder();
-		Request request = new Request.Builder()
-				.url(nURL)
-				.put(nBody.build())
-				.build();
-
-		App.httpClient.newCall(request).enqueue(new Callback() {
-			@Override
-			public void onFailure(Request request, IOException e) {
-				//TODO
-			}
-
-			@Override
-			public void onResponse(final Response response) throws IOException {
-				if(response.code() == 202){
-					JSONObject nResponse = null;
-					try {
-						nResponse = new JSONObject(response.body().string());
-						final String nMode = nResponse.getString("mode");
-						mHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								setModeLabel(nMode);
-							}
-						});
-					} catch (JSONException e) {
-						//TODO
-					}
-				}
-			}
-		});
 	}
 
 	private void loadPlan() {
