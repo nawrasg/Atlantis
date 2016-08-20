@@ -31,7 +31,8 @@ import fr.nawrasg.atlantis.fragments.preferences.SecurityPreferenceFragment;
  */
 
 public class SettingsActivity extends AppCompatActivity {
-    Context mContext;
+    private Context mContext;
+    private boolean mLaunchSync;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.tabsSettingsTabs)
@@ -44,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         mContext = this;
+        mLaunchSync = false;
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,9 +66,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Account nAccount = new Account(getString(R.string.app_name), AtlantisContract.AUTHORITY);
-        ContentResolver.requestSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY);
+        if(mLaunchSync){
+            Account nAccount = new Account(getString(R.string.app_name), AtlantisContract.AUTHORITY);
+            ContentResolver.requestSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY);
+        }
         super.onDestroy();
+    }
+
+    public void launchSync(){
+        mLaunchSync = true;
     }
 
     private void setupViewPager() {

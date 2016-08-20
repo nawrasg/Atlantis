@@ -29,6 +29,7 @@ import java.io.IOException;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.SettingsActivity;
 import fr.nawrasg.atlantis.other.AtlantisContract;
 
 public class DiversPreferenceFragment extends PreferenceFragment implements OnPreferenceClickListener {
@@ -56,6 +57,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
 				long nPeriod = Integer.parseInt(App.getString(mContext, "sync_frequency")) * 3600L;
 				if(nPeriod > 0){
 					ContentResolver.addPeriodicSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY, nPeriod);
+					((SettingsActivity)getActivity()).launchSync();
 					return true;
 				}
 				return false;
