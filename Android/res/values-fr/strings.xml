@@ -303,4 +303,6 @@
     <string name="sync_unit">En heures</string>
     <string name="pref_gps_provider_title">Utiliser le service GPS</string>
     <string name="pref_gps_provider_summary">Par défaut, le réseau mobile est utilisé pour la localisation</string>
+    <string name="geo_enter_message">Bienvenue !</string>
+    <string name="geo_exit_message">A bientôt !</string>
 </resources>

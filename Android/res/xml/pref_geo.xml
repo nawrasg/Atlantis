@@ -19,7 +19,7 @@
             android:entries="@array/geo_ring_profil_entries"
             android:entryValues="@array/geo_ring_profil_values"
             android:icon="@drawable/ic_call_black_24dp"
-            android:key="geo_enter_ring"
+            android:key="geo_enter_profile"
             android:title="@string/xml_pref_geo_incoming_ring_profil_title"/>
     </PreferenceCategory>
 
@@ -42,7 +42,7 @@
             android:entries="@array/geo_ring_profil_entries"
             android:entryValues="@array/geo_ring_profil_values"
             android:icon="@drawable/ic_call_black_24dp"
-            android:key="geo_exit_ring"
+            android:key="geo_exit_profile"
             android:title="@string/xml_pref_geo_outgoing_ring_profil_title"/>
     </PreferenceCategory>
 </PreferenceScreen>

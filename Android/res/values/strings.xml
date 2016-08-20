@@ -307,4 +307,6 @@
     <string name="sync_unit">In hours</string>
     <string name="pref_gps_provider_title">Use GPS provider</string>
     <string name="pref_gps_provider_summary">By default, network provider is used for positioning</string>
+    <string name="geo_enter_message">Welcome home!</string>
+    <string name="geo_exit_message">See you soon!</string>
 </resources>
