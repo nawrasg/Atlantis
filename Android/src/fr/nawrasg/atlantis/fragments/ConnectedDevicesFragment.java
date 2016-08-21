@@ -67,6 +67,7 @@ public class ConnectedDevicesFragment extends ListFragment implements SwipeRefre
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         getItems();
+        ((MainActivity)getActivity()).setProgressBar(true);
         getStatus();
     }
 
@@ -106,18 +107,19 @@ public class ConnectedDevicesFragment extends ListFragment implements SwipeRefre
                         int nIndex = nList.indexOf(nDevice);
                         nList.get(nIndex).update(nDevice);
                     }
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mAdapter.notifyDataSetChanged();
-                            mSwipeLayout.setRefreshing(false);
-                        }
-                    });
                     JSONArray nUserArr = nJson.getJSONArray("users");
                     mUserList.add(new User());
                     for (int i = 0; i < nUserArr.length(); i++) {
                         mUserList.add(new User(nUserArr.getJSONObject(i)));
                     }
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            mSwipeLayout.setRefreshing(false);
+                            ((MainActivity)getActivity()).setProgressBar(false);
+                        }
+                    });
                 } catch (JSONException e) {
                     Log.e("Atlantis", e.toString());
                 }

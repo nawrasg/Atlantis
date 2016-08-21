@@ -60,6 +60,7 @@ public class CuisineFragment extends ListFragment implements SwipeRefreshLayout.
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		((MainActivity)getActivity()).setProgressBar(true);
 		getItems();
 	}
 
@@ -172,6 +173,7 @@ public class CuisineFragment extends ListFragment implements SwipeRefreshLayout.
 							public void run() {
 								setListAdapter(mAdapter);
 								mSwipeLayout.setRefreshing(false);
+								((MainActivity)getActivity()).setProgressBar(false);
 							}
 						});
 					}catch(JSONException e){

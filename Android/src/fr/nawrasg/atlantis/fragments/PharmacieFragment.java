@@ -60,6 +60,7 @@ public class PharmacieFragment extends ListFragment implements SwipeRefreshLayou
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		((MainActivity)getActivity()).setProgressBar(true);
 		getItems();
 	}
 
@@ -92,7 +93,7 @@ public class PharmacieFragment extends ListFragment implements SwipeRefreshLayou
 	}
 
 	public void getItems() {
-		String nURL = App.getFullUrl(mContext) + App.PHARMACIE + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.PHARMACIE);
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
@@ -117,6 +118,7 @@ public class PharmacieFragment extends ListFragment implements SwipeRefreshLayou
 							public void run() {
 								setListAdapter(mAdapter);
 								mSwipeLayout.setRefreshing(false);
+								((MainActivity)getActivity()).setProgressBar(false);
 							}
 						});
 					} catch (JSONException e) {

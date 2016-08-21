@@ -38,6 +38,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.type.Alarm;
 
 public class HomeFragment extends Fragment implements OnTouchListener {
@@ -75,6 +76,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		createFAB();
+		((MainActivity)getActivity()).setProgressBar(true);
 		get();
 		loadPlan();
 	}
@@ -105,6 +107,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 								setWeather(txtWeatherToday, nJsonW1);
 								setWeather(txtWeatherTomorrow, nJsonW2);
 								setModeLabel(nMode);
+								((MainActivity)getActivity()).setProgressBar(false);
 							}
 						});
 					} catch (JSONException e) {

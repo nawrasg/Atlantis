@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView mNavigation;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.mainProgressBar)
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         handleIntent(getIntent());
         if (App.getURL(mContext).equals("")) {
             startActivity(new Intent(this, SettingsActivity.class));
+        }
+    }
+
+    public void setProgressBar(boolean visible){
+        if(visible){
+            mProgressBar.setVisibility(View.VISIBLE);
+        }else{
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 

@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.EntretienAdapter;
 import fr.nawrasg.atlantis.type.Entretien;
 
@@ -81,11 +81,12 @@ public class EntretienFragment extends ListFragment implements SwipeRefreshLayou
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		((MainActivity)getActivity()).setProgressBar(true);
 		getItems();
 	}
 
 	public void getItems() {
-		String nURL = App.getFullUrl(mContext) + App.ENTRETIEN + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.ENTRETIEN);
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
@@ -111,6 +112,7 @@ public class EntretienFragment extends ListFragment implements SwipeRefreshLayou
 						public void run() {
 							setListAdapter(mAdapter);
 							mSwipeLayout.setRefreshing(false);
+							((MainActivity)getActivity()).setProgressBar(false);
 						}
 					});
 				} catch (JSONException e) {
@@ -146,7 +148,7 @@ public class EntretienFragment extends ListFragment implements SwipeRefreshLayou
 	}
 
 	private void modifyItem(final Entretien entretien, final char mode){
-		String nURL = App.getFullUrl(mContext) + App.ENTRETIEN + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.ENTRETIEN);
 		switch(mode){
 			case '+':
 				nURL += "&id=" + entretien.getID() + "&qte=" + (entretien.getQuantity() + 1);
@@ -186,7 +188,7 @@ public class EntretienFragment extends ListFragment implements SwipeRefreshLayou
 	}
 
 	private void deleteItem(final Entretien entretien){
-		String nURL = App.getFullUrl(mContext) + App.ENTRETIEN + "?api=" + App.getAPI(mContext) + "&id=" + entretien.getID();
+		String nURL = App.getUri(mContext, App.ENTRETIEN) + "&id=" + entretien.getID();
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.delete()

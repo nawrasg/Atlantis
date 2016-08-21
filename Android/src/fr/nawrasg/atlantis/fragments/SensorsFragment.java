@@ -31,6 +31,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.SensorAdapter;
 import fr.nawrasg.atlantis.fragments.dialogs.SensorDialogFragment;
 import fr.nawrasg.atlantis.other.AtlantisContract;
@@ -61,6 +62,7 @@ public class SensorsFragment extends ListFragment implements SwipeRefreshLayout.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         getItems();
+        ((MainActivity)getActivity()).setProgressBar(true);
         getStatus();
     }
 
@@ -126,6 +128,7 @@ public class SensorsFragment extends ListFragment implements SwipeRefreshLayout.
                     public void run() {
                         mAdapter.notifyDataSetChanged();
                         mSwipeLayout.setRefreshing(false);
+                        ((MainActivity)getActivity()).setProgressBar(false);
                         //setItemListener();
                     }
                 });

@@ -48,6 +48,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.CoursesAdapter;
 import fr.nawrasg.atlantis.type.Element;
 
@@ -75,6 +76,7 @@ public class CoursesFragment extends ListFragment implements SwipeRefreshLayout.
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		((MainActivity)getActivity()).setProgressBar(true);
 		getItems();
 	}
 
@@ -265,6 +267,7 @@ public class CoursesFragment extends ListFragment implements SwipeRefreshLayout.
 						public void run() {
 							setListAdapter(mAdapter);
 							mSwipeLayout.setRefreshing(false);
+							((MainActivity)getActivity()).setProgressBar(false);
 						}
 					});
 				} catch (JSONException e) {

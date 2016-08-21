@@ -32,6 +32,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.LightAdapter;
 import fr.nawrasg.atlantis.fragments.dialogs.LightDialogFragment;
 import fr.nawrasg.atlantis.other.AtlantisContract;
@@ -86,11 +87,12 @@ public class LightFragment extends ListFragment implements SwipeRefreshLayout.On
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setItemListener();
+		((MainActivity)getActivity()).setProgressBar(true);
 		getStatus();
 	}
 
 	private void getStatus() {
-		String nURL = App.getFullUrl(mContext) + App.LIGHTS + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.LIGHTS);
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
@@ -116,6 +118,7 @@ public class LightFragment extends ListFragment implements SwipeRefreshLayout.On
 						public void run() {
 							mAdapter.notifyDataSetChanged();
 							mSwipeLayout.setRefreshing(false);
+							((MainActivity)getActivity()).setProgressBar(false);
 						}
 					});
 				} catch (JSONException e) {
@@ -126,7 +129,7 @@ public class LightFragment extends ListFragment implements SwipeRefreshLayout.On
 	}
 
 	private void toggleLight(Light light) {
-		String nURL = App.getFullUrl(mContext) + App.LIGHTS + "?api=" + App.getAPI(mContext) + "&toggle=" + ((Hue)light).getUID();
+		String nURL = App.getUri(mContext, App.LIGHTS) + "&toggle=" + ((Hue)light).getUID();
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
