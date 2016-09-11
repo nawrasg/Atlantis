@@ -1,3 +1,54 @@
-<style>img {
+<style>
+	img {
 		margin-right:10px
-	}</style> <md-content> <div layout="row" layout-align="start center" layout-padding> <md-input-container flex> <label>{{ 'SEARCH' | translate }}</label> <input ng-model="item" ng-enter="" flex ng-change="filter(item)"> </md-input-container> <md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="add()"> <md-icon md-svg-src="images/svg/ic_add_white_36px.svg"></md-icon> </md-button> </div> </md-content> <div> <md-card ng-repeat="plant in plants track by plant.id" style="float:left"> <img alt="plant" ng-src="{{getPlantImage(plant)}}"> <md-card-content layout="row"> <div layout-align="center start" layout="column"> <h3 ng-click="editPlant(plant)">{{plant.title}} {{getRoomLabel(plant)}}</h3> <div layout="row" layout-align="start center"> <img src="images/ng_battery.png"> {{ 'VIEW_PLANTS_BATTERY' | translate }} : {{plant.battery}}% </div> <div layout="row" layout-align="start center"> <img src="images/ng_humidity.png"> {{ 'VIEW_PLANTS_HUMIDITY' | translate }} : {{plant.moisture}} </div> <div layout="row" layout-align="start center"> <img src="images/ng_lightning.png"> {{ 'VIEW_PLANTS_CONDUCTIVITY' | translate }} : {{plant.conductivity}} </div> <div layout="row" layout-align="start center"> <img src="images/ng_sun.png"> {{ 'VIEW_PLANTS_LUMINOSITY' | translate }} : {{plant.light}} </div> <div layout="row" layout-align="start center"> <img src="images/ng_thermostat.png"> {{ 'VIEW_PLANTS_TEMPERATURE_SOIL' | translate }} : {{plant.stemperature}} &deg;C </div> <div layout="row" layout-align="start center"> <img src="images/ng_thermostat.png"> {{ 'VIEW_PLANTS_TEMPERATURE_AIR' | translate }} : {{plant.atemperature}} &deg;C </div> <div layout="row" layout-align="start center"> <img src="images/ng_time.png"> {{ 'VIEW_PLANTS_LAST_UPDATE' | translate }} : {{plant.date}} {{ 'AT' | translate }} {{plant.time}} </div> </div> </md-card-content> </md-card> </div>
+	}
+</style>
+<md-content>
+	<div layout=row layout-align="start center" layout-padding>
+		<md-input-container flex>
+			<label>{{ 'SEARCH' | translate }}</label>
+			<input ng-model=item ng-enter="" flex ng-change="filter(item)">
+		</md-input-container>
+		<md-button class="md-fab md-primary md-mini" aria-label="FAB" ng-click="add()">
+		  	<md-icon md-svg-src="images/svg/ic_add_white_36px.svg"></md-icon>
+		</md-button>
+	</div>
+</md-content>
+<div>
+	<md-card ng-repeat="plant in plants track by plant.id" style="float:left">
+		<img alt=plant ng-src="{{getPlantImage(plant)}}">
+		<md-card-content layout=row>
+			<div layout-align="center start" layout=column>
+				<h3 ng-click="editPlant(plant)">{{plant.title}} {{getRoomLabel(plant)}}</h3>
+				<div layout=row layout-align="start center">
+					<img src="images/ng_battery.png">
+					{{ 'VIEW_PLANTS_BATTERY' | translate }} : {{plant.battery}}%
+				</div>
+				<div layout=row layout-align="start center">
+					<img src="images/ng_humidity.png">
+					{{ 'VIEW_PLANTS_HUMIDITY' | translate }} : {{plant.moisture}}
+				</div>
+				<div layout=row layout-align="start center">
+					<img src="images/ng_lightning.png">
+					{{ 'VIEW_PLANTS_CONDUCTIVITY' | translate }} : {{plant.conductivity}}
+				</div>
+				<div layout=row layout-align="start center">
+					<img src="images/ng_sun.png">
+					{{ 'VIEW_PLANTS_LUMINOSITY' | translate }} : {{plant.light}}
+				</div>
+				<div layout=row layout-align="start center">
+					<img src="images/ng_thermostat.png">
+					{{ 'VIEW_PLANTS_TEMPERATURE_SOIL' | translate }} : {{plant.stemperature}} &deg;C
+				</div>
+				<div layout=row layout-align="start center">
+					<img src="images/ng_thermostat.png">
+					{{ 'VIEW_PLANTS_TEMPERATURE_AIR' | translate }} : {{plant.atemperature}} &deg;C
+				</div>
+				<div layout=row layout-align="start center">
+					<img src="images/ng_time.png">
+					{{ 'VIEW_PLANTS_LAST_UPDATE' | translate }} : {{plant.date}} {{ 'AT' | translate }} {{plant.time}}
+				</div>
+			</div>
+		</md-card-content>
+	</md-card>
+</div>

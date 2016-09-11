@@ -1,1 +1,49 @@
-<md-dialog layout-padding> <md-subheader> L'appareil {{name}} </md-subheader> <md-content layout="column"> <div layout="row" layout-align="end start"> <md-icon ng-if="gcm != null" md-svg-src="images/svg/ic_cloud_off_black_24px.svg" ng-click="unsuscribe()" layout-margin></md-icon> <md-icon ng-if="type.id === 'smartphone'" md-svg-src="images/svg/ic_notifications_active_black_24px.svg" ng-click="ring()" layout-margin></md-icon> </div> <md-input-container flex> <label>Nom de l'appareil</label> <input ng-model="name" class="dialog-close"> </md-input-container> <div layout="row"> <md-input-container flex> <label>Adresse IP</label> <input ng-model="ip" class="dialog-close"> </md-input-container> <md-input-container flex> <label>Adresse MAC</label> <input ng-model="mac" class="dialog-close"> </md-input-container> </div> <div layout="row"> <md-input-container flex> <label>Type de l'appareil</label> <md-select ng-model="type.id" placeholder="Type de l'appareil"> <md-option ng-value="type.id" ng-repeat="type in types">{{type.label}}</md-option> </md-select> </md-input-container> <md-input-container flex> <label>Type de connexion</label> <md-select ng-model="connection.id" placeholder="Type de connexion"> <md-option ng-value="connection.id" ng-repeat="connection in connections">{{connection.label}}</md-option> </md-select> </md-input-container> </div> <md-input-container> <label>Utilisateur</label> <md-select ng-model="user.id" placeholder="Utilisateur"> <md-option ng-value="user.id" ng-repeat="user in users">{{user.nom}}</md-option> </md-select> </md-input-container> </md-content> <div class="md-actions"> <md-button ng-click="cancel()">Annuler</md-button> <md-button class="md-primary" ng-click="submit()">{{btnSubmit}}</md-button> </div> </md-dialog>
+<md-dialog layout-padding>
+	<md-subheader>
+		L'appareil {{name}}
+	</md-subheader>
+	<md-content layout=column>
+		<div layout=row layout-align="end start">
+			<md-icon ng-if="gcm != null" md-svg-src="images/svg/ic_cloud_off_black_24px.svg" ng-click="unsuscribe()" layout-margin></md-icon>
+			<md-icon ng-if="type.id === 'smartphone'" md-svg-src="images/svg/ic_notifications_active_black_24px.svg" ng-click="ring()" layout-margin></md-icon>
+		</div>
+		<md-input-container flex>
+			<label>Nom de l'appareil</label>
+			<input ng-model=name class=dialog-close>
+		</md-input-container>
+		<div layout=row>
+			<md-input-container flex>
+				<label>Adresse IP</label>
+				<input ng-model=ip class=dialog-close>
+			</md-input-container>
+			<md-input-container flex>
+				<label>Adresse MAC</label>
+				<input ng-model=mac class=dialog-close>
+			</md-input-container>
+		</div>
+		<div layout=row>
+			<md-input-container flex>
+				<label>Type de l'appareil</label>
+				<md-select ng-model=type.id placeholder="Type de l'appareil">
+					<md-option ng-value=type.id ng-repeat="type in types">{{type.label}}</md-option>
+				</md-select>
+			</md-input-container>
+			<md-input-container flex>
+				<label>Type de connexion</label>
+				<md-select ng-model=connection.id placeholder="Type de connexion">
+					<md-option ng-value=connection.id ng-repeat="connection in connections">{{connection.label}}</md-option>
+				</md-select>
+			</md-input-container>
+		</div>
+		<md-input-container>
+			<label>Utilisateur</label>
+			<md-select ng-model=user.id placeholder=Utilisateur>
+				<md-option ng-value=user.id ng-repeat="user in users">{{user.nom}}</md-option>
+			</md-select>
+		</md-input-container>
+	</md-content>
+	<div class=md-actions>
+		<md-button ng-click=cancel()>Annuler</md-button>
+		<md-button class='md-primary' ng-click=submit()>{{btnSubmit}}</md-button>
+	</div>
+</md-dialog>

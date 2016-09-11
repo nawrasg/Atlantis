@@ -1,1 +1,20 @@
-<md-dialog layout-padding> <md-content layout="column"> <md-input-container> <label>M&eacute;dicament</label> <input ng-model="name" class="dialog-close"> </md-input-container> <md-input-container> <label>Quantit&eacute;</label> <input ng-model="quantity" class="dialog-close" type="number"> </md-input-container> <md-input-container> <label>Date</label> <input ng-model="date" type="date" class="dialog-close"> </md-input-container> </md-content> <div class="md-actions"> <md-button ng-click="cancel()">Annuler</md-button> <md-button class="md-primary" ng-click="submit()">Ajouter</md-button> </div> </md-dialog>
+<md-dialog layout-padding>
+	<md-content layout=column>
+		<md-input-container>
+			<label>M&eacute;dicament</label>
+			<input ng-model=name class=dialog-close>
+		</md-input-container>
+		<md-input-container>
+			<label>Quantit&eacute;</label>
+			<input ng-model=quantity class=dialog-close type=number>
+		</md-input-container>
+		<md-input-container>
+			<label>Date</label>
+			<input ng-model=date type=date class=dialog-close>
+		</md-input-container>
+	</md-content>
+	<div class=md-actions>
+		<md-button ng-click=cancel()>Annuler</md-button>
+		<md-button class=md-primary ng-click=submit()>Ajouter</md-button>
+	</div>
+</md-dialog>

@@ -1,3 +1,43 @@
-<style>.container {
+<style>
+.container {
     height:90%;
-}</style> <div class="alert alert-warning" role="alert" ng-if="scenario_description != null"> {{scenario_description}} </div> <div class="panel panel-info"> <div class="panel-heading">{{ 'VIEW_SCENARIO_CONTROLS' | translate }}</div> <div class="panel-body" layout="column"> <md-select ng-model="scenario" aria-label="scenarios" placeholder="{{ 'VIEW_SCENARIO_SCENARIO' | translate }}" md-on-close="loadScenario(scenario)"> <md-option ng-value="scenario" ng-repeat="scenario in scenarios">{{scenario.file}}</md-option> </md-select> <md-input-container> <label>{{ 'VIEW_SCENARIO_SCENARIO_NAME' | translate }}</label> <input ng-model="newScenario" ng-change="updateTitle()"> </md-input-container> <div layout="row"> <md-button class="md-raised" ng-click="new()" flex>{{ 'VIEW_SCENARIO_NEW' | translate }}</md-button> <md-button class="md-raised md-primary" ng-click="save()" flex>{{ 'VIEW_SCENARIO_SAVE' | translate }}</md-button> <md-button class="md-raised md-warn" ng-click="delete()" flex>{{ 'VIEW_SCENARIO_DELETE' | translate }}</md-button> </div> </div> </div> <div layout="row" layout-align="center center" ng-if="tools"> <md-button class="md-raised" ng-click="loadToolbox('atlantis')">{{ 'VIEW_SCENARIO_SENSORS' | translate }}</md-button> <md-button class="md-raised" ng-click="loadToolbox('logic')">{{ 'VIEW_SCENARIO_LOGIC' | translate }}</md-button> <md-button class="md-raised" ng-click="loadToolbox('control')">{{ 'VIEW_SCENARIO_CONTROL' | translate }}</md-button> </div> <div id="blocklyArea" class="container" style=""></div> <xml id="toolbox" style="display: none"> <block type="at_light"></block> <block type="at_light_status"></block> <block type="at_switch"></block> <block type="at_music"></block> <block type="at_gcm"></block> <block type="at_mail"></block> <block type="at_alarm_status"></block> <block type="at_alarm"></block> <block type="at_time"></block> </xml> <div id="blocklyDiv" style="position: absolute"></div>
+}
+</style>
+<div class="alert alert-warning" role="alert" ng-if="scenario_description != null">
+	{{scenario_description}}
+</div>
+<div class="panel panel-info">
+	<div class=panel-heading>{{ 'VIEW_SCENARIO_CONTROLS' | translate }}</div>
+	<div class=panel-body layout=column>
+		<md-select ng-model=scenario aria-label="scenarios" placeholder="{{ 'VIEW_SCENARIO_SCENARIO' | translate }}" md-on-close="loadScenario(scenario)">
+			<md-option ng-value=scenario ng-repeat="scenario in scenarios">{{scenario.file}}</md-option>
+		</md-select>
+		<md-input-container>
+			<label>{{ 'VIEW_SCENARIO_SCENARIO_NAME' | translate }}</label>
+			<input ng-model=newScenario ng-change="updateTitle()">
+		</md-input-container>
+		<div layout=row>
+			<md-button class="md-raised" ng-click="new()" flex>{{ 'VIEW_SCENARIO_NEW' | translate }}</md-button>		
+			<md-button class="md-raised md-primary" ng-click="save()" flex>{{ 'VIEW_SCENARIO_SAVE' | translate }}</md-button>		
+			<md-button class="md-raised md-warn" ng-click="delete()" flex>{{ 'VIEW_SCENARIO_DELETE' | translate }}</md-button>		
+		</div>
+	</div>
+</div>
+<div layout=row layout-align="center center" ng-if="tools">
+	<md-button class="md-raised" ng-click="loadToolbox('atlantis')">{{ 'VIEW_SCENARIO_SENSORS' | translate }}</md-button>
+	<md-button class="md-raised" ng-click="loadToolbox('logic')">{{ 'VIEW_SCENARIO_LOGIC' | translate }}</md-button>
+	<md-button class="md-raised" ng-click="loadToolbox('control')">{{ 'VIEW_SCENARIO_CONTROL' | translate }}</md-button>
+</div>
+<div id="blocklyArea" class="container" style=""></div>
+<xml id="toolbox" style="display: none">
+	<block type="at_light"></block>
+	<block type="at_light_status"></block>
+	<block type="at_switch"></block>
+	<block type="at_music"></block>
+	<block type="at_gcm"></block>
+	<block type="at_mail"></block>
+	<block type="at_alarm_status"></block>
+	<block type="at_alarm"></block>
+	<block type="at_time"></block>
+</xml>
+<div id="blocklyDiv" style="position: absolute"></div>

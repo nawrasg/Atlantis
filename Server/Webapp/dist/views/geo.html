@@ -1,1 +1,20 @@
-<div layout="row" layout-align="center center" layout-margin> <md-button class="md-raised" ng-click="getLocation()"> <md-icon md-svg-src="images/svg/ic_refresh_black_24px.svg"></md-icon> </md-button> <md-button class="md-raised" ng-click="request('p')"> <md-icon md-svg-src="images/svg/ic_center_focus_strong_black_24px.svg"></md-icon> </md-button> <md-button class="md-raised" ng-click="request('s')" ng-if="admin"> <md-icon md-svg-src="images/svg/ic_center_focus_weak_black_24px.svg"></md-icon> </md-button> </div> <map center="{{home.lat}}, {{home.long}}" style="height:500px" zoom="14"> <marker position="{{home.lat}}, {{home.long}}" title="Atlantis" animation="Animation.BOUNCE"></marker> <marker ng-repeat="device in devices" position="{{device.lat}}, {{device.long}}" title="{{device.mac}} &agrave; {{device.timestamp}}"></marker> </map> <div> </div>
+<div layout="row" layout-align="center center" layout-margin>
+	<md-button class="md-raised" ng-click="getLocation()">
+		<md-icon md-svg-src="images/svg/ic_refresh_black_24px.svg"></md-icon>
+	</md-button>
+	<md-button class="md-raised" ng-click="request('p')">
+		<md-icon md-svg-src="images/svg/ic_center_focus_strong_black_24px.svg"></md-icon>
+	</md-button>
+	<md-button class="md-raised" ng-click="request('s')" ng-if="admin">
+		<md-icon md-svg-src="images/svg/ic_center_focus_weak_black_24px.svg"></md-icon>
+	</md-button>
+</div>
+
+<map  center="{{home.lat}}, {{home.long}}" style="height:500px" zoom="14">
+	<marker position="{{home.lat}}, {{home.long}}" title="Atlantis" animation="Animation.BOUNCE"></marker>
+	<marker ng-repeat="device in devices" position="{{device.lat}}, {{device.long}}" title="{{device.mac}} &agrave; {{device.timestamp}}"></marker>
+</map>
+
+<div>
+
+</div>
