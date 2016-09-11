@@ -7,6 +7,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
@@ -74,7 +75,7 @@ public class App extends Application{
 	public static String getAPI(Context c){
 		SharedPreferences nPrefs = PreferenceManager.getDefaultSharedPreferences(c);
 		String nAPI = nPrefs.getString("api", "");
-		if(!nAPI.equals("")){
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M || !nAPI.equals("")){
 			return nAPI;
 		}
 		WifiManager nWM = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
