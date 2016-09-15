@@ -12,6 +12,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -21,10 +22,10 @@ import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.adapters.TabsAdapter;
-import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.fragments.preferences.ConnectionPreferenceFragment;
 import fr.nawrasg.atlantis.fragments.preferences.DiversPreferenceFragment;
 import fr.nawrasg.atlantis.fragments.preferences.SecurityPreferenceFragment;
+import fr.nawrasg.atlantis.other.AtlantisContract;
 
 /**
  * Created by Nawras on 14/07/2016.
@@ -66,14 +67,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if(mLaunchSync){
+        if (mLaunchSync) {
             Account nAccount = new Account(getString(R.string.app_name), AtlantisContract.AUTHORITY);
             ContentResolver.requestSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY);
         }
         super.onDestroy();
     }
 
-    public void launchSync(){
+    public void launchSync() {
         mLaunchSync = true;
     }
 
@@ -89,7 +90,6 @@ public class SettingsActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.fragment_dialog_pin, null);
         final EditText txtCode = (EditText) view.findViewById(R.id.txtPin);
         final TextInputLayout txtCodeLayout = (TextInputLayout) view.findViewById(R.id.txtPinLayout);
-        
         AlertDialog.Builder inputBoxBuilder = new AlertDialog.Builder(this);
         inputBoxBuilder.setView(view);
         inputBoxBuilder.setCancelable(false);
@@ -118,6 +118,25 @@ public class SettingsActivity extends AppCompatActivity {
                     txtCode.setText("");
                     txtCodeLayout.setError(getString(R.string.fragment_settings_pin_password_incorrect));
                 }
+            }
+        });
+        txtCode.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            if (txtCode.getText().toString().equals(App.getString(mContext, "pinCode"))) {
+                                inputBox.dismiss();
+                            } else {
+                                txtCode.setText("");
+                                txtCodeLayout.setError(getString(R.string.fragment_settings_pin_password_incorrect));
+                            }
+                            return true;
+                    }
+                }
+                return false;
             }
         });
     }
