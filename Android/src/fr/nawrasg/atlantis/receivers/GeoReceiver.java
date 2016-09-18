@@ -35,7 +35,7 @@ public class GeoReceiver extends WakefulBroadcastReceiver {
         nN = new Notification.Builder(context)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(result)
-                .setSmallIcon(R.drawable.ng_home_notifications)
+                .setSmallIcon(R.mipmap.ng_home_notifications)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .build();
