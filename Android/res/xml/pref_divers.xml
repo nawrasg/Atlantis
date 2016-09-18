@@ -18,6 +18,10 @@
             android:key="import"
             android:summary="@string/xml_pref_divers_settings_import_summary"
             android:title="@string/xml_pref_divers_settings_import_title"/>
+        <SwitchPreference
+            android:icon="@drawable/ic_brightness_3_black_24dp"
+            android:key="doze"
+            android:title="@string/pref_ignore_doze_title"/>
         <Preference
             android:icon="@drawable/ic_send_black_24dp"
             android:key="gcm"

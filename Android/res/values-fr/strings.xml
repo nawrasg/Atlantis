@@ -305,4 +305,7 @@
     <string name="pref_gps_provider_summary">Par défaut, le réseau mobile est utilisé pour la localisation</string>
     <string name="geo_enter_message">Bienvenue !</string>
     <string name="geo_exit_message">A bientôt !</string>
+    <string name="pref_ignore_doze_title">Ignorer les optimisations d\'énergie</string>
+    <string name="xml_pref_security_marshmallow_title">Permissions</string>
+    <string name="xml_pref_security_marshmallow_gps_title">Permission de Localisation</string>
 </resources>
