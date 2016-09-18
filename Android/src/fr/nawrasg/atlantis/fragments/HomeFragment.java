@@ -101,15 +101,17 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 						final JSONObject nJsonW1 = nArr.getJSONObject(0);
 						final JSONObject nJsonW2 = nArr.getJSONObject(1);
 						final String nMode = nJson.getString("mode");
-						mHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								setWeather(txtWeatherToday, nJsonW1);
-								setWeather(txtWeatherTomorrow, nJsonW2);
-								setModeLabel(nMode);
-								((MainActivity)getActivity()).setProgressBar(false);
-							}
-						});
+						if(isAdded()){
+							mHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									setWeather(txtWeatherToday, nJsonW1);
+									setWeather(txtWeatherTomorrow, nJsonW2);
+									setModeLabel(nMode);
+									((MainActivity)getActivity()).setProgressBar(false);
+								}
+							});
+						}
 					} catch (JSONException e) {
 						//TODO
 					}
