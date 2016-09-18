@@ -21,6 +21,7 @@ import fr.nawrasg.atlantis.other.CheckConnection;
 
 public class App extends Application{
 	public static final int CODE_PLAN = 5;
+	public static final int PERMISSION_LOCATION = 1;
 	public static final String CALL_NOTIFIER = "backend/at_call_notifier.php";
 	public static final String CAMERAS = "backend/at_cameras.php";
 	public static final String COURSES = "backend/at_courses.php";

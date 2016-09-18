@@ -28,5 +28,13 @@
             android:title="@string/xml_pref_security_ssl_title"/>
 
     </PreferenceCategory>
+    <PreferenceCategory
+        android:key="MarshmallowPermissions"
+        android:title="@string/xml_pref_security_marshmallow_title">
+        <SwitchPreference
+            android:icon="@drawable/ic_gps_fixed_black_24dp"
+            android:key="PermissionLocation"
+            android:title="@string/xml_pref_security_marshmallow_gps_title"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

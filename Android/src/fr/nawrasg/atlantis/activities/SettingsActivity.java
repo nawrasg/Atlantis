@@ -2,10 +2,13 @@ package fr.nawrasg.atlantis.activities;
 
 import android.accounts.Account;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
@@ -72,6 +75,22 @@ public class SettingsActivity extends AppCompatActivity {
             ContentResolver.requestSync(nAccount, AtlantisContract.AUTHORITY, Bundle.EMPTY);
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Fragment nFragment = getFragmentManager().findFragmentByTag("android:switcher:" + R.id.vpSettingsViewPager + ":" + mViewPager.getCurrentItem());
+        switch (requestCode) {
+            case App.PERMISSION_LOCATION:
+                boolean nResult = false;
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    nResult = true;
+                }
+                if (nFragment instanceof SecurityPreferenceFragment) {
+                    ((SecurityPreferenceFragment) nFragment).setPermissionResult(App.PERMISSION_LOCATION, nResult);
+                }
+                break;
+        }
     }
 
     public void launchSync() {
