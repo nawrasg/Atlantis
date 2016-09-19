@@ -312,4 +312,6 @@
     <string name="pref_ignore_doze_title">Ignore energy optimizations</string>
     <string name="xml_pref_security_marshmallow_title">Permissions</string>
     <string name="xml_pref_security_marshmallow_gps_title">Location Permission</string>
+    <string name="ok">OK</string>
+    <string name="fragment_gps_permission_warning">This function requires the location permission. Please enable it from Settings -> Security.</string>
 </resources>

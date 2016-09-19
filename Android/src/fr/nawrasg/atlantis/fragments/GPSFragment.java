@@ -1,13 +1,19 @@
 package fr.nawrasg.atlantis.fragments;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +33,7 @@ import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.fragments.preferences.GeoPreferenceFragment;
 
 public class GPSFragment extends Fragment {
-    private Context nContext;
+    private Context mContext;
     @Bind(R.id.txtGPScoord)
     EditText txtCoord;
     @Bind(R.id.txtGPSradius)
@@ -42,13 +48,13 @@ public class GPSFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        nContext = getActivity();
+        mContext = getActivity();
         View nView = inflater.inflate(R.layout.fragment_gps, container, false);
         ButterKnife.bind(this, nView);
-        mLocation = new fr.nawrasg.atlantis.type.Location(nContext);
-        nLM = (LocationManager) nContext.getSystemService(Context.LOCATION_SERVICE);
+        mLocation = new fr.nawrasg.atlantis.type.Location(mContext);
+        nLM = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         Intent nIntent = new Intent(ATLANTIS_GEO_ALERT);
-        boolean nActivate = (PendingIntent.getBroadcast(nContext, 0, nIntent, PendingIntent.FLAG_NO_CREATE) != null);
+        boolean nActivate = (PendingIntent.getBroadcast(mContext, 0, nIntent, PendingIntent.FLAG_NO_CREATE) != null);
         if (nActivate)
             cbGeo.setChecked(true);
         cbGeo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -62,7 +68,28 @@ public class GPSFragment extends Fragment {
         if (getActivity().findViewById(R.id.main_fragment2) == null) {
             setHasOptionsMenu(true);
         }
+        verifyLocationPermission();
         return nView;
+    }
+
+    private void verifyLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int nLocationPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+            if (nLocationPermission == PackageManager.PERMISSION_DENIED) {
+                AlertDialog nDialog = new AlertDialog.Builder(mContext).create();
+                nDialog.setTitle(mContext.getString(R.string.app_name));
+                nDialog.setMessage(mContext.getString(R.string.fragment_gps_permission_warning));
+                nDialog.setIcon(R.drawable.home);
+                nDialog.setCancelable(false);
+                nDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ((MainActivity) getActivity()).loadFragment(new HomeFragment(), true);
+                    }
+                });
+                nDialog.show();
+            }
+        }
     }
 
     @OnClick(R.id.btnGPSClear)
@@ -111,6 +138,7 @@ public class GPSFragment extends Fragment {
             txtRadius.setText(nRadius + "");
     }
 
+
     @OnClick(R.id.btnGPSPosition)
     public void getCoord() {
         nLM.requestSingleUpdate(mLocation.getProvider(), new LocationListener() {
@@ -144,7 +172,7 @@ public class GPSFragment extends Fragment {
         float nRadius = mLocation.getHomeRadius();
         // check if zero or not
         Intent nIntent = new Intent(ATLANTIS_GEO_ALERT);
-        PendingIntent nPI = PendingIntent.getBroadcast(nContext, 0, nIntent, 0);
+        PendingIntent nPI = PendingIntent.getBroadcast(mContext, 0, nIntent, 0);
         if (x) {
             nLM.addProximityAlert(nLat, nLong, nRadius, -1, nPI);
         } else {

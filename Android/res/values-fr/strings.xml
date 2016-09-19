@@ -308,4 +308,6 @@
     <string name="pref_ignore_doze_title">Ignorer les optimisations d\'énergie</string>
     <string name="xml_pref_security_marshmallow_title">Permissions</string>
     <string name="xml_pref_security_marshmallow_gps_title">Permission de Localisation</string>
+    <string name="ok">OK</string>
+    <string name="fragment_gps_permission_warning">Cette fonctionnalité requiert l\'autorisation de localisation. Veuillez l\'activer depuis Paramètres -> Sécurité.</string>
 </resources>
