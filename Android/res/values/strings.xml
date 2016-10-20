@@ -314,4 +314,6 @@
     <string name="xml_pref_security_marshmallow_gps_title">Location Permission</string>
     <string name="ok">OK</string>
     <string name="fragment_gps_permission_warning">This function requires the location permission. Please enable it from Settings -> Security.</string>
+    <string name="first_run_description">Welcome to Atlantis! You need to complete the following steps before to start enjoying your new home automation system.</string>
+    <string name="intro_validate_error">Please fill the server address and the connection key!</string>
 </resources>

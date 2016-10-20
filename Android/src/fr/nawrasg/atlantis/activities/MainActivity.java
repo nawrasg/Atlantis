@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (App.httpClient == null) {
             App.httpClient = new OkHttpClient();
         }
-        if(!App.getPrefBoolean(mContext, "first_launch")){
+        if (!App.getPrefBoolean(mContext, "first_launch")) {
             createSyncAccount();
-            App.setPrefBoolean(mContext, "first_launch", false);
+            startActivity(new Intent(this, IntroActivity.class));
         }
         mNavigation.setItemIconTintList(null);
         mNavigation.setNavigationItemSelectedListener(this);
@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void setProgressBar(boolean visible){
-        if(visible){
+    public void setProgressBar(boolean visible) {
+        if (visible) {
             mProgressBar.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mProgressBar.setVisibility(View.GONE);
         }
     }
