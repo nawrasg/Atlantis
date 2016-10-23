@@ -313,4 +313,8 @@
     <string name="first_run_description">Bienvenue à Atlantis ! Encore quelques étapes à compléter avant de pouvoir profiter de votre nouveau système domotique.</string>
     <string name="intro_validate_error">Merci de remplir l\'adresse du serveur et la clé de connexion !</string>
     <string name="widget_alarm_label">Atlantis Alarm</string>
+    <string name="xml_pref_divers_log_title">Journal</string>
+    <string name="xml_pref_divers_log_section">Journalisation</string>
+    <string name="xml_pref_divers_log_activate_title">Activer la journalisation</string>
+    <string name="xml_pref_divers_log_level_title">Niveau de journalisation</string>
 </resources>

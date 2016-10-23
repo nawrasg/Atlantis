@@ -33,12 +33,13 @@ import java.io.IOException;
 
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.activities.LogActivity;
 import fr.nawrasg.atlantis.activities.SettingsActivity;
 import fr.nawrasg.atlantis.other.AtlantisContract;
 
 public class DiversPreferenceFragment extends PreferenceFragment implements OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
     private Context mContext;
-    private Preference mImportPreference, mGcmPreference;
+    private Preference mImportPreference, mGcmPreference, mLogPreference;
     private SwitchPreference mDozePreference;
     private EditTextPreference mSyncFrequencyPreference;
     private GoogleCloudMessaging mGCM;
@@ -80,8 +81,14 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
         }
 
         mDozePreference = (SwitchPreference) findPreference("doze");
-
-
+        mLogPreference = findPreference("log");
+        mLogPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(mContext, LogActivity.class));
+                return true;
+            }
+        });
     }
 
     @Override

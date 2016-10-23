@@ -2,10 +2,15 @@ package fr.nawrasg.atlantis.type;
 
 import android.content.Context;
 
+import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+import fr.nawrasg.atlantis.App;
+
+import static android.content.Context.MODE_APPEND;
 
 /**
  * Created by Nawras on 17/08/2016.
@@ -14,27 +19,32 @@ import java.io.IOException;
 public class Log {
     private static final String LOG_FILENAME = "log.at";
     private Context mContext;
-    private FileOutputStream nFileOutputStream;
-    private FileInputStream nFileInputStream;
 
-    public Log(Context context){
+    public Log(Context context) {
         mContext = context;
     }
 
     public void log(String value) throws IOException {
-        nFileOutputStream = mContext.openFileOutput(LOG_FILENAME, Context.MODE_APPEND);
-        nFileOutputStream.write(value.getBytes());
-        nFileOutputStream.close();
+        if (!App.getPrefBoolean(mContext, "log")) {
+            return;
+        }
+        FileOutputStream nStream = mContext.openFileOutput(LOG_FILENAME, MODE_APPEND);
+        OutputStreamWriter nWriter = new OutputStreamWriter(nStream);
+        nWriter.write(value + "\n");
+        nWriter.flush();
+        nWriter.close();
     }
 
     public String read() throws IOException {
-        nFileInputStream = mContext.openFileInput(LOG_FILENAME);
-        StringBuffer nContent = new StringBuffer("");
-        byte[] nBuffer = new byte[1024];
-        int nSize = 0;
-        while((nSize = nFileInputStream.read(nBuffer)) != -1){
-            nContent.append(new String(nBuffer, 0, nSize));
+        String nContent = "";
+        FileInputStream nStream = mContext.openFileInput(LOG_FILENAME);
+        DataInputStream nData = new DataInputStream(nStream);
+        String nLine = null;
+        while ((nLine = nData.readLine()) != null) {
+            nContent += nLine + "\n";
         }
-        return nContent.toString();
+        nData.close();
+        nStream.close();
+        return nContent;
     }
 }

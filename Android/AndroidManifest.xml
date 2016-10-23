@@ -75,6 +75,7 @@
         </activity>
         <activity android:name=".activities.SettingsActivity"/>
         <activity android:name=".activities.IntroActivity"/>
+        <activity android:name=".activities.LogActivity"/>
 
         <!-- Widget Config Activities -->
         <activity android:name=".widgets.config.DoorLockWidgetConfigActivity">
