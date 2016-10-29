@@ -8,97 +8,102 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.nawrasg.atlantis.other.AtlantisContract;
+
 public class Light extends PDevice implements Parcelable {
-	protected String mID, mName, mProtocol, mIP, mRoom;
+    protected String mID, mName, mProtocol, mIP, mRoom;
 
-	public Light(JSONObject json) {
-		try{
-			mID = json.getString("id");
-			mName = json.getString("name");
-			mProtocol = json.getString("protocol");
-			if(!json.isNull("ip")){
-				mIP = json.getString("ip");
-			}
-			if(!json.isNull("room")){
-				mRoom = json.getString("room");				
-			}
-		}catch(JSONException e){
-			Log.w("Atlantis", e.toString());
-		}
-	}
+    public static final String HUE = "hue";
+    public static final String TYPE = "light";
 
-	public Light(Cursor cursor){
-		mID = cursor.getString(cursor.getColumnIndex("id"));
-		mName = cursor.getString(cursor.getColumnIndex("name"));
-		mProtocol = cursor.getString(cursor.getColumnIndex("protocol"));
-		mIP = cursor.getString(cursor.getColumnIndex("ip"));
-		mRoom = cursor.getString(cursor.getColumnIndex("room"));
-	}
-	
-	public String getID(){
-		return mID;
-	}
-	
-	public String getName(){
-		return mName;
-	}
-	
-	public String getProtocol(){
-		return mProtocol;
-	}
-	
-	public String getIP(){
-		return mIP;
-	}
-	
-	public String getRoom(){
-		return mRoom;
-	}
+    public Light(JSONObject json) {
+        try {
+            mID = json.getString(AtlantisContract.Lights.COLUMN_ID);
+            mName = json.getString(AtlantisContract.Lights.COLUMN_LABEL);
+            mProtocol = json.getString(AtlantisContract.Lights.COLUMN_PROTOCOL);
+            if (!json.isNull(AtlantisContract.Lights.COLUMN_IP)) {
+                mIP = json.getString(AtlantisContract.Lights.COLUMN_IP);
+            }
+            if (!json.isNull(AtlantisContract.Lights.COLUMN_ROOM)) {
+                mRoom = json.getString(AtlantisContract.Lights.COLUMN_ROOM);
+            }
+        } catch (JSONException e) {
+            Log.w("Atlantis", e.toString());
+        }
+    }
 
-	@Override
-	public int describeContents() {
-		return 0;
-	}
+    public Light(Cursor cursor) {
+        mID = cursor.getString(cursor.getColumnIndex(AtlantisContract.Lights.COLUMN_ID));
+        mName = cursor.getString(cursor.getColumnIndex(AtlantisContract.Lights.COLUMN_LABEL));
+        mProtocol = cursor.getString(cursor.getColumnIndex(AtlantisContract.Lights.COLUMN_PROTOCOL));
+        mIP = cursor.getString(cursor.getColumnIndex(AtlantisContract.Lights.COLUMN_IP));
+        mRoom = cursor.getString(cursor.getColumnIndex(AtlantisContract.Lights.COLUMN_ROOM));
+    }
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(mID);
-		dest.writeString(mName);
-		dest.writeString(mProtocol);
-		dest.writeString(mIP);
-		dest.writeString(mRoom);
-	}
-	
-	public static final Parcelable.Creator<Light> CREATOR = new Parcelable.Creator<Light>() {
-		@Override
-		public Light createFromParcel(Parcel source) {
-			return new Light(source);
-		}
+    public String getID() {
+        return mID;
+    }
 
-		@Override
-		public Light[] newArray(int size) {
-			return new Light[size];
-		}
-	};
-	
-	public Light(Parcel in) {
-		mID = in.readString();
-		mName = in.readString();
-		mProtocol = in.readString();
-		mIP = in.readString();
-		mRoom = in.readString();
-	}
+    public String getName() {
+        return mName;
+    }
 
-	@Override
-	public String getType() {
-		return "light";
-	}
+    public String getProtocol() {
+        return mProtocol;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if(o instanceof Light){
-			return (getID().equals(((Light)o).getID()));
-		}
-		return false;
-	}
+    public String getIP() {
+        return mIP;
+    }
+
+    public String getRoom() {
+        return mRoom;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mID);
+        dest.writeString(mName);
+        dest.writeString(mProtocol);
+        dest.writeString(mIP);
+        dest.writeString(mRoom);
+    }
+
+    public static final Parcelable.Creator<Light> CREATOR = new Parcelable.Creator<Light>() {
+        @Override
+        public Light createFromParcel(Parcel source) {
+            return new Light(source);
+        }
+
+        @Override
+        public Light[] newArray(int size) {
+            return new Light[size];
+        }
+    };
+
+    public Light(Parcel in) {
+        mID = in.readString();
+        mName = in.readString();
+        mProtocol = in.readString();
+        mIP = in.readString();
+        mRoom = in.readString();
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Light) {
+            return (getID().equals(((Light) o).getID()));
+        }
+        return false;
+    }
 }

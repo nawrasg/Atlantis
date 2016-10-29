@@ -38,6 +38,11 @@ public final class AtlantisContract {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AtlantisContract.CONTENT_URI, "lights");
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.lights";
         public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.lights";
+        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_LABEL = "name";
+        public static final String COLUMN_PROTOCOL = "protocol";
+        public static final String COLUMN_IP = "ip";
+        public static final String COLUMN_ROOM = "room";
     }
 
     public static final class Rooms implements BaseColumns {
