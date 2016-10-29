@@ -8,16 +8,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import fr.nawrasg.atlantis.other.AtlantisContract;
+
 public class Hue extends Light{
 	private String mUID, mBrightness, mReachable, mOn;
 	
 	public Hue(JSONObject json) {
 		super(json);
 		try{
-			mUID = json.getString("uid");
-			mReachable = json.getString("reachable");
-			mOn = json.getString("on");
-			mBrightness = json.getString("brightness");
+			mUID = json.getString(AtlantisContract.Lights.COLUMN_UID);
+			mReachable = json.getString(AtlantisContract.Lights.COLUMN_REACHABLE);
+			mOn = json.getString(AtlantisContract.Lights.COLUMN_ON);
+			mBrightness = json.getString(AtlantisContract.Lights.COLUMN_BRIGHTNESS);
 		}catch(JSONException e){
 			Log.w("Atlantis", e.toString());
 		}
@@ -25,7 +27,7 @@ public class Hue extends Light{
 
 	public Hue(Cursor cursor){
 		super(cursor);
-		mUID = cursor.getString(cursor.getColumnIndex("uid"));
+		mUID = cursor.getString(cursor.getColumnIndex(AtlantisContract.Lights.COLUMN_UID));
 		mBrightness = "0";
 		mReachable = "false";
 		mOn = "false";

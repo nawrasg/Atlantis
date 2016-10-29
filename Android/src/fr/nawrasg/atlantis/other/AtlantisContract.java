@@ -43,6 +43,10 @@ public final class AtlantisContract {
         public static final String COLUMN_PROTOCOL = "protocol";
         public static final String COLUMN_IP = "ip";
         public static final String COLUMN_ROOM = "room";
+        public static final String COLUMN_UID = "uid";
+        public static final String COLUMN_REACHABLE = "reachable";
+        public static final String COLUMN_ON = "on";
+        public static final String COLUMN_BRIGHTNESS = "brightness";
     }
 
     public static final class Rooms implements BaseColumns {
