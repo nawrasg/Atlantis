@@ -284,7 +284,7 @@
     <!-- fragment_dialog_courses -->
     <string name="layout_fragment_dialog_courses_description">Enter a product name and its quantity (apple, 2)</string>
 
-    <!-- row_light -->
+    <!-- row_light_legacy -->
     <string name="layout_row_lights_switch_on">On</string>
     <string name="layout_row_lights_switch_off">Off</string>
 
