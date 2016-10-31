@@ -58,7 +58,7 @@ public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View nView = inflater.inflate(R.layout.fragment_light, container, false);
         ButterKnife.bind(this, nView);
-        mContext = super.getActivity();
+        mContext = getActivity();
         mHandler = new Handler();
         mSwipeLayout.setOnRefreshListener(this);
         return nView;
@@ -68,10 +68,9 @@ public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        ((MainActivity)getActivity()).setProgressBar(true);
         getItems();
         getStatus();
-        ((MainActivity)getActivity()).setProgressBar(true);
-
     }
 
     private void getItems() {
@@ -92,7 +91,7 @@ public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 mList.add(nLight);
             } while (nCursor.moveToNext());
         }
-        mAdapter = new LightAdapter(mContext, mList);
+        mAdapter = new LightAdapter(mContext, mList, mRoomList);
         mRecyclerView.setAdapter(mAdapter);
     }
 

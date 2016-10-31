@@ -21,6 +21,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +30,7 @@ import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.fragments.dialogs.LightDialogFragment;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
+import fr.nawrasg.atlantis.type.Room;
 
 /**
  * Created by Nawras on 29/10/2016.
@@ -37,10 +39,17 @@ import fr.nawrasg.atlantis.type.Light;
 public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHolder> {
     private Context mContext;
     private ArrayList<Light> mList;
+    private ArrayList<Room> mRoomList;
 
     public LightAdapter(Context context, ArrayList<Light> list) {
         mContext = context;
         mList = list;
+    }
+
+    public LightAdapter(Context context, ArrayList<Light> list, ArrayList<Room> rooms) {
+        mContext = context;
+        mList = list;
+        mRoomList = rooms;
     }
 
     @Override
@@ -53,6 +62,7 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
     public void onBindViewHolder(final LightViewHolder holder, int position) {
         Light nLight = mList.get(position);
         String nName = nLight.getName();
+        nName += getRoom(nLight);
         holder.lblLightName.setText(nName);
         holder.swtLightToggle.setTag(nLight);
         holder.swtLightToggle.setOnClickListener(new View.OnClickListener() {
@@ -187,9 +197,22 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
         }
     }
 
+    private String getRoom(Light light) {
+        Room nRoom;
+        if (mRoomList != null) {
+            for (int i = 0; i < mRoomList.size(); i++) {
+                nRoom = mRoomList.get(i);
+                if (light.getRoom() != null && light.getRoom().equals(nRoom.getID())) {
+                    return " (" + nRoom.getRoom() + ")";
+                }
+            }
+        }
+        return "";
+    }
+
     private Bundle setArgs(Light light) {
         Bundle nBundle = new Bundle();
-        //nBundle.putParcelableArrayList("rooms", mRoomList);
+        nBundle.putParcelableArrayList("rooms", mRoomList);
         nBundle.putParcelable("light", light);
         return nBundle;
     }
