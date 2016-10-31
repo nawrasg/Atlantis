@@ -13,7 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import fr.nawrasg.atlantis.App;
-import fr.nawrasg.atlantis.adapters.ScenarioAdapter;
+import fr.nawrasg.atlantis.adapters.ScenarioSimpleAdapter;
 import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Scenario;
 import fr.nawrasg.atlantis.widgets.ScenarioWidgetProvider;
@@ -24,7 +24,7 @@ import fr.nawrasg.atlantis.widgets.ScenarioWidgetProvider;
 
 public class ScenarioWidgetConfigActivity extends ListActivity {
     private ArrayList<Scenario> mList;
-    private ScenarioAdapter mAdapter;
+    private ScenarioSimpleAdapter mAdapter;
     private int mWidgetId;
 
     @Override
@@ -55,7 +55,7 @@ public class ScenarioWidgetConfigActivity extends ListActivity {
                 mList.add(nScenario);
             } while (nCursor.moveToNext());
         }
-        mAdapter = new ScenarioAdapter(this, mList);
+        mAdapter = new ScenarioSimpleAdapter(this, mList);
         setListAdapter(mAdapter);
     }
 
