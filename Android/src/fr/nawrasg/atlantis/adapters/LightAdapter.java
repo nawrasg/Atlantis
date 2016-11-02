@@ -217,7 +217,7 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
         return nBundle;
     }
 
-    static class LightViewHolder extends RecyclerView.ViewHolder {
+    static class LightViewHolder extends WidgetAdapter.ViewHolder {
         @Bind(R.id.cvLight)
         CardView cvLight;
         @Bind(R.id.imgLightIcon)

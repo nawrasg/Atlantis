@@ -35,7 +35,6 @@ import fr.nawrasg.atlantis.fragments.EntretienAddFragment;
 import fr.nawrasg.atlantis.fragments.EntretienFragment;
 import fr.nawrasg.atlantis.fragments.GPSFragment;
 import fr.nawrasg.atlantis.fragments.HistoryFragment;
-import fr.nawrasg.atlantis.fragments.HomeFragment;
 import fr.nawrasg.atlantis.fragments.LightFragment;
 import fr.nawrasg.atlantis.fragments.MapsFragment;
 import fr.nawrasg.atlantis.fragments.MusicFragment;
@@ -44,6 +43,7 @@ import fr.nawrasg.atlantis.fragments.PharmacieFragment;
 import fr.nawrasg.atlantis.fragments.PlantFragment;
 import fr.nawrasg.atlantis.fragments.ScenarioFragment;
 import fr.nawrasg.atlantis.fragments.SensorsFragment;
+import fr.nawrasg.atlantis.fragments.WidgetsFragment;
 import fr.nawrasg.atlantis.other.AtlantisContract;
 
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        loadFragment(new HomeFragment(), true);
+        loadFragment(new WidgetsFragment(), true);
         loadFragment(new PlantFragment(), false);
         handleIntent(getIntent());
         if (App.getURL(mContext).equals("")) {
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.itemNavigationHome:
-                loadFragment(new HomeFragment(), true);
+                loadFragment(new WidgetsFragment(), true);
                 loadFragment(new PlantFragment(), false);
                 return true;
             case R.id.itemNavigationLights:

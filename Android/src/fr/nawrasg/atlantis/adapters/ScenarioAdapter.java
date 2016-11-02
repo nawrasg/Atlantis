@@ -80,7 +80,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioAdapter.Scenar
         return mList.size();
     }
 
-    static class ScenarioViewHolder extends RecyclerView.ViewHolder{
+    static class ScenarioViewHolder extends WidgetAdapter.ViewHolder{
         @Bind(R.id.imgScenarioPlay)
         ImageView action;
         @Bind(R.id.txtScenarioLabel)
