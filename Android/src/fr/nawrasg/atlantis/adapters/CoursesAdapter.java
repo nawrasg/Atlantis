@@ -76,6 +76,11 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
         });
     }
 
+    public void add(Element element){
+        mList.add(element);
+        update(null);
+    }
+
     static class CoursesViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         private CoursesAdapter mAdapter;
         @Bind(R.id.lblCoursesTitle)
