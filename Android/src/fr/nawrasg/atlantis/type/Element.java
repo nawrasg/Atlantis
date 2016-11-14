@@ -54,4 +54,14 @@ public class Element {
     public void done(boolean value) {
         mDone = value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Element) {
+            if (((Element) o).getID() == getID()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
