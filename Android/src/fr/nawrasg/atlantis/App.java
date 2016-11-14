@@ -20,6 +20,8 @@ import java.util.Set;
 import fr.nawrasg.atlantis.other.CheckConnection;
 
 public class App extends Application{
+	private static Context mContext;
+
 	public static final int CODE_PLAN = 5;
 	public static final int PERMISSION_LOCATION = 1;
 	public static final String CALL_NOTIFIER = "backend/at_call_notifier.php";
@@ -47,6 +49,16 @@ public class App extends Application{
 	public static final String WELCOME = "backend/at_welcome.php";
 
 	public static OkHttpClient httpClient;
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		mContext = getApplicationContext();
+	}
+
+	public static Context getContext(){
+		return mContext;
+	}
 
 	public static String getURL(Context c) {
 		WifiManager nWM = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
