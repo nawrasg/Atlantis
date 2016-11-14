@@ -12,14 +12,5 @@
         android:icon="@drawable/ic_send_white_24dp"
         android:title="@string/menu_fragment_courses_notification"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/itemCoursesOffline"
-        android:title="@string/menu_fragment_courses_offline"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/itemCoursesClear"
-        android:icon="@drawable/ic_delete_white_24dp"
-        android:title="@string/menu_fragment_courses_clear"
-        app:showAsAction="ifRoom"/>
 
 </menu>
