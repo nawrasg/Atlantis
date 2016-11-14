@@ -90,7 +90,7 @@ public class CoursesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.itemCoursesAdd:
                 addItem();
                 return true;
@@ -210,7 +210,7 @@ public class CoursesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         inputBox.show();
     }
 
-    private void postCourses(String name, long quantity){
+    private void postCourses(String name, long quantity) {
         String nURL = App.getUri(mContext, App.COURSES) + "&name=" + name + "&quantity=" + quantity;
         Request nRequest = new Request.Builder()
                 .url(nURL)
@@ -224,17 +224,12 @@ public class CoursesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if(response.code() == 202){
-                    try{
+                if (response.code() == 202) {
+                    try {
                         JSONObject nItem = new JSONObject(response.body().string());
                         final Element nElement = new Element(nItem);
-                        /*mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mAdapter.add(nElement);
-                            }
-                        });*/
-                    }catch(JSONException e){
+                        mAdapter.add(nElement);
+                    } catch (JSONException e) {
 
                     }
                 }
