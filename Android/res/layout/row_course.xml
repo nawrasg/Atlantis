@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/llCoursesRow"
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvCourse"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:descendantFocusability="blocksDescendants"
-    android:orientation="horizontal"
-    android:padding="20dp">
+    android:layout_gravity="center"
+    android:layout_marginBottom="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginTop="4dp"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="5dp"
+    card_view:cardMaxElevation="5dp">
 
-    <TextView
-        android:id="@+id/lblCoursesQuantity"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llCoursesRow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/qte"
-        android:gravity="center"/>
+        android:layout_gravity="center_vertical"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal"
+        android:padding="20dp">
 
-    <TextView
-        android:id="@+id/lblCoursesTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawableLeft="@drawable/ng_todo"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/lblCoursesQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/qte"
+            android:gravity="center"/>
 
-    <CheckBox
-        android:id="@+id/cbCoursesDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/lblCoursesTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ng_todo"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"/>
 
-</LinearLayout>
+        <CheckBox
+            android:id="@+id/cbCoursesDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

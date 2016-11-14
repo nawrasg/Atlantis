@@ -1,66 +1,185 @@
 package fr.nawrasg.atlantis.adapters;
 
-import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.util.List;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.type.Element;
 
-public class CoursesAdapter extends ArrayAdapter<Element> {
-	private Context mContext;
-	private List<Element> mList;
-	private Element mElement;
+/**
+ * Created by Nawras on 04/11/2016.
+ */
 
-	static class CoursesViewHolder {
-		@Bind(R.id.lblCoursesTitle)
-		TextView title;
-		@Bind(R.id.lblCoursesQuantity)
-		TextView quantity;
-		@Bind(R.id.cbCoursesDone)
-		CheckBox done;
+public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder> {
+    private ArrayList<Element> mList;
+    private Handler mHandler;
 
-		public CoursesViewHolder(View view) {
-			ButterKnife.bind(this, view);
-		}
-	}
+    public CoursesAdapter(ArrayList<Element> list) {
+        mList = list;
+        mHandler = new Handler(Looper.getMainLooper());
+    }
 
-	public CoursesAdapter(Context context, List<Element> objects) {
-		super(context, R.layout.row_course, objects);
-		mContext = context;
-		mList = objects;
-	}
+    @Override
+    public CoursesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View nView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course, parent, false);
+        return new CoursesViewHolder(nView, this);
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		mElement = mList.get(position);
-		if (convertView == null) {
-			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.row_course, parent, false);
-			CoursesViewHolder nHolder = new CoursesViewHolder(convertView);
-			nHolder.done.setTag(position);
-			convertView.setTag(nHolder);
-		}
-		final CoursesViewHolder nHolder = (CoursesViewHolder) convertView.getTag();
-		nHolder.title.setText(mElement.getName());
-		nHolder.quantity.setText(mElement.getQuantity() + "");
-		nHolder.done.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				nHolder.done.setChecked(false);
-				int nPosition = ((Integer) nHolder.done.getTag()).intValue();
-				mList.remove(nPosition);
-				notifyDataSetChanged();
-			}
-		});
-		return convertView;
-	}
+    @Override
+    public void onBindViewHolder(final CoursesViewHolder holder, int position) {
+        Element nElement = mList.get(position);
+        holder.title.setText(nElement.getName());
+        holder.quantity.setText(nElement.getQuantity() + "");
+        holder.cv.setTag(nElement);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mList.size();
+    }
+
+    public Element getItem(int position) {
+        return mList.get(position);
+    }
+
+    public void update(final Element element) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (element != null) {
+                    mList.remove(element);
+                }
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+    static class CoursesViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+        private CoursesAdapter mAdapter;
+        @Bind(R.id.lblCoursesTitle)
+        TextView title;
+        @Bind(R.id.lblCoursesQuantity)
+        TextView quantity;
+        @Bind(R.id.cbCoursesDone)
+        CheckBox done;
+        @Bind(R.id.cvCourse)
+        CardView cv;
+
+        public CoursesViewHolder(View itemView, CoursesAdapter adapter) {
+            super(itemView);
+            mAdapter = adapter;
+            ButterKnife.bind(this, itemView);
+            itemView.setOnCreateContextMenuListener(this);
+            done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        done.setChecked(false);
+                        deleteCourses((Element) cv.getTag());
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            MenuItem nIncrementItem = menu.add(0, R.string.menu_increment, 0, R.string.menu_increment);
+            nIncrementItem.setOnMenuItemClickListener(this);
+            MenuItem nDecrementItem = menu.add(0, R.string.menu_decrement, 1, R.string.menu_decrement);
+            nDecrementItem.setOnMenuItemClickListener(this);
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.string.menu_increment:
+                    modifyCourses((Element) cv.getTag(), '+');
+                    return true;
+                case R.string.menu_decrement:
+                    modifyCourses((Element) cv.getTag(), '-');
+                    return true;
+            }
+            return false;
+        }
+
+        private void modifyCourses(final Element element, final char mode) {
+            String nURL = App.getUri(App.getContext(), App.COURSES) + "&id=" + element.getID();
+            switch (mode) {
+                case '+':
+                    nURL += "&quantity=" + (element.getQuantity() + 1);
+                    break;
+                case '-':
+                    nURL += "&quantity=" + (element.getQuantity() - 1);
+                    break;
+            }
+            Request nRequest = new Request.Builder()
+                    .url(nURL)
+                    .put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+                    .build();
+            App.httpClient.newCall(nRequest).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    if (response.code() == 202) {
+                        switch (mode) {
+                            case '+':
+                                element.increment();
+                                break;
+                            case '-':
+                                element.decrement();
+                                break;
+                        }
+                        mAdapter.update(null);
+                    }
+                }
+            });
+        }
+
+        private void deleteCourses(final Element element) {
+            String nURL = App.getUri(App.getContext(), App.COURSES) + "&id=" + element.getID();
+            Request nRequest = new Request.Builder()
+                    .url(nURL)
+                    .delete()
+                    .build();
+            App.httpClient.newCall(nRequest).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    if (response.code() == 202) {
+                        mAdapter.update(element);
+                    }
+                }
+            });
+        }
+    }
 }
