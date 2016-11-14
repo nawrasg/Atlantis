@@ -60,13 +60,14 @@ public class App extends Application{
 		return mContext;
 	}
 
-	public static String getURL(Context c) {
-		WifiManager nWM = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+	public static String getURL() {
+		Context nContext = getContext();
+		WifiManager nWM = (WifiManager) nContext.getSystemService(Context.WIFI_SERVICE);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(nContext);
 		String nURL = "";
-		Set<String> nWifiSet = getPrefSet(c, "wifiSet");
+		Set<String> nWifiSet = getPrefSet(nContext, "wifiSet");
 		if (prefs.getBoolean("wifi", false)) {
-			if (new CheckConnection(c).checkConnection() == CheckConnection.TYPE_WIFI) {
+			if (new CheckConnection(nContext).checkConnection() == CheckConnection.TYPE_WIFI) {
 				String nSSID = nWM.getConnectionInfo().getSSID();
 				if (nWifiSet.contains(nSSID)) {
 					nURL = prefs.getString("urlInterne", "");
@@ -101,7 +102,7 @@ public class App extends Application{
 		if(isSSL(context)){
 			nLink += "s";
 		}
-		nLink += "://" + getURL(context) + "/";
+		nLink += "://" + getURL() + "/";
 		return nLink;
 	}
 

@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadFragment(new WidgetsFragment(), true);
         loadFragment(new PlantFragment(), false);
         handleIntent(getIntent());
-        if (App.getURL(mContext).equals("")) {
+        if (App.getURL().equals("")) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
     }
