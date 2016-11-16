@@ -30,7 +30,7 @@ import fr.nawrasg.atlantis.fragments.CameraFragment;
 import fr.nawrasg.atlantis.fragments.ConnectedDevicesFragment;
 import fr.nawrasg.atlantis.fragments.CoursesFragment;
 import fr.nawrasg.atlantis.fragments.CuisineAddFragment;
-import fr.nawrasg.atlantis.fragments.CuisineFragment;
+import fr.nawrasg.atlantis.fragments.CuisineFragmentLegacy;
 import fr.nawrasg.atlantis.fragments.EntretienAddFragment;
 import fr.nawrasg.atlantis.fragments.EntretienFragment;
 import fr.nawrasg.atlantis.fragments.GPSFragment;
@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadFragment(new WidgetsFragment(), true);
         loadFragment(new PlantFragment(), false);
         handleIntent(getIntent());
-        if (App.getURL().equals("")) {
+        /*if (App.getURL().equals("")) {
             startActivity(new Intent(this, SettingsActivity.class));
-        }
+        }*/
     }
 
     public void setProgressBar(boolean visible) {
@@ -207,8 +207,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void refreshFragment() {
         Fragment nFragment = getFragmentManager().findFragmentByTag("f1");
-        if (nFragment instanceof CuisineFragment) {
-            ((CuisineFragment) nFragment).getItems();
+        if (nFragment instanceof CuisineFragmentLegacy) {
+            ((CuisineFragmentLegacy) nFragment).getItems();
         } else if (nFragment instanceof PharmacieFragment) {
             ((PharmacieFragment) nFragment).getItems();
         } else if (nFragment instanceof EntretienFragment) {
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 loadFragment(new CoursesFragment(), true);
                 return true;
             case R.id.itemNavigationCuisine:
-                loadFragment(new CuisineFragment(), true);
+                loadFragment(new CuisineFragmentLegacy(), true);
                 loadFragment(new CuisineAddFragment(), false);
                 return true;
             case R.id.itemNavigationPharmacie:

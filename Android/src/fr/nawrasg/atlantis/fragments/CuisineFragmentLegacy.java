@@ -39,7 +39,7 @@ import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.CuisineAdapter;
 import fr.nawrasg.atlantis.type.Produit;
 
-public class CuisineFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class CuisineFragmentLegacy extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
 	@Bind(R.id.swipeCuisine)
 	SwipeRefreshLayout mSwipeLayout;
 	private Context mContext;
@@ -51,7 +51,7 @@ public class CuisineFragment extends ListFragment implements SwipeRefreshLayout.
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mContext = getActivity();
 		mHandler = new Handler();
-		View nView = inflater.inflate(R.layout.fragment_cuisine, container, false);
+		View nView = inflater.inflate(R.layout.fragment_cuisine_legacy, container, false);
 		ButterKnife.bind(this, nView);
 		setHasOptionsMenu(true);
 		mSwipeLayout.setOnRefreshListener(this);

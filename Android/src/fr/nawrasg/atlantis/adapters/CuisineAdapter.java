@@ -43,7 +43,7 @@ public class CuisineAdapter extends ArrayAdapter<Produit> implements Filterable{
 	}
 
 	public CuisineAdapter(Context context, ArrayList<Produit> list) {
-		super(context, R.layout.row_cuisine, list);
+		super(context, R.layout.row_cuisine_legacy, list);
 		mContext = context;
 		mOriginList = list;
         mSeeAll = false;
@@ -96,7 +96,7 @@ public class CuisineAdapter extends ArrayAdapter<Produit> implements Filterable{
 		View nView = convertView;
 		if (nView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			nView = inflater.inflate(R.layout.row_cuisine, parent, false);
+			nView = inflater.inflate(R.layout.row_cuisine_legacy, parent, false);
 			final CuisineViewHolder nHolder = new CuisineViewHolder(nView);
 			nView.setTag(nHolder);
 		}
