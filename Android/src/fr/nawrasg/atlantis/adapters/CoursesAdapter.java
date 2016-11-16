@@ -44,7 +44,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
     @Override
     public CoursesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View nView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course, parent, false);
-        return new CoursesViewHolder(nView, this);
+        return new CoursesViewHolder(nView);
     }
 
     @Override
@@ -52,7 +52,8 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
         Element nElement = mList.get(position);
         holder.title.setText(nElement.getName());
         holder.quantity.setText(nElement.getQuantity() + "");
-        holder.cv.setTag(nElement);
+        holder.cv.setTag(R.id.tag_object, nElement);
+        holder.cv.setTag(R.id.tag_adapter, this);
     }
 
     @Override
@@ -76,13 +77,12 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
         });
     }
 
-    public void add(Element element){
+    public void add(Element element) {
         mList.add(element);
         update(null);
     }
 
     static class CoursesViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
-        private CoursesAdapter mAdapter;
         @Bind(R.id.lblCoursesTitle)
         TextView title;
         @Bind(R.id.lblCoursesQuantity)
@@ -92,9 +92,8 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
         @Bind(R.id.cvCourse)
         CardView cv;
 
-        public CoursesViewHolder(View itemView, CoursesAdapter adapter) {
+        public CoursesViewHolder(View itemView) {
             super(itemView);
-            mAdapter = adapter;
             ButterKnife.bind(this, itemView);
             itemView.setOnCreateContextMenuListener(this);
             done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -102,7 +101,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         done.setChecked(false);
-                        deleteCourses((Element) cv.getTag());
+                        deleteCourses((Element) cv.getTag(R.id.tag_object));
                     }
                 }
             });
@@ -120,10 +119,10 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.string.menu_increment:
-                    modifyCourses((Element) cv.getTag(), '+');
+                    modifyCourses((Element) cv.getTag(R.id.tag_object), '+');
                     return true;
                 case R.string.menu_decrement:
-                    modifyCourses((Element) cv.getTag(), '-');
+                    modifyCourses((Element) cv.getTag(R.id.tag_object), '-');
                     return true;
             }
             return false;
@@ -160,7 +159,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
                                 element.decrement();
                                 break;
                         }
-                        mAdapter.update(null);
+                        ((CoursesAdapter) cv.getTag(R.id.tag_adapter)).update(null);
                     }
                 }
             });
@@ -181,7 +180,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
                 @Override
                 public void onResponse(Response response) throws IOException {
                     if (response.code() == 202) {
-                        mAdapter.update(element);
+                        ((CoursesAdapter) cv.getTag(R.id.tag_adapter)).update(element);
                     }
                 }
             });

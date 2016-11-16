@@ -126,7 +126,11 @@ public class CoursesFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mRecyclerView.setAdapter(mAdapter);
+                            if (mRecyclerView.getAdapter() == null) {
+                                mRecyclerView.setAdapter(mAdapter);
+                            } else {
+                                mRecyclerView.swapAdapter(mAdapter, false);
+                            }
                             mSwipeLayout.setRefreshing(false);
                             ((MainActivity) getActivity()).setProgressBar(false);
                         }
@@ -239,6 +243,6 @@ public class CoursesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
-        mSwipeLayout.setRefreshing(false);
+        getCourses();
     }
 }
