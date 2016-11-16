@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -72,6 +73,12 @@ public class CoursesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         mSwipeLayout.setOnRefreshListener(this);
         setHasOptionsMenu(true);
         return nView;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.courses_layout), StaggeredGridLayoutManager.VERTICAL));
     }
 
     @Override
