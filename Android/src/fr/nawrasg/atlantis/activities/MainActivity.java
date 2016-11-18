@@ -35,6 +35,7 @@ import fr.nawrasg.atlantis.fragments.EntretienAddFragment;
 import fr.nawrasg.atlantis.fragments.EntretienFragment;
 import fr.nawrasg.atlantis.fragments.GPSFragment;
 import fr.nawrasg.atlantis.fragments.HistoryFragment;
+import fr.nawrasg.atlantis.fragments.KitchenFragment;
 import fr.nawrasg.atlantis.fragments.LightFragment;
 import fr.nawrasg.atlantis.fragments.MapsFragment;
 import fr.nawrasg.atlantis.fragments.MusicFragment;
@@ -80,9 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadFragment(new WidgetsFragment(), true);
         loadFragment(new PlantFragment(), false);
         handleIntent(getIntent());
-        /*if (App.getURL().equals("")) {
-            startActivity(new Intent(this, SettingsActivity.class));
-        }*/
     }
 
     public void setProgressBar(boolean visible) {
@@ -271,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 loadFragment(new CoursesFragment(), true);
                 return true;
             case R.id.itemNavigationCuisine:
-                loadFragment(new CuisineFragmentLegacy(), true);
+                loadFragment(new KitchenFragment(), true);
                 loadFragment(new CuisineAddFragment(), false);
                 return true;
             case R.id.itemNavigationPharmacie:

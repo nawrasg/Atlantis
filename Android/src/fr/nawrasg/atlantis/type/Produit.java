@@ -3,6 +3,11 @@ package fr.nawrasg.atlantis.type;
 import org.json.JSONObject;
 
 public class Produit {
+
+	public static String PLACE_PLACARD = "placard";
+	public static String PLACE_FRIDGE = "frigidaire";
+	public static String PLACE_FREEZER = "congelateur";
+
 	private String nTitre, mEAN;
 	private int nQuantite, mID;
 	private long nDate, nDate2;
