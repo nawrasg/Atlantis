@@ -107,7 +107,7 @@ public class KitchenFragment extends Fragment implements SwipeRefreshLayout.OnRe
         return false;
     }
 
-    private void get() {
+    public void get() {
         String nURL = App.getUri(mContext, App.CUISINE);
         Request nRequest = new Request.Builder()
                 .url(nURL)
@@ -133,7 +133,11 @@ public class KitchenFragment extends Fragment implements SwipeRefreshLayout.OnRe
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                mRecyclerView.setAdapter(mAdapter);
+                                if(mRecyclerView.getAdapter() == null){
+                                    mRecyclerView.setAdapter(mAdapter);
+                                }else{
+                                    mRecyclerView.swapAdapter(mAdapter, false);
+                                }
                                 mSwipeLayout.setRefreshing(false);
                                 ((MainActivity) getActivity()).setProgressBar(false);
                             }
@@ -148,6 +152,6 @@ public class KitchenFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
-        mSwipeLayout.setRefreshing(false);
+        get();
     }
 }
