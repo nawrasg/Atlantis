@@ -30,7 +30,6 @@ import fr.nawrasg.atlantis.fragments.CameraFragment;
 import fr.nawrasg.atlantis.fragments.ConnectedDevicesFragment;
 import fr.nawrasg.atlantis.fragments.CoursesFragment;
 import fr.nawrasg.atlantis.fragments.CuisineAddFragment;
-import fr.nawrasg.atlantis.fragments.CuisineFragmentLegacy;
 import fr.nawrasg.atlantis.fragments.EntretienAddFragment;
 import fr.nawrasg.atlantis.fragments.EntretienFragment;
 import fr.nawrasg.atlantis.fragments.GPSFragment;
@@ -205,8 +204,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void refreshFragment() {
         Fragment nFragment = getFragmentManager().findFragmentByTag("f1");
-        if (nFragment instanceof CuisineFragmentLegacy) {
-            ((CuisineFragmentLegacy) nFragment).getItems();
+        if (nFragment instanceof KitchenFragment) {
+            ((KitchenFragment) nFragment).get();
         } else if (nFragment instanceof PharmacieFragment) {
             ((PharmacieFragment) nFragment).getItems();
         } else if (nFragment instanceof EntretienFragment) {
