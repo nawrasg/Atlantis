@@ -149,7 +149,7 @@ public class PharmacieFragment extends ListFragment implements SwipeRefreshLayou
 	}
 
 	private void modifyItem(final Medicament medicament, final char mode){
-		String nURL = App.getFullUrl(mContext) + App.PHARMACIE + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.PHARMACIE);
 		switch(mode){
 			case '+':
 				nURL += "&id=" + medicament.getID() + "&qte=" + (medicament.getQuantity() + 1);
@@ -189,7 +189,7 @@ public class PharmacieFragment extends ListFragment implements SwipeRefreshLayou
 	}
 
 	private void deleteItem(final Medicament medicament){
-		String nURL = App.getFullUrl(mContext) + App.PHARMACIE + "?api=" + App.getAPI(mContext) + "&id=" + medicament.getID();
+		String nURL = App.getUri(mContext, App.PHARMACIE) + "&id=" + medicament.getID();
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.delete()

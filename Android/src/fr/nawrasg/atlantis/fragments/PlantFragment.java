@@ -71,7 +71,7 @@ public class PlantFragment extends Fragment {
     }
 
     private void getStatus() {
-        String nURL = App.getFullUrl(mContext) + App.PLANTE + "?api=" + App.getAPI(mContext);
+        String nURL = App.getUri(mContext, App.PLANTE);
         Request nRequest = new Request.Builder().url(nURL).build();
         App.httpClient.newCall(nRequest).enqueue(new Callback() {
             @Override

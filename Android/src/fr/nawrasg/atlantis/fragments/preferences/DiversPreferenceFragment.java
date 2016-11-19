@@ -120,7 +120,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
     }
 
     private void importSettings() {
-        String nURL = App.getFullUrl(mContext) + App.SETTINGS + "?api=" + App.getAPI(mContext) + "&type=Atlantis";
+        String nURL = App.getUri(mContext, App.SETTINGS) + "&type=Atlantis";
         Request nRequest = new Request.Builder().url(nURL).build();
         App.httpClient.newCall(nRequest).enqueue(new Callback() {
             @Override
@@ -227,7 +227,7 @@ public class DiversPreferenceFragment extends PreferenceFragment implements OnPr
     }
 
     private void regGCM(String data) {
-        String nURL = App.getFullUrl(mContext) + App.GCM + "?api=" + App.getAPI(mContext) + "&gcm=" + data;
+        String nURL = App.getUri(mContext, App.GCM) + "&gcm=" + data;
         Request nRequest = new Request.Builder().url(nURL).post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), "")).build();
         App.httpClient.newCall(nRequest).enqueue(new Callback() {
             @Override

@@ -155,7 +155,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	}
 
 	private void getItems() {
-		String nURL = App.getFullUrl(mContext) + App.MUSIC + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.MUSIC);
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.build();
@@ -251,7 +251,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	}
 
 	private void refresh(){
-		String nURL = App.getFullUrl(mContext) + App.MUSIC + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.MUSIC);
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
@@ -271,7 +271,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	}
 
 	private void delete(String data){
-		String nURL = App.getFullUrl(mContext) + App.MUSIC + "?api=" + App.getAPI(mContext) + "&" + data;
+		String nURL = App.getUri(mContext, App.MUSIC) + "&" + data;
 		Request nRequest = new Request.Builder().url(nURL).delete().build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
@@ -287,7 +287,7 @@ public class MusicFragment extends ListFragment implements OnClickListener, OnSe
 	}
 
 	private void modify(String data){
-		String nURL = App.getFullUrl(mContext) + App.MUSIC + "?api=" + App.getAPI(mContext) + "&" + data;
+		String nURL = App.getUri(mContext, App.MUSIC) + "&" + data;
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))

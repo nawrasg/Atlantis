@@ -118,7 +118,7 @@ public class PharmacieAddFragment extends Fragment{
 	}
 
 	private void post(String data){
-		String nURL = App.getFullUrl(mContext) + App.PHARMACIE + "?api=" + App.getAPI(mContext) + "&" + data;
+		String nURL = App.getUri(mContext, App.PHARMACIE) + "&" + data;
 		Request nRequest = new Request.Builder()
 				.url(nURL)
 				.post(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))

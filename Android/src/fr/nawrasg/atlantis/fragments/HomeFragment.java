@@ -219,7 +219,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	}
 
 	private void loadPlan() {
-		Picasso.with(mContext).load(App.getFullUrl(mContext) + App.Images + "?type=plan&api=" + App.getAPI(mContext)).into(imgPlan);
+		Picasso.with(mContext).load(App.getUri(mContext, App.Images) + "&type=plan").into(imgPlan);
 	}
 
 	@Override

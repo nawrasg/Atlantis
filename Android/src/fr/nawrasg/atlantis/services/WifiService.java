@@ -36,7 +36,7 @@ public class WifiService extends IntentService {
 			@Override
 			public void run() {
 				Toast.makeText(nContext, nContext.getString(R.string.service_wifi_atlantis_connected), Toast.LENGTH_SHORT).show();
-				String nURL = App.getFullUrl(nContext) + App.WELCOME + "?api=" + App.getAPI(nContext);
+				String nURL = App.getUri(nContext, App.WELCOME);
 				Request nRequest = new Request.Builder().url(nURL).build();
 				App.httpClient.newCall(nRequest).enqueue(new Callback() {
 					@Override

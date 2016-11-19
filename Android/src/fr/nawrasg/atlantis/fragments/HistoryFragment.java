@@ -167,7 +167,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 	}
 
 	private void getSensors(){
-		String nURL = App.getFullUrl(mContext) + App.HISTORY + "?api=" + App.getAPI(mContext);
+		String nURL = App.getUri(mContext, App.HISTORY);
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
@@ -205,7 +205,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 	}
 
 	private void getSensor(String data){
-		String nURL = App.getFullUrl(mContext) + App.HISTORY + "?api=" + App.getAPI(mContext) + "&" + data;
+		String nURL = App.getUri(mContext, App.HISTORY) + "&" + data;
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
@@ -250,7 +250,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemSelec
 	}
 
 	private void getPlant(String data){
-		String nURL = App.getFullUrl(mContext) + App.HISTORY + "?api=" + App.getAPI(mContext) + "&" + data;
+		String nURL = App.getUri(mContext, App.HISTORY) + "&" + data;
 		Request nRequest = new Request.Builder().url(nURL).build();
 		App.httpClient.newCall(nRequest).enqueue(new Callback() {
 			@Override
