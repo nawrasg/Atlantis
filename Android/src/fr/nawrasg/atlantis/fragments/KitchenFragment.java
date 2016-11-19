@@ -6,11 +6,16 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,7 +35,6 @@ import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.activities.MainActivity;
-import fr.nawrasg.atlantis.adapters.CuisineAdapter;
 import fr.nawrasg.atlantis.adapters.KitchenAdapter;
 import fr.nawrasg.atlantis.type.Produit;
 
@@ -74,7 +78,36 @@ public class KitchenFragment extends Fragment implements SwipeRefreshLayout.OnRe
         get();
     }
 
-    private void get(){
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_kitchen, menu);
+        SearchView nSV = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.itemSearch));
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            public boolean onQueryTextChange(String newText) {
+                if (mAdapter != null)
+                    mAdapter.getFilter().filter(newText);
+                return true;
+            }
+
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+        };
+        nSV.setOnQueryTextListener(queryTextListener);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemCuisineAdd:
+                ((MainActivity) getActivity()).loadFragment(new CuisineAddFragment(), true);
+                return true;
+        }
+        return false;
+    }
+
+    private void get() {
         String nURL = App.getUri(mContext, App.CUISINE);
         Request nRequest = new Request.Builder()
                 .url(nURL)
@@ -87,11 +120,11 @@ public class KitchenFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if(response.code() == 202){
+                if (response.code() == 202) {
                     ArrayList<Produit> nList = new ArrayList<>();
                     try {
                         JSONArray nArr = new JSONArray(response.body().string());
-                        for(int i = 0; i < nArr.length(); i++){
+                        for (int i = 0; i < nArr.length(); i++) {
                             JSONObject nJson = nArr.getJSONObject(i);
                             Produit nProduit = new Produit(nJson);
                             nList.add(nProduit);
@@ -102,10 +135,10 @@ public class KitchenFragment extends Fragment implements SwipeRefreshLayout.OnRe
                             public void run() {
                                 mRecyclerView.setAdapter(mAdapter);
                                 mSwipeLayout.setRefreshing(false);
-                                ((MainActivity)getActivity()).setProgressBar(false);
+                                ((MainActivity) getActivity()).setProgressBar(false);
                             }
                         });
-                    }catch(JSONException e){
+                    } catch (JSONException e) {
                         Log.e("Atlantis", e.getMessage());
                     }
                 }

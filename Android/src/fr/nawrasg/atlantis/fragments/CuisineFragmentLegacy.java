@@ -67,7 +67,7 @@ public class CuisineFragmentLegacy extends ListFragment implements SwipeRefreshL
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.fragment_cuisine, menu);
+		inflater.inflate(R.menu.fragment_kitchen, menu);
 		SearchView nSV = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.itemSearch));
 		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
 			public boolean onQueryTextChange(String newText) {

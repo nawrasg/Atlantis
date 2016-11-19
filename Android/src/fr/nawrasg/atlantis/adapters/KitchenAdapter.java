@@ -1,17 +1,30 @@
 package fr.nawrasg.atlantis.adapters;
 
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,11 +36,15 @@ import fr.nawrasg.atlantis.type.Produit;
  * Created by Nawras on 16/11/2016.
  */
 
-public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenViewHolder> {
+public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenViewHolder> implements Filterable {
     private ArrayList<Produit> mList;
+    private ArrayList<Produit> mOriginalList;
+    private Handler mHandler;
 
     public KitchenAdapter(ArrayList<Produit> list) {
         mList = list;
+        mOriginalList = list;
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -66,7 +83,7 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenV
         if (nDate < 0) {
             holder.expiry.setBackgroundColor(Color.RED);
             holder.description.setText(App.getContext().getResources().getString(R.string.adapter_cuisine_item_date_peremption) + " " + Math.abs(nDate) + " " + nDateUnit);
-        }else{
+        } else {
             holder.expiry.setBackgroundColor(Color.TRANSPARENT);
         }
     }
@@ -75,6 +92,50 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenV
     public int getItemCount() {
         return mList.size();
     }
+
+    public void update(final Produit produit) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (produit != null) {
+                    mList.remove(produit);
+                }
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public Filter getFilter() {
+        Filter nFilter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults nResults = new FilterResults();
+                if (constraint == null || constraint.length() == 0) {
+                    mList = mOriginalList;
+                } else {
+                    mList = new ArrayList<>();
+                    constraint = constraint.toString().toLowerCase(Locale.FRANCE);
+                    for (int i = 0; i < mOriginalList.size(); i++) {
+                        Produit nProduit = mOriginalList.get(i);
+                        if (nProduit.getTitre().toLowerCase(Locale.FRANCE).startsWith(constraint.toString())) {
+                            mList.add(nProduit);
+                        }
+                    }
+                }
+                nResults.count = mList.size();
+                nResults.values = mList;
+                return nResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                notifyDataSetChanged();
+            }
+        };
+        return nFilter;
+    }
+
 
     static class KitchenViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         @Bind(R.id.lblCuisineTitle)
@@ -100,12 +161,117 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenV
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
+            Produit nProduit = (Produit) cv.getTag(R.id.tag_object);
+            switch (item.getItemId()) {
+                case R.string.menu_increment:
+                    modifyItem(nProduit, '+');
+                    return true;
+                case R.string.menu_decrement:
+                    modifyItem(nProduit, '-');
+                    return true;
+                case R.string.menu_context_cuisine_open_title:
+                    modifyItem(nProduit, ',');
+                    return true;
+                case R.string.menu_context_cuisine_avoid_title:
+                    modifyItem(nProduit, '.');
+                    return true;
+                case R.string.menu_delete:
+                    deleteItem(nProduit);
+                    return true;
+            }
             return false;
         }
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            Produit nProduit = (Produit) cv.getTag(R.id.tag_object);
+            MenuItem nIncrementItem = menu.add(0, R.string.menu_increment, 0, R.string.menu_increment);
+            nIncrementItem.setOnMenuItemClickListener(this);
+            if (nProduit.getQuantite() > 1) {
+                MenuItem nDecrementItem = menu.add(0, R.string.menu_decrement, 1, R.string.menu_decrement);
+                nDecrementItem.setOnMenuItemClickListener(this);
+            }
+            if (nProduit.getStatus() != 1 && !nProduit.getPlace().equals(Produit.PLACE_FREEZER)) {
+                MenuItem nOpenItem = menu.add(0, R.string.menu_context_cuisine_open_title, 2, R.string.menu_context_cuisine_open_title);
+                nOpenItem.setOnMenuItemClickListener(this);
+            }
+            if (!nProduit.isIgnore()) {
+                MenuItem nIgnoreItem = menu.add(0, R.string.menu_context_cuisine_avoid_title, 3, R.string.menu_context_cuisine_avoid_title);
+                nIgnoreItem.setOnMenuItemClickListener(this);
+            }
+            MenuItem nDeleteItem = menu.add(0, R.string.menu_delete, 4, R.string.menu_delete);
+            nDeleteItem.setOnMenuItemClickListener(this);
+        }
 
+        private void modifyItem(final Produit produit, final char mode) {
+            String nURL = App.getUri(App.getContext(), App.CUISINE);
+            switch (mode) {
+                case ',':
+                    nURL += "&open=" + produit.getID();
+                    break;
+                case '+':
+                    nURL += "&id=" + produit.getID() + "&quantite=" + (produit.getQuantite() + 1);
+                    break;
+                case '-':
+                    nURL += "&id=" + produit.getID() + "&quantite=" + (produit.getQuantite() - 1);
+                    break;
+                case '.':
+                    nURL += "&ignore=" + produit.getID();
+                    break;
+            }
+            Request nRequest = new Request.Builder()
+                    .url(nURL)
+                    .put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+                    .build();
+            App.httpClient.newCall(nRequest).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    if (response.code() == 202) {
+                        switch (mode) {
+                            case ',':
+                                produit.open();
+                                break;
+                            case '+':
+                                produit.increment();
+                                break;
+                            case '-':
+                                produit.decrement();
+                                break;
+                            case '.':
+                                produit.ignore();
+                                break;
+                        }
+                        ((KitchenAdapter) cv.getTag(R.id.tag_adapter)).update(null);
+                    }
+                }
+            });
+        }
+
+        private void deleteItem(final Produit produit) {
+            String nURL = App.getUri(App.getContext(), App.CUISINE) + "&id=" + produit.getID();
+            Request nRequest = new Request.Builder()
+                    .url(nURL)
+                    .delete()
+                    .build();
+            App.httpClient.newCall(nRequest).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    Log.d("Nawras", response.code() + "");
+                    if (response.code() == 202) {
+                        ((KitchenAdapter) cv.getTag(R.id.tag_adapter)).update(produit);
+                    }
+                }
+            });
         }
     }
 }

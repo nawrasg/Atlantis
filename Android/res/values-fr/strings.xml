@@ -188,7 +188,7 @@
     <string name="menu_fragment_courses_offline">Mode hors-connexion</string>
     <string name="menu_fragment_courses_clear">Tout effacer</string>
 
-    <!-- fragment_cuisine -->
+    <!-- fragment_kitchen -->
     <string name="menu_fragment_cuisine_add">Ajouter</string>
     <string name="menu_fragment_cuisine_show_all">Tout afficher</string>
 
