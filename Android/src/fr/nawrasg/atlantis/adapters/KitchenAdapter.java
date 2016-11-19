@@ -81,7 +81,11 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenV
             }
         }
         if (nDate < 0) {
-            holder.expiry.setBackgroundColor(Color.RED);
+            if (nProduit.isIgnore()) {
+                holder.expiry.setBackgroundColor(Color.BLACK);
+            } else {
+                holder.expiry.setBackgroundColor(Color.RED);
+            }
             holder.description.setText(App.getContext().getResources().getString(R.string.adapter_cuisine_item_date_peremption) + " " + Math.abs(nDate) + " " + nDateUnit);
         } else {
             holder.expiry.setBackgroundColor(Color.TRANSPARENT);
