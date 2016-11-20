@@ -3,6 +3,7 @@ package fr.nawrasg.atlantis.other;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.provider.ContactsContract;
 
 /**
  * Created by Nawras on 23/06/2016.
@@ -83,5 +84,9 @@ public final class AtlantisContract {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AtlantisContract.CONTENT_URI, "widgets");
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.widgets";
         public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.widgets";
+        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_TYPE = "type";
+        public static final String COLUMN_ORDER = "order";
+        public static final String COLUMN_ITEM = "item";
     }
 }
