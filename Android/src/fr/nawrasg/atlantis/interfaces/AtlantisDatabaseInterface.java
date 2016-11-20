@@ -5,6 +5,16 @@ package fr.nawrasg.atlantis.interfaces;
  */
 
 public interface AtlantisDatabaseInterface {
+    String LIGHTS_TABLE_NAME = "at_lights";
+    String ROOMS_TABLE_NAME = "at_room";
+    String EAN_TABLE_NAME = "at_ean";
+    String SCENARIOS_TABLE_NAME = "at_scenarios";
+    String PLANTS_TABLE_NAME = "at_plants";
+    String DEVICES_TABLE_NAME = "at_devices";
+    String SENSORS_TABLE_NAME = "at_sensors";
+    String SENSORS_DEVICES_TABLE_NAME = "at_sensors_devices";
+    String TABLE_NAME_WIDGETS = "at_widgets";
+
     String EAN_TABLE_CREATE = "CREATE TABLE at_ean (" +
             "ean TEXT UNIQUE, \n" +
             "nom TEXT" +
@@ -79,12 +89,10 @@ public interface AtlantisDatabaseInterface {
             "room INTEGER" +
             ")";
 
-    String LIGHTS_TABLE_NAME = "at_lights";
-    String ROOMS_TABLE_NAME = "at_room";
-    String EAN_TABLE_NAME = "at_ean";
-    String SCENARIOS_TABLE_NAME = "at_scenarios";
-    String PLANTS_TABLE_NAME = "at_plants";
-    String DEVICES_TABLE_NAME = "at_devices";
-    String SENSORS_TABLE_NAME = "at_sensors";
-    String SENSORS_DEVICES_TABLE_NAME = "at_sensors_devices";
+    String TABLE_CREATE_WIDGETS = "CREATE TABLE " + TABLE_NAME_WIDGETS + " (" +
+            "_id INTEGER, \n" +
+            "type INTEGER, \n" +
+            "order INTEGER, \n" +
+            "item INTEGER)";
+
 }
