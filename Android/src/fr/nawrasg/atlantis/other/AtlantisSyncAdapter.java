@@ -83,7 +83,7 @@ public class AtlantisSyncAdapter extends AbstractThreadedSyncAdapter {
                         if (!nJSON.isNull("sensors")) {
                             insertSensors(nJSON.getJSONObject("sensors"));
                         }
-                        if(!nJSON.isNull("user")){
+                        if (!nJSON.isNull("user")) {
                             getUser(nJSON.getJSONObject("user"));
                         }
                         App.setLong(mContext, "lastmodified", (System.currentTimeMillis() / 1000));
