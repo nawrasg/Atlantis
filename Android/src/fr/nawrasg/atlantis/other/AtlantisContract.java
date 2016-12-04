@@ -33,6 +33,7 @@ public final class AtlantisContract {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AtlantisContract.CONTENT_URI, "scenarios");
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.scenarios";
         public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.scenarios";
+        public static final String COLUMN_LABEL = "file";
     }
 
     public static final class Lights implements BaseColumns {
@@ -86,7 +87,7 @@ public final class AtlantisContract {
         public static final String CONTENT_TYPE_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.fr.nawrasg.atlantis.widgets";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_TYPE = "type";
-        public static final String COLUMN_ORDER = "order";
+        public static final String COLUMN_ORDER = "rang";
         public static final String COLUMN_ITEM = "item";
     }
 }

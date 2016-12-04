@@ -3,7 +3,9 @@ package fr.nawrasg.atlantis.fragments;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,11 +40,14 @@ import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.WidgetAdapter;
+import fr.nawrasg.atlantis.interfaces.AtlantisDatabaseInterface;
 import fr.nawrasg.atlantis.other.AtlantisContract;
+import fr.nawrasg.atlantis.other.AtlantisOpenHelper;
 import fr.nawrasg.atlantis.type.Alarm;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
 import fr.nawrasg.atlantis.type.Scenario;
+import fr.nawrasg.atlantis.type.Widget;
 
 /**
  * Created by Nawras on 29/10/2016.
@@ -57,6 +62,7 @@ public class WidgetsFragment extends Fragment {
     private Alarm mAlarm;
     private ArrayList<Object> mList;
     private WidgetAdapter mAdapter;
+
     @Bind(R.id.rvWidget)
     RecyclerView mRecyclerView;
     @Bind(R.id.imgWidgetWeatherToday)
@@ -72,7 +78,7 @@ public class WidgetsFragment extends Fragment {
         View nView = inflater.inflate(R.layout.fragment_widgets, container, false);
         mContext = getActivity();
         ButterKnife.bind(this, nView);
-        mHandler = new Handler(){
+        mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 setModeLabel(msg.getData().getString("mode"));
@@ -85,12 +91,20 @@ public class WidgetsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.fragment_widgets_column), StaggeredGridLayoutManager.VERTICAL));
         createFAB();
-        ((MainActivity)getActivity()).setProgressBar(true);
+        ((MainActivity) getActivity()).setProgressBar(true);
         get();
-        getItems();
-        getLightStatus();
+        //getItems();
+        //getLightStatus();
+        loadWidgets();
+        ((MainActivity) getActivity()).setProgressBar(false);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.fragment_widgets_column), StaggeredGridLayoutManager.VERTICAL));
     }
 
     @Override
@@ -101,7 +115,7 @@ public class WidgetsFragment extends Fragment {
         super.onDestroy();
     }
 
-    private void get(){
+    private void get() {
         String nURL = App.getUri(mContext, App.HOME);
         Request nRequest = new Request.Builder()
                 .url(nURL)
@@ -114,14 +128,14 @@ public class WidgetsFragment extends Fragment {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if(response.code() == 202){
+                if (response.code() == 202) {
                     try {
                         JSONObject nJson = new JSONObject(response.body().string());
                         JSONArray nArr = nJson.getJSONArray("weather");
                         final JSONObject nJsonW1 = nArr.getJSONObject(0);
                         final JSONObject nJsonW2 = nArr.getJSONObject(1);
                         final String nMode = nJson.getString("mode");
-                        if(isAdded()){
+                        if (isAdded()) {
                             mHandler.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -140,7 +154,7 @@ public class WidgetsFragment extends Fragment {
         });
     }
 
-    private void getLightStatus(){
+    private void getLightStatus() {
         String nURL = App.getUri(mContext, App.LIGHTS);
         Request nRequest = new Request.Builder()
                 .url(nURL)
@@ -160,14 +174,16 @@ public class WidgetsFragment extends Fragment {
                         JSONObject json = arr.getJSONObject(i);
                         Light nLight = new Hue(json);
                         int nI = mList.indexOf(nLight);
-                        ((Hue)mList.get(nI)).update((Hue)nLight);
+                        if (nI > -1) {
+                            ((Hue) mList.get(nI)).update((Hue) nLight);
+                        }
                     }
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             mAdapter.notifyDataSetChanged();
                             //mSwipeLayout.setRefreshing(false);
-                            ((MainActivity)getActivity()).setProgressBar(false);
+                            ((MainActivity) getActivity()).setProgressBar(false);
                         }
                     });
                 } catch (JSONException e) {
@@ -179,14 +195,7 @@ public class WidgetsFragment extends Fragment {
 
     private void getItems() {
         ContentResolver nResolver = mContext.getContentResolver();
-        Cursor nScenarioCursor = nResolver.query(AtlantisContract.Scenarios.CONTENT_URI, null, null, null, null, null);
         mList = new ArrayList<>();
-        if (nScenarioCursor.moveToFirst()) {
-            do {
-                Scenario nScenario = new Scenario(nScenarioCursor);
-                mList.add(nScenario);
-            } while (nScenarioCursor.moveToNext());
-        }
         Cursor nLightCursor = nResolver.query(AtlantisContract.Lights.CONTENT_URI, null, null, null, null);
         if (nLightCursor.moveToFirst()) {
             do {
@@ -194,14 +203,34 @@ public class WidgetsFragment extends Fragment {
                 mList.add(nLight);
             } while (nLightCursor.moveToNext());
         }
+
+    }
+
+    private void loadWidgets() {
+        AtlantisOpenHelper nHelper = new AtlantisOpenHelper(mContext);
+        SQLiteDatabase nDB = nHelper.getReadableDatabase();
+        mList = new ArrayList<>();
+        getScenarios(nDB);
         mAdapter = new WidgetAdapter(mContext, mList);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private Drawable getDraw(int resource){
+    private void getScenarios(SQLiteDatabase db) {
+        String nQuery = "SELECT * FROM " + AtlantisDatabaseInterface.SCENARIOS_TABLE_NAME + " INNER JOIN " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + " ON " +
+                AtlantisContract.Scenarios.COLUMN_LABEL + " = " + AtlantisContract.Widgets.COLUMN_ITEM + " WHERE " + AtlantisContract.Widgets.COLUMN_TYPE + " = " + Widget.WIDGET_SCENARIO;
+        Cursor nCursor = db.rawQuery(nQuery, null);
+        if (nCursor != null && nCursor.moveToFirst()) {
+            do {
+                Scenario nScenario = new Scenario(nCursor);
+                mList.add(nScenario);
+            } while (nCursor.moveToNext());
+        }
+    }
+
+    private Drawable getDraw(int resource) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return getResources().getDrawable(resource, mContext.getTheme());
-        }else{
+        } else {
             return getResources().getDrawable(resource, null);
         }
     }
@@ -270,7 +299,7 @@ public class WidgetsFragment extends Fragment {
                 .build();
     }
 
-    private void setModeLabel(String mode){
+    private void setModeLabel(String mode) {
         String nModePrefix = getResources().getString(R.string.fragment_home_mode);
         String nModePost = "";
         int nModeIcon = 0;
@@ -289,7 +318,7 @@ public class WidgetsFragment extends Fragment {
                 break;
         }
         //txtMode.setText(nModePrefix + " " + nModePost);
-        if(nModeIcon != 0){
+        if (nModeIcon != 0) {
             mAlarmIcon.setImageResource(nModeIcon);
         }
     }

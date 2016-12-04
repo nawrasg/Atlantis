@@ -100,6 +100,7 @@ public class AtlantisContentProvider extends ContentProvider {
                 break;
             case SCENARIOS_LIST:
                 nBuilder.setTables(AtlantisDatabaseInterface.SCENARIOS_TABLE_NAME);
+                //nDB.rawQuery();
                 break;
             case LIGHTS_LIST:
                 nBuilder.setTables(AtlantisDatabaseInterface.LIGHTS_TABLE_NAME);
@@ -287,6 +288,8 @@ public class AtlantisContentProvider extends ContentProvider {
             case SENSORS_DEVICES_LIST:
                 return nDB.delete(AtlantisDatabaseInterface.SENSORS_DEVICES_TABLE_NAME, selection, selectionArgs);
             case WIDGETS_LIST:
+                return nDB.delete(AtlantisDatabaseInterface.TABLE_NAME_WIDGETS, selection, selectionArgs);
+            case WIDGETS_ITEM:
                 return nDB.delete(AtlantisDatabaseInterface.TABLE_NAME_WIDGETS, selection, selectionArgs);
         }
         return nCount;
