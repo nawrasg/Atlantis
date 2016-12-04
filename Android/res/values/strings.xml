@@ -321,4 +321,5 @@
     <string name="xml_pref_divers_log_section">Logs</string>
     <string name="xml_pref_divers_log_activate_title">Activate logging</string>
     <string name="xml_pref_divers_log_level_title">Logging level</string>
+    <string name="fragment_scenarios_dashboard">Add widgets to dashboard</string>
 </resources>

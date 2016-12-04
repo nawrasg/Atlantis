@@ -317,4 +317,5 @@
     <string name="xml_pref_divers_log_section">Journalisation</string>
     <string name="xml_pref_divers_log_activate_title">Activer la journalisation</string>
     <string name="xml_pref_divers_log_level_title">Niveau de journalisation</string>
+    <string name="fragment_scenarios_dashboard">Ajouter des widgets à l\'accueil</string>
 </resources>

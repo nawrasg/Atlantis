@@ -20,6 +20,12 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
+        <CheckBox
+            android:id="@+id/cbScenarioDashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/txtScenarioLabel"
             android:layout_width="0dp"

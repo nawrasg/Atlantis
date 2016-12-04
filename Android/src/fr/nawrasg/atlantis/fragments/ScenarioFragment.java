@@ -9,6 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -38,6 +41,7 @@ public class ScenarioFragment extends Fragment {
         View nView = inflater.inflate(R.layout.fragment_scenario, container, false);
         mContext = getActivity();
         ButterKnife.bind(this, nView);
+        setHasOptionsMenu(true);
         return nView;
     }
 
@@ -46,6 +50,22 @@ public class ScenarioFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         getItems();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_scenarios, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemScenarioDashboard:
+                mAdapter.modeDashboard();
+                return true;
+        }
+        return false;
     }
 
     private void getItems() {
