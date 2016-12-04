@@ -1,7 +1,6 @@
 package fr.nawrasg.atlantis.fragments;
 
 import android.app.Fragment;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -95,9 +94,8 @@ public class WidgetsFragment extends Fragment {
         createFAB();
         ((MainActivity) getActivity()).setProgressBar(true);
         get();
-        //getItems();
-        //getLightStatus();
         loadWidgets();
+        getLightStatus();
         ((MainActivity) getActivity()).setProgressBar(false);
     }
 
@@ -193,24 +191,12 @@ public class WidgetsFragment extends Fragment {
         });
     }
 
-    private void getItems() {
-        ContentResolver nResolver = mContext.getContentResolver();
-        mList = new ArrayList<>();
-        Cursor nLightCursor = nResolver.query(AtlantisContract.Lights.CONTENT_URI, null, null, null, null);
-        if (nLightCursor.moveToFirst()) {
-            do {
-                Light nLight = new Hue(nLightCursor);
-                mList.add(nLight);
-            } while (nLightCursor.moveToNext());
-        }
-
-    }
-
     private void loadWidgets() {
         AtlantisOpenHelper nHelper = new AtlantisOpenHelper(mContext);
         SQLiteDatabase nDB = nHelper.getReadableDatabase();
         mList = new ArrayList<>();
         getScenarios(nDB);
+        getLights(nDB);
         mAdapter = new WidgetAdapter(mContext, mList);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -223,6 +209,19 @@ public class WidgetsFragment extends Fragment {
             do {
                 Scenario nScenario = new Scenario(nCursor);
                 mList.add(nScenario);
+            } while (nCursor.moveToNext());
+        }
+    }
+
+    private void getLights(SQLiteDatabase db) {
+        String nQuery = "SELECT * FROM " + AtlantisDatabaseInterface.LIGHTS_TABLE_NAME + " INNER JOIN " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + " ON " +
+                AtlantisDatabaseInterface.LIGHTS_TABLE_NAME + "." + AtlantisContract.Lights.COLUMN_ID + " = " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + "." +
+                AtlantisContract.Widgets.COLUMN_ITEM + " WHERE " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + "." + AtlantisContract.Widgets.COLUMN_TYPE + " = " + Widget.WIDGET_LIGHT;
+        Cursor nCursor = db.rawQuery(nQuery, null);
+        if (nCursor != null && nCursor.moveToFirst()) {
+            do {
+                Hue nLight = new Hue(nCursor);
+                mList.add(nLight);
             } while (nCursor.moveToNext());
         }
     }

@@ -1,6 +1,9 @@
 package fr.nawrasg.atlantis.adapters;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -8,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -28,9 +33,12 @@ import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.fragments.dialogs.LightDialogFragment;
+import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
 import fr.nawrasg.atlantis.type.Room;
+import fr.nawrasg.atlantis.type.Scenario;
+import fr.nawrasg.atlantis.type.Widget;
 
 /**
  * Created by Nawras on 29/10/2016.
@@ -40,16 +48,20 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
     private Context mContext;
     private ArrayList<Light> mList;
     private ArrayList<Room> mRoomList;
+    private boolean mDashboard = false;
+    private ContentResolver mResolver;
 
     public LightAdapter(Context context, ArrayList<Light> list) {
         mContext = context;
         mList = list;
+        mResolver = mContext.getContentResolver();
     }
 
     public LightAdapter(Context context, ArrayList<Light> list, ArrayList<Room> rooms) {
         mContext = context;
         mList = list;
         mRoomList = rooms;
+        mResolver = mContext.getContentResolver();
     }
 
     @Override
@@ -60,7 +72,7 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
 
     @Override
     public void onBindViewHolder(final LightViewHolder holder, int position) {
-        Light nLight = mList.get(position);
+        final Light nLight = mList.get(position);
         String nName = nLight.getName();
         nName += getRoom(nLight);
         holder.lblLightName.setText(nName);
@@ -115,6 +127,51 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
                 int nValue = getLightIntensity(nLight);
                 holder.sbLightIntensity.setProgress(nValue);
                 break;
+        }
+        holder.dashboard.setChecked(isDashboard(nLight));
+        if (mDashboard) {
+            holder.dashboard.setVisibility(View.VISIBLE);
+        } else {
+            holder.dashboard.setVisibility(View.GONE);
+        }
+        holder.dashboard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    addToDashboard(nLight);
+                } else {
+                    removeFromDashboard(nLight);
+                }
+            }
+        });
+    }
+
+    public void modeDashboard() {
+        mDashboard = !mDashboard;
+        notifyDataSetChanged();
+    }
+
+    private void addToDashboard(Light light) {
+        ContentValues nValues = new ContentValues();
+        nValues.put(AtlantisContract.Widgets.COLUMN_TYPE, Widget.WIDGET_LIGHT);
+        nValues.put(AtlantisContract.Widgets.COLUMN_ITEM, light.getID());
+        mResolver.insert(AtlantisContract.Widgets.CONTENT_URI, nValues);
+    }
+
+    private void removeFromDashboard(Light light) {
+        String nWhere = AtlantisContract.Widgets.COLUMN_ITEM + " = ? AND " + AtlantisContract.Widgets.COLUMN_TYPE + " = ?";
+        String[] nArgs = {light.getID(), Widget.WIDGET_LIGHT + ""};
+        int i = mResolver.delete(AtlantisContract.Widgets.CONTENT_URI, nWhere, nArgs);
+    }
+
+    private boolean isDashboard(Light light) {
+        String nWhere = AtlantisContract.Widgets.COLUMN_ITEM + " = ? AND " + AtlantisContract.Widgets.COLUMN_TYPE + " = ?";
+        String[] nArgs = {light.getID(), Widget.WIDGET_LIGHT + ""};
+        Cursor nCursor = mResolver.query(AtlantisContract.Widgets.CONTENT_URI, null, nWhere, nArgs, null);
+        if (nCursor != null && nCursor.getCount() > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -228,6 +285,8 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
         Switch swtLightToggle;
         @Bind(R.id.sbLightIntensity)
         SeekBar sbLightIntensity;
+        @Bind(R.id.cbLightDashboard)
+        CheckBox dashboard;
 
         public LightViewHolder(View itemView) {
             super(itemView);

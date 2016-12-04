@@ -12,6 +12,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -60,6 +63,7 @@ public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mContext = getActivity();
         mHandler = new Handler();
         mSwipeLayout.setOnRefreshListener(this);
+        setHasOptionsMenu(true);
         return nView;
     }
 
@@ -70,6 +74,22 @@ public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         ((MainActivity) getActivity()).setProgressBar(true);
         getItems();
         getStatus();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_light, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemLightDashboard:
+                mAdapter.modeDashboard();
+                return true;
+        }
+        return false;
     }
 
     private void getItems() {
