@@ -35,14 +35,13 @@ import fr.nawrasg.atlantis.adapters.LightAdapter;
 import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
-import fr.nawrasg.atlantis.type.Plant;
 import fr.nawrasg.atlantis.type.Room;
 
 /**
  * Created by Nawras on 29/10/2016.
  */
 
-public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private Context mContext;
     private Handler mHandler;
     private ArrayList<Light> mList;
@@ -68,7 +67,7 @@ public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        ((MainActivity)getActivity()).setProgressBar(true);
+        ((MainActivity) getActivity()).setProgressBar(true);
         getItems();
         getStatus();
     }
@@ -77,12 +76,12 @@ public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mList = new ArrayList<Light>();
         ContentResolver nResolver = mContext.getContentResolver();
         Cursor nRoomsCursor = nResolver.query(AtlantisContract.Rooms.CONTENT_URI, null, null, null, null);
-        if(nRoomsCursor.moveToFirst()){
+        if (nRoomsCursor.moveToFirst()) {
             mRoomList = new ArrayList<>();
-            do{
+            do {
                 Room nRoom = new Room(nRoomsCursor);
                 mRoomList.add(nRoom);
-            }while(nRoomsCursor.moveToNext());
+            } while (nRoomsCursor.moveToNext());
         }
         Cursor nCursor = nResolver.query(AtlantisContract.Lights.CONTENT_URI, null, null, null, null);
         if (nCursor.moveToFirst()) {
@@ -115,14 +114,16 @@ public class LightFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         JSONObject json = arr.getJSONObject(i);
                         Light nLight = new Hue(json);
                         int nI = mList.indexOf(nLight);
-                        ((Hue)mList.get(nI)).update((Hue)nLight);
+                        if (nI > -1) {
+                            ((Hue) mList.get(nI)).update((Hue) nLight);
+                        }
                     }
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             mAdapter.notifyDataSetChanged();
                             mSwipeLayout.setRefreshing(false);
-                            ((MainActivity)getActivity()).setProgressBar(false);
+                            ((MainActivity) getActivity()).setProgressBar(false);
                         }
                     });
                 } catch (JSONException e) {
