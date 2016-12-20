@@ -9,9 +9,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.nawrasg.atlantis.other.AtlantisContract;
+import fr.nawrasg.atlantis.interfaces.Widget;
 
-public class Light extends PDevice implements Parcelable {
+public class Light extends PDevice implements Parcelable, Widget{
     protected String mID, mName, mProtocol, mIP, mRoom;
+    protected int mOrder;
 
     public static final String HUE = "hue";
     public static final String TYPE = "light";
@@ -105,5 +107,26 @@ public class Light extends PDevice implements Parcelable {
             return (getID().equals(((Light) o).getID()));
         }
         return false;
+    }
+
+    @Override
+    public int getOrder() {
+        return mOrder;
+    }
+
+    @Override
+    public void setOrder(int order) {
+        mOrder = order;
+    }
+
+    @Override
+    public int compareTo(Widget another) {
+        if(getOrder() == another.getOrder()){
+            return 0;
+        }else if(getOrder() > another.getOrder()){
+            return 1;
+        }else{
+            return -1;
+        }
     }
 }

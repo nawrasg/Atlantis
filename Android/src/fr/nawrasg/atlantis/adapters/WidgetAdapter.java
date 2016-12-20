@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.fragments.dialogs.LightDialogFragment;
+import fr.nawrasg.atlantis.interfaces.Widget;
 import fr.nawrasg.atlantis.type.Alarm;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
@@ -40,14 +41,14 @@ import fr.nawrasg.atlantis.type.Scenario;
 public class WidgetAdapter extends RecyclerView.Adapter<WidgetAdapter.ViewHolder> {
     private Context mContext;
 
-    private ArrayList<Object> mList;
+    private ArrayList<Widget> mList;
 
     public static final int LIGHT = 0;
     public static final int SENSOR = 1;
     public static final int CAMERA = 2;
     public static final int SCENARIO = 3;
 
-    public WidgetAdapter(Context context, ArrayList<Object> list){
+    public WidgetAdapter(Context context, ArrayList<Widget> list){
         mContext = context;
         mList = list;
     }

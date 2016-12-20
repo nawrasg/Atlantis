@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,13 +41,14 @@ import fr.nawrasg.atlantis.R;
 import fr.nawrasg.atlantis.activities.MainActivity;
 import fr.nawrasg.atlantis.adapters.WidgetAdapter;
 import fr.nawrasg.atlantis.interfaces.AtlantisDatabaseInterface;
+import fr.nawrasg.atlantis.interfaces.Widget;
 import fr.nawrasg.atlantis.other.AtlantisContract;
 import fr.nawrasg.atlantis.other.AtlantisOpenHelper;
 import fr.nawrasg.atlantis.type.Alarm;
 import fr.nawrasg.atlantis.type.Hue;
 import fr.nawrasg.atlantis.type.Light;
 import fr.nawrasg.atlantis.type.Scenario;
-import fr.nawrasg.atlantis.type.Widget;
+
 
 /**
  * Created by Nawras on 29/10/2016.
@@ -59,7 +61,7 @@ public class WidgetsFragment extends Fragment {
     private SubActionButton mDayButton, mNightButton, mAwayButton;
     private Handler mHandler;
     private Alarm mAlarm;
-    private ArrayList<Object> mList;
+    private ArrayList<Widget> mList;
     private WidgetAdapter mAdapter;
 
     @Bind(R.id.rvWidget)
@@ -95,6 +97,7 @@ public class WidgetsFragment extends Fragment {
         ((MainActivity) getActivity()).setProgressBar(true);
         get();
         loadWidgets();
+        Collections.sort(mList);
         getLightStatus();
         ((MainActivity) getActivity()).setProgressBar(false);
     }
@@ -203,11 +206,12 @@ public class WidgetsFragment extends Fragment {
 
     private void getScenarios(SQLiteDatabase db) {
         String nQuery = "SELECT * FROM " + AtlantisDatabaseInterface.SCENARIOS_TABLE_NAME + " INNER JOIN " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + " ON " +
-                AtlantisContract.Scenarios.COLUMN_LABEL + " = " + AtlantisContract.Widgets.COLUMN_ITEM + " WHERE " + AtlantisContract.Widgets.COLUMN_TYPE + " = " + Widget.WIDGET_SCENARIO;
+                AtlantisContract.Scenarios.COLUMN_LABEL + " = " + AtlantisContract.Widgets.COLUMN_ITEM + " WHERE " + AtlantisContract.Widgets.COLUMN_TYPE + " = " + fr.nawrasg.atlantis.type.Widget.WIDGET_SCENARIO;
         Cursor nCursor = db.rawQuery(nQuery, null);
         if (nCursor != null && nCursor.moveToFirst()) {
             do {
                 Scenario nScenario = new Scenario(nCursor);
+                Log.d("Nawras", nScenario.getLabel() + " : " + nCursor.getInt(nCursor.getColumnIndex(AtlantisContract.Widgets.COLUMN_ORDER)));
                 mList.add(nScenario);
             } while (nCursor.moveToNext());
         }
@@ -216,11 +220,12 @@ public class WidgetsFragment extends Fragment {
     private void getLights(SQLiteDatabase db) {
         String nQuery = "SELECT * FROM " + AtlantisDatabaseInterface.LIGHTS_TABLE_NAME + " INNER JOIN " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + " ON " +
                 AtlantisDatabaseInterface.LIGHTS_TABLE_NAME + "." + AtlantisContract.Lights.COLUMN_ID + " = " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + "." +
-                AtlantisContract.Widgets.COLUMN_ITEM + " WHERE " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + "." + AtlantisContract.Widgets.COLUMN_TYPE + " = " + Widget.WIDGET_LIGHT;
+                AtlantisContract.Widgets.COLUMN_ITEM + " WHERE " + AtlantisDatabaseInterface.TABLE_NAME_WIDGETS + "." + AtlantisContract.Widgets.COLUMN_TYPE + " = " + fr.nawrasg.atlantis.type.Widget.WIDGET_LIGHT;
         Cursor nCursor = db.rawQuery(nQuery, null);
         if (nCursor != null && nCursor.moveToFirst()) {
             do {
                 Hue nLight = new Hue(nCursor);
+                Log.d("Nawras", nLight.getName() + " : " + nCursor.getInt(nCursor.getColumnIndex(AtlantisContract.Widgets.COLUMN_ORDER)));
                 mList.add(nLight);
             } while (nCursor.moveToNext());
         }
