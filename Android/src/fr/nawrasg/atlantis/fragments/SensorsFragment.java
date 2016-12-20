@@ -118,7 +118,9 @@ public class SensorsFragment extends ListFragment implements SwipeRefreshLayout.
                             nList.add(nChildSensor);
                         }
                         int nIndex = mList.indexOf(nSensor);
-                        mList.get(nIndex).update(nList);
+                        if(nIndex >= 0){
+                            mList.get(nIndex).update(nList);
+                        }
                     }
                 } catch (JSONException e) {
                     Log.e("Atlantis", e.toString());
