@@ -93,6 +93,6 @@ public interface AtlantisDatabaseInterface {
             "_id INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
             "type INTEGER, \n" +
             "item TEXT, \n" +
-            "rang INTEGER NOT NULL DEFAULT 999)";
+            "rang INTEGER NOT NULL AUTOINCREMENT)";
 
 }
