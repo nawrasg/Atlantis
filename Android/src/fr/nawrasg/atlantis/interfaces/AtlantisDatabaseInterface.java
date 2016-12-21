@@ -90,9 +90,9 @@ public interface AtlantisDatabaseInterface {
             ")";
 
     String TABLE_CREATE_WIDGETS = "CREATE TABLE " + TABLE_NAME_WIDGETS + " (" +
-            "_id INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+            "_id INTEGER PRIMARY KEY, \n" +
             "type INTEGER, \n" +
             "item TEXT, \n" +
-            "rang INTEGER NOT NULL AUTOINCREMENT)";
+            "rang INTEGER NOT NULL DEFAULT 0)";
 
 }
