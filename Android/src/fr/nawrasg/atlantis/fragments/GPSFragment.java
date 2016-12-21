@@ -84,7 +84,7 @@ public class GPSFragment extends Fragment {
                 nDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((MainActivity) getActivity()).loadFragment(new HomeFragment(), true);
+                        ((MainActivity) getActivity()).loadFragment(new WidgetsFragment(), true);
                     }
                 });
                 nDialog.show();
