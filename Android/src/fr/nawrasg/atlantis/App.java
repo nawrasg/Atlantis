@@ -24,6 +24,7 @@ public class App extends Application{
 
 	public static final int CODE_PLAN = 5;
 	public static final int PERMISSION_LOCATION = 1;
+	public static final float FRAME_LAYOUT_25 = 1.5f;
 	public static final float FRAME_LAYOUT_50 = 1;
 	public static final float FRAME_LAYOUT_33 = 2;
 	public static final float FRAME_LAYOUT_66 = 0.5f;
