@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -243,57 +245,79 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nDrawerLayout.closeDrawers();
     }
 
+    private void setFrameWeight(float weight) {
+        FrameLayout nFrame2 = (FrameLayout) findViewById(R.id.main_fragment2);
+        if (nFrame2 != null) {
+            LinearLayout.LayoutParams nParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight);
+            nFrame2.setLayoutParams(nParams);
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.itemNavigationHome:
                 loadFragment(new WidgetsFragment(), true);
                 loadFragment(new PlantFragment(), false);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationLights:
                 loadFragment(new LightFragment(), true);
                 loadFragment(new SensorsFragment(), false);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationSensors:
                 loadFragment(new SensorsFragment(), true);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationCameras:
                 loadFragment(new CameraFragment(), true);
                 loadFragment(new ScenarioFragment(), false);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationScenarios:
                 loadFragment(new ScenarioFragment(), true);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationCourses:
                 loadFragment(new CoursesFragment(), true);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationCuisine:
                 loadFragment(new KitchenFragment(), true);
                 loadFragment(new CuisineAddFragment(), false);
+                setFrameWeight(App.FRAME_LAYOUT_33);
                 return true;
             case R.id.itemNavigationPharmacie:
                 loadFragment(new PharmacieFragment(), true);
                 loadFragment(new PharmacieAddFragment(), false);
+                setFrameWeight(App.FRAME_LAYOUT_33);
                 return true;
             case R.id.itemNavigationEntretien:
                 loadFragment(new EntretienFragment(), true);
                 loadFragment(new EntretienAddFragment(), false);
+                setFrameWeight(App.FRAME_LAYOUT_33);
                 return true;
             case R.id.itemNavigationMusic:
                 loadFragment(new MusicFragment(), true);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationPlants:
                 loadFragment(new PlantFragment(), true);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationGeo:
                 loadFragment(new GPSFragment(), true);
                 loadFragment(new MapsFragment(), false);
+                setFrameWeight(App.FRAME_LAYOUT_66);
                 return true;
             case R.id.itemNavigationDevices:
                 loadFragment(new ConnectedDevicesFragment(), true);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationHistory:
                 loadFragment(new HistoryFragment(), true);
+                setFrameWeight(App.FRAME_LAYOUT_50);
                 return true;
             case R.id.itemNavigationSettings:
                 startActivity(new Intent(this, SettingsActivity.class));
