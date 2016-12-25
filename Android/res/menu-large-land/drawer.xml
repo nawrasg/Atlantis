@@ -9,11 +9,11 @@
         <item
             android:id="@+id/itemNavigationLights"
             android:icon="@drawable/ng_bulb"
-            android:title="@string/main_menu_lights"/>
+            android:title="@string/main_menu_lights_sensors"/>
         <item
             android:id="@+id/itemNavigationCameras"
             android:icon="@drawable/ng_camera"
-            android:title="@string/main_menu_cameras"/>
+            android:title="@string/main_menu_cameras_scenarios"/>
     </group>
 
     <item android:title="@string/main_menu_db">
