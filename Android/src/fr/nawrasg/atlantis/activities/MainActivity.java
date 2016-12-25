@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         loadFragment(new WidgetsFragment(), true);
         loadFragment(new PlantFragment(), false);
+        setFrameWeight(App.FRAME_LAYOUT_25);
         handleIntent(getIntent());
     }
 
@@ -259,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.itemNavigationHome:
                 loadFragment(new WidgetsFragment(), true);
                 loadFragment(new PlantFragment(), false);
-                setFrameWeight(App.FRAME_LAYOUT_50);
+                setFrameWeight(App.FRAME_LAYOUT_25);
                 return true;
             case R.id.itemNavigationLights:
                 loadFragment(new LightFragment(), true);
