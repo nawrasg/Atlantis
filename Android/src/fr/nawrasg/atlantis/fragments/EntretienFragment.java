@@ -38,183 +38,183 @@ import fr.nawrasg.atlantis.adapters.EntretienAdapter;
 import fr.nawrasg.atlantis.type.Entretien;
 
 public class EntretienFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
-	@Bind(R.id.swipeEntretien)
-	SwipeRefreshLayout mSwipeLayout;
-	private Context mContext;
-	private EntretienAdapter mAdapter;
-	private Handler mHandler;
+    @Bind(R.id.swipeEntretien)
+    SwipeRefreshLayout mSwipeLayout;
+    private Context mContext;
+    private EntretienAdapter mAdapter;
+    private Handler mHandler;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mContext = getActivity();
-		mHandler = new Handler();
-		View nV = inflater.inflate(R.layout.layout_entretien, container, false);
-		ButterKnife.bind(this, nV);
-		if (getActivity().findViewById(R.id.main_fragment2) == null) {
-			setHasOptionsMenu(true);
-		}
-		mSwipeLayout.setOnRefreshListener(this);
-		return nV;
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mContext = getActivity();
+        mHandler = new Handler();
+        View nV = inflater.inflate(R.layout.fragment_entretien, container, false);
+        ButterKnife.bind(this, nV);
+        if (getActivity().findViewById(R.id.main_fragment2) == null) {
+            setHasOptionsMenu(true);
+        }
+        mSwipeLayout.setOnRefreshListener(this);
+        return nV;
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		registerForContextMenu(getListView());
-	}
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        registerForContextMenu(getListView());
+    }
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.fragment_entretien, menu);
-	}
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_entretien, menu);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.itemEntretienAdd:
-				((MainActivity) getActivity()).loadFragment(new EntretienAddFragment(), true);
-				return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemEntretienAdd:
+                ((MainActivity) getActivity()).loadFragment(new EntretienAddFragment(), true);
+                return true;
+        }
+        return false;
+    }
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		((MainActivity)getActivity()).setProgressBar(true);
-		getItems();
-	}
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).setProgressBar(true);
+        getItems();
+    }
 
-	public void getItems() {
-		String nURL = App.getUri(mContext, App.ENTRETIEN);
-		Request nRequest = new Request.Builder()
-				.url(nURL)
-				.build();
-		App.httpClient.newCall(nRequest).enqueue(new Callback() {
-			@Override
-			public void onFailure(Request request, IOException e) {
+    public void getItems() {
+        String nURL = App.getUri(mContext, App.ENTRETIEN);
+        Request nRequest = new Request.Builder()
+                .url(nURL)
+                .build();
+        App.httpClient.newCall(nRequest).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
 
-			}
+            }
 
-			@Override
-			public void onResponse(Response response) throws IOException {
-				ArrayList<Entretien> nList = new ArrayList<Entretien>();
-				try {
-					JSONArray arr = new JSONArray(response.body().string());
-					for (int i = 0; i < arr.length(); i++) {
-						JSONObject jdata = arr.getJSONObject(i);
-						Entretien nMed = new Entretien(jdata);
-						nList.add(nMed);
-					}
-					mAdapter = new EntretienAdapter(mContext, nList);
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							setListAdapter(mAdapter);
-							mSwipeLayout.setRefreshing(false);
-							((MainActivity)getActivity()).setProgressBar(false);
-						}
-					});
-				} catch (JSONException e) {
-					Log.e("Atlantis", e.toString());
-				}
-			}
-		});
-	}
+            @Override
+            public void onResponse(Response response) throws IOException {
+                ArrayList<Entretien> nList = new ArrayList<Entretien>();
+                try {
+                    JSONArray arr = new JSONArray(response.body().string());
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject jdata = arr.getJSONObject(i);
+                        Entretien nMed = new Entretien(jdata);
+                        nList.add(nMed);
+                    }
+                    mAdapter = new EntretienAdapter(mContext, nList);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setListAdapter(mAdapter);
+                            mSwipeLayout.setRefreshing(false);
+                            ((MainActivity) getActivity()).setProgressBar(false);
+                        }
+                    });
+                } catch (JSONException e) {
+                    Log.e("Atlantis", e.toString());
+                }
+            }
+        });
+    }
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		getActivity().getMenuInflater().inflate(R.menu.context_entretien, menu);
-	}
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getActivity().getMenuInflater().inflate(R.menu.context_entretien, menu);
+    }
 
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		int position = info.position;
-		Entretien nEntretien = mAdapter.getItem(position);
-		switch (item.getItemId()) {
-			case R.id.itemEntretienPlus:
-				modifyItem(nEntretien, '+');
-				break;
-			case R.id.itemEntretienMinus:
-				modifyItem(nEntretien, '-');
-				break;
-			case R.id.itemEntretienDel:
-				deleteItem(nEntretien);
-				break;
-		}
-		return super.onContextItemSelected(item);
-	}
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+        Entretien nEntretien = mAdapter.getItem(position);
+        switch (item.getItemId()) {
+            case R.id.itemEntretienPlus:
+                modifyItem(nEntretien, '+');
+                break;
+            case R.id.itemEntretienMinus:
+                modifyItem(nEntretien, '-');
+                break;
+            case R.id.itemEntretienDel:
+                deleteItem(nEntretien);
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
 
-	private void modifyItem(final Entretien entretien, final char mode){
-		String nURL = App.getUri(mContext, App.ENTRETIEN);
-		switch(mode){
-			case '+':
-				nURL += "&id=" + entretien.getID() + "&qte=" + (entretien.getQuantity() + 1);
-				break;
-			case '-':
-				nURL += "&id=" + entretien.getID() + "&qte=" + (entretien.getQuantity() - 1);
-				break;
-		}
-		Request nRequest = new Request.Builder()
-				.url(nURL)
-				.put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
-				.build();
-		App.httpClient.newCall(nRequest).enqueue(new Callback() {
-			@Override
-			public void onFailure(Request request, IOException e) {
+    private void modifyItem(final Entretien entretien, final char mode) {
+        String nURL = App.getUri(mContext, App.ENTRETIEN);
+        switch (mode) {
+            case '+':
+                nURL += "&id=" + entretien.getID() + "&qte=" + (entretien.getQuantity() + 1);
+                break;
+            case '-':
+                nURL += "&id=" + entretien.getID() + "&qte=" + (entretien.getQuantity() - 1);
+                break;
+        }
+        Request nRequest = new Request.Builder()
+                .url(nURL)
+                .put(RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"), ""))
+                .build();
+        App.httpClient.newCall(nRequest).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
 
-			}
+            }
 
-			@Override
-			public void onResponse(Response response) throws IOException {
-				switch(mode){
-					case '+':
-						entretien.increment();
-						break;
-					case '-':
-						entretien.decrement();
-						break;
-				}
-				mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						mAdapter.notifyDataSetChanged();
-					}
-				});
-			}
-		});
-	}
+            @Override
+            public void onResponse(Response response) throws IOException {
+                switch (mode) {
+                    case '+':
+                        entretien.increment();
+                        break;
+                    case '-':
+                        entretien.decrement();
+                        break;
+                }
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+    }
 
-	private void deleteItem(final Entretien entretien){
-		String nURL = App.getUri(mContext, App.ENTRETIEN) + "&id=" + entretien.getID();
-		Request nRequest = new Request.Builder()
-				.url(nURL)
-				.delete()
-				.build();
-		App.httpClient.newCall(nRequest).enqueue(new Callback() {
-			@Override
-			public void onFailure(Request request, IOException e) {
+    private void deleteItem(final Entretien entretien) {
+        String nURL = App.getUri(mContext, App.ENTRETIEN) + "&id=" + entretien.getID();
+        Request nRequest = new Request.Builder()
+                .url(nURL)
+                .delete()
+                .build();
+        App.httpClient.newCall(nRequest).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
 
-			}
+            }
 
-			@Override
-			public void onResponse(Response response) throws IOException {
-				if(response.code() == 202){
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							mAdapter.remove(entretien);
-						}
-					});
-				}
-			}
-		});
-	}
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.code() == 202) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAdapter.remove(entretien);
+                        }
+                    });
+                }
+            }
+        });
+    }
 
-	@Override
-	public void onRefresh() {
-		getItems();
-	}
+    @Override
+    public void onRefresh() {
+        getItems();
+    }
 }
