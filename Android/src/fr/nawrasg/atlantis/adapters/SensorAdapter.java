@@ -1,6 +1,8 @@
 package fr.nawrasg.atlantis.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.nawrasg.atlantis.App;
 import fr.nawrasg.atlantis.R;
+import fr.nawrasg.atlantis.fragments.dialogs.SensorDialogFragment;
 import fr.nawrasg.atlantis.type.Room;
 import fr.nawrasg.atlantis.type.Sensor;
 
@@ -61,6 +64,8 @@ public class SensorAdapter extends BaseExpandableListAdapter {
     }
 
     static class SwitchSensorViewHolder {
+        @Bind(R.id.imgSensorSwitchIcon)
+        ImageView image;
         @Bind(R.id.lblSensorSwitchName)
         TextView name;
         @Bind(R.id.lblSensorSwitchDescription)
@@ -123,7 +128,7 @@ public class SensorAdapter extends BaseExpandableListAdapter {
             convertView.setTag(nHolder);
         }
         SensorHeaderViewHolder nHolder = (SensorHeaderViewHolder) convertView.getTag();
-        Sensor nSensor = mList.get(groupPosition);
+        final Sensor nSensor = mList.get(groupPosition);
         String nHeader = nSensor.getAlias();
         if (!nSensor.getRoom().equals("null")) {
             nHeader += getRoom(nSensor);
@@ -142,7 +147,7 @@ public class SensorAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        Sensor nSensor = mList.get(groupPosition).getSensor(childPosition);
+        final Sensor nSensor = mList.get(groupPosition).getSensor(childPosition);
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (nSensor.getType().equals("switchBinary")) {
             convertView = inflater.inflate(R.layout.row_sensor_switch, parent, false);
@@ -174,10 +179,30 @@ public class SensorAdapter extends BaseExpandableListAdapter {
             nHolder.name.setText("");
             nHolder.description.setText("");
             nHolder.toggle.setChecked(nSensor.isOn());
+            nHolder.image.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    SensorDialogFragment nDialog = new SensorDialogFragment();
+                    Bundle nBundle = setArgs(nSensor);
+                    nDialog.setArguments(nBundle);
+                    nDialog.show(((AppCompatActivity) mContext).getFragmentManager(), "sensor");
+                    return true;
+                }
+            });
         } else {
             convertView = inflater.inflate(R.layout.row_sensors, parent, false);
             SensorViewHolder nHolder = new SensorViewHolder(convertView);
             nHolder.name.setText(nSensor.getSensor());
+            nHolder.image.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    SensorDialogFragment nDialog = new SensorDialogFragment();
+                    Bundle nBundle = setArgs(nSensor);
+                    nDialog.setArguments(nBundle);
+                    nDialog.show(((AppCompatActivity) mContext).getFragmentManager(), "sensor");
+                    return true;
+                }
+            });
             switch (nSensor.getType()) {
                 case "Electric ":
                 case "Electric":
@@ -221,6 +246,13 @@ public class SensorAdapter extends BaseExpandableListAdapter {
             }
         }
         return convertView;
+    }
+
+    private Bundle setArgs(Sensor sensor) {
+        Bundle nBundle = new Bundle();
+        nBundle.putParcelableArrayList("rooms", mRoomList);
+        nBundle.putParcelable("sensor", sensor);
+        return nBundle;
     }
 
     @Override
