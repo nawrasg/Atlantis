@@ -3,6 +3,10 @@ package fr.nawrasg.atlantis.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -22,7 +26,6 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
@@ -48,6 +51,7 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 	private SubActionButton mDayButton, mNightButton, mAwayButton;
 	private Handler mHandler;
 	private Alarm mAlarm;
+
 	@Bind(R.id.imgPlanPlan)
 	ImageView imgPlan;
 	@Bind(R.id.txtHomeWeatherToday)
@@ -220,36 +224,48 @@ public class HomeFragment extends Fragment implements OnTouchListener {
 
 	private void loadPlan() {
 		Picasso.with(mContext).load(App.getUri(mContext, App.Images) + "&type=plan").into(imgPlan);
+		imgPlan.setOnTouchListener(this);
+		drawRoom();
+	}
+
+	private void drawRoom(){
+		Paint nPaint = new Paint();
+		nPaint.setColor(Color.RED);
+		nPaint.setStrokeWidth(6);
+		nPaint.setStyle(Paint.Style.STROKE);
+		Path nPath = new Path();
+		nPath.moveTo(26, 26);
+		nPath.lineTo(170, 26);
+		nPath.lineTo(170, 200);
+		nPath.lineTo(26, 200);
+		Canvas nCanvas = new Canvas();
+		nCanvas.drawPath(nPath, nPaint);
+		imgPlan.draw(nCanvas);
 	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
+		if(event.getAction() != MotionEvent.ACTION_DOWN){
+			return false;
+		}
 		Drawable nDrawable = imgPlan.getDrawable();
 		Bitmap nBitmap = ((BitmapDrawable) nDrawable).getBitmap();
 		if (nBitmap == null) {
 			return false;
 		}
-		int nWidth = imgPlan.getWidth();
-		int nHeight = imgPlan.getHeight();
-		if (nWidth > nHeight) {
-			int nScale = nBitmap.getHeight() / nHeight;
-
-		} else {
-			int nScale = nBitmap.getWidth() / nWidth;
-		}
-		Log.d("Nawras", nBitmap.getWidth() + " " + nBitmap.getHeight());
+		int nWidth = nBitmap.getWidth();
+		int nHeight = nBitmap.getHeight();
 
 		int[] viewCoords = new int[2];
-		imgPlan.getLocationInWindow(viewCoords);
+		imgPlan.getLocationOnScreen(viewCoords);
+
 		int touchX = (int) event.getX();
 		int touchY = (int) event.getY();
-
 		int imageX = touchX - viewCoords[0]; // viewCoords[0] is the X
-		// coordinate
 		int imageY = touchY - viewCoords[1]; // viewCoords[1] is the y
-		// coordinate
-		// Toast.makeText(mContext, imageX + " " + imageY,
-		// Toast.LENGTH_SHORT).show();
+		Log.d("Nawras", "ImageView Coords: " + viewCoords[0] + " " + viewCoords[1]);
+		Log.d("Nawras", "Event Coords: " + touchX + " " + touchY);
+		Log.d("Nawras", "Image Coords: " + imageX + " " + imageY);
 		return true;
 	}
 

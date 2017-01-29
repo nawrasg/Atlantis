@@ -3,8 +3,8 @@
     <!-- Fix -->
     <string name="app_name" translatable="false">Atlantis</string>
 
-    <string name="app_datetime_format">dd-MM-yyyy HH:mm:ss</string>
-    <string name="app_date_format">yyyy-MM-dd</string>
+    <string name="app_datetime_format" translatable="false">dd-MM-yyyy HH:mm:ss</string>
+    <string name="app_date_format" translatable="false">yyyy-MM-dd</string>
     <string name="app_last_connection">Last connection on</string>
 
     <!-- MainActivity -->
@@ -322,4 +322,6 @@
     <string name="xml_pref_divers_log_activate_title">Activate logging</string>
     <string name="xml_pref_divers_log_level_title">Logging level</string>
     <string name="fragment_scenarios_dashboard">Add widgets to dashboard</string>
+    <string name="xml_pref_divers_home_title">Home screen type</string>
+    <string name="xml_pref_divers_home_summary">By default, widgets screen is used</string>
 </resources>

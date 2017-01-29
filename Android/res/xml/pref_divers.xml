@@ -2,12 +2,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/xml_pref_main_divers_title">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/welcome_screen_type"
+            android:entryValues="@array/welcome_screen_type_values"
+            android:icon="@drawable/ic_desktop_mac_black_24dp"
+            android:key="home_screen"
+            android:summary="@string/xml_pref_divers_home_summary"
+            android:title="@string/xml_pref_divers_home_title"/>
         <SwitchPreference
             android:icon="@drawable/ic_gps_fixed_black_24dp"
             android:key="gps"
             android:summary="@string/pref_gps_provider_summary"
             android:title="@string/pref_gps_provider_title"/>
         <EditTextPreference
+            android:defaultValue="6"
             android:icon="@drawable/ic_cached_black_24dp"
             android:inputType="number"
             android:key="sync_frequency"

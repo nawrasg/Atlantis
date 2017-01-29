@@ -36,6 +36,7 @@ import fr.nawrasg.atlantis.fragments.EntretienAddFragment;
 import fr.nawrasg.atlantis.fragments.EntretienFragment;
 import fr.nawrasg.atlantis.fragments.GPSFragment;
 import fr.nawrasg.atlantis.fragments.HistoryFragment;
+import fr.nawrasg.atlantis.fragments.HomeFragment;
 import fr.nawrasg.atlantis.fragments.KitchenFragment;
 import fr.nawrasg.atlantis.fragments.LightFragment;
 import fr.nawrasg.atlantis.fragments.MapsFragment;
@@ -79,13 +80,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        loadFragment(new WidgetsFragment(), true);
+        loadHomeScreen();
         loadFragment(new PlantFragment(), false);
         setFrameWeight(App.FRAME_LAYOUT_25);
         handleIntent(getIntent());
     }
 
+    private void loadHomeScreen() {
+        switch (App.getPrefString(this, "home_screen")) {
+            case "widgets":
+                loadFragment(new WidgetsFragment(), true);
+                break;
+            case "plan":
+                loadFragment(new HomeFragment(), true);
+                break;
+        }
+    }
+
     public void setProgressBar(boolean visible) {
+        if (mProgressBar == null) {
+            return;
+        }
         if (visible) {
             mProgressBar.setVisibility(View.VISIBLE);
         } else {
@@ -258,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.itemNavigationHome:
-                loadFragment(new WidgetsFragment(), true);
+                loadHomeScreen();
                 loadFragment(new PlantFragment(), false);
                 setFrameWeight(App.FRAME_LAYOUT_25);
                 return true;

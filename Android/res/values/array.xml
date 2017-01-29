@@ -25,4 +25,12 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+    <string-array name="welcome_screen_type">
+        <item>Widgets Screen</item>
+        <item>Plan Screen</item>
+    </string-array>
+    <string-array name="welcome_screen_type_values">
+        <item>widgets</item>
+        <item>plan</item>
+    </string-array>
 </resources>
